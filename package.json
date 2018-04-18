@@ -1,0 +1,76 @@
+{
+  "name": "avatar-microservice",
+  "description": "Get users avatar across multiple services",
+  "homepage": "https://documentup.com/Kikobeats/avatar-microservice",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "author": {
+    "email": "josefrancisco.verdu@gmail.com",
+    "name": "Kiko Beats",
+    "url": "https://kikobeats.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kikobeats/avatar-microservice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kikobeats/avatar-microservice/issues"
+  },
+  "keywords": [],
+  "dependencies": {
+    "aigle": "~1.12.0-alpha.6",
+    "compression": "~1.7.2",
+    "cors": "~2.8.4",
+    "express": "~4.16.3",
+    "helmet": "~3.12.0",
+    "is-email-like": "~1.0.0",
+    "lodash": "~4.17.5",
+    "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "ava": "latest",
+    "coveralls": "latest",
+    "finepack": "latest",
+    "git-dirty": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "nyc": "latest",
+    "prettier-standard": "latest",
+    "standard": "latest",
+    "standard-markdown": "latest",
+    "svr": "latest"
+  },
+  "engines": {
+    "node": ">= 6"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rm -rf node_modules",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "svr",
+    "lint": "standard-markdown && standard",
+    "precommit": "lint-staged",
+    "pretest": "npm run lint",
+    "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
+    "start": "bin/server",
+    "test": "nyc ava"
+  },
+  "license": "MIT",
+  "lint-staged": {
+    "package.json": [
+      "finepack",
+      "git add"
+    ],
+    "*.js": [
+      "prettier-standard",
+      "git add"
+    ],
+    "*.md": [
+      "standard-markdown",
+      "git add"
+    ]
+  }
+}
