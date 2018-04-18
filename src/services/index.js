@@ -3,9 +3,10 @@
 const { reduce } = require('lodash')
 
 const services = {
-  twitter: require('./twitter'),
+  github: require('./github'),
   gravatar: require('./gravatar'),
-  github: require('./github')
+  instagram: require('./instagram'),
+  twitter: require('./twitter')
 }
 
 const servicesBy = reduce(
