@@ -1,32 +1,24 @@
 'use strict'
 
-const { forEach, reduce } = require('lodash')
+const { forEach } = require('lodash')
 const isEmail = require('is-email-like')
 const aigle = require('aigle')
 const got = require('got')
 
-const services = require('./services')
+const { services, servicesBy } = require('./services')
 
-const servicesBy = reduce(
-  services,
-  (acc, service, serviceName) => {
-    const { supported } = service
-    if (supported.email) acc.email.push(serviceName)
-    if (supported.username) acc.username.push(serviceName)
-    return acc
-  },
-  { email: [], username: [] }
-)
-
-const createAvatarFromService = (fn, { json }) => async (req, res) => {
-  const { key } = req.params
-  const url = await fn(key)
-  if (json) return res.json({ url })
+const sendAvatar = ({ url, res }) => {
   const stream = got.stream(url)
   stream.on('response', resAvatar =>
     res.set('Content-Type', resAvatar.headers['content-type'])
   )
   return stream.pipe(res)
+}
+
+const createAvatarFromService = (fn, { json }) => async (req, res) => {
+  const { key } = req.params
+  const url = await fn(key)
+  return json ? res.json({ url }) : sendAvatar({ res, url })
 }
 
 const createAvatarBy = ({ json }) => async (req, res) => {
@@ -38,12 +30,7 @@ const createAvatarBy = ({ json }) => async (req, res) => {
     .map(service => services[service](key))
     .find(url => got.head(url))
 
-  if (json) return res.json({ url })
-  const stream = got.stream(url)
-  stream.on('response', resAvatar =>
-    res.set('Content-Type', resAvatar.headers['content-type'])
-  )
-  return stream.pipe(res)
+  return json ? res.json({ url }) : sendAvatar({ res, url })
 }
 
 module.exports = (app, express) => {
@@ -62,14 +49,11 @@ module.exports = (app, express) => {
   app.get(`/:key`, createAvatarBy({ json: false }))
   app.get(`/:key/json`, createAvatarBy({ json: true }))
 
-  forEach(services, (service, serviceName) => {
+  forEach(services, (fn, service) => {
+    app.get(`/${service}/:key`, createAvatarFromService(fn, { json: false }))
     app.get(
-      `/${serviceName}/:key`,
-      createAvatarFromService(service, { json: false })
-    )
-    app.get(
-      `/${serviceName}/:key/json`,
-      createAvatarFromService(service, { json: true })
+      `/${service}/:key/json`,
+      createAvatarFromService(fn, { json: true })
     )
   })
 
