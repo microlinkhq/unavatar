@@ -1,20 +1,20 @@
 {
-  "name": "avatar-microservice",
-  "description": "Get user avatar across social services",
-  "homepage": "https://documentup.com/Kikobeats/avatar-microservice",
+  "name": "unavatar",
+  "description": "Get user avatar across social services.",
+  "homepage": "https://unavatar.now.sh",
   "version": "0.0.0",
   "main": "src/index.js",
   "author": {
-    "email": "josefrancisco.verdu@gmail.com",
     "name": "Kiko Beats",
+    "email": "josefrancisco.verdu@gmail.com",
     "url": "https://kikobeats.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kikobeats/avatar-microservice.git"
+    "url": "git+https://github.com/Kikobeats/unavatar.git"
   },
   "bugs": {
-    "url": "https://github.com/Kikobeats/avatar-microservice/issues"
+    "url": "https://github.com/Kikobeats/unavatar/issues"
   },
   "keywords": [],
   "dependencies": {
@@ -22,15 +22,15 @@
     "compression": "~1.7.2",
     "cors": "~2.8.4",
     "express": "~4.16.3",
+    "got": "~8.3.0",
     "helmet": "~3.12.0",
     "is-email-like": "~1.0.0",
     "lodash": "~4.17.5",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "quick-lru": "~1.1.0"
   },
   "devDependencies": {
-    "ava": "latest",
     "browser-sync": "latest",
-    "coveralls": "latest",
     "finepack": "latest",
     "git-dirty": "latest",
     "gulp": "latest",
@@ -51,15 +51,10 @@
     "svr": "latest"
   },
   "engines": {
-    "node": ">= 6"
+    "node": ">= 8"
   },
-  "files": [
-    "bin",
-    "src"
-  ],
   "scripts": {
     "clean": "rm -rf node_modules",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "dev": "svr",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
     "dev:docs:server": "cd static && browser-sync start --server --files \"index.html, **/*.*\"",
@@ -69,7 +64,7 @@
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
     "start": "bin/server",
-    "test": "nyc ava"
+    "test": "exit 0"
   },
   "license": "MIT",
   "lint-staged": {
