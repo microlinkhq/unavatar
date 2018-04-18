@@ -17,20 +17,28 @@ const sendAvatar = ({ url, res }) => {
 
 const createAvatarFromService = (fn, { json }) => async (req, res) => {
   const { key } = req.params
-  const url = await fn(key)
-  return json ? res.json({ url }) : sendAvatar({ res, url })
+
+  try {
+    const url = await fn(key)
+    return json ? res.json({ url }) : sendAvatar({ res, url })
+  } catch (err) {
+    return json ? res.json({ url: null }) : res.status(404).send()
+  }
 }
 
 const createAvatarBy = ({ json }) => async (req, res) => {
   const { key } = req.params
   const collection = isEmail(key) ? servicesBy.email : servicesBy.username
 
-  const url = await aigle
-    .resolve(collection)
-    .map(service => services[service](key))
-    .find(url => got.head(url))
-
-  return json ? res.json({ url }) : sendAvatar({ res, url })
+  try {
+    const url = await aigle
+      .resolve(collection)
+      .map(service => services[service](key))
+      .find(url => got.head(url))
+    return json ? res.json({ url }) : sendAvatar({ res, url })
+  } catch (err) {
+    return json ? res.json({ url: null }) : res.status(404).send()
+  }
 }
 
 module.exports = (app, express) => {
