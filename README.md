@@ -1,5 +1,10 @@
 # unavatar
 
+<h1 align="center">
+  <img style="width: 500px;" src="/static/banner.png" alt="unavatar">
+  <br>
+</h1>
+
 ![Last version](https://img.shields.io/github/tag/Kikobeats/unavatar.svg?style=flat-square)
 [![Build Status](https://img.shields.io/travis/Kikobeats/unavatar/master.svg?style=flat-square)](https://travis-ci.org/Kikobeats/unavatar)
 [![Dependency status](https://img.shields.io/david/Kikobeats/unavatar.svg?style=flat-square)](https://david-dm.org/Kikobeats/unavatar)
