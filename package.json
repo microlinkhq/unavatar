@@ -68,7 +68,8 @@
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
     "start": "bin/server",
-    "test": "exit 0"
+    "test": "exit 0",
+    "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes"
   },
   "license": "MIT",
   "lint-staged": {
