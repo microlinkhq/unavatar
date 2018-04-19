@@ -2,9 +2,8 @@
 
 const { forEach } = require('lodash')
 
-const isProduction = process.env.NODE_ENV === 'production'
-
 const { createGetAvatarUrl } = require('./helpers')
+const { logLevel } = require('./constant')
 const { services } = require('./services')
 
 module.exports = (app, express) => {
@@ -12,7 +11,7 @@ module.exports = (app, express) => {
     .use(require('helmet')())
     .use(require('compression')())
     .use(require('cors')())
-    .use(require('morgan')(isProduction ? 'combined' : 'dev'))
+    .use(require('morgan')(logLevel))
     .use(express.static('static'))
     .disable('x-powered-by')
 

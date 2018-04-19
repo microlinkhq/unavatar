@@ -10,17 +10,9 @@ const sendAvatar = ({ url, res }) => {
   return stream.pipe(res)
 }
 
-const sendError = ({ url, req, res, isJSON }) => {
-  return isJSON ? res.json({ url }) : res.status(404).send()
-}
-
-const sendSuccess = ({ url, req, res, isJSON }) => {
-  return isJSON ? res.json({ url }) : sendAvatar({ res, url })
-}
-
 const send = ({ url, req, res, isJSON, isError }) => {
-  const sendMethod = isError ? sendError : sendSuccess
-  return sendMethod({ url, req, res, isJSON, isError })
+  res.status(isError ? 404 : 200)
+  return isJSON ? res.json({ url }) : sendAvatar({ res, url })
 }
 
 module.exports = send
