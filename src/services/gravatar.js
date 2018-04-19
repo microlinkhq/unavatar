@@ -2,6 +2,8 @@
 
 const crypto = require('crypto')
 
+const { avatarSize } = require('../constant')
+
 const md5 = str =>
   crypto
     .createHash('md5')
@@ -9,9 +11,10 @@ const md5 = str =>
     .digest('hex')
 
 module.exports = async username =>
-  `https://gravatar.com/avatar/${md5(username)}?size=500`
+  `https://gravatar.com/avatar/${md5(username)}?size=${avatarSize}`
 
 module.exports.supported = {
   email: true,
-  username: false
+  username: false,
+  domain: false
 }

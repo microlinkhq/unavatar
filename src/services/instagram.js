@@ -17,5 +17,6 @@ module.exports = async username => {
 
 module.exports.supported = {
   email: false,
-  username: true
+  username: true,
+  domain: false
 }

@@ -6,7 +6,8 @@ const services = {
   github: require('./github'),
   gravatar: require('./gravatar'),
   instagram: require('./instagram'),
-  twitter: require('./twitter')
+  twitter: require('./twitter'),
+  domain: require('./domain')
 }
 
 const servicesBy = reduce(
@@ -14,9 +15,10 @@ const servicesBy = reduce(
   (acc, { supported }, service) => {
     if (supported.email) acc.email.push(service)
     if (supported.username) acc.username.push(service)
+    if (supported.domain) acc.domain.push(service)
     return acc
   },
-  { email: [], username: [] }
+  { email: [], username: [], domain: [] }
 )
 
 module.exports = { services, servicesBy }

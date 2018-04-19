@@ -7,7 +7,7 @@
 
     <!-- Search Engine -->
     <title>unavatar</title>
-    <meta name="description" content="It gets the user avatar based on username or email across multiple services, such as Twitter, GitHub, Gravatar, etc.">
+    <meta name="description" content="Get the user avatar based on username, email or domain across multiple services, such as Twitter, GitHub, Gravatar, etc.">
     <meta name="image" content="/static/logo.png">
     <link rel="canonical" href="https://navatar.now.sh" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -16,18 +16,18 @@
 
     <!-- Schema.org for Google -->
     <meta itemprop="name" content="unavatar">
-    <meta itemprop="description" content="It gets the user avatar based on username or email across multiple services, such as Twitter, GitHub, Gravatar, etc.">
+    <meta itemprop="description" content="Get the user avatar based on username, email or domain across multiple services, such as Twitter, GitHub, Gravatar, etc.">
     <meta itemprop="image" content="https://unavatar.now.sh">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="unavatar">
-    <meta name="twitter:description" content="It gets the user avatar based on username or email across multiple services, such as Twitter, GitHub, Gravatar, etc.">
+    <meta name="twitter:description" content="Get the user avatar based on username, email or domain across multiple services, such as Twitter, GitHub, Gravatar, etc.">
     <meta name="twitter:image" content="/static/logo.png">
 
     <!-- Open Graph general (Facebook, Pinterest & Google+) -->
     <meta name="og:title" content="unavatar">
-    <meta name="og:description" content="It gets the user avatar based on username or email across multiple services, such as Twitter, GitHub, Gravatar, etc.">
+    <meta name="og:description" content="Get the user avatar based on username, email or domain across multiple services, such as Twitter, GitHub, Gravatar, etc.">
     <meta name="og:image" content="/static/logo.png">
     <meta name="og:url" content="https://navatar.now.sh">
 </head>
@@ -42,6 +42,9 @@
         <h2>From email</h2>
         <p><code>&lt;img src="https://unavatar.now.sh/:email" /&gt;</code></p>
         <p>i.e <a target="_blank" href="https://unavatar.now.sh/sindresorhus@gmail.com">https://unavatar.now.sh/sindresorhus@gmail.com</a></p>
+        <h2>From domain</h2>
+        <p><code>&lt;img src="https://unavatar.now.sh/:domain" /&gt;</code></p>
+        <p>i.e <a target="_blank" href="https://unavatar.now.sh/reddit.com">https://unavatar.now.sh/reddit.com</a></p>
         <h2>as JSON</h2>
         <p>Alternatively you can get the avatar url adding <code>/json</code></p>
         <pre class="language-json"><code class="language-json">// https://unavatar.now.sh/kikobeats/json
@@ -63,6 +66,9 @@
         <h3>Twitter</h3>
         <p><code>&lt;img src="https://unavatar.now.sh/twitter/:username" /&gt;</code></p>
         <p>i.e <a target="_blank" href="https://unavatar.now.sh/twitter/kikobeats">https://unavatar.now.sh/twitter/kikobeats</a></p>
+        <h3>Other domain</h3>
+        <p><code>&lt;img src="https://unavatar.now.sh/domain/:domain" /&gt;</code></p>
+        <p>i.e <a target="_blank" href="https://unavatar.now.sh/domain/reddit.com">https://unavatar.now.sh/domain/reddit.com</a></p>
     </article>
     <script src="js/main.min.js"></script>
 </body>

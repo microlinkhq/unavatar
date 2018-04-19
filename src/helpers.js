@@ -1,6 +1,7 @@
 'use strict'
 
 const isEmail = require('is-email-like')
+const urlRegex = require('url-regex')
 const aigle = require('aigle')
 const Keyv = require('keyv')
 const got = require('got')
@@ -11,8 +12,14 @@ const send = require('./send')
 
 const cache = new Keyv(cacheURI, { TTL: cacheTTL })
 
+const is = str => {
+  if (isEmail(str)) return 'email'
+  if (urlRegex({ strict: false }).test(str)) return 'domain'
+  return 'username'
+}
+
 const getAvatarUrl = key => {
-  const collection = isEmail(key) ? servicesBy.email : servicesBy.username
+  const collection = servicesBy[is(key)]
   return aigle
     .resolve(collection)
     .map(service => services[service](key))

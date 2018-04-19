@@ -8,5 +8,6 @@ module.exports = {
   isProduction,
   cacheURI: process.env.CACHE_URI,
   cacheTTL: process.env.CACHE_TTL || TWENTY_FOUR_HOURS,
-  logLevel: process.env.LOGLEVEL || isProduction ? 'combined' : 'dev'
+  logLevel: process.env.LOGLEVEL || isProduction ? 'combined' : 'dev',
+  avatarSize: process.env.AVATAR_SIZE || 400
 }
