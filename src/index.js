@@ -1,47 +1,11 @@
 'use strict'
 
-const isEmail = require('is-email-like')
 const { forEach } = require('lodash')
-const aigle = require('aigle')
-const got = require('got')
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-const { services, servicesBy } = require('./services')
-
-const sendAvatar = ({ url, res }) => {
-  const stream = got.stream(url)
-  stream.on('response', resAvatar =>
-    res.set('Content-Type', resAvatar.headers['content-type'])
-  )
-  return stream.pipe(res)
-}
-
-const createAvatarFromService = (fn, { json }) => async (req, res) => {
-  const { key } = req.params
-
-  try {
-    const url = await fn(key)
-    return json ? res.json({ url }) : sendAvatar({ res, url })
-  } catch (err) {
-    return json ? res.json({ url: null }) : res.status(404).send()
-  }
-}
-
-const createAvatarBy = ({ json }) => async (req, res) => {
-  const { key } = req.params
-  const collection = isEmail(key) ? servicesBy.email : servicesBy.username
-
-  try {
-    const url = await aigle
-      .resolve(collection)
-      .map(service => services[service](key))
-      .find(url => got.head(url))
-    return json ? res.json({ url }) : sendAvatar({ res, url })
-  } catch (err) {
-    return json ? res.json({ url: null }) : res.status(404).send()
-  }
-}
+const { createGetAvatarUrl } = require('./helpers')
+const { services } = require('./services')
 
 module.exports = (app, express) => {
   app
@@ -56,15 +20,12 @@ module.exports = (app, express) => {
   app.get('/robots.txt', (req, res) => res.status(204).send())
   app.get('/favicon.txt', (req, res) => res.status(204).send())
 
-  app.get(`/:key`, createAvatarBy({ json: false }))
-  app.get(`/:key/json`, createAvatarBy({ json: true }))
+  app.get(`/:key`, createGetAvatarUrl())
+  app.get(`/:key/json`, createGetAvatarUrl({ json: true }))
 
-  forEach(services, (fn, service) => {
-    app.get(`/${service}/:key`, createAvatarFromService(fn, { json: false }))
-    app.get(
-      `/${service}/:key/json`,
-      createAvatarFromService(fn, { json: true })
-    )
+  forEach(services, (urlFn, service) => {
+    app.get(`/${service}/:key`, createGetAvatarUrl({ urlFn }))
+    app.get(`/${service}/:key/json`, createGetAvatarUrl({ urlFn, json: true }))
   })
 
   app.use(express.static('static'))
