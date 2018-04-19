@@ -1,6 +1,7 @@
 {
   "name": "unavatar",
   "description": "Get user avatar across social services.",
+  "private": true,
   "homepage": "https://unavatar.now.sh",
   "version": "0.0.0",
   "main": "src/index.js",
