@@ -20,11 +20,14 @@ module.exports = (app, express) => {
   app.get('/favicon.txt', (req, res) => res.status(204).send())
 
   app.get(`/:key`, createGetAvatarUrl())
-  app.get(`/:key/json`, createGetAvatarUrl({ json: true }))
+  app.get(`/:key/json`, createGetAvatarUrl({ isJSON: true }))
 
   forEach(services, (urlFn, service) => {
     app.get(`/${service}/:key`, createGetAvatarUrl({ urlFn }))
-    app.get(`/${service}/:key/json`, createGetAvatarUrl({ urlFn, json: true }))
+    app.get(
+      `/${service}/:key/json`,
+      createGetAvatarUrl({ urlFn, isJSON: true })
+    )
   })
 
   app.use(express.static('static'))
