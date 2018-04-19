@@ -5,6 +5,8 @@ const { forEach } = require('lodash')
 const aigle = require('aigle')
 const got = require('got')
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 const { services, servicesBy } = require('./services')
 
 const sendAvatar = ({ url, res }) => {
@@ -46,7 +48,7 @@ module.exports = (app, express) => {
     .use(require('helmet')())
     .use(require('compression')())
     .use(require('cors')())
-    .use(require('morgan')('combined'))
+    .use(require('morgan')(isProduction ? 'combined' : 'dev'))
     .use(express.static('static'))
     .disable('x-powered-by')
 
