@@ -3,7 +3,7 @@
 const { avatarSize } = require('../constant')
 
 module.exports = async username =>
-  `https://avatars.githubusercontent.com/${username}?size=${avatarSize}`
+  `https://github.com/${username}.png?size=${avatarSize}`
 
 module.exports.supported = {
   email: false,

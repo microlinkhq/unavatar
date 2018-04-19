@@ -9,5 +9,6 @@ module.exports = {
   cacheURI: process.env.CACHE_URI,
   cacheTTL: process.env.CACHE_TTL || TWENTY_FOUR_HOURS,
   logLevel: process.env.LOGLEVEL || isProduction ? 'combined' : 'dev',
-  avatarSize: process.env.AVATAR_SIZE || 400
+  avatarSize: process.env.AVATAR_SIZE || 400,
+  avatarTimeout: process.env.AVATAR_TIMEOUT || 3000
 }

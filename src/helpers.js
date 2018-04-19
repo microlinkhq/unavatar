@@ -1,13 +1,14 @@
 'use strict'
 
 const isEmail = require('is-email-like')
+const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
 const aigle = require('aigle')
 const Keyv = require('keyv')
 const got = require('got')
 
+const { cacheTTL, cacheURI, avatarTimeout } = require('./constant')
 const { services, servicesBy } = require('./services')
-const { cacheTTL, cacheURI } = require('./constant')
 const send = require('./send')
 
 const cache = new Keyv(cacheURI, { TTL: cacheTTL })
@@ -20,9 +21,18 @@ const is = str => {
 
 const getAvatarUrl = key => {
   const collection = servicesBy[is(key)]
+
   return aigle
     .resolve(collection)
-    .map(service => services[service](key))
+    .reduce(async (acc, service) => {
+      try {
+        const urlFn = services[service]
+        const url = await pTimeout(urlFn(key), avatarTimeout)
+        acc.push(url)
+      } catch (err) {}
+
+      return acc
+    }, [])
     .find(url => got.head(url))
 }
 
@@ -46,7 +56,7 @@ const createGetAvatarUrl = ({
   let url = null
 
   try {
-    url = await urlFn(key)
+    url = await pTimeout(urlFn(key), avatarTimeout)
   } catch (err) {}
 
   send({ url, req, res, isJSON, isError: url === null })
