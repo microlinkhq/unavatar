@@ -3,10 +3,11 @@
 const { reduce } = require('lodash')
 
 const services = {
-  instagram: require('./instagram'),
   twitter: require('./twitter'),
+  instagram: require('./instagram'),
   domain: require('./domain'),
   github: require('./github'),
+  facebook: require('./facebook'),
   // the services that return defaulta avatar, go after!
   gravatar: require('./gravatar')
 }
