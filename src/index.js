@@ -1,7 +1,7 @@
 'use strict'
 
-const { forEach } = require('lodash')
 const isEmail = require('is-email-like')
+const { forEach } = require('lodash')
 const aigle = require('aigle')
 const got = require('got')
 
