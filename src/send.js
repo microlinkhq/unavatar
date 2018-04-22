@@ -9,6 +9,7 @@ const sendAvatar = ({ url, res, isError }) => {
   stream.on('response', resAvatar =>
     res.set('Content-Type', resAvatar.headers['content-type'])
   )
+  stream.on('error', () => res.status(404))
   return stream.pipe(res)
 }
 
