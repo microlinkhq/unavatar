@@ -1,5 +1,6 @@
 'use strict'
 
+const isAbsoluteUrl = require('is-absolute-url')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
@@ -28,7 +29,7 @@ const getAvatarUrl = key => {
       try {
         const urlFn = services[service]
         const url = await pTimeout(urlFn(key), avatarTimeout)
-        if (url) acc.push(url)
+        if (isAbsoluteUrl(url)) acc.push(url)
       } catch (err) {}
 
       return acc
