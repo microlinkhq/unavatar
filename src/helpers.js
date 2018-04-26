@@ -14,6 +14,14 @@ const send = require('./send')
 
 const cache = new Keyv(cacheURI, { TTL: cacheTTL })
 
+let fallbackAvatar
+
+const getFallbackAvatar = req => {
+  if (fallbackAvatar) return fallbackAvatar
+  fallbackAvatar = `${req.protocol}://${req.get('host')}/fallback.png`
+  return fallbackAvatar
+}
+
 const is = str => {
   if (isEmail(str)) return 'email'
   if (urlRegex({ strict: false }).test(str)) return 'domain'
@@ -54,11 +62,18 @@ const createGetAvatarUrl = ({
   }
 
   const { key } = req.params
+  const { fallback } = req.query
   let url = null
 
   try {
     url = await pTimeout(urlFn(key), avatarTimeout)
   } catch (err) {}
+
+  if (!url) {
+    url = isAbsoluteUrl(fallback)
+      ? isAbsoluteUrl(fallback)
+      : getFallbackAvatar(req)
+  }
 
   send({ url, req, res, isJSON, isError: url === null })
   cache.set(req.url, url)
