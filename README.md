@@ -12,7 +12,7 @@
 [![NPM Status](https://img.shields.io/npm/dm/unavatar.svg?style=flat-square)](https://www.npmjs.org/package/unavatar)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/Kikobeats)
 
-> Get user avatar across social services.
+> Get unified user avatar.
 
 ## License
 

@@ -1,13 +1,12 @@
 {
   "name": "unavatar",
-  "description": "Get user avatar across social services.",
-  "private": true,
+  "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
   "version": "0.0.0",
   "main": "src/index.js",
   "author": {
-    "name": "Kiko Beats",
     "email": "josefrancisco.verdu@gmail.com",
+    "name": "Kiko Beats",
     "url": "https://kikobeats.com"
   },
   "repository": {
@@ -28,9 +27,9 @@
     "helmet": "~3.12.0",
     "is-absolute-url": "~2.1.0",
     "is-email-like": "~1.0.0",
-    "jsdom": "~11.8.0",
+    "jsdom": "~11.9.0",
     "keyv": "~3.0.0",
-    "lodash": "~4.17.5",
+    "lodash": "~4.17.10",
     "morgan": "~1.9.0",
     "p-timeout": "~2.0.1",
     "url-regex": "~4.1.1"
@@ -61,6 +60,7 @@
   },
   "scripts": {
     "clean": "rm -rf node_modules",
+    "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
     "dev": "svr",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
     "dev:docs:server": "cd static && browser-sync start --server --files \"index.html, **/*.*\"",
@@ -70,13 +70,13 @@
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
     "start": "bin/server",
-    "test": "exit 0",
-    "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes"
+    "test": "exit 0"
   },
+  "private": true,
   "license": "MIT",
   "lint-staged": {
     "package.json": [
-      "finepack",
+      "finepack --no-validate",
       "git add"
     ],
     "*.js": [

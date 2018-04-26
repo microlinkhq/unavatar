@@ -4,6 +4,7 @@ plugins:
   prerelease:
     Linting config files:
       plugin: bumped-finepack
+      validate: false
   postrelease:
     Generating CHANGELOG file:
       plugin: bumped-changelog
