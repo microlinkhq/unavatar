@@ -28,7 +28,7 @@ const getAvatarUrl = key => {
       try {
         const urlFn = services[service]
         const url = await pTimeout(urlFn(key), avatarTimeout)
-        acc.push(url)
+        if (url) acc.push(url)
       } catch (err) {}
 
       return acc
