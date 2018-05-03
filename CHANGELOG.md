@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## 1.0.1 (2018-05-03)
+
+* Fix return avatar url ([10264d1](https://github.com/Kikobeats/unavatar/commit/10264d1))
+* Refactor ([7ac7e02](https://github.com/Kikobeats/unavatar/commit/7ac7e02))
+* Remove publish step ([4e921b1](https://github.com/Kikobeats/unavatar/commit/4e921b1))
+* Rename domain → clearbit ([f438bb5](https://github.com/Kikobeats/unavatar/commit/f438bb5))
+
+
+
 <a name="1.0.0"></a>
 # 1.0.0 (2018-04-26)
 
