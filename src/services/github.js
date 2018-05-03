@@ -5,7 +5,9 @@ const got = require('got')
 
 module.exports = async username => {
   try {
-    await got.head(`https://github.com/${username}.png?size=${avatarSize}`)
+    const logoUrl = `https://github.com/${username}.png?size=${avatarSize}`
+    await got.head(logoUrl)
+    return logoUrl
   } catch (err) {
     return null
   }
