@@ -8,7 +8,7 @@ const services = {
   clearbit: require('./clearbit'),
   github: require('./github'),
   facebook: require('./facebook'),
-  // the services that return defaulta avatar, go after!
+  // gravatar returns a default avatar, so use it as fallback
   gravatar: require('./gravatar')
 }
 
