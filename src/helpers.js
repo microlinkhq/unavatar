@@ -66,7 +66,7 @@ const createGetAvatarUrl = ({
   let url = null
 
   try {
-    url = await pTimeout(urlFn(key), avatarTimeout)
+    url = await pTimeout(urlFn(key, fallback), avatarTimeout)
   } catch (err) {}
 
   if (!url) {
