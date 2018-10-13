@@ -2,4 +2,4 @@ language: node_js
 node_js:
   - "lts/*"
 after_success:
-  - npx now-cd --alias "master=unavatar.now.sh"
+  - test $TRAVIS_BRANCH = "master" && npx now-cd --alias "master=unavatar.now.sh"
