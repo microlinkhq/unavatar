@@ -1,4 +1,8 @@
 language: node_js
 node_js:
   - "lts/*"
-after_success: npx now-cd --public --alias "master=changes.now.sh"
+deploy:
+  provider: script
+  script: npx now-cd --public --alias "master=unavatar.now.sh"
+  on:
+    branch: master
