@@ -10,7 +10,6 @@
 [![Dependency status](https://img.shields.io/david/Kikobeats/unavatar.svg?style=flat-square)](https://david-dm.org/Kikobeats/unavatar)
 [![Dev Dependencies Status](https://img.shields.io/david/dev/Kikobeats/unavatar.svg?style=flat-square)](https://david-dm.org/Kikobeats/unavatar#info=devDependencies)
 [![NPM Status](https://img.shields.io/npm/dm/unavatar.svg?style=flat-square)](https://www.npmjs.org/package/unavatar)
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/Kikobeats) [![Greenkeeper badge](https://badges.greenkeeper.io/Kikobeats/unavatar.svg)](https://greenkeeper.io/)
 
 > Get unified user avatar.
 
