@@ -1,4 +1,5 @@
 {
   "name": "unavatar",
+  "public": true,
   "alias": "unavatar.now.sh"
 }
