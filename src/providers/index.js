@@ -2,7 +2,7 @@
 
 const { reduce } = require('lodash')
 
-const services = {
+const providers = {
   twitter: require('./twitter'),
   instagram: require('./instagram'),
   clearbit: require('./clearbit'),
@@ -12,15 +12,15 @@ const services = {
   gravatar: require('./gravatar')
 }
 
-const servicesBy = reduce(
-  services,
-  (acc, { supported }, service) => {
-    if (supported.email) acc.email.push(service)
-    if (supported.username) acc.username.push(service)
-    if (supported.domain) acc.domain.push(service)
+const providersBy = reduce(
+  providers,
+  (acc, { supported }, provider) => {
+    if (supported.email) acc.email.push(provider)
+    if (supported.username) acc.username.push(provider)
+    if (supported.domain) acc.domain.push(provider)
     return acc
   },
   { email: [], username: [], domain: [] }
 )
 
-module.exports = { services, servicesBy }
+module.exports = { providers, providersBy }

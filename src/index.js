@@ -2,9 +2,9 @@
 
 const { forEach } = require('lodash')
 
-const { createGetAvatarUrl } = require('./helpers')
+const createGetAvatarUrl = require('./avatar-url')
 const { logLevel } = require('./constant')
-const { services } = require('./services')
+const { providers } = require('./providers')
 
 module.exports = (app, express) => {
   app
@@ -20,15 +20,10 @@ module.exports = (app, express) => {
   app.get('/favicon.txt', (req, res) => res.status(204).send())
 
   app.get(`/:key`, createGetAvatarUrl())
-  app.get(`/:key/json`, createGetAvatarUrl({ isJSON: true }))
 
-  forEach(services, (urlFn, service) => {
-    app.get(`/${service}/:key`, createGetAvatarUrl({ urlFn }))
-    app.get(
-      `/${service}/:key/json`,
-      createGetAvatarUrl({ urlFn, isJSON: true })
-    )
-  })
+  forEach(providers, (fn, provider) =>
+    app.get(`/${provider}/:key`, createGetAvatarUrl(fn))
+  )
 
   app.use(express.static('static'))
 

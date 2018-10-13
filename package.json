@@ -27,9 +27,11 @@
     "helmet": "~3.12.0",
     "is-absolute-url": "~2.1.0",
     "is-email-like": "~1.0.0",
+    "is-url-http": "~1.0.1",
     "jsdom": "~11.9.0",
     "keyv": "~3.0.0",
     "lodash": "~4.17.10",
+    "memoize-one": "~4.0.2",
     "morgan": "~1.9.0",
     "p-timeout": "~2.0.1",
     "url-regex": "~4.1.1"
@@ -51,7 +53,7 @@
     "nyc": "latest",
     "prettier-standard": "latest",
     "prismjs": "latest",
-    "standard": "latest",
+    "standard": "11",
     "standard-markdown": "latest",
     "svr": "latest"
   },
