@@ -37,8 +37,12 @@
     "url-regex": "~4.1.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "latest",
+    "@commitlint/config-conventional": "latest",
     "browser-sync": "latest",
+    "conventional-github-releaser": "latest",
     "finepack": "latest",
+    "git-authors-cli": "latest",
     "git-dirty": "latest",
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
@@ -50,11 +54,13 @@
     "hack": "latest",
     "husky": "latest",
     "lint-staged": "latest",
+    "npm-check-updates": "latest",
     "nyc": "latest",
     "prettier-standard": "latest",
     "prismjs": "latest",
     "standard": "11",
     "standard-markdown": "latest",
+    "standard-version": "latest",
     "svr": "latest"
   },
   "engines": {
@@ -68,30 +74,50 @@
     "dev:docs:server": "cd static && browser-sync start --server --files \"index.html, **/*.*\"",
     "dev:docs:src": "gulp",
     "lint": "standard-markdown && standard",
+    "postrelease": "npm run release:tags && npm run release:github",
+    "prerelease": "npm run update:check && git-authors-cli",
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
+    "release": "git add package.json && standard-version -a",
+    "release:github": "conventional-github-releaser -p angular",
+    "release:tags": "git push --follow-tags origin HEAD:master",
     "start": "bin/server",
-    "test": "exit 0"
+    "test": "exit 0",
+    "update": "ncu -a",
+    "update:check": "ncu -- --error-level 2"
   },
   "private": true,
   "license": "MIT",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "package.json": [
-      "finepack --no-validate",
-      "git add"
-    ],
-    "*.js": [
-      "prettier-standard",
-      "git add"
-    ],
-    "*.md": [
-      "standard-markdown",
-      "git add"
-    ]
+    "linters": {
+      "package.json": [
+        "finepack",
+        "git add"
+      ],
+      "*.js": [
+        "prettier-standard",
+        "git add"
+      ],
+      "*.md": [
+        "standard-markdown",
+        "git add"
+      ]
+    }
+  },
+  "standard-version": {
+    "scripts": {
+      "prechangelog": "git-authors-cli"
+    }
   }
 }
