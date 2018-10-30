@@ -1,3 +1,22 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.0.2"></a>
+## 1.0.2 (2018-10-30)
+
+
+
+<a name="1.0.1"></a>
+## 1.0.1 (2018-05-03)
+
+
+
+<a name="1.0.0"></a>
+# 1.0.0 (2018-04-26)
+
+
+
 <a name="1.0.1"></a>
 ## 1.0.1 (2018-05-03)
 
@@ -41,6 +60,3 @@
 * Update README.md ([80e6afa](https://github.com/Kikobeats/unavatar/commit/80e6afa))
 * User better twitter strategy ([a680cf9](https://github.com/Kikobeats/unavatar/commit/a680cf9))
 * Wrap into try/catch ([46a40e1](https://github.com/Kikobeats/unavatar/commit/46a40e1))
-
-
-
