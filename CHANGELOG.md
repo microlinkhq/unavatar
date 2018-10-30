@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/Kikobeats/unavatar/compare/v1.0.2...v1.0.3) (2018-10-30)
+
+
+### Bug Fixes
+
+* **package:** update got to version 9.3.0 ([9f9ff96](https://github.com/Kikobeats/unavatar/commit/9f9ff96))
+
+
+
 <a name="1.0.2"></a>
 ## 1.0.2 (2018-10-30)
 

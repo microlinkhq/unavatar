@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "src/index.js",
   "author": {
     "email": "josefrancisco.verdu@gmail.com",
@@ -121,6 +121,7 @@
     }
   },
   "contributors": [
-    "Angel M De Miguel <angel@bitnami.com>"
+    "Angel M De Miguel <angel@bitnami.com>",
+    "Travis CI <travis@travis-ci.org>"
   ]
 }
