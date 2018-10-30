@@ -23,7 +23,7 @@
     "compression": "~1.7.2",
     "cors": "~2.8.4",
     "express": "~4.16.3",
-    "got": "~9.2.2",
+    "got": "~9.3.0",
     "helmet": "~3.14.0",
     "is-absolute-url": "~2.1.0",
     "is-email-like": "~1.0.0",
