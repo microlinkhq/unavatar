@@ -18,7 +18,7 @@ async function getChannelInfo (channelUrl) {
     url: 'https://content.googleapis.com/youtube/v3/channels',
     qs: {
       part: 'id,snippet',
-      key: 'AIzaSyAnEy2O9Iwf1qn7-U8AxoajQ2nw0OlDxyg'
+      key: constant.youtubeApiKey
     },
     headers: { 'cache-control': 'no-cache' },
     json: true
