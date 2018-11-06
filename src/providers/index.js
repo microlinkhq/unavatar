@@ -8,6 +8,7 @@ const providers = {
   clearbit: require('./clearbit'),
   github: require('./github'),
   facebook: require('./facebook'),
+  youtube: require('./youtube'),
   // gravatar returns a default avatar, so use it as fallback
   gravatar: require('./gravatar')
 }

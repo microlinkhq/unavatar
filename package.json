@@ -9,6 +9,16 @@
     "name": "Kiko Beats",
     "url": "https://kikobeats.com"
   },
+  "contributors": [
+    {
+      "name": "Travis CI",
+      "email": "travis@travis-ci.org"
+    },
+    {
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kikobeats/unavatar.git"
@@ -34,6 +44,8 @@
     "memoize-one": "~4.0.2",
     "morgan": "~1.9.0",
     "p-timeout": "~2.0.1",
+    "request": "~2.88.0",
+    "request-promise": "~4.2.2",
     "url-regex": "~4.1.1"
   },
   "devDependencies": {
@@ -119,9 +131,5 @@
     "scripts": {
       "prechangelog": "git-authors-cli"
     }
-  },
-  "contributors": [
-    "Travis CI <travis@travis-ci.org>",
-    "Angel M De Miguel <angel@bitnami.com>"
-  ]
+  }
 }
