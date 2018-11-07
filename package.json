@@ -29,7 +29,7 @@
     "debug": "~4.1.0",
     "express": "~4.16.3",
     "got": "~9.3.0",
-    "helmet": "~3.14.0",
+    "helmet": "~3.15.0",
     "is-absolute-url": "~2.1.0",
     "is-email-like": "~1.0.0",
     "is-url-http": "~1.0.1",
