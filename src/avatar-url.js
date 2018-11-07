@@ -5,7 +5,7 @@ const beautyError = require('beauty-error')
 const debug = require('debug')('unavatar')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
-const { get, isNil } = require('lodash')
+const { eq, get, isNil } = require('lodash')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
@@ -25,6 +25,7 @@ const getDefaultFallbackUrl = memoizeOne(
 
 const getFallbackUrl = memoizeOne(req => {
   const fallbackUrl = get(req, 'query.fallback')
+  if (eq(fallbackUrl, 'false')) return null
   return isUrlHttp(fallbackUrl) && isAbsoluteUrl(fallbackUrl)
     ? fallbackUrl
     : getDefaultFallbackUrl(req)
