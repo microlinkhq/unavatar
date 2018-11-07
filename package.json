@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "main": "src/index.js",
   "author": {
     "email": "josefrancisco.verdu@gmail.com",
@@ -10,14 +10,7 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    {
-      "name": "Travis CI",
-      "email": "travis@travis-ci.org"
-    },
-    {
-      "name": "Angel M De Miguel",
-      "email": "angel@bitnami.com"
-    }
+    "Angel M De Miguel <angel@bitnami.com>"
   ],
   "repository": {
     "type": "git",

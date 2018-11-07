@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/Kikobeats/unavatar/compare/v1.0.4...v1.1.0) (2018-11-07)
+
+
+### Features
+
+* add youtube support ([3706ce5](https://github.com/Kikobeats/unavatar/commit/3706ce5)), closes [#13](https://github.com/Kikobeats/unavatar/issues/13)
+
+
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/Kikobeats/unavatar/compare/v1.0.3...v1.0.4) (2018-11-05)
 
