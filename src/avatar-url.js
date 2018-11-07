@@ -1,6 +1,8 @@
 'use strict'
 
 const isAbsoluteUrl = require('is-absolute-url')
+const beautyError = require('beauty-error')
+const debug = require('debug')('unavatar')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const { get, isNil } = require('lodash')
@@ -62,7 +64,7 @@ module.exports = (fn = getAvatarUrl) => async (req, res) => {
   try {
     url = await pTimeout(fn(username, fallbackUrl), avatarTimeout)
   } catch (err) {
-    console.log('err', err)
+    debug(beautyError(err))
     url = fallbackUrl
   }
 

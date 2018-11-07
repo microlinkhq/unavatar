@@ -9,6 +9,16 @@
     "name": "Kiko Beats",
     "url": "https://kikobeats.com"
   },
+  "contributors": [
+    {
+      "name": "Travis CI",
+      "email": "travis@travis-ci.org"
+    },
+    {
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kikobeats/unavatar.git"
@@ -18,10 +28,12 @@
   },
   "keywords": [],
   "dependencies": {
-    "aigle": "~1.12.0-alpha.6",
+    "aigle": "~1.12.0-alpha.10",
+    "beauty-error": "~1.0.1",
     "cheerio": "~1.0.0-rc.2",
     "compression": "~1.7.2",
     "cors": "~2.8.4",
+    "debug": "~4.1.0",
     "express": "~4.16.3",
     "got": "~9.3.0",
     "helmet": "~3.14.0",
@@ -33,6 +45,7 @@
     "lodash": "~4.17.10",
     "memoize-one": "~4.0.2",
     "morgan": "~1.9.0",
+    "p-any": "~1.1.0",
     "p-timeout": "~2.0.1",
     "url-regex": "~4.1.1"
   },
@@ -119,9 +132,5 @@
     "scripts": {
       "prechangelog": "git-authors-cli"
     }
-  },
-  "contributors": [
-    "Travis CI <travis@travis-ci.org>",
-    "Angel M De Miguel <angel@bitnami.com>"
-  ]
+  }
 }
