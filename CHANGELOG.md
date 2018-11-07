@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/Kikobeats/unavatar/compare/v1.1.0...v1.2.0) (2018-11-07)
+
+
+### Features
+
+* add disable fallback ([9139375](https://github.com/Kikobeats/unavatar/commit/9139375))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/Kikobeats/unavatar/compare/v1.0.4...v1.1.0) (2018-11-07)
 
