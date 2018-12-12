@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/Kikobeats/unavatar/compare/v1.2.1...v1.2.2) (2018-12-12)
+
+
+### Bug Fixes
+
+* **package:** update memoize-one to version 4.1.0 ([#27](https://github.com/Kikobeats/unavatar/issues/27)) ([e5d49fa](https://github.com/Kikobeats/unavatar/commit/e5d49fa))
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/Kikobeats/unavatar/compare/v1.2.0...v1.2.1) (2018-12-11)
 
