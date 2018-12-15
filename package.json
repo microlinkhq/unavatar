@@ -33,7 +33,7 @@
     "is-absolute-url": "~2.1.0",
     "is-email-like": "~1.0.0",
     "is-url-http": "~1.0.1",
-    "jsdom": "~13.0.0",
+    "jsdom": "~13.1.0",
     "keyv": "~3.1.0",
     "lodash": "~4.17.10",
     "memoize-one": "~4.1.0",
