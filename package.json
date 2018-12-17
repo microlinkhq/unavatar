@@ -36,7 +36,7 @@
     "jsdom": "~13.1.0",
     "keyv": "~3.1.0",
     "lodash": "~4.17.10",
-    "memoize-one": "~4.1.0",
+    "memoize-one": "~5.0.0",
     "morgan": "~1.9.0",
     "p-any": "~1.1.0",
     "p-timeout": "~2.0.1",
