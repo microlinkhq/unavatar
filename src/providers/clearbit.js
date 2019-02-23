@@ -1,11 +1,14 @@
 'use strict'
 
+const { stringify } = require('querystring')
 const got = require('got')
 
 const { AVATAR_SIZE } = require('../constant')
 
 module.exports = async url => {
-  const logoUrl = `https://logo.clearbit.com/${url}?size=${AVATAR_SIZE}`
+  const logoUrl = `https://logo.clearbit.com/${url}?${stringify({
+    size: AVATAR_SIZE
+  })}`
 
   try {
     await got.head(logoUrl)

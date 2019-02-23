@@ -1,12 +1,12 @@
 'use strict'
 
 const { isNil, chain, get } = require('lodash')
+const { stringify } = require('querystring')
 const pAny = require('p-any')
 const url = require('url')
 const got = require('got')
 
 const { YOUTUBE_API_KEY } = require('../constant')
-const { URLSearchParams } = url
 
 const getUrl = async (username, { slugProp }) => {
   const parts = url.parse(username).pathname.split('/')
@@ -15,11 +15,11 @@ const getUrl = async (username, { slugProp }) => {
     .last()
     .value()
 
-  const query = new URLSearchParams([
-    ['part', 'id,snippet'],
-    [slugProp, slug],
-    ['key', YOUTUBE_API_KEY]
-  ]).toString()
+  const query = stringify({
+    part: 'id,snippet',
+    [slugProp]: slug,
+    key: YOUTUBE_API_KEY
+  })
 
   const { body } = await got(
     'https://content.googleapis.com/youtube/v3/channels',
