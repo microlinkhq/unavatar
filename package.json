@@ -10,7 +10,10 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    "Angel M De Miguel <angel@bitnami.com>"
+    {
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
+    }
   ],
   "repository": {
     "type": "git",
@@ -21,23 +24,23 @@
   },
   "keywords": [],
   "dependencies": {
-    "aigle": "~1.12.0-alpha.10",
-    "beauty-error": "~1.1.0",
+    "aigle": "~1.13.0",
+    "beauty-error": "~1.1.2",
     "cheerio": "~1.0.0-rc.2",
-    "compression": "~1.7.2",
-    "cors": "~2.8.4",
-    "debug": "~4.1.0",
-    "express": "~4.16.3",
+    "compression": "~1.7.3",
+    "cors": "~2.8.5",
+    "debug": "~4.1.1",
+    "express": "~4.16.4",
     "got": "~9.6.0",
-    "helmet": "~3.15.0",
+    "helmet": "~3.15.1",
     "is-absolute-url": "~2.1.0",
     "is-email-like": "~1.0.0",
     "is-url-http": "~1.0.1",
-    "jsdom": "~13.1.0",
+    "jsdom": "~13.2.0",
     "keyv": "~3.1.0",
-    "lodash": "~4.17.10",
+    "lodash": "~4.17.11",
     "memoize-one": "~5.0.0",
-    "morgan": "~1.9.0",
+    "morgan": "~1.9.1",
     "p-any": "~1.1.0",
     "p-timeout": "~2.0.1",
     "url-regex": "~4.1.1"
@@ -64,7 +67,7 @@
     "nyc": "latest",
     "prettier-standard": "latest",
     "prismjs": "latest",
-    "standard": "11",
+    "standard": "latest",
     "standard-markdown": "latest",
     "standard-version": "latest",
     "svr": "latest"
