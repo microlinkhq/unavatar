@@ -24,7 +24,6 @@
   },
   "keywords": [],
   "dependencies": {
-    "aigle": "~1.13.0",
     "beauty-error": "~1.1.2",
     "cheerio": "~1.0.0-rc.2",
     "compression": "~1.7.3",
@@ -42,7 +41,9 @@
     "memoize-one": "~5.0.0",
     "morgan": "~1.9.1",
     "p-any": "~1.1.0",
+    "p-map": "~2.0.0",
     "p-timeout": "~2.0.1",
+    "reachable-url": "~1.1.8",
     "url-regex": "~4.1.1"
   },
   "devDependencies": {
