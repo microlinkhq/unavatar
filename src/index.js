@@ -3,18 +3,19 @@
 const { forEach } = require('lodash')
 
 const createGetAvatarUrl = require('./avatar-url')
-const { logLevel } = require('./constant')
 const { providers } = require('./providers')
+const { LOG_LEVEL } = require('./constant')
 
 module.exports = (app, express) => {
   app
     .use(require('helmet')())
     .use(require('compression')())
     .use(require('cors')())
-    .use(require('morgan')(logLevel))
+    .use(require('morgan')(LOG_LEVEL))
     .use(express.static('static'))
     .disable('x-powered-by')
 
+  // TODO: Add caching layer
   app.get('/', (req, res) => res.status(204).send())
   app.get('/robots.txt', (req, res) => res.status(204).send())
   app.get('/favicon.txt', (req, res) => res.status(204).send())

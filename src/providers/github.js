@@ -1,11 +1,11 @@
 'use strict'
 
-const { avatarSize } = require('../constant')
+const { AVATAR_SIZE } = require('../constant')
 const got = require('got')
 
 module.exports = async username => {
   try {
-    const logoUrl = `https://github.com/${username}.png?size=${avatarSize}`
+    const logoUrl = `https://github.com/${username}.png?size=${AVATAR_SIZE}`
     await got.head(logoUrl)
     return logoUrl
   } catch (err) {

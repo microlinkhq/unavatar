@@ -5,7 +5,7 @@ const pAny = require('p-any')
 const url = require('url')
 const got = require('got')
 
-const { youtubeApiKey } = require('../constant')
+const { YOUTUBE_API_KEY } = require('../constant')
 const { URLSearchParams } = url
 
 const getUrl = async (username, { slugProp }) => {
@@ -18,7 +18,7 @@ const getUrl = async (username, { slugProp }) => {
   const query = new URLSearchParams([
     ['part', 'id,snippet'],
     [slugProp, slug],
-    ['key', youtubeApiKey]
+    ['key', YOUTUBE_API_KEY]
   ]).toString()
 
   const { body } = await got(

@@ -2,7 +2,7 @@
 
 const crypto = require('crypto')
 
-const { avatarSize } = require('../constant')
+const { AVATAR_SIZE } = require('../constant')
 
 const md5 = str =>
   crypto
@@ -13,7 +13,7 @@ const md5 = str =>
 module.exports = async (username, fallback) =>
   `https://gravatar.com/avatar/${md5(
     username
-  )}?size=${avatarSize}&d=${fallback}`
+  )}?size=${AVATAR_SIZE}&d=${fallback}`
 
 module.exports.supported = {
   email: true,
