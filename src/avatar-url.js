@@ -1,11 +1,11 @@
 'use strict'
 
 const isAbsoluteUrl = require('is-absolute-url')
+const { eq, get, isNil } = require('lodash')
 const beautyError = require('beauty-error')
 const debug = require('debug')('unavatar')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
-const { eq, get, isNil } = require('lodash')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
@@ -20,15 +20,15 @@ const send = require('./send')
 const cache = new Keyv(cacheURI, { TTL: cacheTTL })
 
 const getDefaultFallbackUrl = memoizeOne(
-  req => `${req.protocol}://${req.get('host')}/fallback.png`
+  ({ protocol, host }) => `${protocol}://${host}/fallback.png`
 )
 
-const getFallbackUrl = memoizeOne(req => {
-  const fallbackUrl = get(req, 'query.fallback')
+const getFallbackUrl = memoizeOne(({ query, protocol, host }) => {
+  const fallbackUrl = get(query, 'fallback')
   if (eq(fallbackUrl, 'false')) return null
   return isUrlHttp(fallbackUrl) && isAbsoluteUrl(fallbackUrl)
     ? fallbackUrl
-    : getDefaultFallbackUrl(req)
+    : getDefaultFallbackUrl({ protocol, host })
 })
 
 const is = str => {
@@ -57,9 +57,10 @@ const getAvatarUrl = key => {
 module.exports = (fn = getAvatarUrl) => async (req, res) => {
   const cachedData = await cache.get(req.url)
   if (!isNil(cachedData)) return send({ req, res, ...cachedData })
-
+  const { query, protocol } = req
+  const host = req.get('host')
   const username = get(req, 'params.key')
-  const fallbackUrl = getFallbackUrl(req)
+  const fallbackUrl = getFallbackUrl({ query, protocol, host })
   let url = null
 
   try {
