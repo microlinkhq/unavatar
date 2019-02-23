@@ -25,6 +25,7 @@
   "keywords": [],
   "dependencies": {
     "beauty-error": "~1.1.2",
+    "cacheable-response": "~1.1.0",
     "cheerio": "~1.0.0-rc.2",
     "compression": "~1.7.3",
     "cors": "~2.8.5",

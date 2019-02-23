@@ -13,9 +13,8 @@ const urlRegex = require('url-regex')
 const pAny = require('p-any')
 const pMap = require('p-map')
 
-const { AVATAR_TIMEOUT } = require('./constant')
 const { providers, providersBy } = require('./providers')
-const send = require('./send')
+const { AVATAR_TIMEOUT } = require('./constant')
 
 const getDefaultFallbackUrl = memoizeOne(
   ({ protocol, host }) => `${protocol}://${host}/fallback.png`
@@ -70,11 +69,9 @@ module.exports = (fn = getAvatarUrl) => async (req, res) => {
     url = fallbackUrl
   }
 
-  const data = {
+  return {
     url,
     isJSON: !isNil(get(req, 'query.json')),
     isError: isNil(url)
   }
-
-  send({ req, res, ...data })
 }
