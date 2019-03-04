@@ -10,7 +10,10 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    "Angel M De Miguel <angel@bitnami.com>"
+    {
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
+    }
   ],
   "repository": {
     "type": "git",
@@ -21,8 +24,8 @@
   },
   "keywords": [],
   "dependencies": {
-    "beauty-error": "~1.1.2",
-    "cacheable-response": "~1.1.0",
+    "beauty-error": "~1.1.3",
+    "cacheable-response": "~1.1.6",
     "cheerio": "~1.0.0-rc.2",
     "compression": "~1.7.3",
     "cors": "~2.8.5",
@@ -32,7 +35,7 @@
     "helmet": "~3.15.1",
     "is-absolute-url": "~2.1.0",
     "is-email-like": "~1.0.0",
-    "is-url-http": "~1.1.1",
+    "is-url-http": "~1.1.3",
     "jsdom": "~13.2.0",
     "keyv": "~3.1.0",
     "lodash": "~4.17.11",
