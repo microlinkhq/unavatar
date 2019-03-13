@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.8"></a>
+## [1.2.8](https://github.com/Kikobeats/unavatar/compare/v1.2.7...v1.2.8) (2019-03-13)
+
+
+### Bug Fixes
+
+* **package:** update p-timeout to version 3.0.0 ([#38](https://github.com/Kikobeats/unavatar/issues/38)) ([7201b1e](https://github.com/Kikobeats/unavatar/commit/7201b1e))
+
+
+
 <a name="1.2.7"></a>
 ## [1.2.7](https://github.com/Kikobeats/unavatar/compare/v1.2.6...v1.2.7) (2019-03-10)
 
