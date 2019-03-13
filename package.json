@@ -43,7 +43,7 @@
     "morgan": "~1.9.1",
     "p-any": "~1.1.0",
     "p-map": "~2.0.0",
-    "p-timeout": "~2.0.1",
+    "p-timeout": "~3.0.0",
     "reachable-url": "~1.1.8",
     "url-regex": "~4.1.1"
   },
