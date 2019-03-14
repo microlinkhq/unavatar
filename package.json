@@ -41,7 +41,7 @@
     "lodash": "~4.17.11",
     "memoize-one": "~5.0.0",
     "morgan": "~1.9.1",
-    "p-any": "~1.1.0",
+    "p-any": "~2.0.0",
     "p-map": "~2.0.0",
     "p-timeout": "~3.0.0",
     "reachable-url": "~1.1.8",
