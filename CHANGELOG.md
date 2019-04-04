@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.9"></a>
+## [1.2.9](https://github.com/Kikobeats/unavatar/compare/v1.2.8...v1.2.9) (2019-04-04)
+
+
+
 <a name="1.2.8"></a>
 ## [1.2.8](https://github.com/Kikobeats/unavatar/compare/v1.2.7...v1.2.8) (2019-03-13)
 
