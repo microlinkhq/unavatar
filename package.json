@@ -42,7 +42,7 @@
     "memoize-one": "~5.0.0",
     "morgan": "~1.9.1",
     "p-any": "~2.1.0",
-    "p-map": "~2.0.0",
+    "p-map": "~2.1.0",
     "p-timeout": "~3.1.0",
     "reachable-url": "~1.1.8",
     "url-regex": "~4.1.1"
