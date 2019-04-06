@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.11"></a>
+## [1.2.11](https://github.com/Kikobeats/unavatar/compare/v1.2.10...v1.2.11) (2019-04-06)
+
+
+### Bug Fixes
+
+* **package:** update cacheable-response to version 1.4.0 ([#45](https://github.com/Kikobeats/unavatar/issues/45)) ([65ede42](https://github.com/Kikobeats/unavatar/commit/65ede42))
+
+
+
 <a name="1.2.10"></a>
 ## [1.2.10](https://github.com/Kikobeats/unavatar/compare/v1.2.9...v1.2.10) (2019-04-06)
 
