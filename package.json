@@ -33,7 +33,7 @@
     "express": "~4.16.4",
     "got": "~9.6.0",
     "helmet": "~3.16.0",
-    "is-absolute-url": "~2.1.0",
+    "is-absolute-url": "~3.0.0",
     "is-email-like": "~1.0.0",
     "is-url-http": "~1.1.3",
     "jsdom": "~14.0.0",
