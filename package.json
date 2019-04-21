@@ -45,7 +45,7 @@
     "p-map": "~2.1.0",
     "p-timeout": "~3.1.0",
     "reachable-url": "~1.1.8",
-    "url-regex": "~4.1.1"
+    "url-regex": "~5.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "latest",
