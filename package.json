@@ -86,10 +86,10 @@
     "dev:docs:src": "gulp",
     "lint": "standard-markdown && standard",
     "postrelease": "npm run release:tags && npm run release:github",
-    "prerelease": "npm run update:check && git-authors-cli",
+    "prerelease": "npm run update:check",
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
-    "release": "git add package.json && standard-version -a",
+    "release": "git-authors-cli && git add package.json && standard-version -a",
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
     "start": "bin/server",
@@ -124,11 +124,6 @@
         "standard-markdown",
         "git add"
       ]
-    }
-  },
-  "standard-version": {
-    "scripts": {
-      "prechangelog": "git-authors-cli"
     }
   }
 }
