@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.24](https://github.com/Kikobeats/unavatar/compare/v1.2.23...v1.2.24) (2019-06-09)
+
+
+### Bug Fixes
+
+* github icon ([100e34c](https://github.com/Kikobeats/unavatar/commit/100e34c))
+
+
+
 ### [1.2.23](https://github.com/Kikobeats/unavatar/compare/v1.2.22...v1.2.23) (2019-06-09)
 
 
