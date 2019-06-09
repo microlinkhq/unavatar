@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.23](https://github.com/Kikobeats/unavatar/compare/v1.2.22...v1.2.23) (2019-06-09)
+
+
+### Bug Fixes
+
+* setup clearbit fallback properly ([da0464d](https://github.com/Kikobeats/unavatar/commit/da0464d))
+
+
+
 ### [1.2.22](https://github.com/Kikobeats/unavatar/compare/v1.2.21...v1.2.22) (2019-05-28)
 
 
