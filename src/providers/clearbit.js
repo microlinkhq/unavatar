@@ -10,12 +10,8 @@ module.exports = async url => {
     size: AVATAR_SIZE
   })}`
 
-  try {
-    await got.head(logoUrl)
-    return logoUrl
-  } catch (err) {
-    return null
-  }
+  await got.head(logoUrl)
+  return logoUrl
 }
 
 module.exports.supported = {
