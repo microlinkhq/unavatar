@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.27](https://github.com/Kikobeats/unavatar/compare/v1.2.26...v1.2.27) (2019-06-28)
+
+
+### Build System
+
+* remove github icon ([d4e6970](https://github.com/Kikobeats/unavatar/commit/d4e6970))
+
+
+
 ### [1.2.26](https://github.com/Kikobeats/unavatar/compare/v1.2.24...v1.2.26) (2019-06-28)
 
 
