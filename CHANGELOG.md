@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.26](https://github.com/Kikobeats/unavatar/compare/v1.2.24...v1.2.26) (2019-06-28)
+
+
+### Bug Fixes
+
+* typo ([80e6590](https://github.com/Kikobeats/unavatar/commit/80e6590))
+
+
+### Build System
+
+* migrate to gulp v4 ([a1e0eb4](https://github.com/Kikobeats/unavatar/commit/a1e0eb4))
+* update travis ([3a792b9](https://github.com/Kikobeats/unavatar/commit/3a792b9))
+
+
+
 ### [1.2.25](https://github.com/Kikobeats/unavatar/compare/v1.2.24...v1.2.25) (2019-06-19)
 
 
