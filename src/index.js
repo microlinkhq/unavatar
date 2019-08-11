@@ -6,13 +6,13 @@ const express = require('express')
 const path = require('path')
 const { Router } = express
 
-const { CACHE_TTL, IS_DEVELOPMENT, LOG_LEVEL } = require('./constant')
+const { CACHE_TTL, NODE_ENV, LOG_LEVEL } = require('./constant')
 const createGetAvatarUrl = require('./avatar-url')
 const { providers } = require('./providers')
 const send = require('./send')
 
 const ssrCache = (() => {
-  if (IS_DEVELOPMENT) {
+  if (NODE_ENV === 'development') {
     return async ({ req, res, fn }) => {
       const data = await fn(req, res)
       return send({ req, res, ...data })
