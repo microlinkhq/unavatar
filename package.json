@@ -25,7 +25,18 @@
   "bugs": {
     "url": "https://github.com/Kikobeats/unavatar/issues"
   },
-  "keywords": [],
+  "keywords": [
+    "avatar",
+    "clearbit",
+    "domain",
+    "email",
+    "facebook",
+    "github",
+    "gravatar",
+    "instagram",
+    "twitter",
+    "youtube"
+  ],
   "dependencies": {
     "beauty-error": "~1.2.2",
     "cacheable-response": "~1.6.12",
