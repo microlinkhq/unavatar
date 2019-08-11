@@ -9,12 +9,15 @@ const sass = require('gulp-sass')
 const gulp = require('gulp')
 
 const src = {
-  css: ['static/sass/style.scss'],
-  js: ['node_modules/prismjs/prism.js', 'node_modules/prismjs/components/prism-json.js']
+  css: ['public/sass/style.scss'],
+  js: [
+    'node_modules/prismjs/prism.js',
+    'node_modules/prismjs/components/prism-json.js'
+  ]
 }
 
 const dist = {
-  path: 'static',
+  path: 'public',
   name: {
     css: 'css/style',
     js: 'js/main'
