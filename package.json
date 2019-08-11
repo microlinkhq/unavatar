@@ -3,7 +3,10 @@
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
   "version": "1.2.27",
-  "main": "src/index.js",
+  "main": "index.js",
+  "bin": {
+    "unavatar": "bin/server"
+  },
   "author": {
     "email": "josefrancisco.verdu@gmail.com",
     "name": "Kiko Beats",
@@ -37,7 +40,6 @@
     "is-email-like": "~1.0.0",
     "is-url-http": "~1.2.0",
     "jsdom": "~15.1.1",
-    "keyv": "~3.1.0",
     "lodash": "~4.17.15",
     "memoize-one": "~5.0.5",
     "morgan": "~1.9.1",
@@ -77,12 +79,20 @@
   "engines": {
     "node": ">= 8"
   },
+  "files": [
+    "bin",
+    "gulpfile.js",
+    "index.js",
+    "public",
+    "src"
+  ],
   "scripts": {
+    "build": "gulp build",
     "clean": "rm -rf node_modules",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
     "dev": "svr",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
-    "dev:docs:server": "cd static && browser-sync start --server --files \"index.html, **/*.*\"",
+    "dev:docs:server": "cd public && browser-sync start --server --files \"index.html, **/*.*\"",
     "dev:docs:src": "gulp",
     "lint": "standard-markdown && standard",
     "postrelease": "npm run release:tags && npm run release:github",
@@ -92,7 +102,7 @@
     "release": "git-authors-cli && git add package.json && standard-version -a",
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
-    "start": "bin/server",
+    "start": "NODE_ENV=production unavatar",
     "test": "exit 0",
     "update": "ncu -a",
     "update:check": "ncu -- --error-level 2"
