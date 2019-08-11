@@ -2,11 +2,13 @@
 
 const cacheableResponse = require('cacheable-response')
 const { forEach } = require('lodash')
+const express = require('express')
+const path = require('path')
+const { Router } = express
 
 const { CACHE_TTL, IS_DEVELOPMENT, LOG_LEVEL } = require('./constant')
 const createGetAvatarUrl = require('./avatar-url')
 const { providers } = require('./providers')
-
 const send = require('./send')
 
 const ssrCache = (() => {
@@ -26,31 +28,24 @@ const ssrCache = (() => {
   })
 })()
 
-module.exports = (app, express) => {
-  app
-    .use(require('helmet')())
-    .use(require('compression')())
-    .use(require('cors')())
-    .use(require('morgan')(LOG_LEVEL))
-    .use(express.static('static'))
-    .disable('x-powered-by')
+const router = Router()
 
-  app.get('/', (req, res) => res.status(204).send())
-  app.get('/robots.txt', (req, res) => res.status(204).send())
-  app.get('/favicon.txt', (req, res) => res.status(204).send())
+router.use(require('helmet')())
+router.use(require('compression')())
+router.use(require('cors')())
+router.use(require('morgan')(LOG_LEVEL))
+router.use(express.static(path.resolve('public')))
 
-  const getAvatar = createGetAvatarUrl()
+router.get('/robots.txt', (req, res) => res.status(204).send())
+router.get('/favicon.txt', (req, res) => res.status(204).send())
 
-  app.get(`/:key`, (req, res) => ssrCache({ req, res, fn: getAvatar }))
+const getAvatar = createGetAvatarUrl()
 
-  forEach(providers, (fn, provider) => {
-    const getAvatarByProvider = createGetAvatarUrl(fn)
-    app.get(`/${provider}/:key`, (req, res) =>
-      ssrCache({ req, res, fn: getAvatarByProvider })
-    )
-  })
+router.get(`/:key`, (req, res) => ssrCache({ req, res, fn: getAvatar }))
 
-  app.use(express.static('static'))
+forEach(providers, (fn, provider) => {
+  const getAvatarByProvider = createGetAvatarUrl(fn)
+  router.get(`/${provider}/:key`, (req, res) => ssrCache({ req, res, fn: getAvatarByProvider }))
+})
 
-  return app
-}
+module.exports = router

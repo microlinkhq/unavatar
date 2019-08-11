@@ -1,7 +1,7 @@
 # unavatar
 
 <h1 align="center">
-  <img style="width: 500px;" src="/static/banner.png" alt="unavatar">
+  <img style="width: 500px;" src="/public/banner.png" alt="unavatar">
   <br>
 </h1>
 
