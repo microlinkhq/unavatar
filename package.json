@@ -93,7 +93,6 @@
   "files": [
     "bin",
     "gulpfile.js",
-    "index.js",
     "public",
     "src"
   ],
