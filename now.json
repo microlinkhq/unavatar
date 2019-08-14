@@ -10,7 +10,7 @@
   },
   "builds": [
     {
-      "src": "index.js",
+      "src": "src/index.js",
       "use": "@now/node"
     }
   ],
@@ -25,7 +25,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/src/index.js"
     }
   ]
 }

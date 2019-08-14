@@ -48,4 +48,6 @@ forEach(providers, (fn, provider) => {
   router.get(`/${provider}/:key`, (req, res) => ssrCache({ req, res, fn: getAvatarByProvider }))
 })
 
-module.exports = router
+module.exports = express()
+  .use(router)
+  .disable('x-powered-by')
