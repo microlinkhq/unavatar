@@ -113,7 +113,7 @@
     "release": "git-authors-cli && git add package.json && standard-version -a",
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
-    "start": "NODE_ENV=production unavatar",
+    "start": "TZ=UTC NODE_ENV=production unavatar",
     "test": "exit 0",
     "update": "ncu -a",
     "update:check": "ncu -- --error-level 2"
