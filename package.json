@@ -85,7 +85,8 @@
     "standard": "latest",
     "standard-markdown": "latest",
     "standard-version": "latest",
-    "svr": "latest"
+    "svr": "latest",
+    "untracked": "latest"
   },
   "engines": {
     "node": ">= 8"
@@ -97,7 +98,7 @@
     "src"
   ],
   "scripts": {
-    "build": "gulp build",
+    "build": "gulp build && untracked > .nowignore",
     "clean": "rm -rf node_modules",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
     "dev": "svr",
