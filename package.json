@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
