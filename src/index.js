@@ -37,7 +37,7 @@ router.use(require('morgan')(LOG_LEVEL))
 router.use(express.static(path.resolve('public')))
 
 router.get('/robots.txt', (req, res) => res.status(204).send())
-router.get('/favicon.txt', (req, res) => res.status(204).send())
+router.get('/favicon.ico', (req, res) => res.status(204).send())
 
 const getAvatar = createGetAvatarUrl()
 
