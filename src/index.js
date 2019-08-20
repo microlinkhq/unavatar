@@ -41,7 +41,7 @@ router.get('/favicon.txt', (req, res) => res.status(204).send())
 
 const getAvatar = createGetAvatarUrl()
 
-router.get(`/:key`, (req, res) => ssrCache({ req, res, fn: getAvatar }))
+router.get('/:key', (req, res) => ssrCache({ req, res, fn: getAvatar }))
 
 forEach(providers, (fn, provider) => {
   const getAvatarByProvider = createGetAvatarUrl(fn)

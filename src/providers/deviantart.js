@@ -3,7 +3,7 @@
 const cheerio = require('cheerio')
 const got = require('got')
 
-const REGEX_PROFILE_URL = /^https?:\/\/(?:www\.)?deviantart\.com\/([\w\-]+)(?:\/.+)?$/
+const REGEX_PROFILE_URL = /^https?:\/\/(?:www\.)?deviantart\.com\/([\w-]+)(?:\/.+)?$/
 
 module.exports = async username => {
   const { body } = await got(`https://www.deviantart.com/${username}`)
