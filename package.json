@@ -16,6 +16,10 @@
     {
       "name": "David Refoua",
       "email": "David@Refoua.me"
+    },
+    {
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
     }
   ],
   "repository": {
@@ -34,6 +38,7 @@
     "github",
     "gravatar",
     "instagram",
+    "telegram",
     "twitter",
     "youtube"
   ],
