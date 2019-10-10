@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -13,14 +13,7 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    {
-      "name": "David Refoua",
-      "email": "David@Refoua.me"
-    },
-    {
-      "name": "Angel M De Miguel",
-      "email": "angel@bitnami.com"
-    }
+    "David Refoua <David@Refoua.me>"
   ],
   "repository": {
     "type": "git",
