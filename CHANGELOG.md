@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/Kikobeats/unavatar/compare/v2.0.6...v2.1.0) (2019-10-10)
+
+
+### Features
+
+* telegram provider ([#61](https://github.com/Kikobeats/unavatar/issues/61)) ([2332e05](https://github.com/Kikobeats/unavatar/commit/2332e053eaf56b3934d056d09142f1b591877e04))
+
 ### [2.0.6](https://github.com/Kikobeats/unavatar/compare/v2.0.5...v2.0.6) (2019-08-20)
 
 ### [2.0.5](https://github.com/Kikobeats/unavatar/compare/v2.0.4...v2.0.5) (2019-08-20)
