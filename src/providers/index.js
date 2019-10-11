@@ -10,6 +10,7 @@ const providers = {
   facebook: require('./facebook'),
   telegram: require('./telegram'),
   youtube: require('./youtube'),
+  soundcloud: require('./soundcloud'),
   deviantart: require('./deviantart'),
   // gravatar returns a default avatar, so use it as fallback
   gravatar: require('./gravatar')
