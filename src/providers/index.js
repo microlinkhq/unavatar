@@ -12,6 +12,7 @@ const providers = {
   youtube: require('./youtube'),
   soundcloud: require('./soundcloud'),
   deviantart: require('./deviantart'),
+  gitlab: require('./gitlab'),
   // gravatar returns a default avatar, so use it as fallback
   gravatar: require('./gravatar')
 }
