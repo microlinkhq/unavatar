@@ -1,10 +1,10 @@
 'use strict'
 
 const { eq, get, isNil, compact } = require('lodash')
+const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
 const reachableUrl = require('reachable-url')
 const beautyError = require('beauty-error')
-const debug = require('debug')('unavatar')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const isEmail = require('is-email-like')

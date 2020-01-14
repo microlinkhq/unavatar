@@ -5,11 +5,9 @@
   <br>
 </h1>
 
-![Last version](https://img.shields.io/github/tag/Kikobeats/unavatar.svg?style=flat-square)
-[![Build Status](https://img.shields.io/travis/Kikobeats/unavatar/master.svg?style=flat-square)](https://travis-ci.org/Kikobeats/unavatar)
-[![Dependency status](https://img.shields.io/david/Kikobeats/unavatar.svg?style=flat-square)](https://david-dm.org/Kikobeats/unavatar)
-[![Dev Dependencies Status](https://img.shields.io/david/dev/Kikobeats/unavatar.svg?style=flat-square)](https://david-dm.org/Kikobeats/unavatar#info=devDependencies)
-[![NPM Status](https://img.shields.io/npm/dm/unavatar.svg?style=flat-square)](https://www.npmjs.org/package/unavatar)
+[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/new/project?template=https://github.com/Kikobeats/unavatar)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 
 > Get unified user avatar.
 

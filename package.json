@@ -44,7 +44,7 @@
     "cheerio": "~1.0.0-rc.2",
     "compression": "~1.7.4",
     "cors": "~2.8.5",
-    "debug": "~4.1.1",
+    "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
     "got": "~9.6.0",
     "helmet": "~3.21.2",
@@ -86,11 +86,10 @@
     "standard": "latest",
     "standard-markdown": "latest",
     "standard-version": "latest",
-    "svr": "latest",
     "untracked": "latest"
   },
   "engines": {
-    "node": ">= 8"
+    "node": ">= 10"
   },
   "files": [
     "bin",
@@ -102,7 +101,7 @@
     "build": "gulp build && untracked > .nowignore",
     "clean": "rm -rf node_modules",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
-    "dev": "svr",
+    "dev": "TZ=UTC NODE_ENV=development DEBUG=unavatar* node src/server.js",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
     "dev:docs:server": "cd public && browser-sync start --server --files \"index.html, **/*.*\"",
     "dev:docs:src": "gulp",
@@ -114,7 +113,7 @@
     "release": "git-authors-cli && git add package.json && standard-version -a",
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
-    "start": "TZ=UTC NODE_ENV=production unavatar",
+    "start": "TZ=UTC NODE_ENV=production DEBUG=unavatar* node src/server.js",
     "test": "exit 0",
     "update": "ncu -a",
     "update:check": "ncu -- --error-level 2"
