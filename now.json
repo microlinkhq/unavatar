@@ -2,9 +2,6 @@
   "name": "unavatar",
   "version": 2,
   "public": true,
-  "regions": [
-    "all"
-  ],
   "env": {
     "YOUTUBE_API_KEY": "@unavatar.youtube_api_key"
   },
