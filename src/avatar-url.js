@@ -52,7 +52,16 @@ const getAvatarUrl = async key => {
   )
 
   // get the first request in resolve the ping successfully
-  return pAny(urls.map(async url => (await reachableUrl(url)).url))
+  const avatarUrl = await pAny(
+    urls.map(async targetUrl => {
+      const { statusCode, url } = await reachableUrl(targetUrl)
+      if (statusCode >= 200 && statusCode < 300) {
+        return url
+      }
+    })
+  )
+
+  return avatarUrl
 }
 
 module.exports = (fn = getAvatarUrl) => async (req, res) => {
