@@ -77,6 +77,7 @@
     "hack": "latest",
     "husky": "latest",
     "lint-staged": "latest",
+    "ncu": "~0.2.1",
     "npm-check-updates": "latest",
     "nyc": "latest",
     "prettier-standard": "latest",

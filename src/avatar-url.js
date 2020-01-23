@@ -73,6 +73,7 @@ module.exports = (fn = getAvatarUrl) => async (req, res) => {
 
   try {
     url = await pTimeout(fn(username, fallbackUrl), AVATAR_TIMEOUT)
+    if (!url) url = fallbackUrl
   } catch (err) {
     debug(beautyError(err))
     url = fallbackUrl

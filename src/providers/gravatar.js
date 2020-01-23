@@ -11,10 +11,10 @@ const md5 = str =>
     .update(str)
     .digest('hex')
 
-module.exports = async (username, fallback) =>
+module.exports = async username =>
   `https://gravatar.com/avatar/${md5(username)}?${stringify({
     size: AVATAR_SIZE,
-    d: fallback
+    d: '404'
   })}`
 
 module.exports.supported = {
