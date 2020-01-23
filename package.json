@@ -62,6 +62,7 @@
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
     "browser-sync": "latest",
+    "concurrently": "~5.0.2",
     "conventional-github-releaser": "latest",
     "finepack": "latest",
     "git-authors-cli": "latest",
