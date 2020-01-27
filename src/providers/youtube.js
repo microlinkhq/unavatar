@@ -1,41 +1,31 @@
 'use strict'
 
-const { isNil, chain, get } = require('lodash')
 const { stringify } = require('querystring')
-const { URL } = require('url')
+const { isNil, get } = require('lodash')
 const pAny = require('p-any')
 const got = require('got')
 
 const { YOUTUBE_API_KEY } = require('../constant')
 
-const getUrl = async (username, { slugProp }) => {
-  const parts = new URL(username).pathname.split('/')
-  const slug = chain(parts)
-    .filter(p => p !== '')
-    .last()
-    .value()
-
-  const query = stringify({
+const getAvatarUrl = async (username, bySlugProp) => {
+  const apiUrl = `https://content.googleapis.com/youtube/v3/channels?${stringify({
     part: 'id,snippet',
-    [slugProp]: slug,
+    [bySlugProp]: username,
     key: YOUTUBE_API_KEY
-  })
+  })}`
 
-  const { body } = await got('https://content.googleapis.com/youtube/v3/channels', {
-    json: true,
-    query
-  })
-
+  const { body } = await got(apiUrl, { json: true })
   const avatarUrl = get(body, 'items[0].snippet.thumbnails.medium.url')
+
   if (isNil(avatarUrl)) {
-    throw new Error(`YouTube avatar not detected for '${slugProp}'`)
+    throw new Error(`YouTube avatar not detected for '${bySlugProp}'`)
   }
+
   return avatarUrl
 }
 
-module.exports = async username => {
-  return pAny([getUrl(username, { slugProp: 'forUsername' }), getUrl(username, { slugProp: 'id' })])
-}
+module.exports = async username =>
+  pAny([getAvatarUrl(username, 'forUsername'), getAvatarUrl(username, 'id')])
 
 module.exports.supported = {
   email: false,
