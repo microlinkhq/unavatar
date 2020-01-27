@@ -2,6 +2,7 @@
 
 const { stringify } = require('querystring')
 const crypto = require('crypto')
+const got = require('got')
 
 const { AVATAR_SIZE } = require('../constant')
 
@@ -11,11 +12,14 @@ const md5 = str =>
     .update(str)
     .digest('hex')
 
-module.exports = async (username, fallback) =>
-  `https://gravatar.com/avatar/${md5(username)}?${stringify({
+module.exports = async username => {
+  const avatarUrl = `https://gravatar.com/avatar/${md5(username)}?${stringify({
     size: AVATAR_SIZE,
-    d: fallback
+    d: '404'
   })}`
+  await got.head(avatarUrl)
+  return avatarUrl
+}
 
 module.exports.supported = {
   email: true,
