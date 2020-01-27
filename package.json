@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -13,10 +13,7 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    {
-      "name": "David Refoua",
-      "email": "David@Refoua.me"
-    }
+    "David Refoua <David@Refoua.me>"
   ],
   "repository": {
     "type": "git",

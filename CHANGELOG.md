@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.6](https://github.com/Kikobeats/unavatar/compare/v2.2.5...v2.2.6) (2020-01-27)
+
+
+### Bug Fixes
+
+* gravatar respects default avatar ([fecfebc](https://github.com/Kikobeats/unavatar/commit/fecfebcaa5e02f909de4da8a2cf904e105023adf)), closes [#66](https://github.com/Kikobeats/unavatar/issues/66)
+
 ### [2.2.5](https://github.com/Kikobeats/unavatar/compare/v2.2.4...v2.2.5) (2020-01-23)
 
 ### [2.2.4](https://github.com/Kikobeats/unavatar/compare/v2.2.3...v2.2.4) (2020-01-20)
