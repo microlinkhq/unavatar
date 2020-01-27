@@ -10,6 +10,7 @@ const isUrlHttp = require('is-url-http')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
+const pReflect = require('p-reflect')
 const pAny = require('p-any')
 const pMap = require('p-map')
 
@@ -69,14 +70,13 @@ module.exports = (fn = getAvatarUrl) => async (req, res) => {
   const host = req.get('host')
   const username = get(req, 'params.key')
   const fallbackUrl = getFallbackUrl({ query, protocol, host })
-  let url = null
 
-  try {
-    url = await pTimeout(fn(username, fallbackUrl), AVATAR_TIMEOUT)
-  } catch (err) {
-    debug(beautyError(err))
-    url = fallbackUrl
-  }
+  const { value, reason, isRejected } = await pReflect(
+    pTimeout(fn(username, fallbackUrl), AVATAR_TIMEOUT)
+  )
+
+  const url = value || fallbackUrl
+  if (isRejected) debug(beautyError(reason))
 
   return {
     url,
