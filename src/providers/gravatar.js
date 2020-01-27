@@ -13,7 +13,7 @@ const md5 = str =>
     .digest('hex')
 
 module.exports = async username => {
-  const avatarUrl = `https://gravatar.com/avatar/${md5(username)}?${stringify({
+  const avatarUrl = `https://gravatar.com/avatar/${md5(username.trim().toLowerCase())}?${stringify({
     size: AVATAR_SIZE,
     d: '404'
   })}`
