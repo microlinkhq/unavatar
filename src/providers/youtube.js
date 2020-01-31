@@ -14,7 +14,7 @@ const getAvatarUrl = async (username, bySlugProp) => {
     key: YOUTUBE_API_KEY
   })}`
 
-  const { body } = await got(apiUrl, { json: true })
+  const { body } = await got(apiUrl, { responseType: 'json' })
   const avatarUrl = get(body, 'items[0].snippet.thumbnails.medium.url')
 
   if (isNil(avatarUrl)) {
