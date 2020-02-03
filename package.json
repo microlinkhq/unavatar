@@ -48,7 +48,7 @@
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~1.2.4",
-    "jsdom": "~16.0.1",
+    "jsdom": "~16.1.0",
     "lodash": "~4.17.15",
     "memoize-one": "~5.1.1",
     "morgan": "~1.9.1",
