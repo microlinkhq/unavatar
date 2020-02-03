@@ -14,6 +14,8 @@ const pReflect = require('p-reflect')
 const pAny = require('p-any')
 const pMap = require('p-map')
 
+const { isReachable } = reachableUrl
+
 const { providers, providersBy } = require('./providers')
 const { AVATAR_TIMEOUT } = require('./constant')
 
@@ -56,9 +58,7 @@ const getAvatarUrl = async key => {
   const avatarUrl = await pAny(
     urls.map(async targetUrl => {
       const { statusCode, url } = await reachableUrl(targetUrl)
-      if (statusCode >= 200 && statusCode < 300) {
-        return url
-      }
+      return isReachable({ statusCode }) ? url : undefined
     })
   )
 
