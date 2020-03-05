@@ -53,7 +53,7 @@
     "memoize-one": "~5.1.1",
     "morgan": "~1.9.1",
     "p-any": "~3.0.0",
-    "p-map": "~3.0.0",
+    "p-map": "~4.0.0",
     "p-reflect": "~2.1.0",
     "p-timeout": "~3.2.0",
     "reachable-url": "~1.4.1",
