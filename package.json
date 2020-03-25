@@ -44,7 +44,7 @@
     "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
     "got": "~10.6.0",
-    "helmet": "~3.21.2",
+    "helmet": "~3.22.0",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.1.1",
