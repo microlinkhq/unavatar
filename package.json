@@ -36,19 +36,19 @@
     "youtube"
   ],
   "dependencies": {
-    "beauty-error": "~1.2.3",
-    "cacheable-response": "~2.0.7",
+    "beauty-error": "~1.2.4",
+    "cacheable-response": "~2.0.9",
     "cheerio": "~1.0.0-rc.3",
     "compression": "~1.7.4",
     "cors": "~2.8.5",
     "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
-    "got": "~11.1.0",
+    "got": "~11.1.3",
     "helmet": "~3.22.0",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.1.2",
-    "jsdom": "~16.2.1",
+    "jsdom": "~16.2.2",
     "lodash": "~4.17.15",
     "memoize-one": "~5.1.1",
     "morgan": "~1.10.0",
@@ -56,7 +56,7 @@
     "p-map": "~4.0.0",
     "p-reflect": "~2.1.0",
     "p-timeout": "~3.2.0",
-    "reachable-url": "~1.4.4",
+    "reachable-url": "~1.4.7",
     "url-regex": "~5.0.0"
   },
   "devDependencies": {
