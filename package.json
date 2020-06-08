@@ -43,7 +43,7 @@
     "cors": "~2.8.5",
     "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
-    "got": "~11.2.0",
+    "got": "~11.3.0",
     "helmet": "~3.22.0",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
