@@ -2,14 +2,19 @@
 
 const TWENTY_FOUR_HOURS = 86400000
 
-const isProduction = process.env.NODE_ENV === 'production'
+const {
+  NODE_ENV = 'development',
+  CACHE_TTL = TWENTY_FOUR_HOURS,
+  LOG_LEVEL = 'tiny',
+  AVATAR_SIZE = 400,
+  AVATAR_TIMEOUT = 60000
+} = process.env
 
 module.exports = {
-  isProduction,
-  cacheURI: process.env.CACHE_URI,
-  cacheTTL: process.env.CACHE_TTL || TWENTY_FOUR_HOURS,
-  logLevel: process.env.LOGLEVEL || isProduction ? 'combined' : 'dev',
-  avatarSize: process.env.AVATAR_SIZE || 400,
-  avatarTimeout: process.env.AVATAR_TIMEOUT || 3000,
-  youtubeApiKey: process.env.YOUTUBE_API_KEY
+  ...process.env,
+  NODE_ENV,
+  CACHE_TTL,
+  LOG_LEVEL,
+  AVATAR_SIZE,
+  AVATAR_TIMEOUT
 }

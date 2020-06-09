@@ -9,7 +9,7 @@ const sass = require('gulp-sass')
 const gulp = require('gulp')
 
 const src = {
-  css: ['static/sass/style.scss'],
+  css: ['public/sass/style.scss'],
   js: [
     'node_modules/prismjs/prism.js',
     'node_modules/prismjs/components/prism-json.js'
@@ -17,14 +17,19 @@ const src = {
 }
 
 const dist = {
-  path: 'static',
+  path: 'public',
   name: {
     css: 'css/style',
     js: 'js/main'
   }
 }
 
-gulp.task('css', () => {
+function watch () {
+  gulp.watch(src.css, styles)
+  gulp.watch(src.js, scripts)
+}
+
+const styles = () =>
   gulp
     .src(src.css)
     .pipe(
@@ -37,20 +42,16 @@ gulp.task('css', () => {
     .pipe(strip({ all: true }))
     .pipe(cssnano())
     .pipe(gulp.dest(dist.path))
-})
 
-gulp.task('js', () => {
+const scripts = () =>
   gulp
     .src(src.js)
     .pipe(concat(`${dist.name.js}.min.js`))
     .pipe(uglify())
     .pipe(gulp.dest(dist.path))
-})
 
-gulp.task('build', ['css', 'js'])
+const build = gulp.parallel(styles, scripts)
 
-gulp.task('default', () => {
-  gulp.start(['build'])
-  gulp.watch(src.css, ['css'])
-  gulp.watch(src.js, ['js'])
-})
+module.exports.default = gulp.series(build, watch)
+module.exports.build = build
+module.exports.watch = watch

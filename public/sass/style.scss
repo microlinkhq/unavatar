@@ -23,18 +23,20 @@ b::selection {
 
 /* code highlights */
 
-:not(pre) > code[class*="language-"], pre[class*="language-"] {
+:not(pre)>code[class*="language-"],
+pre[class*="language-"] {
   background-color: transparent;
   font-weight: normal;
 }
 
-code[class*=language-], pre[class*=language-] {
+code[class*=language-],
+pre[class*=language-] {
   color: #999;
 }
 
 .hack h1,
 .hack h2,
-.hack h3,  {
+.hack h3 {
   margin-bottom: 2rem;
   margin-top: 4rem;
 }
@@ -45,16 +47,4 @@ code[class*=language-], pre[class*=language-] {
 
 .container {
   max-width: 590px;
-}
-
-.icon-github {
-  border: 0;
-  position: relative;
-  top: 2px;
-  color: inherit;
-
-  &:hover {
-    background-color: inherit;
-    color: rgb(255, 46, 136);
-  }
 }

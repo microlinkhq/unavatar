@@ -1,5 +1,28 @@
 {
   "name": "unavatar",
+  "version": 2,
   "public": true,
-  "alias": "unavatar.now.sh"
+  "env": {
+    "YOUTUBE_API_KEY": "@unavatar.youtube_api_key"
+  },
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/robots.txt",
+      "status": 204
+    },
+    {
+      "src": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/src/index.js"
+    }
+  ]
 }

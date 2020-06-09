@@ -1,31 +1,35 @@
 'use strict'
 
+const { eq, get, isNil, compact } = require('lodash')
+const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
+const reachableUrl = require('reachable-url')
+const beautyError = require('beauty-error')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
-const { get, isNil } = require('lodash')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
-const aigle = require('aigle')
-const Keyv = require('keyv')
-const got = require('got')
+const pReflect = require('p-reflect')
+const pAny = require('p-any')
+const pMap = require('p-map')
 
-const { cacheTTL, cacheURI, avatarTimeout } = require('./constant')
+const { isReachable } = reachableUrl
+
 const { providers, providersBy } = require('./providers')
-const send = require('./send')
-
-const cache = new Keyv(cacheURI, { TTL: cacheTTL })
+const { AVATAR_TIMEOUT } = require('./constant')
 
 const getDefaultFallbackUrl = memoizeOne(
-  req => `${req.protocol}://${req.get('host')}/fallback.png`
+  ({ protocol, host }) => `${protocol}://${host}/fallback.png`
 )
 
-const getFallbackUrl = memoizeOne(req => {
-  const fallbackUrl = get(req, 'query.fallback')
+const getFallbackUrl = memoizeOne(({ query, protocol, host }) => {
+  const fallbackUrl = get(query, 'fallback')
+  if (eq(fallbackUrl, 'false')) return null
+
   return isUrlHttp(fallbackUrl) && isAbsoluteUrl(fallbackUrl)
     ? fallbackUrl
-    : getDefaultFallbackUrl(req)
+    : getDefaultFallbackUrl({ protocol, host })
 })
 
 const is = str => {
@@ -34,43 +38,46 @@ const is = str => {
   return 'username'
 }
 
-const getAvatarUrl = key => {
+const getAvatarUrl = async key => {
   const collection = get(providersBy, is(key))
 
-  return aigle
-    .resolve(collection)
-    .reduce(async (acc, provider) => {
+  // get all the urls from the providers that can resolve the key
+  const urls = compact(
+    await pMap(collection, async provider => {
       try {
         const urlFn = get(providers, provider)
-        const url = await pTimeout(urlFn(key), avatarTimeout)
-        if (isAbsoluteUrl(url)) acc.push(url)
-      } catch (err) {}
+        const url = await pTimeout(urlFn(key), AVATAR_TIMEOUT)
+        return isAbsoluteUrl(url) ? url : null
+      } catch (err) {
+        return null
+      }
+    })
+  )
 
-      return acc
-    }, [])
-    .find(url => got.head(url))
+  // get the first request in resolve the ping successfully
+  const avatarUrl = await pAny(
+    urls.map(async targetUrl => {
+      const { statusCode, url } = await reachableUrl(targetUrl)
+      return isReachable({ statusCode }) ? url : undefined
+    })
+  )
+
+  return avatarUrl
 }
 
 module.exports = (fn = getAvatarUrl) => async (req, res) => {
-  const cachedData = await cache.get(req.url)
-  if (!isNil(cachedData)) return send({ req, res, ...cachedData })
-
+  const { query, protocol } = req
+  const host = req.get('host')
   const username = get(req, 'params.key')
-  const fallbackUrl = getFallbackUrl(req)
-  let url = null
 
-  try {
-    url = await pTimeout(fn(username, fallbackUrl), avatarTimeout)
-  } catch (err) {
-    console.log('err', err)
-    url = fallbackUrl
-  }
+  const { value, reason, isRejected } = await pReflect(pTimeout(fn(username), AVATAR_TIMEOUT))
 
-  const data = {
+  const url = value || getFallbackUrl({ query, protocol, host })
+  if (isRejected) debug(beautyError(reason))
+
+  return {
     url,
     isJSON: !isNil(get(req, 'query.json')),
     isError: isNil(url)
   }
-  send({ req, res, ...data })
-  cache.set(req.url, data)
 }

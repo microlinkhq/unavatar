@@ -1,31 +1,53 @@
 'use strict'
 
+const cacheableResponse = require('cacheable-response')
 const { forEach } = require('lodash')
+const express = require('express')
+const path = require('path')
+const { Router } = express
 
+const { CACHE_TTL, NODE_ENV, LOG_LEVEL } = require('./constant')
 const createGetAvatarUrl = require('./avatar-url')
-const { logLevel } = require('./constant')
 const { providers } = require('./providers')
+const send = require('./send')
 
-module.exports = (app, express) => {
-  app
-    .use(require('helmet')())
-    .use(require('compression')())
-    .use(require('cors')())
-    .use(require('morgan')(logLevel))
-    .use(express.static('static'))
-    .disable('x-powered-by')
+const ssrCache = (() => {
+  if (NODE_ENV === 'development') {
+    return async ({ req, res, fn }) => {
+      const data = await fn(req, res)
+      return send({ req, res, ...data })
+    }
+  }
 
-  app.get('/', (req, res) => res.status(204).send())
-  app.get('/robots.txt', (req, res) => res.status(204).send())
-  app.get('/favicon.txt', (req, res) => res.status(204).send())
+  return cacheableResponse({
+    ttl: CACHE_TTL,
+    get: async ({ req, res, fn }) => ({
+      data: await fn(req, res)
+    }),
+    send: ({ req, res, data }) => send({ req, res, ...data })
+  })
+})()
 
-  app.get(`/:key`, createGetAvatarUrl())
+const router = Router()
 
-  forEach(providers, (fn, provider) =>
-    app.get(`/${provider}/:key`, createGetAvatarUrl(fn))
-  )
+router.use(require('helmet')())
+router.use(require('compression')())
+router.use(require('cors')())
+router.use(require('morgan')(LOG_LEVEL))
+router.use(express.static(path.resolve('public')))
 
-  app.use(express.static('static'))
+router.get('/robots.txt', (req, res) => res.status(204).send())
+router.get('/favicon.ico', (req, res) => res.status(204).send())
 
-  return app
-}
+const getAvatar = createGetAvatarUrl()
+
+router.get('/:key', (req, res) => ssrCache({ req, res, fn: getAvatar }))
+
+forEach(providers, (fn, provider) => {
+  const getAvatarByProvider = createGetAvatarUrl(fn)
+  router.get(`/${provider}/:key`, (req, res) => ssrCache({ req, res, fn: getAvatarByProvider }))
+})
+
+module.exports = express()
+  .use(router)
+  .disable('x-powered-by')

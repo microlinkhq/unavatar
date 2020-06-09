@@ -3,14 +3,17 @@
 const { reduce } = require('lodash')
 
 const providers = {
-  twitter: require('./twitter'),
-  instagram: require('./instagram'),
   clearbit: require('./clearbit'),
-  github: require('./github'),
+  deviantart: require('./deviantart'),
   facebook: require('./facebook'),
-  youtube: require('./youtube'),
-  // gravatar returns a default avatar, so use it as fallback
-  gravatar: require('./gravatar')
+  github: require('./github'),
+  gitlab: require('./gitlab'),
+  gravatar: require('./gravatar'),
+  instagram: require('./instagram'),
+  soundcloud: require('./soundcloud'),
+  telegram: require('./telegram'),
+  twitter: require('./twitter'),
+  youtube: require('./youtube')
 }
 
 const providersBy = reduce(
