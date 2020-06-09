@@ -6,6 +6,7 @@ const got = require('got')
 module.exports = async username => {
   const { body } = await got(`https://www.instagram.com/${username}`)
   const $ = cheerio.load(body)
+  console.log(body)
   return $('meta[property="og:image"]').attr('content')
 }
 
