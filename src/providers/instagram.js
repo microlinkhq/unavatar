@@ -1,20 +1,12 @@
 'use strict'
 
-const { get } = require('lodash')
-const { JSDOM } = require('jsdom')
+const cheerio = require('cheerio')
 const got = require('got')
-
-const AVATAR_URL = {
-  big: '_sharedData.entry_data.ProfilePage[0].graphql.user.profile_pic_url_hd',
-  normal: '_sharedData.entry_data.ProfilePage[0].graphql.user.profile_pic_url'
-}
 
 module.exports = async username => {
   const { body } = await got(`https://www.instagram.com/${username}`)
-  const { window } = new JSDOM(body, { runScripts: 'dangerously' })
-  const avatarUrl = get(window, AVATAR_URL.big) || get(window, AVATAR_URL.normal)
-  console.log({ avatarUrl })
-  return avatarUrl ? new URL(avatarUrl).toString() : null
+  const $ = cheerio.load(body)
+  return $('meta[property="og:image"]').attr('content')
 }
 
 module.exports.supported = {
