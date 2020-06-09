@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.2.20",
+  "version": "2.2.21",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -13,8 +13,22 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    "Hameed Rahamathullah <hameedraha@gmail.com>",
-    "Rodrigo Reis <rodrigoreis22@yahoo.com.br>"
+    {
+      "name": "David Refoua",
+      "email": "David@Refoua.me"
+    },
+    {
+      "name": "Hameed Rahamathullah",
+      "email": "hameedraha@gmail.com"
+    },
+    {
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
+    },
+    {
+      "name": "Rodrigo Reis",
+      "email": "rodrigoreis22@yahoo.com.br"
+    }
   ],
   "repository": {
     "type": "git",
