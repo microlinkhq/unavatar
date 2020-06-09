@@ -12,7 +12,7 @@ insert_final_newline = true
 max_line_length = 100
 indent_brace_style = 1TBS
 spaces_around_operators = true
-quote_type = auto
+quote_type = single
 
 [package.json]
 indent_style = space
