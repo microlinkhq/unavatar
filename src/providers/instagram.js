@@ -12,8 +12,8 @@ const AVATAR_URL = {
 module.exports = async username => {
   const { body } = await got(`https://www.instagram.com/${username}`)
   const { window } = new JSDOM(body, { runScripts: 'dangerously' })
-  const url = get(window, AVATAR_URL.big) || get(window, AVATAR_URL.normal)
-  return url && new URL(url).toString()
+  const avatarUrl = get(window, AVATAR_URL.big) || get(window, AVATAR_URL.normal)
+  return avatarUrl ? new URL(avatarUrl).toString() : null
 }
 
 module.exports.supported = {
