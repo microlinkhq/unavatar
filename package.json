@@ -51,7 +51,7 @@
     "youtube"
   ],
   "dependencies": {
-    "beauty-error": "~1.2.4",
+    "beauty-error": "~1.2.5",
     "cacheable-response": "~2.1.0",
     "cheerio": "~1.0.0-rc.3",
     "compression": "~1.7.4",
@@ -59,7 +59,7 @@
     "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
     "got": "~11.3.0",
-    "helmet": "~3.23.0",
+    "helmet": "~3.23.3",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.1.2",
