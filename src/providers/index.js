@@ -13,7 +13,8 @@ const providers = {
   soundcloud: require('./soundcloud'),
   telegram: require('./telegram'),
   twitter: require('./twitter'),
-  youtube: require('./youtube')
+  youtube: require('./youtube'),
+  reddit: require('./reddit')
 }
 
 const providersBy = reduce(
