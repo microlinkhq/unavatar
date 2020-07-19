@@ -13,18 +13,9 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    {
-      "name": "Hameed Rahamathullah",
-      "email": "hameedraha@gmail.com"
-    },
-    {
-      "name": "Omid Nikrah",
-      "email": "omidnikrah@gmail.com"
-    },
-    {
-      "name": "Rodrigo Reis",
-      "email": "rodrigoreis22@yahoo.com.br"
-    }
+    "Hameed Rahamathullah <hameedraha@gmail.com>",
+    "Omid Nikrah <omidnikrah@gmail.com>",
+    "Rodrigo Reis <rodrigoreis22@yahoo.com.br>"
   ],
   "repository": {
     "type": "git",
