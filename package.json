@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.2.24",
+  "version": "2.2.25",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -13,8 +13,8 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    "Hameed Rahamathullah <hameedraha@gmail.com>",
     "Omid Nikrah <omidnikrah@gmail.com>",
+    "Hameed Rahamathullah <hameedraha@gmail.com>",
     "Rodrigo Reis <rodrigoreis22@yahoo.com.br>"
   ],
   "repository": {
