@@ -50,7 +50,7 @@
     "helmet": "~4.1.0",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
-    "is-url-http": "~2.1.2",
+    "is-url-http": "~2.2.1",
     "jsdom": "~16.4.0",
     "lodash": "~4.17.20",
     "memoize-one": "~5.1.1",
