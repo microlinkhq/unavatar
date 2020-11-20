@@ -56,7 +56,7 @@ router.get('/fallback.svg', (req, res) => {
         </linearGradient>
       </defs>
       <rect fill="url(#avatar)" x="0" y="0" width="${width}" height="${height}"/>
-      <text x="50%" y="50%" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="${size}">${text}</text>
+      <text x="50%" y="51%" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="${size}">${text}</text>
     </g>
   </svg>`
   res.send(svg)
