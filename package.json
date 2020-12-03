@@ -58,7 +58,7 @@
     "p-any": "~3.0.0",
     "p-map": "~4.0.0",
     "p-reflect": "~2.1.0",
-    "p-timeout": "~3.2.0",
+    "p-timeout": "~4.0.0",
     "reachable-url": "~1.4.13",
     "url-regex": "~5.0.0"
   },
