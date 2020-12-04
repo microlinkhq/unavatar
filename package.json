@@ -13,10 +13,22 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    "Omid Nikrah <omidnikrah@gmail.com>",
-    "Hameed Rahamathullah <hameedraha@gmail.com>",
-    "Reed Jones <reedjones@reedjones.com>",
-    "Rodrigo Reis <rodrigoreis22@yahoo.com.br>"
+    {
+      "name": "Omid Nikrah",
+      "email": "omidnikrah@gmail.com"
+    },
+    {
+      "name": "Hameed Rahamathullah",
+      "email": "hameedraha@gmail.com"
+    },
+    {
+      "name": "Reed Jones",
+      "email": "reedjones@reedjones.com"
+    },
+    {
+      "name": "Rodrigo Reis",
+      "email": "rodrigoreis22@yahoo.com.br"
+    }
   ],
   "repository": {
     "type": "git",
@@ -42,6 +54,7 @@
     "beauty-error": "~1.2.5",
     "cacheable-response": "~2.1.0",
     "cheerio": "~1.0.0-rc.3",
+    "color": "~2.0.1",
     "compression": "~1.7.4",
     "cors": "~2.8.5",
     "debug-logfmt": "~1.0.4",
