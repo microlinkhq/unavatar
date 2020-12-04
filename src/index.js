@@ -5,7 +5,6 @@ const { forEach } = require('lodash')
 const express = require('express')
 const path = require('path')
 const { Router } = express
-const { get } = require('lodash')
 
 const { CACHE_TTL, NODE_ENV, LOG_LEVEL } = require('./constant')
 const createGetAvatarUrl = require('./avatar-url')
