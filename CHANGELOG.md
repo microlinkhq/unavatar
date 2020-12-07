@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.28](https://github.com/Kikobeats/unavatar/compare/v2.2.27...v2.2.28) (2020-12-07)
+
+
+### Bug Fixes
+
+* instagram provider ([#117](https://github.com/Kikobeats/unavatar/issues/117)) ([387815d](https://github.com/Kikobeats/unavatar/commit/387815d8d9e8b88ffe90bb21e155b41f33b072b7))
+
 ### [2.2.27](https://github.com/Kikobeats/unavatar/compare/v2.2.26...v2.2.27) (2020-08-15)
 
 ### [2.2.26](https://github.com/Kikobeats/unavatar/compare/v2.2.25...v2.2.26) (2020-08-14)
