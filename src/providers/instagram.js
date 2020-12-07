@@ -10,7 +10,7 @@ const AVATAR_URL = {
 }
 
 module.exports = async username => {
-  const { body } = await got(`https://www.instagram.com/${username}`)
+  const { body } = await got(`https://www.instagram.com/${username}?__a=1`)
   const { window } = new JSDOM(body, { runScripts: 'dangerously' })
   const avatarUrl = get(window, AVATAR_URL.big) || get(window, AVATAR_URL.normal)
   return avatarUrl ? new URL(avatarUrl).toString() : null
