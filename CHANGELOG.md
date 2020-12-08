@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.29](https://github.com/Kikobeats/unavatar/compare/v2.2.28...v2.2.29) (2020-12-08)
+
+
+### Bug Fixes
+
+* instagram image fetch ([#118](https://github.com/Kikobeats/unavatar/issues/118)) ([167037d](https://github.com/Kikobeats/unavatar/commit/167037d4c8d4b7f627466fb48b9a0b1a5df82f9b))
+* linter ([65f6306](https://github.com/Kikobeats/unavatar/commit/65f630686695b8d72c132a02c5adb934f7c5c47c))
+
 ### [2.2.28](https://github.com/Kikobeats/unavatar/compare/v2.2.27...v2.2.28) (2020-12-07)
 
 
