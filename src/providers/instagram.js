@@ -1,7 +1,6 @@
 'use strict'
 
 const { get } = require('lodash')
-const { JSDOM } = require('jsdom')
 const got = require('got')
 
 const AVATAR_URL = {
@@ -11,7 +10,7 @@ const AVATAR_URL = {
 
 module.exports = async username => {
   const body = await got(`https://www.instagram.com/${username}/?__a=1`).json()
-  const avatarUrl = get(window, AVATAR_URL.big) || get(window, AVATAR_URL.normal)
+  const avatarUrl = get(body, AVATAR_URL.big) || get(body, AVATAR_URL.normal)
   return avatarUrl ? new URL(avatarUrl).toString() : null
 }
 
