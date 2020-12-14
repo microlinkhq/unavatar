@@ -15,7 +15,8 @@ const providers = {
   twitter: require('./twitter'),
   youtube: require('./youtube'),
   reddit: require('./reddit'),
-  dribbble: require('./dribbble')
+  dribbble: require('./dribbble'),
+  duckduckgo: require('./duckduckgo')
 }
 
 const providersBy = reduce(
