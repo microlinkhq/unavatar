@@ -5,18 +5,18 @@ const { reduce } = require('lodash')
 const providers = {
   clearbit: require('./clearbit'),
   deviantart: require('./deviantart'),
+  dribbble: require('./dribbble'),
+  duckduckgo: require('./duckduckgo'),
   facebook: require('./facebook'),
   github: require('./github'),
   gitlab: require('./gitlab'),
   gravatar: require('./gravatar'),
   instagram: require('./instagram'),
+  reddit: require('./reddit'),
   soundcloud: require('./soundcloud'),
   telegram: require('./telegram'),
   twitter: require('./twitter'),
-  youtube: require('./youtube'),
-  reddit: require('./reddit'),
-  dribbble: require('./dribbble'),
-  duckduckgo: require('./duckduckgo')
+  youtube: require('./youtube')
 }
 
 const providersBy = reduce(
