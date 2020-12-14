@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.2.29",
+  "version": "2.3.0",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -17,7 +17,8 @@
     "Zadkiel <hello@zadkiel.fr>",
     "Hameed Rahamathullah <hameedraha@gmail.com>",
     "Reed Jones <reedjones@reedjones.com>",
-    "Rodrigo Reis <rodrigoreis22@yahoo.com.br>"
+    "Rodrigo Reis <rodrigoreis22@yahoo.com.br>",
+    "Tom Witkowski <dev.gummibeer@gmail.com>"
   ],
   "repository": {
     "type": "git",
