@@ -14,6 +14,7 @@ const providers = {
   instagram: require('./instagram'),
   reddit: require('./reddit'),
   soundcloud: require('./soundcloud'),
+  substack: require('./substack'),
   telegram: require('./telegram'),
   twitter: require('./twitter'),
   youtube: require('./youtube')
