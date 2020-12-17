@@ -11,12 +11,15 @@ const getAvatarUrl = url => url.replace(REGEX_IMG_MODIFIERS, `${ORIGINAL_IMG_SIZ
 module.exports = async username => {
   // Get a fresh guest token
   console.log('Requesting Twitter user', username)
-  const { body: guestBody } = await got('https://twitter.com', {
-    headers: {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
+  const { body: guestBody } = await got(
+    `https://twitter.com/?prefetchTimestamp=${Date.now().toString()}`,
+    {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
+      }
     }
-  })
+  )
   console.log('Got twitter.com response', guestBody)
   const guestToken = guestBody.match(/gt=[0-9]*/gi)[0].slice(3)
   console.log('Extracted guest token', guestToken)
