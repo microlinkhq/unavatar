@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -13,10 +13,9 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
+    "Alexander Schlindwein <alexander.schlindwein@hotmail.de>",
     "Omid Nikrah <omidnikrah@gmail.com>",
     "Zadkiel <hello@zadkiel.fr>",
-    "Alexander Schlindwein <alexander.schlindwein@hotmail.de>",
-    "Hameed Rahamathullah <hameedraha@gmail.com>",
     "Reed Jones <reedjones@reedjones.com>",
     "Rodrigo Reis <rodrigoreis22@yahoo.com.br>",
     "Tom Witkowski <dev.gummibeer@gmail.com>"
