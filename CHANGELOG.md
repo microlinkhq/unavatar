@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.1](https://github.com/Kikobeats/unavatar/compare/v2.4.0...v2.4.1) (2020-12-17)
+
+## [2.4.0](https://github.com/Kikobeats/unavatar/compare/v2.2.29...v2.4.0) (2020-12-17)
+
+
+### Features
+
+* add domain fallback/favicon DuckDuckGo provider ([#120](https://github.com/Kikobeats/unavatar/issues/120)) ([d441229](https://github.com/Kikobeats/unavatar/commit/d4412293d1d381acf36ed90e47ce8c60acfcd09a))
+
+## [2.3.0](https://github.com/Kikobeats/unavatar/compare/v2.2.29...v2.3.0) (2020-12-14)
+
+
+### Features
+
+* add domain fallback/favicon DuckDuckGo provider ([#120](https://github.com/Kikobeats/unavatar/issues/120)) ([d441229](https://github.com/Kikobeats/unavatar/commit/d4412293d1d381acf36ed90e47ce8c60acfcd09a))
+
+### [2.2.29](https://github.com/Kikobeats/unavatar/compare/v2.2.28...v2.2.29) (2020-12-08)
+
+
+### Bug Fixes
+
+* instagram image fetch ([#118](https://github.com/Kikobeats/unavatar/issues/118)) ([167037d](https://github.com/Kikobeats/unavatar/commit/167037d4c8d4b7f627466fb48b9a0b1a5df82f9b))
+* linter ([65f6306](https://github.com/Kikobeats/unavatar/commit/65f630686695b8d72c132a02c5adb934f7c5c47c))
+
+### [2.2.28](https://github.com/Kikobeats/unavatar/compare/v2.2.27...v2.2.28) (2020-12-07)
+
+
+### Bug Fixes
+
+* instagram provider ([#117](https://github.com/Kikobeats/unavatar/issues/117)) ([387815d](https://github.com/Kikobeats/unavatar/commit/387815d8d9e8b88ffe90bb21e155b41f33b072b7))
+
 ### [2.2.27](https://github.com/Kikobeats/unavatar/compare/v2.2.26...v2.2.27) (2020-08-15)
 
 ### [2.2.26](https://github.com/Kikobeats/unavatar/compare/v2.2.25...v2.2.26) (2020-08-14)

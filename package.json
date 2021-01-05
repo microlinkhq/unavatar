@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.2.27",
+  "version": "2.4.1",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -13,22 +13,12 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    {
-      "name": "Omid Nikrah",
-      "email": "omidnikrah@gmail.com"
-    },
-    {
-      "name": "Hameed Rahamathullah",
-      "email": "hameedraha@gmail.com"
-    },
-    {
-      "name": "Reed Jones",
-      "email": "reedjones@reedjones.com"
-    },
-    {
-      "name": "Rodrigo Reis",
-      "email": "rodrigoreis22@yahoo.com.br"
-    }
+    "Alexander Schlindwein <alexander.schlindwein@hotmail.de>",
+    "Omid Nikrah <omidnikrah@gmail.com>",
+    "Zadkiel <hello@zadkiel.fr>",
+    "Reed Jones <reedjones@reedjones.com>",
+    "Rodrigo Reis <rodrigoreis22@yahoo.com.br>",
+    "Tom Witkowski <dev.gummibeer@gmail.com>"
   ],
   "repository": {
     "type": "git",
@@ -60,7 +50,7 @@
     "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
     "got": "~11.8.0",
-    "helmet": "~4.2.0",
+    "helmet": "~4.3.1",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.2.1",
@@ -71,7 +61,7 @@
     "p-any": "~3.0.0",
     "p-map": "~4.0.0",
     "p-reflect": "~2.1.0",
-    "p-timeout": "~3.2.0",
+    "p-timeout": "~4.1.0",
     "reachable-url": "~1.4.13",
     "url-regex": "~5.0.0"
   },
