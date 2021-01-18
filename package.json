@@ -2,7 +2,7 @@
   "name": "unavatar",
   "description": "Get unified user avatar.",
   "homepage": "https://unavatar.now.sh",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -13,6 +13,10 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
+    {
+      "name": "David Refoua",
+      "email": "David@Refoua.me"
+    },
     {
       "name": "Alexander Schlindwein",
       "email": "alexander.schlindwein@hotmail.de"
@@ -26,8 +30,8 @@
       "email": "hello@zadkiel.fr"
     },
     {
-      "name": "Reed Jones",
-      "email": "reedjones@reedjones.com"
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
     },
     {
       "name": "Rodrigo Reis",
@@ -36,6 +40,14 @@
     {
       "name": "Tom Witkowski",
       "email": "dev.gummibeer@gmail.com"
+    },
+    {
+      "name": "Hameed Rahamathullah",
+      "email": "hameedraha@gmail.com"
+    },
+    {
+      "name": "Reed Jones",
+      "email": "reedjones@reedjones.com"
     }
   ],
   "repository": {
