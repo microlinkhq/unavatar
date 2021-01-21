@@ -92,6 +92,7 @@
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
     "reachable-url": "~1.4.20",
+    "tunnel": "~0.0.6",
     "url-regex": "~5.0.0"
   },
   "devDependencies": {
