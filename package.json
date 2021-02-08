@@ -119,10 +119,11 @@
     "standard": "latest",
     "standard-markdown": "latest",
     "standard-version": "latest",
-    "untracked": "latest"
+    "untracked": "latest",
+    "ci-publish": "latest"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">= 12"
   },
   "files": [
     "bin",
@@ -139,17 +140,18 @@
     "dev:docs:server": "cd public && browser-sync start --server --files \"index.html, **/*.*\"",
     "dev:docs:src": "gulp",
     "lint": "standard-markdown && standard",
-    "postrelease": "npm run release:tags && npm run release:github",
-    "prerelease": "npm run update:check",
+    "postrelease": "npm run release:tags && npm run release:github && (ci-publish || npm publish --access=public)",
+    "prerelease": "npm run update:check && npm run contributors",
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
-    "release": "git-authors-cli && git add package.json && standard-version -a",
+    "release": "standard-version -a",
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
     "start": "TZ=UTC NODE_ENV=production DEBUG=unavatar* node src/server.js",
     "test": "exit 0",
-    "update": "ncu -a",
-    "update:check": "ncu -- --error-level 2"
+    "update": "ncu -u",
+    "update:check": "ncu -- --error-level 2",
+    "contributors": "(git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true"
   },
   "private": true,
   "license": "MIT",

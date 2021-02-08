@@ -1,17 +1,19 @@
 language: node_js
 
 node_js:
-  - lts/*
+  - node
+
+after_success: npm run coverage
 
 stages:
   - Test
+    if: branch = master AND commit_message !~ /(docs|release|no-release)/
   - name: Release
-    if: branch = master AND commit_message !~ /(release|no-release)/
+    if: branch = master AND commit_message !~ /(docs|release|no-release)/
 
 jobs:
   include:
     - stage: Release
-      node_js: lts/*
       install: npm install --no-package-lock
       before_deploy:
         - git config user.email ${GITHUB_EMAIL:-"travis@travis-ci.org"}
