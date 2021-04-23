@@ -98,6 +98,7 @@
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
     "browser-sync": "latest",
+    "ci-publish": "latest",
     "conventional-github-releaser": "latest",
     "finepack": "latest",
     "git-authors-cli": "latest",
@@ -110,17 +111,16 @@
     "gulp-strip-css-comments": "latest",
     "gulp-uglify": "latest",
     "hack": "latest",
-    "husky": "latest",
     "lint-staged": "latest",
     "npm-check-updates": "latest",
     "nyc": "latest",
     "prettier-standard": "latest",
     "prismjs": "latest",
+    "simple-git-hooks": "latest",
     "standard": "latest",
     "standard-markdown": "latest",
     "standard-version": "latest",
-    "untracked": "latest",
-    "ci-publish": "latest"
+    "untracked": "latest"
   },
   "engines": {
     "node": ">= 12"
@@ -134,6 +134,7 @@
   "scripts": {
     "build": "gulp build && untracked > .nowignore",
     "clean": "rm -rf node_modules",
+    "contributors": "(git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
     "dev": "TZ=UTC NODE_ENV=development DEBUG=unavatar* node src/server.js",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
@@ -150,8 +151,7 @@
     "start": "TZ=UTC NODE_ENV=production DEBUG=unavatar* node src/server.js",
     "test": "exit 0",
     "update": "ncu -u",
-    "update:check": "ncu -- --error-level 2",
-    "contributors": "(git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true"
+    "update:check": "ncu -- --error-level 2"
   },
   "private": true,
   "license": "MIT",
@@ -159,12 +159,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "package.json": [
@@ -176,5 +170,9 @@
     "*.md": [
       "standard-markdown"
     ]
+  },
+  "simple-git-hooks": {
+    "commit-msg": "npx commitlint --edit",
+    "pre-commit": "npx lint-staged"
   }
 }
