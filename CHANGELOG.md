@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/Kikobeats/unavatar/compare/v2.4.2...v2.5.0) (2021-04-23)
+
+
+### Features
+
+* improve substack implementation ([#129](https://github.com/Kikobeats/unavatar/issues/129)) ([d8b532c](https://github.com/Kikobeats/unavatar/commit/d8b532c927e4ab746b36741b8d570cfad0402247))
+
+
+### Bug Fixes
+
+* interface ([005b66e](https://github.com/Kikobeats/unavatar/commit/005b66e43419b7b9effccdf8518b4183d1be9f89))
+
 ### [2.4.2](https://github.com/Kikobeats/unavatar/compare/v2.4.1...v2.4.2) (2021-01-18)
 
 ### [2.4.1](https://github.com/Kikobeats/unavatar/compare/v2.4.0...v2.4.1) (2020-12-17)
