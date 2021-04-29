@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 99
+  ignore:
+  - dependency-name: p-map
+    versions:
+    - 5.0.0
+  - dependency-name: p-reflect
+    versions:
+    - 3.0.0
+  - dependency-name: p-timeout
+    versions:
+    - 5.0.0
