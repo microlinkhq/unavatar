@@ -81,7 +81,7 @@
     "got": "~11.8.2",
     "helmet": "~4.6.0",
     "is-absolute-url": "~3.0.3",
-    "is-email-like": "~1.0.0",
+    "is-email-like": "~2.0.0",
     "is-url-http": "~2.2.3",
     "jsdom": "~16.5.3",
     "lodash": "~4.17.21",
