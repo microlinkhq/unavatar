@@ -91,7 +91,7 @@
     "p-map": "~4.0.0",
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
-    "reachable-url": "~1.4.20",
+    "reachable-url": "~1.5.0",
     "url-regex": "~5.0.0"
   },
   "devDependencies": {
