@@ -9,8 +9,8 @@
   <title>unavatar</title>
   <meta name="description"
     content="Get the user avatar based on username, email or domain across multiple providers, such as Twitter, GitHub, Gravatar, etc.">
-  <meta name="image" content="https://unavatar.now.sh/logo.png">
-  <link rel="canonical" href="https://unavatar.now.sh" />
+  <meta name="image" content="https://unavatar.io/logo.png">
+  <link rel="canonical" href="https://unavatar.io" />
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="css/style.min.css">
@@ -20,22 +20,22 @@
   <meta itemprop="name" content="unavatar">
   <meta itemprop="description"
     content="Get the user avatar based on username, email or domain across multiple providers, such as Twitter, GitHub, Gravatar, etc.">
-  <meta itemprop="image" content="https://unavatar.now.sh/banner.png">
+  <meta itemprop="image" content="https://unavatar.io/banner.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="unavatar">
   <meta name="twitter:description"
     content="Get the user avatar based on username, email or domain across multiple providers, such as Twitter, GitHub, Gravatar, etc.">
-  <meta name="twitter:image" content="https://unavatar.now.sh/banner.png">
+  <meta name="twitter:image" content="https://unavatar.io/banner.png">
 
   <!-- Open Graph general (Facebook, Pinterest & Google+) -->
   <meta name="og:title" content="unavatar">
   <meta name="og:description"
     content="Get the user avatar based on username, email or domain across multiple providers, such as Twitter, GitHub, Gravatar, etc.">
-  <meta name="og:logo" content="https://unavatar.now.sh/logo.png">
-  <meta name="og:image" content="https://unavatar.now.sh/banner.png">
-  <meta name="og:url" content="https://unavatar.now.sh">
+  <meta name="og:logo" content="https://unavatar.io/logo.png">
+  <meta name="og:image" content="https://unavatar.io/banner.png">
+  <meta name="og:url" content="https://unavatar.io">
 </head>
 
 <body class="hack">
@@ -47,26 +47,26 @@
     <p>The service will determinate the user avatar querying multiple social providers and serve it to you.</p>
     <p>It can obtain the user avatar based on the input:</p>
     <h2>From username</h2>
-    <p><code>&lt;img src="https://unavatar.now.sh/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/kikobeats">https://unavatar.now.sh/kikobeats</a></p>
+    <p><code>&lt;img src="https://unavatar.io/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/kikobeats">https://unavatar.io/kikobeats</a></p>
     <h2>From email</h2>
-    <p><code>&lt;img src="https://unavatar.now.sh/:email" /&gt;</code></p>
+    <p><code>&lt;img src="https://unavatar.io/:email" /&gt;</code></p>
     <p>e.g., <a target="_blank"
-        href="https://unavatar.now.sh/sindresorhus@gmail.com">https://unavatar.now.sh/sindresorhus@gmail.com</a></p>
+        href="https://unavatar.io/sindresorhus@gmail.com">https://unavatar.io/sindresorhus@gmail.com</a></p>
     <h2>From domain</h2>
-    <p><code>&lt;img src="https://unavatar.now.sh/:domain" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/reddit.com">https://unavatar.now.sh/reddit.com</a></p>
+    <p><code>&lt;img src="https://unavatar.io/:domain" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/reddit.com">https://unavatar.io/reddit.com</a></p>
     <h2>Query Parameters</h2>
     <h3>Fallback</h3>
     <p>In the cases that is not possible determinate the user avatar, unavatar provide one by default.</p>
     <p>Customize it using <code>fallback</code> query parameter</p>
     <p>e.g., <a target="_blank"
-        href="https://unavatar.now.sh/daftpunk?fallback=https://i.imgur.com/0d1TFfQ.jpg">https://unavatar.now.sh/daftpunk?fallback=https://i.imgur.com/0d1TFfQ.jpg</a>
+        href="https://unavatar.io/daftpunk?fallback=https://i.imgur.com/0d1TFfQ.jpg">https://unavatar.io/daftpunk?fallback=https://i.imgur.com/0d1TFfQ.jpg</a>
     </p>
     <p>You can pass <code>fallback=false</code> for disabling it.</p>
     <h3>JSON</h3>
     <p>Alternatively you can get the avatar url adding the query parameter <code>json</code></p>
-    <pre class="language-json"><code class="language-json">// https://unavatar.now.sh/kikobeats?json
+    <pre class="language-json"><code class="language-json">// https://unavatar.io/kikobeats?json
 
 {
   "url": "https://pbs.twimg.com/profile_images/971687520324014080/lkYxX5SG_400x400.jpg"
@@ -74,48 +74,48 @@
     <h2>Providers</h2>
     <p>Each provider has its own endpoint, so you can query it directly.</p>
     <h3>Microlink</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/microlink/:domain" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/microlink/microlink.io">https://unavatar.now.sh/microlink/microlink.io</a></p>
+    <p><code>&lt;img src="https://unavatar.io/microlink/:domain" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/microlink/microlink.io">https://unavatar.io/microlink/microlink.io</a></p>
     <h3>DeviantArt</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/deviantart/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/deviantart/spyed">https://unavatar.now.sh/deviantart/spyed</a></p>
+    <p><code>&lt;img src="https://unavatar.io/deviantart/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/deviantart/spyed">https://unavatar.io/deviantart/spyed</a></p>
     <h3>Dribbble</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/dribbble/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/dribbble/omidnikrah">https://unavatar.now.sh/dribbble/omidnikrah</a></p>
+    <p><code>&lt;img src="https://unavatar.io/dribbble/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/dribbble/omidnikrah">https://unavatar.io/dribbble/omidnikrah</a></p>
     <h3>DuckDuckGo</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/duckduckgo/:domain" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/duckduckgo/gummibeer.dev">https://unavatar.now.sh/duckduckgo/gummibeer.dev</a></p>
+    <p><code>&lt;img src="https://unavatar.io/duckduckgo/:domain" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/duckduckgo/gummibeer.dev">https://unavatar.io/duckduckgo/gummibeer.dev</a></p>
     <h3>Facebook</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/facebook/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/facebook/zuck">https://unavatar.now.sh/facebook/zuck</a></p>
+    <p><code>&lt;img src="https://unavatar.io/facebook/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/facebook/zuck">https://unavatar.io/facebook/zuck</a></p>
     <h3>GitHub</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/github/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/github/mdo">https://unavatar.now.sh/github/mdo</a></p>
+    <p><code>&lt;img src="https://unavatar.io/github/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/github/mdo">https://unavatar.io/github/mdo</a></p>
     <h3>Gravatar</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/gravatar/:email" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/gravatar/sindresorhus@gmail.com">https://unavatar.now.sh/gravatar/sindresorhus@gmail.com</a>
+    <p><code>&lt;img src="https://unavatar.io/gravatar/:email" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/gravatar/sindresorhus@gmail.com">https://unavatar.io/gravatar/sindresorhus@gmail.com</a>
     </p>
     <h3>Instagram</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/instagram/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/instagram/willsmith">https://unavatar.now.sh/instagram/willsmith</a></p>
+    <p><code>&lt;img src="https://unavatar.io/instagram/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/instagram/willsmith">https://unavatar.io/instagram/willsmith</a></p>
     <h3>Reddit</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/reddit/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/reddit/kikobeats">https://unavatar.now.sh/reddit/kikobeats</a></p>
+    <p><code>&lt;img src="https://unavatar.io/reddit/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/reddit/kikobeats">https://unavatar.io/reddit/kikobeats</a></p>
     <h3>SoundCloud</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/soundcloud/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/soundcloud/gorillaz">https://unavatar.now.sh/soundcloud/gorillaz</a></p>
+    <p><code>&lt;img src="https://unavatar.io/soundcloud/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/soundcloud/gorillaz">https://unavatar.io/soundcloud/gorillaz</a></p>
     <h3>Substack</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/substack/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/substack/bankless">https://unavatar.now.sh/substack/bankless</a></p>
+    <p><code>&lt;img src="https://unavatar.io/substack/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/substack/bankless">https://unavatar.io/substack/bankless</a></p>
     <h3>Telegram</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/telegram/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/telegram/drsdavidsoft">https://unavatar.now.sh/telegram/drsdavidsoft</a></p>
+    <p><code>&lt;img src="https://unavatar.io/telegram/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/telegram/drsdavidsoft">https://unavatar.io/telegram/drsdavidsoft</a></p>
     <h3>Twitter</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/twitter/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/twitter/kikobeats">https://unavatar.now.sh/twitter/kikobeats</a></p>
+    <p><code>&lt;img src="https://unavatar.io/twitter/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/twitter/kikobeats">https://unavatar.io/twitter/kikobeats</a></p>
     <h3>YouTube</h3>
-    <p><code>&lt;img src="https://unavatar.now.sh/youtube/:username" /&gt;</code></p>
-    <p>e.g., <a target="_blank" href="https://unavatar.now.sh/youtube/caseyneistat">https://unavatar.now.sh/youtube/caseyneistat</a></p>
+    <p><code>&lt;img src="https://unavatar.io/youtube/:username" /&gt;</code></p>
+    <p>e.g., <a target="_blank" href="https://unavatar.io/youtube/caseyneistat">https://unavatar.io/youtube/caseyneistat</a></p>
   </article>
   <script src="js/main.min.js"></script>
 </body>

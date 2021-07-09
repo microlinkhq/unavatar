@@ -1,7 +1,7 @@
 {
   "name": "unavatar",
   "description": "Get unified user avatar.",
-  "homepage": "https://unavatar.now.sh",
+  "homepage": "https://unavatar.io",
   "version": "2.5.2",
   "main": "src/index.js",
   "bin": {
