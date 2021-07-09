@@ -13,7 +13,8 @@ const src = {
   js: [
     'node_modules/prismjs/prism.js',
     'node_modules/prismjs/components/prism-json.js',
-    'node_modules/anchor-js/anchor.js'
+    'node_modules/anchor-js/anchor.js',
+    'public/js/main.js'
   ]
 }
 
