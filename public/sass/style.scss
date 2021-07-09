@@ -1,5 +1,4 @@
 @import 'hack';
-@import 'prism';
 
 ::selection {
   background-color: #ffe079;
@@ -26,12 +25,14 @@ b::selection {
 :not(pre)>code[class*="language-"],
 pre[class*="language-"] {
   background-color: transparent;
-  font-weight: normal;
+  margin: 20px 0;
+  padding: 20px;
 }
 
 code[class*=language-],
 pre[class*=language-] {
-  color: #999;
+  color: #00bcd4;
+  border-color: #00bcd4;
 }
 
 .hack h1,

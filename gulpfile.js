@@ -1,19 +1,16 @@
 'use strict'
 
+const sass = require('gulp-sass')(require('sass'))
 const strip = require('gulp-strip-css-comments')
 const prefix = require('gulp-autoprefixer')
 const cssnano = require('gulp-cssnano')
 const uglify = require('gulp-uglify')
 const concat = require('gulp-concat')
-const sass = require('gulp-sass')
 const gulp = require('gulp')
 
 const src = {
   css: ['public/sass/style.scss'],
-  js: [
-    'node_modules/prismjs/prism.js',
-    'node_modules/prismjs/components/prism-json.js'
-  ]
+  js: ['node_modules/prismjs/prism.js', 'node_modules/prismjs/components/prism-json.js']
 }
 
 const dist = {
