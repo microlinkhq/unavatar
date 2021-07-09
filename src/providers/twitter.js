@@ -1,13 +1,15 @@
 'use strict'
 
-const { stringify } = require('querystring')
+const mql = require('@microlink/mql')
+const { get } = require('lodash')
+
+const REGEX_IMG_MODIFIERS = /_(?:bigger|mini|normal)\./
+const ORIGINAL_IMG_SIZE = '_400x400'
 
 module.exports = async (username, { headers }) => {
-  const endpoint = headers['x-api-key'] ? 'pro' : 'api'
-  return `https://${endpoint}.microlink.io?${stringify({
-    url: `https://twitter.com/${username}`,
-    embed: 'image.url'
-  })}`
+  const { data } = await mql(`https://twitter.com/${username}`, { apiKey: headers['x-api-key'] })
+  const avatarUrl = get(data, 'image.url')
+  return avatarUrl && avatarUrl.replace(REGEX_IMG_MODIFIERS, `${ORIGINAL_IMG_SIZE}.`)
 }
 
 module.exports.supported = {

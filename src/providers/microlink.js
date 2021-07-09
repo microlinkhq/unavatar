@@ -1,13 +1,13 @@
 'use strict'
 
-const { stringify } = require('querystring')
+const mql = require('@microlink/mql')
+const { get } = require('lodash')
 
-module.exports = async (url, { headers }) => {
-  const endpoint = headers['x-api-key'] ? 'pro' : 'api'
-  return `https://${endpoint}.microlink.io?${stringify({
-    url: `https://${url}`,
-    embed: 'logo.url'
-  })}`
+module.exports = async (domain, { headers }) => {
+  const { data } = await mql(`https://${domain}`, {
+    apiKey: headers['x-api-key']
+  })
+  return get(data, 'logo.url')
 }
 
 module.exports.supported = {

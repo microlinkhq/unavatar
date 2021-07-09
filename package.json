@@ -72,6 +72,7 @@
     "youtube"
   ],
   "dependencies": {
+    "@microlink/mql": "~0.9.8",
     "beauty-error": "~1.2.8",
     "cacheable-response": "~2.1.12",
     "cheerio": "~1.0.0-rc.6",
