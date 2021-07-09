@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.5.4 (2021-07-09)
+
+
+### Bug Fixes
+
+* use microlink for getting twitter avatar ([3f6569c](https://github.com/Kikobeats/unavatar/commit/3f6569c4acd50103d3f012260d4cf5088ea379f0)), closes [#121](https://github.com/Kikobeats/unavatar/issues/121)
+
 ### 2.5.3 (2021-07-09)
 
 ### 2.5.2 (2021-07-09)
