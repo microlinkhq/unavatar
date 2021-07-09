@@ -68,9 +68,11 @@ const getAvatarUrl = async key => {
 module.exports = (fn = getAvatarUrl) => async (req, res) => {
   const { query, protocol } = req
   const host = req.get('host')
-  const username = get(req, 'params.key')
+  const input = get(req, 'params.key')
 
-  const { value, reason, isRejected } = await pReflect(pTimeout(fn(username), AVATAR_TIMEOUT))
+  const { value, reason, isRejected } = await pReflect(
+    pTimeout(fn(input, req, res), AVATAR_TIMEOUT)
+  )
 
   const url = value || getFallbackUrl({ query, protocol, host })
   if (isRejected) debug(beautyError(reason))
