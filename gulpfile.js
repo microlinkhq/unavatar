@@ -10,7 +10,11 @@ const gulp = require('gulp')
 
 const src = {
   css: ['public/sass/style.scss'],
-  js: ['node_modules/prismjs/prism.js', 'node_modules/prismjs/components/prism-json.js']
+  js: [
+    'node_modules/prismjs/prism.js',
+    'node_modules/prismjs/components/prism-json.js',
+    'node_modules/anchor-js/anchor.js'
+  ]
 }
 
 const dist = {
