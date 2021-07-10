@@ -3,7 +3,7 @@
 const mql = require('@microlink/mql')
 const { get } = require('lodash')
 
-module.exports = async (domain, { headers }) => {
+module.exports = async (domain, { headers = {} } = {}) => {
   const { data } = await mql(`https://${domain}`, {
     apiKey: headers['x-api-key']
   })
