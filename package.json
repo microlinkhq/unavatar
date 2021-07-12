@@ -92,6 +92,7 @@
     "p-map": "~4.0.0",
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
+    "qsm": "~2.1.2",
     "reachable-url": "~1.5.0",
     "url-regex": "~5.0.0"
   },
@@ -137,7 +138,7 @@
     "clean": "rm -rf node_modules",
     "contributors": "(git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
-    "dev": "TZ=UTC NODE_ENV=development DEBUG=unavatar* node src/server.js",
+    "dev": "TZ=UTC NODE_ENV=development DEBUG=unavatar* npx vercel dev",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
     "dev:docs:server": "cd public && browser-sync start --server --files \"index.html, **/*.*\"",
     "dev:docs:src": "gulp",

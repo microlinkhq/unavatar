@@ -33,5 +33,5 @@ coverage
 # Other
 ############################
 .envrc
-
+.env
 .vercel
