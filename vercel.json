@@ -1,5 +1,4 @@
 {
-  "name": "unavatar",
   "version": 2,
   "public": true,
   "env": {
@@ -8,18 +7,10 @@
   "builds": [
     {
       "src": "src/index.js",
-      "use": "@now/node"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
-    {
-      "src": "/robots.txt",
-      "status": 204
-    },
-    {
-      "src": "/favicon.ico",
-      "status": 204
-    },
     {
       "src": "/(.*)",
       "dest": "/src/index.js"

@@ -3,7 +3,7 @@
 const { reduce } = require('lodash')
 
 const providers = {
-  clearbit: require('./clearbit'),
+  microlink: require('./microlink'),
   deviantart: require('./deviantart'),
   dribbble: require('./dribbble'),
   duckduckgo: require('./duckduckgo'),

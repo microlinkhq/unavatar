@@ -6,7 +6,7 @@ const got = require('got')
 module.exports = async username => {
   const { body } = await got(`https://${username}.substack.com`)
   const $ = cheerio.load(body)
-  return $('img.publication-logo').attr('src')
+  return $('.publication-logo').attr('src')
 }
 
 module.exports.supported = {

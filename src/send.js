@@ -1,12 +1,16 @@
 'use strict'
 
-const { get } = require('lodash')
+const { pickBy, get } = require('lodash')
 const got = require('got')
 
-const sendAvatar = ({ url, res, isError }) => {
+const { ALLOWED_REQ_HEADERS } = require('./constant')
+
+const sendAvatar = ({ req, res, url, isError }) => {
   if (isError) return res.send()
 
-  const stream = got.stream(url)
+  const headers = pickBy(req.headers, (value, key) => ALLOWED_REQ_HEADERS.includes(key))
+
+  const stream = got.stream(url, { headers })
   stream.on('response', resAvatar =>
     res.set('Content-Type', get(resAvatar, 'headers.content-type'))
   )
@@ -14,9 +18,9 @@ const sendAvatar = ({ url, res, isError }) => {
   return stream.pipe(res)
 }
 
-const send = ({ url, res, isJSON, isError }) => {
+const send = ({ url, req, res, isJSON, isError }) => {
   res.status(isError ? 404 : 200)
-  return isJSON ? res.json({ url }) : sendAvatar({ res, url, isError })
+  return isJSON ? res.json({ url }) : sendAvatar({ req, res, url, isError })
 }
 
 module.exports = send

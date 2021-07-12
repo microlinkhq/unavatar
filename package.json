@@ -1,8 +1,8 @@
 {
   "name": "unavatar",
   "description": "Get unified user avatar.",
-  "homepage": "https://unavatar.now.sh",
-  "version": "2.4.1",
+  "homepage": "https://unavatar.io",
+  "version": "2.5.6",
   "main": "src/index.js",
   "bin": {
     "unavatar": "bin/server"
@@ -13,12 +13,42 @@
     "url": "https://kikobeats.com"
   },
   "contributors": [
-    "Alexander Schlindwein <alexander.schlindwein@hotmail.de>",
-    "Omid Nikrah <omidnikrah@gmail.com>",
-    "Zadkiel <hello@zadkiel.fr>",
-    "Reed Jones <reedjones@reedjones.com>",
-    "Rodrigo Reis <rodrigoreis22@yahoo.com.br>",
-    "Tom Witkowski <dev.gummibeer@gmail.com>"
+    {
+      "name": "David Refoua",
+      "email": "David@Refoua.me"
+    },
+    {
+      "name": "Alexander Schlindwein",
+      "email": "alexander.schlindwein@hotmail.de"
+    },
+    {
+      "name": "Omid Nikrah",
+      "email": "omidnikrah@gmail.com"
+    },
+    {
+      "name": "Zadkiel",
+      "email": "zadkiel.aharonian@gmail.com"
+    },
+    {
+      "name": "Rodrigo Reis",
+      "email": "rodrigoreis22@yahoo.com.br"
+    },
+    {
+      "name": "Tom Witkowski",
+      "email": "dev.gummibeer@gmail.com"
+    },
+    {
+      "name": "Reed Jones",
+      "email": "reedjones@reedjones.com"
+    },
+    {
+      "name": "Hameed Rahamathullah",
+      "email": "hameedraha@gmail.com"
+    },
+    {
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
+    }
   ],
   "repository": {
     "type": "git",
@@ -36,39 +66,41 @@
     "github",
     "gravatar",
     "instagram",
+    "microlink",
     "telegram",
     "twitter",
     "youtube"
   ],
   "dependencies": {
-    "beauty-error": "~1.2.5",
-    "cacheable-response": "~2.1.0",
-    "cheerio": "~1.0.0-rc.3",
     "color": "~2.0.1",
+    "@microlink/mql": "~0.9.8",
+    "beauty-error": "~1.2.8",
+    "cacheable-response": "~2.1.12",
+    "cheerio": "~1.0.0-rc.6",
     "compression": "~1.7.4",
     "cors": "~2.8.5",
     "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
-    "got": "~11.8.0",
-    "helmet": "~4.3.1",
+    "got": "~11.8.2",
+    "helmet": "~4.6.0",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
-    "is-url-http": "~2.2.1",
-    "jsdom": "~16.4.0",
-    "lodash": "~4.17.20",
-    "memoize-one": "~5.1.1",
+    "is-url-http": "~2.2.3",
+    "lodash": "~4.17.21",
+    "memoize-one": "~5.2.1",
     "morgan": "~1.10.0",
     "p-any": "~3.0.0",
     "p-map": "~4.0.0",
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
-    "reachable-url": "~1.4.13",
+    "reachable-url": "~1.5.0",
     "url-regex": "~5.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
     "browser-sync": "latest",
+    "concurrently": "latest",
     "conventional-github-releaser": "latest",
     "finepack": "latest",
     "git-authors-cli": "latest",
@@ -81,19 +113,19 @@
     "gulp-strip-css-comments": "latest",
     "gulp-uglify": "latest",
     "hack": "latest",
-    "husky": "latest",
     "lint-staged": "latest",
     "npm-check-updates": "latest",
-    "nyc": "latest",
     "prettier-standard": "latest",
     "prismjs": "latest",
+    "sass": "latest",
+    "simple-git-hooks": "latest",
     "standard": "latest",
     "standard-markdown": "latest",
     "standard-version": "latest",
     "untracked": "latest"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">= 12"
   },
   "files": [
     "bin",
@@ -104,6 +136,7 @@
   "scripts": {
     "build": "gulp build && untracked > .nowignore",
     "clean": "rm -rf node_modules",
+    "contributors": "(git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
     "dev": "TZ=UTC NODE_ENV=development DEBUG=unavatar* node src/server.js",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
@@ -111,15 +144,15 @@
     "dev:docs:src": "gulp",
     "lint": "standard-markdown && standard",
     "postrelease": "npm run release:tags && npm run release:github",
-    "prerelease": "npm run update:check",
+    "prerelease": "npm run update:check && npm run contributors",
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
-    "release": "git-authors-cli && git add package.json && standard-version -a",
+    "release": "standard-version -a",
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
     "start": "TZ=UTC NODE_ENV=production DEBUG=unavatar* node src/server.js",
     "test": "exit 0",
-    "update": "ncu -a",
+    "update": "ncu -u",
     "update:check": "ncu -- --error-level 2"
   },
   "private": true,
@@ -129,21 +162,19 @@
       "@commitlint/config-conventional"
     ]
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "package.json": [
       "finepack"
     ],
-    "*.js": [
+    "*.js,!*.min.js,": [
       "prettier-standard"
     ],
     "*.md": [
       "standard-markdown"
     ]
+  },
+  "simple-git-hooks": {
+    "commit-msg": "npx commitlint --edit",
+    "pre-commit": "npx lint-staged"
   }
 }

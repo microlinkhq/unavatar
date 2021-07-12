@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.5.6 (2021-07-12)
+
+
+### Bug Fixes
+
+* linter ([fc8e3d0](https://github.com/Kikobeats/unavatar/commit/fc8e3d0bfabdf800c412469a9f88d70c4883e645))
+
+### 2.5.5 (2021-07-09)
+
+### 2.5.4 (2021-07-09)
+
+
+### Bug Fixes
+
+* use microlink for getting twitter avatar ([3f6569c](https://github.com/Kikobeats/unavatar/commit/3f6569c4acd50103d3f012260d4cf5088ea379f0)), closes [#121](https://github.com/Kikobeats/unavatar/issues/121)
+
+### 2.5.3 (2021-07-09)
+
+### 2.5.2 (2021-07-09)
+
+### [2.5.1](https://github.com/Kikobeats/unavatar/compare/v2.5.0...v2.5.1) (2021-06-29)
+
+## [2.5.0](https://github.com/Kikobeats/unavatar/compare/v2.4.2...v2.5.0) (2021-04-23)
+
+
+### Features
+
+* improve substack implementation ([#129](https://github.com/Kikobeats/unavatar/issues/129)) ([d8b532c](https://github.com/Kikobeats/unavatar/commit/d8b532c927e4ab746b36741b8d570cfad0402247))
+
+
+### Bug Fixes
+
+* interface ([005b66e](https://github.com/Kikobeats/unavatar/commit/005b66e43419b7b9effccdf8518b4183d1be9f89))
+
+### [2.4.2](https://github.com/Kikobeats/unavatar/compare/v2.4.1...v2.4.2) (2021-01-18)
+
 ### [2.4.1](https://github.com/Kikobeats/unavatar/compare/v2.4.0...v2.4.1) (2020-12-17)
 
 ## [2.4.0](https://github.com/Kikobeats/unavatar/compare/v2.2.29...v2.4.0) (2020-12-17)

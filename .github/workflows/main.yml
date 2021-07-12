@@ -1,0 +1,44 @@
+name: test
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+  # schedule:
+  #   # Cron job every day at 12:00
+  #   # https://crontab.guru/#0_12_*_*_*
+  #   - cron:  '0 12 * * *'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: lts/*
+      - name: Install
+        run: npm install --no-package-lock
+      - name: Test
+        run: npm test
+      # - name: Report
+      #   run: mkdir -p coverage && npx nyc report --reporter=text-lcov > coverage/lcov.info
+      # - name: Coverage
+      #   uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        if: ${{ github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, 'release') && !contains(github.event.head_commit.message, 'docs') }}
+        shell: 'script -q -e -c "bash {0}"'
+        env:
+          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          git config --global user.email ${{ secrets.GIT_EMAIL }}
+          git config --global user.name ${{ secrets.GIT_USERNAME }}
+          npm run release
