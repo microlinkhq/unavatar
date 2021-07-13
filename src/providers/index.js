@@ -7,7 +7,6 @@ const providers = {
   deviantart: require('./deviantart'),
   dribbble: require('./dribbble'),
   duckduckgo: require('./duckduckgo'),
-  facebook: require('./facebook'),
   github: require('./github'),
   gitlab: require('./gitlab'),
   gravatar: require('./gravatar'),
