@@ -59,7 +59,7 @@
         The service will determinate the user avatar querying multiple social providers and serve it
         to you.
       </p>
-      <p>It can obtain the user avatar based on the input:</p>
+      <p>It can obtain the user avatar based on the following input variations:</p>
       <h2>From username</h2>
       <p><code>&lt;img src="https://unavatar.io/:username" /&gt;</code></p>
       <p>
@@ -93,7 +93,7 @@
         In the cases that is not possible determinate the user avatar, unavatar provide one by
         default.
       </p>
-      <p>Customize it using <code>fallback</code> query parameter</p>
+      <p>Customize it using <code>fallback</code> query parameter.</p>
       <p>
         e.g.,
         <a
@@ -103,11 +103,28 @@
           >https://unavatar.io/daftpunk?fallback=https://i.imgur.com/0d1TFfQ.jpg</a
         >
       </p>
+      <p>
+        You can also pipe against other external service, like <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://boringavatars.com"
+        >boringavatars.com</a
+      >.
+      </p>
+      <p>
+        e.g.,
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://unavatar.io/1337_user?fallback=https://source.boringavatars.com/marble/120/1337_user?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+          >https://unavatar.io/1337_user?fallback=https://source.boringavatars.com/marble/120/1337_user?colors=264653,2a9d8f,e9c46a,f4a261,e76f51</a
+        >
+      </p>
       <p>You can pass <code>fallback=false</code> for disabling it.</p>
       <h3>JSON</h3>
       <p>
         Alternatively you can get the avatar url adding the query parameter
-        <code>json</code>
+        <code>json</code>.
       </p>
       <p>
         e.g.,
