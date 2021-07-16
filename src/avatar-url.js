@@ -1,6 +1,6 @@
 'use strict'
 
-const { omit, eq, get, isNil, compact } = require('lodash')
+const { omit, eq, get, isNil } = require('lodash')
 const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
 const reachableUrl = require('reachable-url')
@@ -13,7 +13,6 @@ const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
 const pReflect = require('p-reflect')
 const pAny = require('p-any')
-const pMap = require('p-map')
 
 const { isReachable } = reachableUrl
 
@@ -44,40 +43,29 @@ const getFallbackUrl = memoizeOne(({ query, protocol, host }) => {
     : getDefaultFallbackUrl({ protocol, host })
 })
 
-const is = str => {
-  if (isEmail(str)) return 'email'
-  if (urlRegex({ strict: false }).test(str)) return 'domain'
+const is = input => {
+  if (isEmail(input)) return 'email'
+  if (urlRegex({ strict: false }).test(input)) return 'domain'
   return 'username'
 }
 
-const getAvatarUrl = async key => {
-  const collection = get(providersBy, is(key))
-
-  // get all the urls from the providers that can resolve the key
-  const urls = compact(
-    await pMap(collection, async provider => {
-      try {
-        const urlFn = get(providers, provider)
-        const url = await pTimeout(urlFn(key), AVATAR_TIMEOUT)
-        return isAbsoluteUrl(url) ? url : null
-      } catch (err) {
-        return null
-      }
-    })
-  )
-
-  // get the first request in resolve the ping successfully
-  const avatarUrl = await pAny(
-    urls.map(async targetUrl => {
-      const { statusCode, url } = await reachableUrl(targetUrl)
-      return isReachable({ statusCode }) ? url : undefined
-    })
-  )
-
-  return avatarUrl
+const getAvatarUrl = async (fn, input) => {
+  const avatarUrl = await fn(input)
+  if (!isAbsoluteUrl(avatarUrl)) throw new Error('Avatar URL is not valid.')
+  const { statusCode, url } = await reachableUrl(avatarUrl)
+  if (!isReachable({ statusCode })) throw new Error('Avatar URL is not reachable.')
+  return url
 }
 
-module.exports = (fn = getAvatarUrl) => async (req, res) => {
+const getFirstReachableAvatarUrl = async input => {
+  const collection = get(providersBy, is(input))
+  const promises = collection.map(providerName =>
+    pTimeout(getAvatarUrl(get(providers, providerName), input), AVATAR_TIMEOUT)
+  )
+  return pAny(promises)
+}
+
+module.exports = (fn = getFirstReachableAvatarUrl) => async (req, res) => {
   const { query, protocol } = req
   const host = req.get('host')
   const input = get(req, 'params.key')
