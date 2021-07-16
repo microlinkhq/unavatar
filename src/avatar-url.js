@@ -90,7 +90,7 @@ module.exports = (fn = getAvatarUrl) => async (req, res) => {
   if (isRejected) debug(beautyError(reason))
 
   return {
-    url: proxyImageUrl(url),
+    url: proxyImageUrl(url, query),
     isJSON: !isNil(get(req, 'query.json')),
     isError: isNil(url)
   }

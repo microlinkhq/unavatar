@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.6.0 (2021-07-16)
+
+
+### Features
+
+* use a image optimizer service ([bda2e68](https://github.com/Kikobeats/unavatar/commit/bda2e680e508f50373371cfade0838a2a2f6d817))
+
 ### 2.5.10 (2021-07-13)
 
 ### 2.5.9 (2021-07-13)
