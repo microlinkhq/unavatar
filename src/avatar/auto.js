@@ -23,7 +23,9 @@ const is = input => {
 
 const getAvatarUrl = async (fn, input) => {
   const avatarUrl = await fn(input)
-  if (!isAbsoluteUrl(avatarUrl)) throw new Error('Avatar URL is not valid.')
+  if (typeof avatarUrl !== 'string' || !isAbsoluteUrl(avatarUrl)) {
+    throw new Error('Avatar URL is not valid.')
+  }
   const { statusCode, url } = await reachableUrl(avatarUrl, gotOpts)
   if (!isReachable({ statusCode })) throw new Error(`Avatar \`${url}\` returns \`${statusCode}\``)
   return url
@@ -36,3 +38,5 @@ module.exports = async input => {
   )
   return pAny(promises)
 }
+
+module.exports.getAvatarUrl = getAvatarUrl

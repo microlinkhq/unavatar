@@ -1,9 +1,6 @@
 {
   "version": 2,
   "public": true,
-  "env": {
-    "YOUTUBE_API_KEY": "@unavatar.youtube_api_key"
-  },
   "builds": [
     {
       "src": "src/index.js",
