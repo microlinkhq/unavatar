@@ -3,7 +3,7 @@
 const cheerio = require('cheerio')
 const qsm = require('qsm')
 
-const got = require('../got')
+const got = require('../util/got')
 
 const { AVATAR_SIZE } = require('../constant')
 

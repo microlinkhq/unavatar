@@ -5,21 +5,15 @@ const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
 const reachableUrl = require('reachable-url')
 const beautyError = require('beauty-error')
-const { URLSearchParams } = require('url')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
-const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
-const urlRegex = require('url-regex')
 const pReflect = require('p-reflect')
-const pAny = require('p-any')
 
-const { gotOpts } = require('./got')
-
+const { gotOpts } = require('../util/got')
 const { isReachable } = reachableUrl
 
-const { AVATAR_SIZE, AVATAR_TIMEOUT } = require('./constant')
-const { providers, providersBy } = require('./providers')
+const { AVATAR_SIZE, AVATAR_TIMEOUT } = require('../constant')
 
 const optimizeUrl = async (url, query) => {
   const proxyUrl = `https://images.weserv.nl/?${new URLSearchParams({
@@ -49,29 +43,7 @@ const getFallbackUrl = memoizeOne(({ query, protocol, host }) => {
     : getDefaultFallbackUrl({ protocol, host })
 })
 
-const is = input => {
-  if (isEmail(input)) return 'email'
-  if (urlRegex({ strict: false }).test(input)) return 'domain'
-  return 'username'
-}
-
-const getAvatarUrl = async (fn, input) => {
-  const avatarUrl = await fn(input)
-  if (!isAbsoluteUrl(avatarUrl)) throw new Error('Avatar URL is not valid.')
-  const { statusCode, url } = await reachableUrl(avatarUrl, gotOpts)
-  if (!isReachable({ statusCode })) throw new Error('Avatar URL is not reachable.')
-  return url
-}
-
-const getFirstReachableAvatarUrl = async input => {
-  const collection = get(providersBy, is(input))
-  const promises = collection.map(providerName =>
-    pTimeout(getAvatarUrl(get(providers, providerName), input), AVATAR_TIMEOUT)
-  )
-  return pAny(promises)
-}
-
-module.exports = (fn = getFirstReachableAvatarUrl) => async (req, res) => {
+module.exports = fn => async (req, res) => {
   const { query, protocol } = req
   const host = req.get('host')
   const input = get(req, 'params.key')
@@ -79,9 +51,9 @@ module.exports = (fn = getFirstReachableAvatarUrl) => async (req, res) => {
   const { value, reason, isRejected } = await pReflect(
     pTimeout(fn(input, req, res), AVATAR_TIMEOUT)
   )
-
   const url = value || getFallbackUrl({ query, protocol, host })
-  if (isRejected) debug(beautyError(reason))
+
+  if (isRejected) Array.from(reason).forEach(error => debug(beautyError(error)))
 
   return {
     url: await optimizeUrl(url, query),

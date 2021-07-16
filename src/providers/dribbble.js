@@ -2,7 +2,7 @@
 
 const cheerio = require('cheerio')
 
-const got = require('../got')
+const got = require('../util/got')
 
 module.exports = async username => {
   const { body } = await got(`https://dribbble.com/${username}`)
