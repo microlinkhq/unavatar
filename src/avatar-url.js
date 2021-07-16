@@ -1,10 +1,11 @@
 'use strict'
 
-const { eq, get, isNil, compact } = require('lodash')
+const { omit, eq, get, isNil, compact } = require('lodash')
 const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
 const reachableUrl = require('reachable-url')
 const beautyError = require('beauty-error')
+const { URLSearchParams } = require('url')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const isEmail = require('is-email-like')
@@ -16,8 +17,19 @@ const pMap = require('p-map')
 
 const { isReachable } = reachableUrl
 
+const { AVATAR_SIZE, AVATAR_TIMEOUT } = require('./constant')
 const { providers, providersBy } = require('./providers')
-const { AVATAR_TIMEOUT } = require('./constant')
+
+const proxyImageUrl = (url, query) =>
+  `https://images.weserv.nl/?${new URLSearchParams({
+    url,
+    l: 9,
+    af: '',
+    il: '',
+    n: -1,
+    w: AVATAR_SIZE,
+    ...omit(query, ['json', 'fallback'])
+  }).toString()}`
 
 const getDefaultFallbackUrl = memoizeOne(
   ({ protocol, host }) => `${protocol}://${host}/fallback.png`
@@ -78,7 +90,7 @@ module.exports = (fn = getAvatarUrl) => async (req, res) => {
   if (isRejected) debug(beautyError(reason))
 
   return {
-    url,
+    url: proxyImageUrl(url),
     isJSON: !isNil(get(req, 'query.json')),
     isError: isNil(url)
   }
