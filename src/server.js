@@ -6,7 +6,7 @@ const server = require('..')
 const port = process.env.PORT || process.env.port || 3000
 
 server.on('error', err => {
-  debug({ status: 'error', message: err.message, trace: err.stack })
+  debug.error({ status: 'error', message: err.message, trace: err.stack })
   process.exit(1)
 })
 

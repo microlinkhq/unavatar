@@ -38,3 +38,5 @@ module.exports = async input => {
   )
   return pAny(promises)
 }
+
+module.exports.getAvatarUrl = getAvatarUrl
