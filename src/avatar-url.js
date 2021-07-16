@@ -14,13 +14,15 @@ const urlRegex = require('url-regex')
 const pReflect = require('p-reflect')
 const pAny = require('p-any')
 
+const { gotOpts } = require('./got')
+
 const { isReachable } = reachableUrl
 
 const { AVATAR_SIZE, AVATAR_TIMEOUT } = require('./constant')
 const { providers, providersBy } = require('./providers')
 
-const proxyImageUrl = (url, query) =>
-  `https://images.weserv.nl/?${new URLSearchParams({
+const optimizeUrl = async (url, query) => {
+  const proxyUrl = `https://images.weserv.nl/?${new URLSearchParams({
     url,
     l: 9,
     af: '',
@@ -29,6 +31,10 @@ const proxyImageUrl = (url, query) =>
     w: AVATAR_SIZE,
     ...omit(query, ['json', 'fallback'])
   }).toString()}`
+
+  const { statusCode, url: resourceUrl } = await reachableUrl(proxyUrl, gotOpts)
+  return isReachable({ statusCode }) ? resourceUrl : url
+}
 
 const getDefaultFallbackUrl = memoizeOne(
   ({ protocol, host }) => `${protocol}://${host}/fallback.png`
@@ -52,7 +58,7 @@ const is = input => {
 const getAvatarUrl = async (fn, input) => {
   const avatarUrl = await fn(input)
   if (!isAbsoluteUrl(avatarUrl)) throw new Error('Avatar URL is not valid.')
-  const { statusCode, url } = await reachableUrl(avatarUrl)
+  const { statusCode, url } = await reachableUrl(avatarUrl, gotOpts)
   if (!isReachable({ statusCode })) throw new Error('Avatar URL is not reachable.')
   return url
 }
@@ -78,7 +84,7 @@ module.exports = (fn = getFirstReachableAvatarUrl) => async (req, res) => {
   if (isRejected) debug(beautyError(reason))
 
   return {
-    url: proxyImageUrl(url, query),
+    url: await optimizeUrl(url, query),
     isJSON: !isNil(get(req, 'query.json')),
     isError: isNil(url)
   }
