@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.6.3 (2021-07-16)
+
+
+### Bug Fixes
+
+* ensure optimized URL is reachabel ([0db0b1a](https://github.com/Kikobeats/unavatar/commit/0db0b1acc74ecce0463c0f808251403cfa279965))
+
 ### 2.6.2 (2021-07-16)
 
 
