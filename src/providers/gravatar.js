@@ -2,7 +2,8 @@
 
 const { stringify } = require('querystring')
 const crypto = require('crypto')
-const got = require('got')
+
+const got = require('../got')
 
 const { AVATAR_SIZE } = require('../constant')
 

@@ -1,8 +1,9 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const got = require('got')
 const qsm = require('qsm')
+
+const got = require('../got')
 
 const { AVATAR_SIZE } = require('../constant')
 

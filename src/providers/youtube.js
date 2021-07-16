@@ -3,7 +3,8 @@
 const { stringify } = require('querystring')
 const { isNil, get } = require('lodash')
 const pAny = require('p-any')
-const got = require('got')
+
+const got = require('../got')
 
 const { YOUTUBE_API_KEY } = require('../constant')
 

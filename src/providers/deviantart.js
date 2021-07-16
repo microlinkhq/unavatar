@@ -1,7 +1,8 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const got = require('got')
+
+const got = require('../got')
 
 const REGEX_PROFILE_URL = /^https?:\/\/(?:www\.)?deviantart\.com\/([\w-]+)(?:\/.+)?$/
 

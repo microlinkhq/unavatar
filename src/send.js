@@ -1,7 +1,8 @@
 'use strict'
 
 const { pickBy, get } = require('lodash')
-const got = require('got')
+
+const got = require('./got')
 
 const { ALLOWED_REQ_HEADERS } = require('./constant')
 

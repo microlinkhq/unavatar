@@ -1,7 +1,8 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const got = require('got')
+
+const got = require('../got')
 
 module.exports = async username => {
   const { body } = await got(`https://www.reddit.com/user/${username}`)

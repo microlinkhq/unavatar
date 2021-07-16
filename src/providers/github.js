@@ -1,7 +1,8 @@
 'use strict'
 
 const { stringify } = require('querystring')
-const got = require('got')
+
+const got = require('../got')
 
 const { AVATAR_SIZE } = require('../constant')
 
