@@ -89,7 +89,7 @@
     "memoize-one": "~5.2.1",
     "morgan": "~1.10.0",
     "p-any": "~3.0.0",
-    "p-reflect": "~2.1.0",
+    "p-reflect": "~3.0.0",
     "p-timeout": "~4.1.0",
     "qsm": "~2.1.2",
     "reachable-url": "~1.6.0",
