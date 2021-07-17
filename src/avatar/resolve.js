@@ -1,5 +1,6 @@
 'use strict'
 
+const log = require('debug-logfmt')('unavatar:resolve')
 const { omit, eq, get, isNil } = require('lodash')
 const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
@@ -26,7 +27,9 @@ const optimizeUrl = async (url, query) => {
     ...omit(query, ['json', 'fallback'])
   }).toString()}`
 
+  log('optimizeUrl', { ping: proxyUrl })
   const { statusCode, url: resourceUrl } = await reachableUrl(proxyUrl, gotOpts)
+  log('optimizeUrl', { url, optimizeUrl, statusCode, resourceUrl })
   return isReachable({ statusCode }) ? resourceUrl : url
 }
 
