@@ -7,7 +7,7 @@ const {
   CACHE_TTL = TWENTY_FOUR_HOURS,
   LOG_LEVEL = 'tiny',
   AVATAR_SIZE = 400,
-  AVATAR_TIMEOUT = 8000,
+  AVATAR_TIMEOUT = 20000,
   ALLOWED_REQ_HEADERS = ['user-agent', 'accept', 'x-api-key']
 } = process.env
 
