@@ -82,7 +82,7 @@
     "express": "~4.17.1",
     "got": "~11.8.2",
     "helmet": "~4.6.0",
-    "is-absolute-url": "~3.0.3",
+    "is-absolute-url": "~4.0.0",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.2.4",
     "lodash": "~4.17.21",
