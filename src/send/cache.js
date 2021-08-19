@@ -12,6 +12,7 @@ module.exports =
       }
     : require('cacheable-response')({
       ttl: CACHE_TTL,
+      staleTtl: 0,
       get: async ({ req, res, fn }) => ({
         data: await fn(req, res)
       }),
