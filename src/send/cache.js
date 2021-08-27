@@ -7,7 +7,7 @@ const { CACHE_TTL, MONGO_URI } = require('../constant')
 
 const send = require('.')
 
-const store = MONGO_URI ? new KeyvMongo() : new Map()
+const store = MONGO_URI ? new KeyvMongo(MONGO_URI) : new Map()
 
 const cache = new Keyv({ namespace: null, store })
 
