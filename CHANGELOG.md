@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.6.14 (2021-08-27)
+
+
+### Bug Fixes
+
+* pass mongo uri connection ([83273e2](https://github.com/Kikobeats/unavatar/commit/83273e245652d30e79fa250b00fda78e434a8925))
+
 ### 2.6.13 (2021-08-27)
 
 ### 2.6.12 (2021-08-26)
