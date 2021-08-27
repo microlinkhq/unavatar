@@ -71,8 +71,6 @@
     "youtube"
   ],
   "dependencies": {
-    "@keyvhq/core": "~1.2.6",
-    "@keyvhq/mongo": "~1.2.7",
     "@microlink/mql": "~0.9.9",
     "beauty-error": "~1.2.8",
     "cacheable-lookup": "~6.0.1",
