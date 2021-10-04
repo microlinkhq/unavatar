@@ -39,7 +39,7 @@
     "youtube"
   ],
   "dependencies": {
-    "@microlink/mql": "~0.9.9",
+    "@microlink/mql": "~0.10.0",
     "beauty-error": "~1.2.8",
     "cacheable-lookup": "~6.0.1",
     "cacheable-response": "~2.7.2",
