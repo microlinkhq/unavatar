@@ -98,7 +98,7 @@
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.2.4",
     "lodash": "~4.17.21",
-    "memoize-one": "~5.2.1",
+    "memoize-one": "~6.0.0",
     "morgan": "~1.10.0",
     "p-any": "~3.0.0",
     "p-reflect": "~2.1.0",
