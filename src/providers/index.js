@@ -3,14 +3,15 @@
 const { reduce } = require('lodash')
 
 const providers = {
-  microlink: require('./microlink'),
   deviantart: require('./deviantart'),
   dribbble: require('./dribbble'),
   duckduckgo: require('./duckduckgo'),
   github: require('./github'),
   gitlab: require('./gitlab'),
+  google: require('./google'),
   gravatar: require('./gravatar'),
   instagram: require('./instagram'),
+  microlink: require('./microlink'),
   reddit: require('./reddit'),
   soundcloud: require('./soundcloud'),
   substack: require('./substack'),
