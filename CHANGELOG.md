@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.7.0 (2021-10-24)
+
+
+### Features
+
+* add google as provider ([7507977](https://github.com/Kikobeats/unavatar/commit/75079777297bec72fdfa2f197bc5413df36c6417))
+
 ### 2.6.22 (2021-10-24)
 
 ### 2.6.21 (2021-10-10)
