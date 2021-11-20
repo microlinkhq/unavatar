@@ -4,7 +4,6 @@ const { omit, eq, get, isNil } = require('lodash')
 const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
 const reachableUrl = require('reachable-url')
-const beautyError = require('beauty-error')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const pTimeout = require('p-timeout')
@@ -56,7 +55,7 @@ module.exports = fn => async (req, res) => {
   const url = value || getFallbackUrl({ query, protocol, host })
 
   if (isRejected) {
-    debug.error(`\n${beautyError(reason.message || reason)}`)
+    debug.error((reason.message || reason).trim())
   }
 
   return {

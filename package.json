@@ -84,7 +84,6 @@
   ],
   "dependencies": {
     "@microlink/mql": "~0.10.4",
-    "beauty-error": "~1.2.8",
     "cacheable-lookup": "~6.0.4",
     "cacheable-response": "~2.7.7",
     "cheerio": "~1.0.0-rc.10",
