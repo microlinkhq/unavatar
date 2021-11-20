@@ -21,8 +21,8 @@ const is = input => {
   return 'username'
 }
 
-const getAvatarUrl = async (fn, input) => {
-  const avatarUrl = await fn(input)
+const getAvatarUrl = async (fn, ...args) => {
+  const avatarUrl = await fn(...args)
   if (typeof avatarUrl !== 'string' || !isAbsoluteUrl(avatarUrl)) {
     throw new Error('Avatar URL is not valid.')
   }
