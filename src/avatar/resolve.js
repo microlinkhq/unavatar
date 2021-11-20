@@ -54,7 +54,7 @@ module.exports = fn => async (req, res) => {
   const url = value || getFallbackUrl({ query, protocol, host })
 
   if (isRejected) {
-    Array.from(reason).forEach(error => debug.error(beautyError(error.message || error)))
+    debug.error(`\n${beautyError(reason.message || reason)}`)
   }
 
   return {
