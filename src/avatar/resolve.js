@@ -27,7 +27,9 @@ const optimizeUrl = async (url, query) => {
   }).toString()}`
 
   const { statusCode, url: resourceUrl } = await reachableUrl(proxyUrl, gotOpts)
-  return isReachable({ statusCode }) ? resourceUrl : url
+  const optimizedUrl = isReachable({ statusCode }) ? resourceUrl : url
+  debug('optimizeUrl', { original: url, optimized: optimizedUrl })
+  return optimizedUrl
 }
 
 const getDefaultFallbackUrl = memoizeOne(
