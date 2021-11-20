@@ -94,6 +94,7 @@
     "express": "~4.17.1",
     "got": "~11.8.2",
     "helmet": "~4.6.0",
+    "https-tls": "~1.0.4",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.2.4",
@@ -105,6 +106,8 @@
     "p-timeout": "~4.1.0",
     "qsm": "~2.1.2",
     "reachable-url": "~1.6.3",
+    "top-user-agents": "~1.0.39",
+    "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
   },
   "devDependencies": {
