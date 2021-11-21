@@ -23,7 +23,7 @@ const is = input => {
 }
 
 const getAvatarContent = async input => {
-  if (typeof input !== 'string') {
+  if (typeof input !== 'string' || input === '') {
     throw new Error(`Avatar \`${input}\` is not valid.`)
   }
 
