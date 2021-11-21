@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.8.1 (2021-11-21)
+
+
+### Bug Fixes
+
+* ensure input is not empty ([da1693d](https://github.com/Kikobeats/unavatar/commit/da1693d584b12ee62d9c4cb2b3a2e0d4dc3c20af))
+
 ## 2.8.0 (2021-11-21)
 
 
