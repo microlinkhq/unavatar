@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.8.0 (2021-11-21)
+
+
+### Features
+
+* add base64 URLs support ([814b76c](https://github.com/Kikobeats/unavatar/commit/814b76ca3647e2f8c7cb334095c6f7cb840e0a7e))
+
 ### 2.7.3 (2021-11-21)
 
 ### 2.7.2 (2021-11-20)
