@@ -1,6 +1,7 @@
 'use strict'
 
 const isAbsoluteUrl = require('is-absolute-url')
+const dataUriRegex = require('data-uri-regex')
 const reachableUrl = require('reachable-url')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
@@ -21,22 +22,36 @@ const is = input => {
   return 'username'
 }
 
-const getAvatarUrl = async (fn, ...args) => {
-  const avatarUrl = await fn(...args)
-  if (typeof avatarUrl !== 'string' || !isAbsoluteUrl(avatarUrl)) {
-    throw new Error('Avatar URL is not valid.')
+const getAvatarContent = async input => {
+  if (typeof input !== 'string') {
+    throw new Error(`Avatar \`${input}\` is not valid.`)
   }
-  const { statusCode, url } = await reachableUrl(avatarUrl, gotOpts)
-  if (!isReachable({ statusCode })) throw new Error(`Avatar \`${url}\` returns \`${statusCode}\``)
-  return url
+
+  if (dataUriRegex().test(input)) {
+    return { type: 'buffer', data: input }
+  }
+
+  if (!isAbsoluteUrl(input)) {
+    throw new Error('Avatar as URL should be absolute.')
+  }
+
+  const { statusCode, url } = await reachableUrl(input, gotOpts)
+
+  if (!isReachable({ statusCode })) {
+    throw new Error(`Avatar \`${url}\` is unreachable (\`${statusCode}\`)`)
+  }
+
+  return { type: 'url', data: url }
 }
+
+const getAvatar = async (fn, ...args) => fn(...args).then(getAvatarContent)
 
 module.exports = async input => {
   const collection = get(providersBy, is(input))
   const promises = collection.map(providerName =>
-    pTimeout(getAvatarUrl(get(providers, providerName), input), AVATAR_TIMEOUT)
+    pTimeout(getAvatar(get(providers, providerName), input), AVATAR_TIMEOUT)
   )
   return pAny(promises)
 }
 
-module.exports.getAvatarUrl = getAvatarUrl
+module.exports.getAvatar = getAvatar

@@ -1,5 +1,5 @@
 'use strict'
 
-const { getAvatarUrl } = require('./auto')
+const { getAvatar } = require('./auto')
 
-module.exports = fn => async (...args) => getAvatarUrl(fn, ...args)
+module.exports = fn => async (...args) => getAvatar(fn, ...args)

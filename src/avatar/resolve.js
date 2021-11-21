@@ -27,7 +27,6 @@ const optimizeUrl = async (url, query) => {
 
   const { statusCode, url: resourceUrl } = await reachableUrl(proxyUrl, gotOpts)
   const optimizedUrl = isReachable({ statusCode }) ? resourceUrl : url
-  debug('optimizeUrl', { original: url, optimized: optimizedUrl })
   return optimizedUrl
 }
 
@@ -49,18 +48,25 @@ module.exports = fn => async (req, res) => {
   const host = req.get('host')
   const input = get(req, 'params.key')
 
-  const { value, reason, isRejected } = await pReflect(
+  let { value, reason, isRejected } = await pReflect(
     pTimeout(fn(input, req, res), AVATAR_TIMEOUT)
   )
-  const url = value || getFallbackUrl({ query, protocol, host })
 
   if (isRejected) {
     debug.error((reason.message || reason).trim())
   }
 
+  if (value && value.type === 'url') {
+    value.data = await optimizeUrl(value.data, query)
+  }
+
+  if (value === undefined) {
+    value = { type: 'url', data: getFallbackUrl({ query, protocol, host }) }
+  }
+
   return {
-    url: await optimizeUrl(url, query),
+    ...value,
     isJSON: !isNil(get(req, 'query.json')),
-    isError: isNil(url)
+    isError: isNil(value)
   }
 }
