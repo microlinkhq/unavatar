@@ -108,7 +108,7 @@
     "qsm": "~2.1.2",
     "reachable-url": "~1.6.3",
     "top-user-agents": "~1.0.39",
-    "unique-random-array": "~2.0.0",
+    "unique-random-array": "~3.0.0",
     "url-regex": "~5.0.0"
   },
   "devDependencies": {
