@@ -90,7 +90,7 @@
     "compression": "~1.7.4",
     "cors": "~2.8.5",
     "data-uri-regex": "~0.1.4",
-    "data-uri-to-buffer": "~3.0.1",
+    "data-uri-to-buffer": "~4.0.0",
     "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
     "got": "~11.8.2",
