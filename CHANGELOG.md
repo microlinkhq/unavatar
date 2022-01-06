@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.8.3 (2022-01-06)
+
+
+### Bug Fixes
+
+* disable crossOriginResourcePolicy ([#176](https://github.com/Kikobeats/unavatar/issues/176)) ([12475c5](https://github.com/Kikobeats/unavatar/commit/12475c575ab0d7a566bf110fff9356c84d953a10))
+
 ### 2.8.2 (2022-01-03)
 
 ### 2.8.1 (2021-11-21)
