@@ -13,7 +13,11 @@ const avatar = require('./avatar')
 
 const router = Router()
 
-router.use(require('helmet')())
+router.use(
+  require('helmet')({
+    crossOriginResourcePolicy: false
+  })
+)
 router.use(require('compression')())
 router.use(require('cors')())
 router.use(require('morgan')(LOG_LEVEL))
