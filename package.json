@@ -94,7 +94,7 @@
     "debug-logfmt": "~1.0.4",
     "express": "~4.17.1",
     "got": "~11.8.2",
-    "helmet": "~5.0.0",
+    "helmet": "~4.6.0",
     "https-tls": "~1.0.4",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
