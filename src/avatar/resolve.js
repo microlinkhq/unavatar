@@ -53,7 +53,7 @@ module.exports = fn => async (req, res) => {
   )
 
   if (isRejected) {
-    debug.error((reason.message || reason).trim())
+    debug.warn((reason.message || reason).trim())
   }
 
   if (value && value.type === 'url') {
