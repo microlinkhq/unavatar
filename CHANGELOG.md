@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.8.4 (2022-01-07)
+
+
+### Bug Fixes
+
+* ensure fallback is present ([a50d505](https://github.com/Kikobeats/unavatar/commit/a50d505a7a873ff82c3434c361dc30375958c25e))
+
 ### 2.8.3 (2022-01-06)
 
 
