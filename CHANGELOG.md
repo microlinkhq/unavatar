@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.8.6 (2022-01-08)
+
+
+### Bug Fixes
+
+* rename fallback into data variable ([d98cdf2](https://github.com/Kikobeats/unavatar/commit/d98cdf2c1a755c3942af39e80e9b92f5a3b584ab))
+
 ### 2.8.5 (2022-01-08)
 
 ### 2.8.4 (2022-01-07)
