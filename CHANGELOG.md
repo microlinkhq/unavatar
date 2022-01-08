@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.8.7 (2022-01-08)
+
+
+### Bug Fixes
+
+* ensure to wait until twitter dom is loaded ([#177](https://github.com/Kikobeats/unavatar/issues/177)) ([dbea09f](https://github.com/Kikobeats/unavatar/commit/dbea09f26ab495e961580f93f4036fcf3f4dd1cc))
+
 ### 2.8.6 (2022-01-08)
 
 
