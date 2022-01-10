@@ -44,9 +44,10 @@ const getFallbackUrl = memoizeOne(({ query, protocol, host }) => {
 })
 
 module.exports = fn => async (req, res) => {
-  const { query, protocol } = req
-  const host = req.get('host')
+  const protocol = req.socket.encrypted ? 'https' : 'http'
   const input = get(req, 'params.key')
+  const host = req.headers.host
+  const { query } = req
 
   let { value, reason, isRejected } = await pReflect(
     pTimeout(fn(input, req, res), AVATAR_TIMEOUT)
