@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.9.0 (2022-01-10)
+
+
+### Features
+
+* add rate limiter ([99ae399](https://github.com/Kikobeats/unavatar/commit/99ae3991d2560611fa1d75d13144dc86bd8f9fbf))
+
 ### 2.8.7 (2022-01-08)
 
 
