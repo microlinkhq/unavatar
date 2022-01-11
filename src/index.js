@@ -24,8 +24,8 @@ app.use(require('cors')())
 app.use(require('morgan')(LOG_LEVEL))
 app.use(serveStatic(path.resolve('public')))
 
-app.get('/robots.txt', (req, res) => res.status(204).send())
-app.get('/favicon.ico', (req, res) => res.status(204).send())
+app.get('/robots.txt', (req, res) => (res.statusCode = 204) && res.end())
+app.get('/favicon.ico', (req, res) => (res.statusCode = 204) && res.end())
 
 app.get('/:key', (req, res) =>
   ssrCache({
