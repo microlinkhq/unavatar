@@ -18,13 +18,9 @@ const userAgentHook = options => {
 const gotOpts = {
   dnsCache,
   https: { rejectUnauthorized: false },
-  retry: 0,
-  headers: {
-    'user-agent': undefined
-  },
-  hooks: {
-    beforeRequest: [userAgentHook, tlsHook]
-  }
+  retry: 1,
+  headers: { 'user-agent': undefined },
+  hooks: { beforeRequest: [userAgentHook, tlsHook] }
 }
 
 module.exports = got.extend(gotOpts)
