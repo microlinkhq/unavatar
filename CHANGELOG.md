@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.10.1 (2022-01-11)
+
+
+### Bug Fixes
+
+* use res.statusCode instead of res.status ([80f5a3f](https://github.com/Kikobeats/unavatar/commit/80f5a3f3343aa7f8f7c2c562bc1f4f86f4d345e0))
+
 ## 2.10.0 (2022-01-11)
 
 
