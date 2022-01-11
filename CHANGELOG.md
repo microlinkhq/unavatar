@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.10.2 (2022-01-11)
+
+
+### Bug Fixes
+
+* regions should be an array ([fd24093](https://github.com/Kikobeats/unavatar/commit/fd24093d9229d77097be694f970ca26987248530))
+
 ### 2.10.1 (2022-01-11)
 
 ## 2.10.0 (2022-01-11)
