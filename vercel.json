@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "regions": "all",
+  "regions": ["all"],
   "builds": [
     {
       "src": "src/index.js",
