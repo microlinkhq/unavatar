@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.10.0 (2022-01-11)
+
+
+### Features
+
+* use polka instead of express ([c680e04](https://github.com/Kikobeats/unavatar/commit/c680e04b3578bafda1d05b45119ae5e955f15abb))
+
 ## 2.9.0 (2022-01-10)
 
 
