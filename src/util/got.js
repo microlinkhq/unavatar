@@ -9,7 +9,8 @@ const got = require('got')
 const randomUserAgent = uniqueRandomArray(userAgents)
 
 const dnsCache = new CacheableLookup()
-dnsCache.servers = ['1.1.1.1', '1.0.0.1']
+
+dnsCache.servers = [...new Set(['1.1.1.1', '1.0.0.1', ...dnsCache.servers])]
 
 const userAgentHook = options => {
   options.headers['user-agent'] = randomUserAgent()
