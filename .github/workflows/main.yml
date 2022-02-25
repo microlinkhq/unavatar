@@ -3,10 +3,10 @@ name: test
 on:
   push:
     branches:
-    - master
+      - master
   pull_request:
     branches:
-    - master
+      - master
   # schedule:
   #   # Cron job every day at 12:00
   #   # https://crontab.guru/#0_12_*_*_*
@@ -27,7 +27,7 @@ jobs:
       - name: Test
         run: npm test
       # - name: Report
-      #   run: mkdir -p coverage && npx nyc report --reporter=text-lcov > coverage/lcov.info
+      #   run: mkdir -p coverage && npx c8 report --reporter=text-lcov > coverage/lcov.info
       # - name: Coverage
       #   uses: coverallsapp/github-action@master
       #   with:
