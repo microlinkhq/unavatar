@@ -92,7 +92,7 @@
     "data-uri-regex": "~0.1.4",
     "data-uri-to-buffer": "~3.0.1",
     "debug-logfmt": "~1.0.4",
-    "got": "~11.8.2",
+    "got": "~12.0.3",
     "helmet": "~5.0.0",
     "https-tls": "~1.0.4",
     "is-absolute-url": "~3.0.3",
