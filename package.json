@@ -97,7 +97,7 @@
     "https-tls": "~1.0.4",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
-    "is-url-http": "~2.2.4",
+    "is-url-http": "~2.3.0",
     "lodash": "~4.17.21",
     "memoize-one": "~6.0.0",
     "morgan": "~1.10.0",
