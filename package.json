@@ -103,7 +103,7 @@
     "morgan": "~1.10.0",
     "p-any": "~3.0.0",
     "p-reflect": "~2.1.0",
-    "p-timeout": "~4.1.0",
+    "p-timeout": "~5.1.0",
     "polka": "~0.5.2",
     "qsm": "~2.1.2",
     "reachable-url": "~1.6.3",
