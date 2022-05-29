@@ -86,7 +86,7 @@
     "@microlink/mql": "~0.10.4",
     "cacheable-lookup": "~6.0.4",
     "cacheable-response": "~2.7.7",
-    "cheerio": "~1.0.0-rc.10",
+    "cheerio": "~1.0.0-rc.11",
     "compression": "~1.7.4",
     "cors": "~2.8.5",
     "data-uri-regex": "~0.1.4",
