@@ -6,14 +6,19 @@ const userAgents = require('top-user-agents')
 const tlsHook = require('https-tls/hook')
 const got = require('got')
 
-const randomUserAgent = uniqueRandomArray(userAgents)
+const randUserAgent = uniqueRandomArray(userAgents)
 
 const dnsCache = new CacheableLookup()
 
 dnsCache.servers = [...new Set(['1.1.1.1', '1.0.0.1', ...dnsCache.servers])]
 
 const userAgentHook = options => {
-  options.headers['user-agent'] = randomUserAgent()
+  if (
+    options.headers['user-agent'] ===
+    'got (https://github.com/sindresorhus/got)'
+  ) {
+    options.headers['user-agent'] = randUserAgent()
+  }
 }
 
 const gotOpts = {
