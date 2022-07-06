@@ -83,10 +83,10 @@
     "youtube"
   ],
   "dependencies": {
-    "@microlink/mql": "~0.10.22",
+    "@microlink/mql": "~0.10.26",
     "cacheable-lookup": "~6.0.4",
-    "cacheable-response": "~2.7.10",
-    "cheerio": "~1.0.0-rc.11",
+    "cacheable-response": "~2.8.1",
+    "cheerio": "~1.0.0-rc.12",
     "compression": "~1.7.4",
     "cors": "~2.8.5",
     "data-uri-regex": "~0.1.4",
@@ -108,7 +108,7 @@
     "qsm": "~2.1.2",
     "reachable-url": "~1.6.11",
     "serve-static": "~1.15.0",
-    "top-user-agents": "~1.0.45",
+    "top-user-agents": "~1.0.46",
     "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
   },
