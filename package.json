@@ -102,7 +102,7 @@
     "memoize-one": "~6.0.0",
     "morgan": "~1.10.0",
     "p-any": "~3.0.0",
-    "p-reflect": "~2.1.0",
+    "p-reflect": "~3.1.0",
     "p-timeout": "~4.1.0",
     "polka": "~0.5.2",
     "qsm": "~2.1.2",
