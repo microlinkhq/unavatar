@@ -106,7 +106,7 @@
     "p-timeout": "~4.1.0",
     "polka": "~0.5.2",
     "qsm": "~2.1.2",
-    "reachable-url": "~1.6.11",
+    "reachable-url": "~1.7.0",
     "serve-static": "~1.15.0",
     "top-user-agents": "~1.0.46",
     "unique-random-array": "~2.0.0",
