@@ -83,7 +83,7 @@
     "youtube"
   ],
   "dependencies": {
-    "@microlink/mql": "~0.10.26",
+    "@microlink/mql": "~0.10.30",
     "cacheable-lookup": "~6.1.0",
     "cacheable-response": "~2.8.1",
     "cheerio": "~1.0.0-rc.12",
@@ -106,9 +106,9 @@
     "p-timeout": "~4.1.0",
     "polka": "~0.5.2",
     "qsm": "~2.1.2",
-    "reachable-url": "~1.7.0",
+    "reachable-url": "~1.7.1",
     "serve-static": "~1.15.0",
-    "top-user-agents": "~1.0.46",
+    "top-user-agents": "~1.0.49",
     "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
   },
