@@ -117,6 +117,7 @@
   "devDependencies": {
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
+    "anchor-js": "latest",
     "browser-sync": "latest",
     "concurrently": "latest",
     "conventional-github-releaser": "latest",
