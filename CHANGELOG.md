@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.11.0 (2022-12-20)
+
+
+### Features
+
+* add traffic control ([#205](https://github.com/Kikobeats/unavatar/issues/205)) ([9865f54](https://github.com/Kikobeats/unavatar/commit/9865f54e6b1b20a118a88a83e523aa952246571a))
+
 ### 2.10.13 (2022-12-20)
 
 ### 2.10.12 (2022-11-19)
