@@ -11,7 +11,9 @@ module.exports = async username => {
   const { body } = await got(`https://gitlab.com/${username}`)
   const $ = cheerio.load(body)
   const avatarUrl = $('.avatar').attr('data-src')
-  return qsm.exist(avatarUrl, 'width') ? qsm.add(avatarUrl, { width: AVATAR_SIZE }) : avatarUrl
+  return qsm.exist(avatarUrl, 'width')
+    ? qsm.add(avatarUrl, { width: AVATAR_SIZE })
+    : avatarUrl
 }
 
 module.exports.supported = {

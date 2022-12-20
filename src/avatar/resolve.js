@@ -63,7 +63,7 @@ module.exports = fn => async (req, res) => {
 
   if (value === undefined) {
     const data = getFallbackUrl({ query, protocol, host })
-    value = data ? { type: 'url', data: data } : null
+    value = data ? { type: 'url', data } : null
   }
 
   return {
