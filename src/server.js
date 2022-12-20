@@ -1,19 +1,14 @@
 'use strict'
 
 const debug = require('debug-logfmt')('unavatar')
-const server = require('..')
+const server = require('.')
 
-const port = process.env.PORT || process.env.port || 3000
+const { PORT } = require('./constant')
 
-server.on('error', err => {
-  debug.error({ status: 'error', message: err.message, trace: err.stack })
-  process.exit(1)
-})
-
-server.listen(port, function () {
+server.listen(PORT, () => {
   debug({
     status: 'listening',
     pid: process.pid,
-    address: `http://localhost:${port}`
+    address: `http://localhost:${PORT}`
   })
 })
