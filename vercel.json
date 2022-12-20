@@ -5,7 +5,12 @@
     {
       "src": "src/index.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
     }
+
   ],
   "routes": [
     {
@@ -16,6 +21,7 @@
       "src": "/favicon.ico",
       "status": 204
     },
+    { "handle": "filesystem" },
     {
       "src": "/(.*)",
       "dest": "/src/index.js"
