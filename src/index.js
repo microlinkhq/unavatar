@@ -1,7 +1,9 @@
 'use strict'
 
+const serveStatic = require('serve-static')
 const { forEach } = require('lodash')
 const polka = require('polka')
+const path = require('path')
 
 const { LOG_LEVEL } = require('./constant')
 
@@ -15,6 +17,13 @@ app.use(require('helmet')({ crossOriginResourcePolicy: false }))
 app.use(require('compression')())
 app.use(require('cors')())
 app.use(require('morgan')(LOG_LEVEL))
+
+app.use(
+  serveStatic(path.resolve('public'), {
+    immutable: true,
+    maxAge: '1y'
+  })
+)
 app.use(require('./authentication'))
 
 app.get('/:key', (req, res) =>

@@ -1,6 +1,10 @@
-FROM node:14
-COPY . /app
-WORKDIR /app
-RUN npm install --only=production
+FROM node:lts
+
+COPY package.json .npmrc ./
+RUN npm install --omit=dev
+
+COPY . .
+
+EXPOSE 3000
 
 CMD ["node", "src/server.js"]

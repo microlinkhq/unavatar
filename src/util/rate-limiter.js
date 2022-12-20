@@ -13,7 +13,6 @@ const createRedis = uri =>
     : undefined
 
 const { REDIS_URI, RATE_LIMIT_WINDOW, RATE_LIMIT } = require('../constant')
-
 const db = createRedis(REDIS_URI)
 
 module.exports = new RateLimiter({

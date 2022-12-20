@@ -2,9 +2,9 @@
 
 const { isFinished } = require('on-finished')
 
-const { API_KEY } = require('./constant')
-
 const rateLimiter = require('./util/rate-limiter')
+
+const { API_KEY } = require('./constant')
 
 const more = (() => {
   const email = 'hello@microlink.io'
@@ -33,8 +33,13 @@ const rateLimitError = (() => {
 
 module.exports = async (req, res, next) => {
   if (req.headers['x-api-key'] === API_KEY) return next()
-  const ipAddress = req.headers['cf-connecting-ip'] || req.headers['x-real-ip']
-  const { total, reset, remaining } = await rateLimiter.get({ id: ipAddress })
+
+  const clientIp =
+    req.headers['fly-client-ip'] ||
+    req.headers['cf-connecting-ip'] ||
+    '::ffff:127.0.0.1'
+
+  const { total, reset, remaining } = await rateLimiter.get({ id: clientIp })
 
   if (!isFinished(res)) {
     res.setHeader('X-Rate-Limit-Limit', total)
