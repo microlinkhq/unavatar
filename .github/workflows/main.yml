@@ -56,18 +56,3 @@ jobs:
           git config --global user.email ${{ secrets.GIT_EMAIL }}
           git config --global user.name ${{ secrets.GIT_USERNAME }}
           npm run release
-  deploy:
-    if: ${{ startsWith(github.event.head_commit.message, 'chore(release):') }}
-    needs: [release]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install
-        uses: superfly/flyctl-actions/setup-flyctl@master
-      - name: Deploy
-        run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
