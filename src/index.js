@@ -5,8 +5,6 @@ const { forEach } = require('lodash')
 const polka = require('polka')
 const path = require('path')
 
-const { LOG_LEVEL } = require('./constant')
-
 const { providers } = require('./providers')
 const ssrCache = require('./send/cache')
 const avatar = require('./avatar')
@@ -16,7 +14,19 @@ const app = polka()
 app.use(require('helmet')({ crossOriginResourcePolicy: false }))
 app.use(require('compression')())
 app.use(require('cors')())
-app.use(require('morgan')(LOG_LEVEL))
+app.use(
+  require('morgan')(function (tokens, req, res) {
+    return [
+      '',
+      req.headers['cf-connecting-ip'],
+      tokens.url(req, res),
+      tokens.status(req, res),
+      ' – ',
+      tokens['response-time'](req, res),
+      'ms'
+    ].join(' ')
+  })
+)
 
 app.use(
   serveStatic(path.resolve('public'), {

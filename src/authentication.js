@@ -33,12 +33,7 @@ const rateLimitError = (() => {
 
 module.exports = async (req, res, next) => {
   if (req.headers['x-api-key'] === API_KEY) return next()
-
-  const clientIp =
-    req.headers['fly-client-ip'] ||
-    req.headers['cf-connecting-ip'] ||
-    '::ffff:127.0.0.1'
-
+  const clientIp = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
   const { total, reset, remaining } = await rateLimiter.get({ id: clientIp })
 
   if (!isFinished(res)) {
