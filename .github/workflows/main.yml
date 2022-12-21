@@ -45,6 +45,8 @@ jobs:
           node-version: lts/*
       - name: Install
         run: npm install --no-package-lock
+      - name: Test
+        run: npm test
       - name: Release
         shell: 'script -q -e -c "bash {0}" > /dev/null'
         env:
