@@ -31,7 +31,7 @@ jobs:
           branch: ${{ github.head_ref }}
 
   release:
-    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') && !startsWith(github.event.head_commit.message, 'docs:') && !startsWith(github.event.head_commit.message, 'ci:') }}
+    if: ${{ !startsWith(github.event.head_commit.message, 'docs:') && !startsWith(github.event.head_commit.message, 'ci:') }}
     needs: [contributors]
     runs-on: ubuntu-latest
     steps:
@@ -57,3 +57,17 @@ jobs:
           git config --global user.name ${{ secrets.GIT_USERNAME }}
           git pull origin master
           npm run release
+  deploy:
+    needs: [release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
