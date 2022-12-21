@@ -14,10 +14,6 @@
   },
   "contributors": [
     {
-      "name": "ぶーと / Yoshiaki Ueda",
-      "email": "oh@bootjp.me"
-    },
-    {
       "name": "David Refoua",
       "email": "David@Refoua.me"
     },
@@ -26,40 +22,44 @@
       "email": "alexander.schlindwein@hotmail.de"
     },
     {
-      "name": "Omid Nikrah",
-      "email": "omidnikrah@gmail.com"
-    },
-    {
       "name": "Zadkiel",
       "email": "hello@zadkiel.fr"
     },
     {
-      "name": "Rodrigo Reis",
-      "email": "rodrigoreis22@yahoo.com.br"
-    },
-    {
-      "name": "Terence Eden",
-      "email": "edent@users.noreply.github.com"
-    },
-    {
-      "name": "Tom Witkowski",
-      "email": "dev.gummibeer@gmail.com"
+      "name": "Omid Nikrah",
+      "email": "omidnikrah@gmail.com"
     },
     {
       "name": "Nicolas Hedger",
       "email": "649677+nhedger@users.noreply.github.com"
     },
     {
+      "name": "Angel M De Miguel",
+      "email": "angel@bitnami.com"
+    },
+    {
+      "name": "Tom Witkowski",
+      "email": "dev.gummibeer@gmail.com"
+    },
+    {
+      "name": "Terence Eden",
+      "email": "edent@users.noreply.github.com"
+    },
+    {
       "name": "Hameed Rahamathullah",
       "email": "hameedraha@gmail.com"
+    },
+    {
+      "name": "ぶーと / Yoshiaki Ueda",
+      "email": "oh@bootjp.me"
     },
     {
       "name": "Reed Jones",
       "email": "reedjones@reedjones.com"
     },
     {
-      "name": "Angel M De Miguel",
-      "email": "angel@bitnami.com"
+      "name": "Rodrigo Reis",
+      "email": "rodrigoreis22@yahoo.com.br"
     }
   ],
   "repository": {
