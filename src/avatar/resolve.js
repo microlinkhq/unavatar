@@ -3,20 +3,17 @@
 const { omit, eq, get, isNil } = require('lodash')
 const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
-const reachableUrl = require('reachable-url')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const pTimeout = require('p-timeout')
 const pReflect = require('p-reflect')
 
-const { gotOpts } = require('../util/got')
-const { isReachable } = reachableUrl
-
 const { AVATAR_SIZE, AVATAR_TIMEOUT } = require('../constant')
 
-const optimizeUrl = async (url, query) => {
-  const proxyUrl = `https://images.weserv.nl/?${new URLSearchParams({
+const optimizeUrl = async (url, query) =>
+  `https://images.weserv.nl/?${new URLSearchParams({
     url,
+    default: url,
     l: 9,
     af: '',
     il: '',
@@ -24,11 +21,6 @@ const optimizeUrl = async (url, query) => {
     w: AVATAR_SIZE,
     ...omit(query, ['json', 'fallback'])
   }).toString()}`
-
-  const { statusCode, url: resourceUrl } = await reachableUrl(proxyUrl, gotOpts)
-  const optimizedUrl = isReachable({ statusCode }) ? resourceUrl : url
-  return optimizedUrl
-}
 
 const getDefaultFallbackUrl = memoizeOne(
   ({ protocol, host }) => `${protocol}://${host}/fallback.png`
