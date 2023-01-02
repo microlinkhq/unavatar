@@ -31,7 +31,7 @@ jobs:
           branch: ${{ github.head_ref }}
 
   release:
-    if: ${{ !startsWith(github.event.head_commit.message, 'docs:') && !startsWith(github.event.head_commit.message, 'ci:') }}
+    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') && !startsWith(github.event.head_commit.message, 'docs:') && !startsWith(github.event.head_commit.message, 'ci:') }}
     needs: [contributors]
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,6 @@ jobs:
       - name: Test
         run: npm test
       - name: Release
-        shell: 'script -q -e -c "bash {0}" > /dev/null'
         env:
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
