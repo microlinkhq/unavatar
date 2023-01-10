@@ -5,7 +5,6 @@ const { get } = require('lodash')
 
 module.exports = async (username, { headers = {} } = {}) => {
   const { data } = await mql(`https://twitter.com/${username}`, {
-    waitForTimeout: 700,
     apiKey: headers['x-api-key'],
     force: true
   })
