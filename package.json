@@ -106,7 +106,7 @@
     "on-finished": "~2.4.1",
     "p-any": "~3.0.0",
     "p-reflect": "~2.1.0",
-    "p-timeout": "~4.1.0",
+    "p-timeout": "~6.1.0",
     "polka": "~0.5.2",
     "qsm": "~2.1.2",
     "reachable-url": "~1.7.1",
