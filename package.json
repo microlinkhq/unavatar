@@ -96,7 +96,7 @@
     "got": "~11.8.5",
     "helmet": "~6.0.0",
     "https-tls": "~1.0.12",
-    "ioredis": "~5.2.4",
+    "ioredis": "~5.3.0",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.3.2",
