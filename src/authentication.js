@@ -1,7 +1,5 @@
 'use strict'
 
-const { isFinished } = require('on-finished')
-
 const rateLimiter = require('./util/rate-limiter')
 
 const { API_KEY } = require('./constant')
@@ -36,7 +34,7 @@ module.exports = async (req, res, next) => {
   const clientIp = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
   const { total, reset, remaining } = await rateLimiter.get({ id: clientIp })
 
-  if (!isFinished(res)) {
+  if (!res.writableEnded) {
     res.setHeader('X-Rate-Limit-Limit', total)
     res.setHeader('X-Rate-Limit-Remaining', Math.max(0, remaining - 1))
     res.setHeader('X-Rate-Limit-Reset', reset)
