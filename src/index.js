@@ -12,7 +12,7 @@ const avatar = require('./avatar')
 const app = polka()
 
 app.use(require('helmet')({ crossOriginResourcePolicy: false }))
-app.use(require('compression')())
+app.use(require('http-compression')())
 app.use(require('cors')())
 app.use(
   require('morgan')(function (tokens, req, res) {
