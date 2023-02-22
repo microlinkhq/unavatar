@@ -9,6 +9,8 @@ const { providers } = require('./providers')
 const ssrCache = require('./send/cache')
 const avatar = require('./avatar')
 
+const { NODE_ENV } = require('./constant')
+
 const router = createRouter((error, req, res) => {
   const hasError = error !== undefined
   res.statusCode = hasError ? error.code ?? 500 : 404
@@ -16,29 +18,27 @@ const router = createRouter((error, req, res) => {
 })
 
 router
-  .use(require('helmet')({ crossOriginResourcePolicy: false }))
-  .use(require('http-compression')())
-  .use(require('cors')())
   .use(
+    require('helmet')({ crossOriginResourcePolicy: false }),
+    require('http-compression')(),
+    require('cors')(),
     require('morgan')(function (tokens, req, res) {
       return [
         '',
         req.headers['cf-connecting-ip'],
         tokens.url(req, res),
         tokens.status(req, res),
-        ' – ',
+        '–',
         tokens['response-time'](req, res),
         'ms'
       ].join(' ')
-    })
-  )
-  .use(
+    }),
     serveStatic(path.resolve('public'), {
       immutable: true,
       maxAge: '1y'
-    })
+    }),
+    NODE_ENV === 'production' && require('./authentication')
   )
-  .use(require('./authentication'))
   .get('/:key', (req, res) =>
     ssrCache({
       req,

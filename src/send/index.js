@@ -1,11 +1,7 @@
 'use strict'
 
 const dataUriToBuffer = require('data-uri-to-buffer')
-const { promisify } = require('util')
 const { pickBy } = require('lodash')
-const stream = require('stream')
-
-const pipeline = promisify(stream.pipeline)
 
 const got = require('../util/got')
 
@@ -25,7 +21,7 @@ const sendAvatar = ({ req, res, type, data, isError }) => {
   if (isError) return res.end()
   return type === 'buffer'
     ? res.end(dataUriToBuffer(data))
-    : pipeline(got.stream(data, { headers: pickHeaders(req.headers) }), res)
+    : got.stream(data, { headers: pickHeaders(req.headers) }).pipe(res)
 }
 
 const send = ({ type, data, req, res, isJSON, isError }) => {
