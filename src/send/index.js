@@ -30,7 +30,6 @@ const sendAvatar = ({ req, res, type, data, isError }) => {
 
 const send = ({ type, data, req, res, isJSON, isError }) => {
   res.statusCode = isError ? 404 : 200
-
   return isJSON
     ? sendJson(res, { url: data })
     : sendAvatar({ req, res, type, data, isError })
