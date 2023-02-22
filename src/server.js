@@ -1,9 +1,11 @@
 'use strict'
 
 const debug = require('debug-logfmt')('unavatar')
-const server = require('.')
+const { createServer } = require('http')
 
 const { PORT } = require('./constant')
+
+const server = createServer(require('.'))
 
 server.listen(PORT, () => {
   debug({
