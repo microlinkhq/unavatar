@@ -10,10 +10,11 @@ const { get } = require('lodash')
 const pAny = require('p-any')
 
 const { providers, providersBy } = require('../providers')
+const isIterable = require('../util/is-iterable')
 const { gotOpts } = require('../util/got')
+const Error = require('../util/error')
 
-const { isReachable } = reachableUrl
-
+const { STATUS_CODES } = require('http')
 const { AVATAR_TIMEOUT } = require('../constant')
 
 const is = input => {
@@ -22,9 +23,13 @@ const is = input => {
   return 'username'
 }
 
-const getAvatarContent = async input => {
+const getAvatarContent = name => async input => {
   if (typeof input !== 'string' || input === '') {
-    throw new Error(`Avatar \`${input}\` is not valid.`)
+    throw new Error({
+      name,
+      message: `Avatar \`${input}\` is invalid.`,
+      statusCode: 400
+    })
   }
 
   if (dataUriRegex().test(input)) {
@@ -32,19 +37,42 @@ const getAvatarContent = async input => {
   }
 
   if (!isAbsoluteUrl(input)) {
-    throw new Error('Avatar as URL should be absolute.')
+    throw new Error({
+      message: 'The URL must to be absolute.',
+      name,
+      statusCode: 400
+    })
   }
 
-  const { statusCode, url } = await reachableUrl(input, gotOpts)
+  const { statusCode, url } = await reachableUrl.isReachable(input, gotOpts)
 
-  if (!isReachable({ statusCode })) {
-    throw new Error(`Avatar \`${url}\` is unreachable (\`${statusCode}\`)`)
+  if (!reachableUrl.isReachable({ statusCode })) {
+    throw new Error({
+      message: STATUS_CODES[statusCode],
+      name,
+      statusCode
+    })
   }
 
   return { type: 'url', data: url }
 }
 
-const getAvatar = async (fn, ...args) => fn(...args).then(getAvatarContent)
+const getAvatar = async (fn, ...args) => {
+  const promise = Promise.resolve(fn(...args))
+    .then(getAvatarContent(fn.name))
+    .catch(error => {
+      isIterable.forEach(error, error => {
+        error.statusCode = error.statusCode ?? error.response?.statusCode
+        error.name = fn.name
+      })
+      throw error
+    })
+
+  return pTimeout(promise, AVATAR_TIMEOUT).catch(error => {
+    error.name = fn.name
+    throw error
+  })
+}
 
 module.exports = async input => {
   const collection = get(providersBy, is(input))

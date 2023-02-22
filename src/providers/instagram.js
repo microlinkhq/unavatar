@@ -3,7 +3,7 @@
 const mql = require('@microlink/mql')
 const { get } = require('lodash')
 
-module.exports = async (username, { headers = {} } = {}) => {
+module.exports = async function telegram (username, { headers = {} } = {}) {
   const { data } = await mql(`https://www.instagram.com/${username}`, {
     apiKey: headers['x-api-key']
   })

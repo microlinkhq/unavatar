@@ -7,7 +7,7 @@ const got = require('../util/got')
 
 const { AVATAR_SIZE } = require('../constant')
 
-module.exports = async username => {
+module.exports = async function gitlab (username) {
   const { body } = await got(`https://gitlab.com/${username}`)
   const $ = cheerio.load(body)
   const avatarUrl = $('.avatar').attr('data-src')
