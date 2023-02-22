@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug-logfmt')('unavatar:rate')
 const rateLimiter = require('./util/rate-limiter')
 
 const { API_KEY } = require('./constant')
@@ -24,20 +25,23 @@ const rateLimitError = (() => {
     })
   )
 
-  rateLimitError.status = 429
+  rateLimitError.statusCode = 429
   rateLimitError.headers = { 'Content-Type': 'application/json' }
   return rateLimitError
 })()
 
 module.exports = async (req, res, next) => {
   if (req.headers['x-api-key'] === API_KEY) return next()
-  const clientIp = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
-  const { total, reset, remaining } = await rateLimiter.get({ id: clientIp })
+  const { total, reset, remaining } = await rateLimiter.get({
+    id: req.ipAddress
+  })
 
   if (!res.writableEnded) {
+    const _remaining = Math.max(0, remaining - 1)
     res.setHeader('X-Rate-Limit-Limit', total)
-    res.setHeader('X-Rate-Limit-Remaining', Math.max(0, remaining - 1))
+    res.setHeader('X-Rate-Limit-Remaining', _remaining)
     res.setHeader('X-Rate-Limit-Reset', reset)
+    debug(req.ipAddress, { total, remaining: _remaining })
   }
 
   return remaining ? next() : next(rateLimitError)

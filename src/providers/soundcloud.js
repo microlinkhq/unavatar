@@ -4,7 +4,7 @@ const cheerio = require('cheerio')
 
 const got = require('../util/got')
 
-module.exports = async username => {
+module.exports = async function soundcloud (username) {
   const { body } = await got(`https://soundcloud.com/${username}`)
   const $ = cheerio.load(body, { xmlMode: true })
   const name = $(`a[itemprop=url][href="/${username}" i]`)

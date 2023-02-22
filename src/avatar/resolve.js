@@ -1,14 +1,31 @@
 'use strict'
 
+const debug = require('debug-logfmt')('unavatar:resolve')
 const { omit, eq, get, isNil } = require('lodash')
-const debug = require('debug-logfmt')('unavatar')
 const isAbsoluteUrl = require('is-absolute-url')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const pTimeout = require('p-timeout')
 const pReflect = require('p-reflect')
 
+const isIterable = require('../util/is-iterable')
+
 const { AVATAR_SIZE, AVATAR_TIMEOUT } = require('../constant')
+
+const printErrors = error => {
+  isIterable.forEach(error, error => {
+    if (isIterable(error)) printErrors(error)
+    else {
+      if (error.message) {
+        debug.error({
+          name: error.name,
+          message: error.message,
+          statusCode: error.statusCode
+        })
+      }
+    }
+  })
+}
 
 const optimizeUrl = async (url, query) =>
   `https://images.weserv.nl/?${new URLSearchParams({
@@ -45,9 +62,7 @@ module.exports = fn => async (req, res) => {
     pTimeout(fn(input, req, res), AVATAR_TIMEOUT)
   )
 
-  if (isRejected) {
-    debug.warn((reason.message || reason).trim())
-  }
+  if (isRejected) printErrors(reason)
 
   if (value && value.type === 'url') {
     value.data = await optimizeUrl(value.data, query)

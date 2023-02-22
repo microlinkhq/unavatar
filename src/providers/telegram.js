@@ -4,7 +4,7 @@ const cheerio = require('cheerio')
 
 const got = require('../util/got')
 
-module.exports = async username => {
+module.exports = async function telegram (username) {
   const { body } = await got(`https://t.me/${username}`)
   const $ = cheerio.load(body)
   const el = $('img.tgme_page_photo_image')
