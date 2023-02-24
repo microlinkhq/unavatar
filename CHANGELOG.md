@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.11.17 (2023-02-24)
+
+
+### Bug Fixes
+
+* user the right reachable method ([#219](https://github.com/Kikobeats/unavatar/issues/219)) ([af958b1](https://github.com/Kikobeats/unavatar/commit/af958b1915f31385e3d1a0a318d727b4a82280e1)), closes [#218](https://github.com/Kikobeats/unavatar/issues/218)
+
 ### 2.11.16 (2023-02-22)
 
 ### 2.11.15 (2023-02-22)
