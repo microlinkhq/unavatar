@@ -44,7 +44,7 @@ const getAvatarContent = name => async input => {
     })
   }
 
-  const { statusCode, url } = await reachableUrl.isReachable(input, gotOpts)
+  const { statusCode, url } = await reachableUrl(input, gotOpts)
 
   if (!reachableUrl.isReachable({ statusCode })) {
     throw new Error({
