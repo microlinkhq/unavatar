@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.11.18 (2023-02-25)
+
+
+### Bug Fixes
+
+* gitlab selector ([275f9b9](https://github.com/Kikobeats/unavatar/commit/275f9b9626bee46b03afee4c7f348f896455ea59))
+
 ### 2.11.17 (2023-02-24)
 
 
