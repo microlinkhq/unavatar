@@ -43,6 +43,17 @@ router
     (req, res, next) => {
       req.timestamp = timestamp()
       req.ipAddress = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
+      req.query = Array.from(new URLSearchParams(req.query).entries()).reduce(
+        (acc, [key, value]) => {
+          try {
+            acc[key] = value === '' ? true : JSON.parse(value)
+          } catch (err) {
+            acc[key] = value
+          }
+          return acc
+        },
+        {}
+      )
       onFinished(res, () => {
         debug(
           `${req.ipAddress} ${req.url} ${res.statusCode} ${req.timestamp()}ms`

@@ -75,7 +75,7 @@ module.exports = fn => async (req, res) => {
 
   return {
     ...value,
-    isJSON: !isNil(get(req, 'query.json')),
+    isJSON: !isNil(query.json),
     isError: isNil(value)
   }
 }
