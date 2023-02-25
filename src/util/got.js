@@ -4,13 +4,18 @@ const uniqueRandomArray = require('unique-random-array')
 const CacheableLookup = require('cacheable-lookup')
 const userAgents = require('top-user-agents')
 const tlsHook = require('https-tls/hook')
+const Tangerine = require('tangerine')
 const got = require('got')
 
 const randUserAgent = uniqueRandomArray(userAgents)
 
-const dnsCache = new CacheableLookup()
-
-dnsCache.servers = [...new Set(['1.1.1.1', '1.0.0.1', ...dnsCache.servers])]
+const dnsCache = new CacheableLookup(
+  { resolver: new Tangerine() },
+  got.extend({
+    responseType: 'buffer',
+    decompress: false
+  })
+)
 
 const userAgentHook = options => {
   if (

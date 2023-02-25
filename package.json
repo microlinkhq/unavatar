@@ -111,6 +111,7 @@
     "router-http": "1.0.0",
     "send-http": "~1.0.2",
     "serve-static": "~1.15.0",
+    "tangerine": "~1.0.4",
     "top-user-agents": "~1.0.51",
     "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
