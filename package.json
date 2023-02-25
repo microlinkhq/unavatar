@@ -120,6 +120,7 @@
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
     "anchor-js": "latest",
+    "ava": "latest",
     "browser-sync": "latest",
     "concurrently": "latest",
     "conventional-github-releaser": "latest",
@@ -157,7 +158,7 @@
   "scripts": {
     "build": "gulp build && untracked > .nowignore",
     "clean": "rm -rf node_modules",
-    "contributors": "(npx git-authors-cli && npx finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
+    "contributors": "(npx git-authors-cli && npx finepack --sort-ignore-object-at ava && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
     "dev": "TZ=UTC NODE_ENV=development watchexec --clear --on-busy-update=restart node src/server.js",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
@@ -172,12 +173,18 @@
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
     "start": "TZ=UTC NODE_ENV=production DEBUG=\"unavatar*\" node src/server.js",
-    "test": "exit 0",
+    "test": "ava",
     "update": "ncu -u",
     "update:check": "ncu -- --error-level 2"
   },
   "private": true,
   "license": "MIT",
+  "ava": {
+    "files": [
+      "!test/helpers.js",
+      "test/**/*.js"
+    ]
+  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
