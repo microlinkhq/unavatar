@@ -1,12 +1,16 @@
 'use strict'
 
 const cheerio = require('cheerio')
-
-const got = require('../util/got')
+const getHTML = require('../util/html-get')
 
 module.exports = async function reddit (username) {
-  const { body } = await got(`https://www.reddit.com/user/${username}`)
-  const $ = cheerio.load(body)
+  const { html } = await getHTML(`https://www.reddit.com/user/${username}`, {
+    headers: { 'accept-language': 'en' },
+    puppeteerOpts: {
+      abortTypes: ['image', 'stylesheet', 'font', 'script']
+    }
+  })
+  const $ = cheerio.load(html)
   return $('img[alt="User avatar"]').attr('src')
 }
 

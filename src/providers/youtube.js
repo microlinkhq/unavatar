@@ -1,10 +1,10 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const got = require('../util/got')
+const getHTML = require('../util/html-get')
 
 module.exports = async function gitlab (username) {
-  const { body: html } = await got(`https://www.youtube.com/@${username}`)
+  const { html } = await getHTML(`https://www.youtube.com/@${username}`)
   const $ = cheerio.load(html)
   return $('meta[property="og:image"]').attr('content')
 }

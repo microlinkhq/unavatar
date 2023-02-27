@@ -3,12 +3,12 @@
 const cheerio = require('cheerio')
 const qsm = require('qsm')
 
-const got = require('../util/got')
+const getHTML = require('../util/html-get')
 
 const { AVATAR_SIZE } = require('../constant')
 
 module.exports = async function gitlab (username) {
-  const { body: html } = await got(`https://gitlab.com/${username}`)
+  const { html } = await getHTML(`https://gitlab.com/${username}`)
   const $ = cheerio.load(html)
 
   let avatarUrl = $('.avatar-holder > a > img').attr('src')

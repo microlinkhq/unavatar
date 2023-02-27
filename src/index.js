@@ -12,12 +12,10 @@ const { providers } = require('./providers')
 const ssrCache = require('./send/cache')
 const avatar = require('./avatar')
 
-const { NODE_ENV } = require('./constant')
-
 const timestamp =
   (start = process.hrtime.bigint()) =>
-    () =>
-      Math.round(Number(process.hrtime.bigint() - start) / 1e6)
+  () =>
+    Math.round(Number(process.hrtime.bigint() - start) / 1e6)
 
 const router = createRouter((error, req, res) => {
   const hasError = error !== undefined
@@ -68,7 +66,7 @@ router
       immutable: true,
       maxAge: '1y'
     }),
-    NODE_ENV === 'production' && require('./authentication')
+    require('./authentication')
   )
   .get('/:key', (req, res) =>
     ssrCache({

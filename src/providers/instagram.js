@@ -1,14 +1,12 @@
 'use strict'
 
-const mql = require('@microlink/mql')
-const { get } = require('lodash')
+const cheerio = require('cheerio')
+const getHTML = require('../util/html-get')
 
-module.exports = async function telegram (username, { headers = {} } = {}) {
-  const { data } = await mql(`https://www.instagram.com/${username}`, {
-    apiKey: headers['x-api-key']
-  })
-  const avatarUrl = get(data, 'image.url')
-  return avatarUrl && !avatarUrl.includes('/static/') && avatarUrl
+module.exports = async function instagram (username) {
+  const { html } = await getHTML(`https://www.instagram.com/${username}`)
+  const $ = cheerio.load(html)
+  return $('meta[property="og:image"]').attr('content')
 }
 
 module.exports.supported = {

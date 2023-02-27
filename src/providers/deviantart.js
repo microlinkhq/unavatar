@@ -1,15 +1,14 @@
 'use strict'
 
 const cheerio = require('cheerio')
-
-const got = require('../util/got')
+const getHTML = require('../util/html-get')
 
 const REGEX_PROFILE_URL =
   /^https?:\/\/(?:www\.)?deviantart\.com\/([\w-]+)(?:\/.+)?$/
 
 module.exports = async function deviantart (username) {
-  const { body } = await got(`https://www.deviantart.com/${username}`)
-  const $ = cheerio.load(body)
+  const { html } = await getHTML(`https://www.deviantart.com/${username}`)
+  const $ = cheerio.load(html)
   const canonUsername = $('head link[rel=canonical]')
     .attr('href')
     .replace(REGEX_PROFILE_URL, '$1')
