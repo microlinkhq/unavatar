@@ -108,7 +108,7 @@
     "p-timeout": "~4.1.0",
     "qsm": "~2.1.2",
     "reachable-url": "~1.7.1",
-    "router-http": "0.2.0",
+    "router-http": "1.0.0",
     "send-http": "~1.0.2",
     "serve-static": "~1.15.0",
     "top-user-agents": "~1.0.51",
