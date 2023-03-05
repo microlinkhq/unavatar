@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/Kikobeats/unavatar/compare/v2.11.19...v3.0.0) (2023-03-05)
+
+
+### Features
+
+* revamp project ([b4d3185](https://github.com/Kikobeats/unavatar/commit/b4d3185ceb41f628b15e8c48116759149a96eb69))
+
 ### 2.11.19 (2023-02-25)
 
 ### 2.11.18 (2023-02-25)
