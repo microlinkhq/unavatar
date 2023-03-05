@@ -175,7 +175,7 @@
     "dev:docs:src": "gulp",
     "lint": "standard-markdown && standard",
     "postrelease": "npm run release:tags && npm run release:github",
-    "prerelease": "npm run update:check && npm run contributors",
+    "prerelease": "npm run update:check",
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
     "release": "standard-version -a",
