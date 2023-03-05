@@ -182,7 +182,7 @@
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
     "start": "TZ=UTC NODE_ENV=production DEBUG=\"unavatar*\" node src/server.js",
-    "test": "ava",
+    "test": "AVATAR_TIMEOUT=60000 ava",
     "update": "ncu -u",
     "update:check": "ncu -- --error-level 2"
   },

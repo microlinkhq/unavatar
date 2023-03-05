@@ -6,7 +6,6 @@ const reachableUrl = require('reachable-url')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
-const { get } = require('lodash')
 const pAny = require('p-any')
 
 const { providers, providersBy } = require('../providers')
@@ -75,9 +74,9 @@ const getAvatar = async (fn, ...args) => {
 }
 
 module.exports = async input => {
-  const collection = get(providersBy, is(input))
+  const collection = providersBy[is(input)]
   const promises = collection.map(providerName =>
-    pTimeout(getAvatar(get(providers, providerName), input), AVATAR_TIMEOUT)
+    pTimeout(getAvatar(providers[providerName], input), AVATAR_TIMEOUT)
   )
   return pAny(promises)
 }

@@ -19,7 +19,7 @@ module.exports = {
   ...process.env,
   ALLOWED_REQ_HEADERS,
   AVATAR_SIZE,
-  AVATAR_TIMEOUT,
+  AVATAR_TIMEOUT: Number(AVATAR_TIMEOUT),
   CACHE_TTL,
   NODE_ENV,
   PORT,

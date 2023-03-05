@@ -12,7 +12,8 @@ const avatarUrl = str =>
 module.exports = async function twitter (username) {
   const { html } = await getHTML(`https://twitter.com/${username}`, {
     puppeteerOpts: {
-      waitUntil: 'networkidle2'
+      waitUntil: 'networkidle2',
+      abortTypes: ['image', 'stylesheet', 'font']
     }
   })
   const $ = cheerio.load(html)

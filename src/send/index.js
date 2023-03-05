@@ -17,18 +17,19 @@ const sendJson = (res, data) => {
   return res.end(str)
 }
 
-const sendAvatar = ({ req, res, type, data, isError }) => {
-  if (isError) return res.end()
+const sendAvatar = ({ req, res, type, data }) => {
+  if (!data) return res.end()
   return type === 'buffer'
     ? res.end(dataUriToBuffer(data))
     : got.stream(data, { headers: pickHeaders(req.headers) }).pipe(res)
 }
 
-const send = ({ type, data, req, res, isJSON, isError }) => {
-  res.statusCode = isError ? 404 : 200
-  return isJSON
+const send = ({ type, data, req, res }) => {
+  const { query } = req
+  res.statusCode = data ? 200 : 404
+  return query.json
     ? sendJson(res, { url: data })
-    : sendAvatar({ req, res, type, data, isError })
+    : sendAvatar({ req, res, type, data })
 }
 
 module.exports = send

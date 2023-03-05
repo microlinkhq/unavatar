@@ -1,12 +1,12 @@
 'use strict'
 
 const debug = require('debug-logfmt')('unavatar:resolve')
-const { omit, eq, get, isNil } = require('lodash')
 const isAbsoluteUrl = require('is-absolute-url')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const pTimeout = require('p-timeout')
 const pReflect = require('p-reflect')
+const { omit } = require('lodash')
 
 const isIterable = require('../util/is-iterable')
 
@@ -44,17 +44,17 @@ const getDefaultFallbackUrl = memoizeOne(
 )
 
 const getFallbackUrl = memoizeOne(({ query, protocol, host }) => {
-  const fallbackUrl = get(query, 'fallback')
-  if (eq(fallbackUrl, 'false')) return null
+  const { fallback } = query
+  if (fallback === false) return null
 
-  return isUrlHttp(fallbackUrl) && isAbsoluteUrl(fallbackUrl)
-    ? fallbackUrl
+  return isUrlHttp(fallback) && isAbsoluteUrl(fallback)
+    ? fallback
     : getDefaultFallbackUrl({ protocol, host })
 })
 
 module.exports = fn => async (req, res) => {
   const protocol = req.socket.encrypted ? 'https' : 'http'
-  const input = get(req, 'params.key')
+  const input = req.params.key
   const host = req.headers.host
   const { query } = req
 
@@ -73,9 +73,5 @@ module.exports = fn => async (req, res) => {
     value = data ? { type: 'url', data } : null
   }
 
-  return {
-    ...value,
-    isJSON: !isNil(query.json),
-    isError: isNil(value)
-  }
+  return value
 }

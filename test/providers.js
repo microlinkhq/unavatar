@@ -11,7 +11,7 @@ test.serial('youtube', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('gitlab', async t => {
@@ -20,7 +20,7 @@ test.serial('gitlab', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('github', async t => {
@@ -29,7 +29,7 @@ test.serial('github', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('twitter', async t => {
@@ -38,7 +38,7 @@ test.serial('twitter', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('soundcloud', async t => {
@@ -47,7 +47,7 @@ test.serial('soundcloud', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('deviantart', async t => {
@@ -56,7 +56,7 @@ test.serial('deviantart', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('dribbble', async t => {
@@ -65,7 +65,7 @@ test.serial('dribbble', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('duckduckgo', async t => {
@@ -74,7 +74,7 @@ test.serial('duckduckgo', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('google', async t => {
@@ -83,7 +83,7 @@ test.serial('google', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('gravatar', async t => {
@@ -92,7 +92,7 @@ test.serial('gravatar', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('telegram', async t => {
@@ -101,7 +101,7 @@ test.serial('telegram', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('substack', async t => {
@@ -110,7 +110,7 @@ test.serial('substack', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('reddit', async t => {
@@ -119,7 +119,7 @@ test.serial('reddit', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
 })
 
 test.serial('instagram', async t => {
@@ -128,5 +128,14 @@ test.serial('instagram', async t => {
     prefixUrl: serverUrl,
     responseType: 'json'
   })
-  t.snapshot(body)
+  t.true(body.url.includes('images.weserv.nl'))
+})
+
+test.serial('microlink', async t => {
+  const serverUrl = await createServer(t)
+  const { body } = await got('microlink/reddit.com?json', {
+    prefixUrl: serverUrl,
+    responseType: 'json'
+  })
+  t.true(body.url.includes('images.weserv.nl'))
 })

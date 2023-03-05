@@ -15,9 +15,9 @@ module.exports = async (url, { puppeteerOpts, ...opts } = {}) => {
     ...opts,
     getBrowserless: () => browserContext,
     puppeteerOpts: {
-      ...puppeteerOpts,
       abortTypes: ['image', 'stylesheet', 'font', 'script'],
-      timeout: AVATAR_TIMEOUT
+      timeout: AVATAR_TIMEOUT,
+      ...puppeteerOpts
     },
     gotOpts: {
       ...gotOpts,
