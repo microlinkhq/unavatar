@@ -1,30 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
   <!-- Search Engine -->
-  <title>unavatar.io: get unified user avatar from Twitter, GitHub, Intagram,
-    Reddit, etc.</title>
+  <title>unavatar.io: get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more.</title>
   <meta name="description"
     content="Just enter username, email or domain as input, get the avatar back as output. Cross social network support." />
   <meta name="image" content="https://unavatar.io/logo.png" />
   <meta name="author" content="Microlink HQ" />
   <link rel="canonical" href="https://unavatar.io" />
   <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
   <link rel="stylesheet" href="css/style.min.css" />
   <link rel="shortcut icon" href="https://unavatar.io/favicon.ico" />
   <link rel="icon" type="image/png" href="https://unavatar.io/favicon-32x32.png"
     sizes="32x32" />
   <link rel="icon" type="image/png" href="https://unavatar.io/favicon-16x16.png"
     sizes="16x16" />
-
   <!-- Schema.org for Google -->
   <meta itemprop="name"
-    content="unavatar.io: Get unified user gvatar from Twitter, GitHub, Intagram, Reddit, etc." />
+    content="unavatar.io: Get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more." />
   <meta itemprop="author" content="Microlink HQ" />
   <meta itemprop="description"
     content="Just enter username, email or domain as input, get the avatar back as output. Cross social network support." />
@@ -33,7 +31,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title"
-    content="unavatar.io: Get unified user gvatar from Twitter, GitHub, Intagram, Reddit, etc." />
+    content="unavatar.io: Get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more." />
   <meta name="twitter:creator" content="@microlinkhq" />
   <meta name="twitter:site" content="https://microlink.io" />
   <meta name="twitter:description"
@@ -44,7 +42,7 @@
 
   <!-- Open Graph general (Facebook, Pinterest & Google+) -->
   <meta property="og:title"
-    content="unavatar.io: Get unified user gvatar from Twitter, GitHub, Intagram, Reddit, etc." />
+    content="unavatar.io: Get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more." />
   <meta property="og:description"
     content="Just enter username, email or domain as input, get the avatar back as output. Cross social network support." />
   <meta property="og:logo" content="https://unavatar.io/logo.png" />
@@ -57,8 +55,8 @@
 </head>
 
 <body class="hack">
-  <article class="main container">
-    <h1><img style="width: 20px; vertical-align: middle" src="/fallback.png" />&nbsp;unavatar</h1>
+  <main class="main container">
+    <h1><img width="20" height="20" alt="unavatar.io logo" style="width: 20px; vertical-align: middle" src="/fallback.png" />&nbsp;unavatar</h1>
     <p>
       Get unified user avatar from social networks (<a target="_blank"
         rel="noopener noreferrer"
@@ -67,7 +65,10 @@
     <p>
     </p>
     <h2>Usage</h2>
-    <div class="alert alert-info">A daily rate limit is applied for preventing abusive usage.</div>
+    <div class="alert alert-info">
+      <span style="display:inline-block;">A daily rate limit is applied to prevent abusive usage.</span><br style="padding: 1rem;">
+      <span style="display:inline-block;margin-top:4px;">Looking for unlimited quota? <a href="mailto:hello@microlink.io?subject=unavatar.io%20API%20key&body=Hello%2C%0D%0A%0D%0AWe%20wanted%20unlimited%20usage%20for%20unavatar.io.%0D%0A%0D%0APlease%2C%20tell%20us%20how%20to%20proceed.">Contact us</a></span>.</div>
+    </div>
     <p>
       Just query against <code>https://unavatar.io/:input</code>, being <code>input</code>:
     </p>

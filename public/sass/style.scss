@@ -1,5 +1,9 @@
 @import 'hack';
 
+body.hack {
+  line-height: 1.75;
+}
+
 ::selection {
   background-color: #ffe079;
   color: #000;
@@ -51,7 +55,7 @@ pre[class*=language-] {
 }
 
 .container {
-  max-width: 590px;
+  max-width: 70ch;
 }
 
 /* anchor links */
