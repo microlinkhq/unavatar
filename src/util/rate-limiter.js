@@ -8,9 +8,9 @@ const db = require('./redis')
 
 module.exports = db
   ? new RateLimiter({
-      db,
-      namespace: 'rate',
-      duration: RATE_LIMIT_WINDOW,
-      max: RATE_LIMIT
-    })
+    db,
+    namespace: 'rate',
+    duration: RATE_LIMIT_WINDOW,
+    max: RATE_LIMIT
+  })
   : undefined

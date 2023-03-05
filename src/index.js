@@ -14,8 +14,8 @@ const avatar = require('./avatar')
 
 const timestamp =
   (start = process.hrtime.bigint()) =>
-  () =>
-    Math.round(Number(process.hrtime.bigint() - start) / 1e6)
+    () =>
+      Math.round(Number(process.hrtime.bigint() - start) / 1e6)
 
 const router = createRouter((error, req, res) => {
   const hasError = error !== undefined

@@ -5,7 +5,7 @@ const got = require('got')
 
 const { createServer } = require('./helpers')
 
-test('youtube', async t => {
+test.serial('youtube', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('youtube/natelive7?json', {
     prefixUrl: serverUrl,
@@ -14,7 +14,7 @@ test('youtube', async t => {
   t.snapshot(body)
 })
 
-test('gitlab', async t => {
+test.serial('gitlab', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('gitlab/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -23,7 +23,7 @@ test('gitlab', async t => {
   t.snapshot(body)
 })
 
-test('github', async t => {
+test.serial('github', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('github/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -32,7 +32,7 @@ test('github', async t => {
   t.snapshot(body)
 })
 
-test('twitter', async t => {
+test.serial('twitter', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('twitter/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -41,7 +41,7 @@ test('twitter', async t => {
   t.snapshot(body)
 })
 
-test('soundcloud', async t => {
+test.serial('soundcloud', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('soundcloud/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -50,7 +50,7 @@ test('soundcloud', async t => {
   t.snapshot(body)
 })
 
-test('deviantart', async t => {
+test.serial('deviantart', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('deviantart/spyed?json', {
     prefixUrl: serverUrl,
@@ -59,7 +59,7 @@ test('deviantart', async t => {
   t.snapshot(body)
 })
 
-test('dribbble', async t => {
+test.serial('dribbble', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('dribbble/omidnikrah?json', {
     prefixUrl: serverUrl,
@@ -68,7 +68,7 @@ test('dribbble', async t => {
   t.snapshot(body)
 })
 
-test('duckduckgo', async t => {
+test.serial('duckduckgo', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('duckduckgo/google.com?json', {
     prefixUrl: serverUrl,
@@ -77,7 +77,7 @@ test('duckduckgo', async t => {
   t.snapshot(body)
 })
 
-test('google', async t => {
+test.serial('google', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('google/teslahunt.io?json', {
     prefixUrl: serverUrl,
@@ -86,7 +86,7 @@ test('google', async t => {
   t.snapshot(body)
 })
 
-test('gravatar', async t => {
+test.serial('gravatar', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('gravatar/sindresorhus@gmail.com?json', {
     prefixUrl: serverUrl,
@@ -95,7 +95,7 @@ test('gravatar', async t => {
   t.snapshot(body)
 })
 
-test('telegram', async t => {
+test.serial('telegram', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('telegram/drsdavidsoft?json', {
     prefixUrl: serverUrl,
@@ -104,7 +104,7 @@ test('telegram', async t => {
   t.snapshot(body)
 })
 
-test('substack', async t => {
+test.serial('substack', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('substack/bankless?json', {
     prefixUrl: serverUrl,
@@ -113,7 +113,7 @@ test('substack', async t => {
   t.snapshot(body)
 })
 
-test('reddit', async t => {
+test.serial('reddit', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('reddit/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -122,7 +122,7 @@ test('reddit', async t => {
   t.snapshot(body)
 })
 
-test('instagram', async t => {
+test.serial('instagram', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('instagram/willsmith?json', {
     prefixUrl: serverUrl,
