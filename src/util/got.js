@@ -1,16 +1,11 @@
 'use strict'
 
 const uniqueRandomArray = require('unique-random-array')
-const CacheableLookup = require('cacheable-lookup')
 const userAgents = require('top-user-agents')
 const tlsHook = require('https-tls/hook')
 const got = require('got')
 
 const randUserAgent = uniqueRandomArray(userAgents)
-
-const dnsCache = new CacheableLookup()
-
-dnsCache.servers = [...new Set(['1.1.1.1', '1.0.0.1', ...dnsCache.servers])]
 
 const userAgentHook = options => {
   if (
@@ -22,7 +17,7 @@ const userAgentHook = options => {
 }
 
 const gotOpts = {
-  dnsCache,
+  dnsCache: require('./cacheable-lookup'),
   https: { rejectUnauthorized: false },
   headers: { 'user-agent': undefined },
   hooks: { beforeRequest: [userAgentHook, tlsHook] }

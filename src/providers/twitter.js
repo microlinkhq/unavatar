@@ -1,15 +1,23 @@
 'use strict'
 
-const mql = require('@microlink/mql')
-const { get } = require('lodash')
+const cheerio = require('cheerio')
+const getHTML = require('../util/html-get')
 
-module.exports = async function twitter (username, { headers = {} } = {}) {
-  const { data } = await mql(`https://twitter.com/${username}`, {
-    apiKey: headers['x-api-key'],
-    force: true
+const REGEX_IMG_MODIFIERS = /_(?:bigger|mini|normal|x96)\./
+const ORIGINAL_IMG_SIZE = '_400x400'
+
+const avatarUrl = str =>
+  str?.replace(REGEX_IMG_MODIFIERS, `${ORIGINAL_IMG_SIZE}.`)
+
+module.exports = async function twitter (username) {
+  const { html } = await getHTML(`https://twitter.com/${username}`, {
+    puppeteerOpts: {
+      waitUntil: 'networkidle2',
+      abortTypes: ['image', 'stylesheet', 'font']
+    }
   })
-
-  return get(data, 'image.url', '')
+  const $ = cheerio.load(html)
+  return avatarUrl($('meta[property="og:image"]').attr('content'))
 }
 
 module.exports.supported = {

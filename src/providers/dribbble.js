@@ -1,12 +1,11 @@
 'use strict'
 
 const cheerio = require('cheerio')
-
-const got = require('../util/got')
+const getHTML = require('../util/html-get')
 
 module.exports = async function dribbble (username) {
-  const { body } = await got(`https://dribbble.com/${username}`)
-  const $ = cheerio.load(body)
+  const { html } = await getHTML(`https://dribbble.com/${username}`)
+  const $ = cheerio.load(html)
   return $('.profile-avatar').attr('src')
 }
 

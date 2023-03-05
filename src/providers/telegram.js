@@ -1,12 +1,13 @@
 'use strict'
 
 const cheerio = require('cheerio')
-
-const got = require('../util/got')
+const getHTML = require('../util/html-get')
 
 module.exports = async function telegram (username) {
-  const { body } = await got(`https://t.me/${username}`)
-  const $ = cheerio.load(body)
+  const { html } = await getHTML(`https://t.me/${username}`, {
+    prerender: false
+  })
+  const $ = cheerio.load(html)
   const el = $('img.tgme_page_photo_image')
   return el.attr('src')
 }

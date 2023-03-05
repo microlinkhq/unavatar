@@ -1,12 +1,11 @@
 'use strict'
 
 const cheerio = require('cheerio')
-
-const got = require('../util/got')
+const getHTML = require('../util/html-get')
 
 module.exports = async function soundcloud (username) {
-  const { body } = await got(`https://soundcloud.com/${username}`)
-  const $ = cheerio.load(body, { xmlMode: true })
+  const { html } = await getHTML(`https://soundcloud.com/${username}`)
+  const $ = cheerio.load(html, { xmlMode: true })
   const name = $(`a[itemprop=url][href="/${username}" i]`)
   return $(`img[itemprop=image][alt="${name.text().trim()}’s avatar" i]`).attr(
     'src'

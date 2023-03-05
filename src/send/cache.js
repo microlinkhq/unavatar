@@ -7,7 +7,7 @@ const send = require('.')
 module.exports = require('cacheable-response')({
   logger: require('debug-logfmt')('cacheable-response'),
   ttl: CACHE_TTL,
-  staleTtl: 0,
+  staleTtl: false,
   get: async ({ req, res, fn }) => ({ data: await fn(req, res) }),
   send: ({ req, res, data }) => send({ req, res, ...data })
 })
