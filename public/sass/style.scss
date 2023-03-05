@@ -22,6 +22,10 @@ b::selection {
 
 /* code highlights */
 
+.hack code {
+  user-select: all;
+}
+
 :not(pre)>code[class*="language-"],
 pre[class*="language-"] {
   background-color: transparent;
