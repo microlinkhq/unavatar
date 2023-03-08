@@ -15,8 +15,12 @@ const {
   PORT = 3000
 } = process.env
 
+const API_URL =
+  NODE_ENV === 'production' ? 'https://unavatar.io' : `http://127.0.0.1:${PORT}`
+
 module.exports = {
   ...process.env,
+  API_URL,
   ALLOWED_REQ_HEADERS,
   AVATAR_SIZE,
   AVATAR_TIMEOUT: Number(AVATAR_TIMEOUT),
