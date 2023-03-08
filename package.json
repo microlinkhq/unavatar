@@ -119,6 +119,7 @@
     "router-http": "~1.0.0",
     "send-http": "~1.0.2",
     "serve-static": "~1.15.0",
+    "srcset": "~4.0.0",
     "tangerine": "~1.4.3",
     "top-user-agents": "~1.0.52",
     "unique-random-array": "~2.0.0",
@@ -182,13 +183,14 @@
     "release:github": "conventional-github-releaser -p angular",
     "release:tags": "git push --follow-tags origin HEAD:master",
     "start": "TZ=UTC NODE_ENV=production DEBUG=\"unavatar*\" node src/server.js",
-    "test": "AVATAR_TIMEOUT=60000 ava",
+    "test": "ava",
     "update": "ncu -u",
     "update:check": "ncu -- --error-level 2"
   },
   "private": true,
   "license": "MIT",
   "ava": {
+    "timeout": "1m",
     "files": [
       "test/**/*.js",
       "!test/helpers.js"

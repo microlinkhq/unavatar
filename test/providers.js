@@ -5,7 +5,7 @@ const got = require('got')
 
 const { createServer } = require('./helpers')
 
-test.serial('youtube', async t => {
+test('youtube', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('youtube/natelive7?json', {
     prefixUrl: serverUrl,
@@ -14,7 +14,7 @@ test.serial('youtube', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('gitlab', async t => {
+test('gitlab', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('gitlab/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -23,7 +23,7 @@ test.serial('gitlab', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('github', async t => {
+test('github', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('github/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -32,7 +32,7 @@ test.serial('github', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('twitter', async t => {
+test('twitter', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('twitter/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -41,7 +41,7 @@ test.serial('twitter', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('soundcloud', async t => {
+test('soundcloud', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('soundcloud/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -50,7 +50,7 @@ test.serial('soundcloud', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('deviantart', async t => {
+test('deviantart', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('deviantart/spyed?json', {
     prefixUrl: serverUrl,
@@ -59,7 +59,7 @@ test.serial('deviantart', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('dribbble', async t => {
+test('dribbble', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('dribbble/omidnikrah?json', {
     prefixUrl: serverUrl,
@@ -68,7 +68,7 @@ test.serial('dribbble', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('duckduckgo', async t => {
+test('duckduckgo', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('duckduckgo/google.com?json', {
     prefixUrl: serverUrl,
@@ -77,7 +77,7 @@ test.serial('duckduckgo', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('google', async t => {
+test('google', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('google/teslahunt.io?json', {
     prefixUrl: serverUrl,
@@ -86,7 +86,7 @@ test.serial('google', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('gravatar', async t => {
+test('gravatar', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('gravatar/sindresorhus@gmail.com?json', {
     prefixUrl: serverUrl,
@@ -95,7 +95,7 @@ test.serial('gravatar', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('telegram', async t => {
+test('telegram', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('telegram/drsdavidsoft?json', {
     prefixUrl: serverUrl,
@@ -104,7 +104,7 @@ test.serial('telegram', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('substack', async t => {
+test('substack', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('substack/bankless?json', {
     prefixUrl: serverUrl,
@@ -113,7 +113,7 @@ test.serial('substack', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('reddit', async t => {
+test('reddit', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('reddit/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -122,7 +122,7 @@ test.serial('reddit', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('instagram', async t => {
+test('instagram', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('instagram/willsmith?json', {
     prefixUrl: serverUrl,
@@ -131,9 +131,18 @@ test.serial('instagram', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test.serial('microlink', async t => {
+test('microlink', async t => {
   const serverUrl = await createServer(t)
   const { body } = await got('microlink/reddit.com?json', {
+    prefixUrl: serverUrl,
+    responseType: 'json'
+  })
+  t.true(body.url.includes('images.weserv.nl'))
+})
+
+test('readcv', async t => {
+  const serverUrl = await createServer(t)
+  const { body } = await got('readcv/elenatorro?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
   })

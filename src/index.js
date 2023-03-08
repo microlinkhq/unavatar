@@ -12,6 +12,8 @@ const { providers } = require('./providers')
 const ssrCache = require('./send/cache')
 const avatar = require('./avatar')
 
+const { API_URL } = require('./constant')
+
 const timestamp =
   (start = process.hrtime.bigint()) =>
     () =>
@@ -54,7 +56,9 @@ router
       )
       onFinished(res, () => {
         debug(
-          `${req.ipAddress} ${req.url} ${res.statusCode} ${req.timestamp()}ms`
+          `${req.ipAddress} ${new URL(req.url, API_URL).toString()} ${
+            res.statusCode
+          } ${req.timestamp()}ms`
         )
       })
       next()
