@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/Kikobeats/unavatar/compare/v3.0.0...v3.1.0) (2023-03-08)
+
+
+### Features
+
+* add readcv support ([#228](https://github.com/Kikobeats/unavatar/issues/228)) ([e2cd2f6](https://github.com/Kikobeats/unavatar/commit/e2cd2f684cb238d7b44d80b0d08299d7df698265))
+
 ## [3.0.0](https://github.com/Kikobeats/unavatar/compare/v2.11.19...v3.0.0) (2023-03-05)
 
 
