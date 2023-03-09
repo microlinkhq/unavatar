@@ -119,7 +119,7 @@
     "router-http": "~1.0.0",
     "send-http": "~1.0.2",
     "serve-static": "~1.15.0",
-    "srcset": "~4.0.0",
+    "srcset": "~5.0.0",
     "tangerine": "~1.4.3",
     "top-user-agents": "~1.0.52",
     "unique-random-array": "~2.0.0",
