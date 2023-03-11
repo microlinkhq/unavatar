@@ -148,3 +148,12 @@ test('readcv', async t => {
   })
   t.true(body.url.includes('images.weserv.nl'))
 })
+
+test('tiktok', async t => {
+  const serverUrl = await createServer(t)
+  const { body } = await got('tiktok/carlosazaustre?json', {
+    prefixUrl: serverUrl,
+    responseType: 'json'
+  })
+  t.true(body.url.includes('images.weserv.nl'))
+})

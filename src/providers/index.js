@@ -17,6 +17,7 @@ const providers = {
   soundcloud: require('./soundcloud'),
   substack: require('./substack'),
   telegram: require('./telegram'),
+  tiktok: require('./tiktok'),
   twitter: require('./twitter'),
   youtube: require('./youtube')
 }
