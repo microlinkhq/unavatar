@@ -11,7 +11,6 @@ module.exports = async function readcv (username) {
   const images = $('main > div > div > div > div > img').attr('srcset')
   if (!images) return
   const parsedImages = srcset.parse(images)
-  if (parsedImages.length === 0) return
   return parsedImages[parsedImages.length - 1].url
 }
 
