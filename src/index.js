@@ -63,7 +63,11 @@ router
       })
       next()
     },
-    require('helmet')({ crossOriginResourcePolicy: false }),
+    require('helmet')({
+      crossOriginResourcePolicy: false,
+      contentSecurityPolicy: false,
+      crossOriginEmbedderPolicy: false
+    }),
     require('http-compression')(),
     require('cors')(),
     serveStatic(path.resolve('public'), {
