@@ -10,8 +10,8 @@ const pAny = require('p-any')
 
 const { providers, providersBy } = require('../providers')
 const isIterable = require('../util/is-iterable')
+const ExtendableError = require('../util/error')
 const { gotOpts } = require('../util/got')
-const Error = require('../util/error')
 
 const { STATUS_CODES } = require('http')
 const { AVATAR_TIMEOUT } = require('../constant')
@@ -24,7 +24,7 @@ const is = input => {
 
 const getAvatarContent = name => async input => {
   if (typeof input !== 'string' || input === '') {
-    throw new Error({
+    throw new ExtendableError({
       name,
       message: `Avatar \`${input}\` is invalid.`,
       statusCode: 400
@@ -36,7 +36,7 @@ const getAvatarContent = name => async input => {
   }
 
   if (!isAbsoluteUrl(input)) {
-    throw new Error({
+    throw new ExtendableError({
       message: 'The URL must to be absolute.',
       name,
       statusCode: 400
@@ -46,7 +46,7 @@ const getAvatarContent = name => async input => {
   const { statusCode, url } = await reachableUrl(input, gotOpts)
 
   if (!reachableUrl.isReachable({ statusCode })) {
-    throw new Error({
+    throw new ExtendableError({
       message: STATUS_CODES[statusCode],
       name,
       statusCode
