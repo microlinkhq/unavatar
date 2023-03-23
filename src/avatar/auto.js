@@ -2,16 +2,15 @@
 
 const isAbsoluteUrl = require('is-absolute-url')
 const dataUriRegex = require('data-uri-regex')
-const reachableUrl = require('reachable-url')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
 const pAny = require('p-any')
 
 const { providers, providersBy } = require('../providers')
+const reachableUrl = require('../util/reachable-url')
 const isIterable = require('../util/is-iterable')
 const ExtendableError = require('../util/error')
-const { gotOpts } = require('../util/got')
 
 const { STATUS_CODES } = require('http')
 const { AVATAR_TIMEOUT } = require('../constant')
@@ -43,7 +42,7 @@ const getAvatarContent = name => async input => {
     })
   }
 
-  const { statusCode, url } = await reachableUrl(input, gotOpts)
+  const { statusCode, url } = await reachableUrl(input)
 
   if (!reachableUrl.isReachable({ statusCode })) {
     throw new ExtendableError({
