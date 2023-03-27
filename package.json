@@ -113,7 +113,7 @@
     "p-any": "~3.0.0",
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
-    "puppeteer": "~19.7.2",
+    "puppeteer": "~19.8.0",
     "qsm": "~2.1.2",
     "reachable-url": "~1.7.1",
     "router-http": "~1.0.0",
