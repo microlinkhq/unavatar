@@ -3,10 +3,10 @@
 const test = require('ava')
 const got = require('got')
 
-const { createServer } = require('./helpers')
+const { runServer } = require('./helpers')
 
 test('youtube', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('youtube/natelive7?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -15,7 +15,7 @@ test('youtube', async t => {
 })
 
 test('gitlab', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('gitlab/kikobeats?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -24,7 +24,7 @@ test('gitlab', async t => {
 })
 
 test('github', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('github/kikobeats?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -33,7 +33,7 @@ test('github', async t => {
 })
 
 test('twitter', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('twitter/kikobeats?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -42,7 +42,7 @@ test('twitter', async t => {
 })
 
 test('soundcloud', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('soundcloud/kikobeats?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -51,7 +51,7 @@ test('soundcloud', async t => {
 })
 
 test('deviantart', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('deviantart/spyed?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -60,7 +60,7 @@ test('deviantart', async t => {
 })
 
 test('dribbble', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('dribbble/omidnikrah?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -69,7 +69,7 @@ test('dribbble', async t => {
 })
 
 test('duckduckgo', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('duckduckgo/google.com?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -78,7 +78,7 @@ test('duckduckgo', async t => {
 })
 
 test('google', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('google/teslahunt.io?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -87,7 +87,7 @@ test('google', async t => {
 })
 
 test('gravatar', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('gravatar/sindresorhus@gmail.com?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -96,7 +96,7 @@ test('gravatar', async t => {
 })
 
 test('telegram', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('telegram/drsdavidsoft?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -105,7 +105,7 @@ test('telegram', async t => {
 })
 
 test('substack', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('substack/bankless?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -114,7 +114,7 @@ test('substack', async t => {
 })
 
 test('reddit', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('reddit/kikobeats?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -123,7 +123,7 @@ test('reddit', async t => {
 })
 
 test('instagram', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('instagram/willsmith?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -132,7 +132,7 @@ test('instagram', async t => {
 })
 
 test('microlink', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('microlink/reddit.com?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -141,7 +141,7 @@ test('microlink', async t => {
 })
 
 test('readcv', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('readcv/elenatorro?json', {
     prefixUrl: serverUrl,
     responseType: 'json'
@@ -150,7 +150,7 @@ test('readcv', async t => {
 })
 
 test('tiktok', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
   const { body } = await got('tiktok/carlosazaustre?json', {
     prefixUrl: serverUrl,
     responseType: 'json'

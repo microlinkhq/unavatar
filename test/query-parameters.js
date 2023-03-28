@@ -6,11 +6,11 @@ const ms = require('ms')
 
 const { CACHE_TTL } = require('../src/constant')
 
-const { createServer } = require('./helpers')
+const { runServer } = require('./helpers')
 const { getTtl } = require('../src/send/cache')
 
 test('json', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
 
   const { headers, body } = await got('github/kikobeats?json', {
     prefixUrl: serverUrl,
@@ -22,7 +22,7 @@ test('json', async t => {
 })
 
 test('fallback', async t => {
-  const serverUrl = await createServer(t)
+  const serverUrl = await runServer(t)
 
   const { headers, body } = await got(
     'github/__notexistprofile__?fallback=https://i.imgur.com/0d1TFfQ.jpg&json',

@@ -130,6 +130,7 @@
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
     "anchor-js": "latest",
+    "async-listen": "latest",
     "ava": "latest",
     "browser-sync": "latest",
     "concurrently": "latest",
