@@ -9,7 +9,7 @@ const {
   ALLOWED_REQ_HEADERS = ['accept-encoding', 'accept', 'user-agent'],
   AVATAR_SIZE = 400,
   AVATAR_TIMEOUT = 25000,
-  CACHE_TTL = ms('7d'),
+  CACHE_TTL = ms('1y'),
   NODE_ENV = 'development',
   PORT = 3000
 } = process.env
