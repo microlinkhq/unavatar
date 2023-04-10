@@ -1,256 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <!-- Search Engine -->
+    <meta name="description" content="The ultimate avatar service that offers everything you need to easily retrieve user avatars" />
+    <meta name="image" content="https://unavatar.io/banner.png" />
+    <link rel="canonical" href="https://unavatar.io" />
+    <title>unavatar, the ultimate avatar service that offers everything you need to easily retrieve user avatars</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
 
-  <!-- Search Engine -->
-  <title>unavatar.io: get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more.</title>
-  <meta name="description"
-    content="Just enter username, email or domain as input, get the avatar back as output. Cross social network support." />
-  <meta name="image" content="https://unavatar.io/logo.png" />
-  <meta name="author" content="Microlink HQ" />
-  <link rel="canonical" href="https://unavatar.io" />
-  <meta name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
-  <link rel="stylesheet" href="css/style.min.css" />
-  <link rel="shortcut icon" href="https://unavatar.io/favicon.ico" />
-  <link rel="icon" type="image/png" href="https://unavatar.io/favicon-32x32.png"
-    sizes="32x32" />
-  <link rel="icon" type="image/png" href="https://unavatar.io/favicon-16x16.png"
-    sizes="16x16" />
-  <!-- Schema.org for Google -->
-  <meta itemprop="name"
-    content="unavatar.io: Get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more." />
-  <meta itemprop="author" content="Microlink HQ" />
-  <meta itemprop="description"
-    content="Just enter username, email or domain as input, get the avatar back as output. Cross social network support." />
-  <meta itemprop="image" content="https://unavatar.io/banner.png" />
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="unavatar, The ultimate avatar service that offers everything you need to easily retrieve user avatars" />
+    <meta itemprop="description" content="The ultimate avatar service that offers everything you need to easily retrieve user avatars" />
+    <meta itemprop="image" content="https://unavatar.io/banner.png" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title"
-    content="unavatar.io: Get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more." />
-  <meta name="twitter:creator" content="@microlinkhq" />
-  <meta name="twitter:site" content="https://microlink.io" />
-  <meta name="twitter:description"
-    content="Just enter username, email or domain as input, get the avatar back as output. Cross social network support." />
-  <meta name="twitter:image" content="https://unavatar.io/banner.png" />
-  <meta name="twitter:image:alt"
-    content="The unavatar logo is a tribute to the iconic Susan Kare Macintosh icon for Apple" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="unavatar" />
+    <meta name="twitter:description" content="The ultimate avatar service that offers everything you need to easily retrieve user avatars" />
+    <meta name="twitter:image" content="https://unavatar.io/banner.png" />
 
-  <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-  <meta property="og:title"
-    content="unavatar.io: Get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more." />
-  <meta property="og:description"
-    content="Just enter username, email or domain as input, get the avatar back as output. Cross social network support." />
-  <meta property="og:logo" content="https://unavatar.io/logo.png" />
-  <meta property="og:image" content="https://unavatar.io/banner.png" />
-  <meta property="og:image:alt"
-    content="The unavatar logo is a tribute to the iconic Susan Kare Macintosh icon for Apple" />
-  <meta property="og:url" content="https://unavatar.io" />
-  <meta property="og:type" content="website" />
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta property="og:title" content="unavatar" />
+    <meta property="og:logo" content="https://unavatar.io/static/logo.png" />
+    <meta property="og:description" content="The ultimate avatar service that offers everything you need to easily retrieve user avatars" />
+    <meta property="og:image" content="https://unavatar.io/banner.png" />
+    <meta property="og:url" content="https://unavatar.io" />
+    <meta property="og:site_name" content="unavatar.io" />
+    <meta property="og:type" content="website" />
 
-</head>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://unavatar.io/favicon.ico" />
+    <link rel="icon" type="image/png" href="https://unavatar.io/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="https://unavatar.io/favicon-16x16.png" sizes="16x16" />
 
-<body class="hack">
-  <main class="main container">
-    <h1><img width="20" height="20" alt="unavatar.io logo" style="width: 20px; vertical-align: middle" src="/fallback.png" />&nbsp;unavatar</h1>
-    <p>
-      Get unified user avatar from social networks (<a target="_blank"
-        rel="noopener noreferrer"
-        href="https://github.com/Kikobeats/unavatar">source code</a>).
-    </p>
-    <p>
-    </p>
-    <h2>Usage</h2>
-    <div class="alert alert-info">
-      <span style="display:inline-block;">A daily rate limit is applied to prevent abusive usage.</span><br style="padding: 1rem;">
-      <span style="display:inline-block;margin-top:4px;">Looking for unlimited quota? <a href="mailto:hello@microlink.io?subject=unavatar.io%20API%20key&body=Hello%2C%0D%0A%0D%0AWe%20wanted%20unlimited%20usage%20for%20unavatar.io.%0D%0A%0D%0APlease%2C%20tell%20us%20how%20to%20proceed.">Contact us</a></span>.</div>
-    </div>
-    <p>
-      Just query against <code>https://unavatar.io/:input</code>, being <code>input</code>:
-    </p>
-    <ul>
-      <li>an username: <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/kikobeats">https://unavatar.io/kikobeats</a></li>
-      <li>an email: <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/sindresorhus@gmail.com">https://unavatar.io/sindresorhus@gmail.com</a></li>
-      <li>a site domain: <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/reddit.com">https://unavatar.io/reddit.com</a></li>
-    </ul>
-    <h2>Query Parameters</h2>
-    <h3>Fallback</h3>
-    <p>
-      When it isn't possible to get a user avatar, a generic one is used. You can customize this behavior passing any external URL to be used, such as <a target="_blank"
-        rel="noopener noreferrer"
-        href="https://boringavatars.com">boringavatars.com</a>:
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/__0x1337?fallback=https://source.boringavatars.com/marble/120/1337_user?colors=264653,2a9d8f,e9c46a,f4a261,e76f51">https://unavatar.io/1337_user?fallback=https://source.boringavatars.com/marble/120/1337_user?colors=264653,2a9d8f,e9c46a,f4a261,e76f51</a>
-    </p>
-    <p>You can pass <code>fallback=false</code> for disabling it. In that case, a HTTP 404 Not Found status code will returned.</p>
-    <h3>JSON</h3>
-    <p>The avatars resolved can be embed directly in your HML markup.</p>
-    <p>
-      Alternatively, you can consume the service as JSON passing <code>json=true</code>:
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/kikobeats?json">https://unavatar.io/kikobeats?json</a>
-    </p>
-    <h2>Providers</h2>
-      <p>The fastest service into resolve the query will be the avatar returned. You can also query for a specific service.</p>
-    <h3>Microlink</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/microlink/:domain" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/microlink/microlink.io">https://unavatar.io/microlink/microlink.io</a>
-    </p>
-    <h3>DeviantArt</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/deviantart/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/deviantart/spyed">https://unavatar.io/deviantart/spyed</a>
-    </p>
-    <h3>Dribbble</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/dribbble/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/dribbble/omidnikrah">https://unavatar.io/dribbble/omidnikrah</a>
-    </p>
-    <h3>DuckDuckGo</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/duckduckgo/:domain" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/duckduckgo/gummibeer.dev">https://unavatar.io/duckduckgo/gummibeer.dev</a>
-    </p>
-    <h3>GitHub</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/github/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/github/mdo">https://unavatar.io/github/mdo</a>
-    </p>
-    <h3>Google</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/google/:domain" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/google/netflix.com">https://unavatar.io/google/netflix.com</a>
-    </p>
-    <h3>Gravatar</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/gravatar/:email" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/gravatar/sindresorhus@gmail.com">https://unavatar.io/gravatar/sindresorhus@gmail.com</a>
-    </p>
-    <h3>Instagram</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/instagram/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/instagram/willsmith">https://unavatar.io/instagram/willsmith</a>
-    </p>
-    <h3>Read.cv</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/readcv/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/readcv/elenatorro">https://unavatar.io/readcv/elenatorro</a>
-    </p>
-    <h3>Reddit</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/reddit/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/reddit/kikobeats">https://unavatar.io/reddit/kikobeats</a>
-    </p>
-    <h3>SoundCloud</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/soundcloud/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/soundcloud/gorillaz">https://unavatar.io/soundcloud/gorillaz</a>
-    </p>
-    <h3>Substack</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/substack/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/substack/bankless">https://unavatar.io/substack/bankless</a>
-    </p>
-    <h3>Telegram</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/telegram/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/telegram/drsdavidsoft">https://unavatar.io/telegram/drsdavidsoft</a>
-    </p>
-    <h3>TikTok</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/tiktok/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/tiktok/carlosazaustre">https://unavatar.io/tiktok/carlosazaustre</a>
-    </p>
-    <h3>Twitter</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/twitter/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/twitter/kikobeats">https://unavatar.io/twitter/kikobeats</a>
-    </p>
-    <h3>YouTube</h3>
-    <p>
-      <code>&lt;img src="https://unavatar.io/youtube/:username" /&gt;</code>
-    </p>
-    <p>
-      e.g.,
-      <a target="_blank" rel="noopener noreferrer"
-        href="https://unavatar.io/youtube/casey">https://unavatar.io/youtube/casey</a>
-    </p>
-  </article>
-  <script src="js/main.min.js"></script>
-</body>
+    <!-- Stylesheet -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Nunito+Sans" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codecopy/umd/codecopy.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  </head>
 
+  <body>
+    <div id="app"></div>
+  </body>
+  <script src="/js/main.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
 </html>

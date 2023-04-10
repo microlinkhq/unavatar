@@ -2,11 +2,13 @@
 
 const debug = require('debug-logfmt')('unavatar:resolve')
 const isAbsoluteUrl = require('is-absolute-url')
+const { getTtl } = require('../send/cache')
 const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const pTimeout = require('p-timeout')
 const pReflect = require('p-reflect')
 const { omit } = require('lodash')
+const ms = require('ms')
 
 const isIterable = require('../util/is-iterable')
 
@@ -27,8 +29,9 @@ const printErrors = error => {
   })
 }
 
-const optimizeUrl = async (url, query) =>
-  `https://images.weserv.nl/?${new URLSearchParams({
+const optimizeUrl = async (url, query) => {
+  const { ttl, ...rest } = omit(query, ['json', 'fallback'])
+  return `https://images.weserv.nl/?${new URLSearchParams({
     url,
     default: url,
     l: 9,
@@ -36,8 +39,10 @@ const optimizeUrl = async (url, query) =>
     il: '',
     n: -1,
     w: AVATAR_SIZE,
-    ...omit(query, ['json', 'fallback'])
+    ttl: ms(getTtl(ttl)),
+    ...rest
   }).toString()}`
+}
 
 const getDefaultFallbackUrl = memoizeOne(
   ({ protocol, host }) => `${protocol}://${host}/fallback.png`

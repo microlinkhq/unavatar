@@ -43,7 +43,7 @@ router
     (req, res, next) => {
       req.timestamp = timestamp()
       req.ipAddress = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
-      req.query = Array.from(new URLSearchParams(req.query).entries()).reduce(
+      req.query = Array.from(new URLSearchParams(req.query)).reduce(
         (acc, [key, value]) => {
           try {
             acc[key] = value === '' ? true : JSON.parse(value)
@@ -63,7 +63,11 @@ router
       })
       next()
     },
-    require('helmet')({ crossOriginResourcePolicy: false }),
+    require('helmet')({
+      crossOriginResourcePolicy: false,
+      contentSecurityPolicy: false,
+      crossOriginEmbedderPolicy: false
+    }),
     require('http-compression')(),
     require('cors')(),
     serveStatic(path.resolve('public'), {

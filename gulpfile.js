@@ -1,6 +1,5 @@
 'use strict'
 
-const sass = require('gulp-sass')(require('sass'))
 const strip = require('gulp-strip-css-comments')
 const prefix = require('gulp-autoprefixer')
 const cssnano = require('gulp-cssnano')
@@ -9,13 +8,8 @@ const concat = require('gulp-concat')
 const gulp = require('gulp')
 
 const src = {
-  css: ['public/sass/style.scss'],
-  js: [
-    'node_modules/prismjs/prism.js',
-    'node_modules/prismjs/components/prism-json.js',
-    'node_modules/anchor-js/anchor.js',
-    'public/js/main.js'
-  ]
+  css: ['public/css/style.css'],
+  js: ['public/js/main.js']
 }
 
 const dist = {
@@ -26,19 +20,9 @@ const dist = {
   }
 }
 
-function watch () {
-  gulp.watch(src.css, styles)
-  gulp.watch(src.js, scripts)
-}
-
 const styles = () =>
   gulp
     .src(src.css)
-    .pipe(
-      sass({
-        includePaths: ['node_modules/hack/dist', 'node_modules/prismjs/themes']
-      }).on('error', sass.logError)
-    )
     .pipe(concat(`${dist.name.css}.min.css`))
     .pipe(prefix())
     .pipe(strip({ all: true }))
@@ -53,6 +37,11 @@ const scripts = () =>
     .pipe(gulp.dest(dist.path))
 
 const build = gulp.parallel(styles, scripts)
+
+function watch () {
+  gulp.watch(src.css, styles)
+  gulp.watch(src.js, scripts)
+}
 
 module.exports.default = gulp.series(build, watch)
 module.exports.build = build
