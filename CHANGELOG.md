@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/Kikobeats/unavatar/compare/v3.1.0...v3.2.0) (2023-04-10)
+
+
+### Features
+
+* add tiktok support ([#230](https://github.com/Kikobeats/unavatar/issues/230)) ([02750a8](https://github.com/Kikobeats/unavatar/commit/02750a88b6577535607227aac65b5db0b392a0c0)), closes [#225](https://github.com/Kikobeats/unavatar/issues/225)
+* revamp website ([#231](https://github.com/Kikobeats/unavatar/issues/231)) ([d2dda16](https://github.com/Kikobeats/unavatar/commit/d2dda16cfe679c40e2140d85331893db8eadf2d7))
+
 ## [3.1.0](https://github.com/Kikobeats/unavatar/compare/v3.0.0...v3.1.0) (2023-03-08)
 
 
