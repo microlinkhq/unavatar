@@ -99,7 +99,7 @@
     "data-uri-to-buffer": "~3.0.1",
     "debug-logfmt": "~1.0.4",
     "got": "~11.8.6",
-    "helmet": "~6.0.1",
+    "helmet": "~6.1.2",
     "html-get": "~2.10.0",
     "http-compression": "~1.0.4",
     "https-tls": "~1.0.12",
