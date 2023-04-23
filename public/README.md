@@ -16,9 +16,9 @@ In summary, **unavatar.io** provides versatility, speed, optimization, and effor
 
 The service is a single endpoint exposed in **unavatar.io** that can resolve:
 
-- a **domain**: https://unavatar.io/reddit.com
-- an **username**: https://unavatar.io/kikobeats
 - an **email**: https://unavatar.io/sindresorhus@gmail.com
+- an **username**: https://unavatar.io/kikobeats
+- a **domain**: https://unavatar.io/reddit.com
 
 So, no matter what type of query you use, **unavatar.io** has you covered. You can read more about that in [providers](#providers).
 
