@@ -115,7 +115,7 @@
     "p-any": "~3.0.0",
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
-    "puppeteer": "~19.10.1",
+    "puppeteer": "~19.11.0",
     "qsm": "~2.1.2",
     "router-http": "~1.0.2",
     "send-http": "~1.0.3",
