@@ -13,19 +13,15 @@
   --gray10: #101214;
   --gray11: #010101;
   --gray12: #000;
-
   /* theme */
-
   --primary-color: var(--gray10);
   --selection-color: #f9e4ac;
   --bg-color: #fff;
   --serif-font: 'Space Grotesk', sans-serif;
   --sans-serif-font: var(--serif-font);
   --code-font: Source Code Pro, Menlo, monospace;
-  --codebox-bg: var(--gray0);
   --codebox-border-color: var(--gray3);
   --codebox-color: var(--gray12);
-
 }
 
 ::selection {
@@ -170,10 +166,6 @@ main {
   background: hsla(0, 0%, 53%, 0.1);
 }
 
-.close .sidebar {
-  transform: translateX(-300px);
-}
-
 body.sticky .sidebar,
 body.sticky .sidebar-toggle {
   position: fixed;
@@ -280,7 +272,6 @@ body {
 
 .markdown-section :is(p, li) a:hover {
   border-bottom: 2px solid var(--gray12);
-  font-weight: bold;
 }
 
 .markdown-section p a[href^="http"]::after,
@@ -349,15 +340,21 @@ body {
 }
 
 .markdown-section :is(li,p) code {
-  background: var(--codebox-bg);
+  background: var(--bg-color);
   border-radius: 3px;
   border: 1px solid var(--codebox-border-color);
   color: var(--codebox-color);
   font-family: var(--code-font);
   font-size: 0.75rem;
   margin: 0 2px;
-  padding: 3px 5px;
+  padding: 4px 5px;
   white-space: nowrap;
+}
+
+#banner {
+  width: 60%;
+  display: flex;
+  margin: auto;
 }
 
 .app-name {
