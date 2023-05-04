@@ -83,7 +83,7 @@
     "youtube"
   ],
   "dependencies": {
-    "@browserless/goto": "~9.9.8",
+    "@browserless/goto": "~9.10.1",
     "@keyvhq/compress": "~2.0.0",
     "@keyvhq/core": "~2.0.0",
     "@keyvhq/multi": "~2.0.0",
