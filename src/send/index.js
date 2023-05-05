@@ -1,6 +1,6 @@
 'use strict'
 
-const dataUriToBuffer = require('data-uri-to-buffer')
+const { dataUriToBuffer } = require('data-uri-to-buffer')
 const { pickBy } = require('lodash')
 
 const got = require('../util/got')
