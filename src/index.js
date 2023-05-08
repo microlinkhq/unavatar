@@ -65,8 +65,7 @@ router
     },
     require('helmet')({
       crossOriginResourcePolicy: false,
-      contentSecurityPolicy: false,
-      crossOriginEmbedderPolicy: false
+      contentSecurityPolicy: false
     }),
     require('http-compression')(),
     require('cors')(),
