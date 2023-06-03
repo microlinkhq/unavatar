@@ -7,9 +7,9 @@ const { AVATAR_SIZE } = require('../constant')
 
 const md5 = str => crypto.createHash('md5').update(str).digest('hex')
 
-module.exports = function gravatar (username) {
+module.exports = function gravatar ({ input }) {
   return `https://gravatar.com/avatar/${md5(
-    username.trim().toLowerCase()
+    input.trim().toLowerCase()
   )}?${stringify({
     size: AVATAR_SIZE,
     d: '404'

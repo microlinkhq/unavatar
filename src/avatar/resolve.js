@@ -64,7 +64,7 @@ module.exports = fn => async (req, res) => {
   const { query } = req
 
   let { value, reason, isRejected } = await pReflect(
-    pTimeout(fn(input, req, res), AVATAR_TIMEOUT)
+    pTimeout(fn({ input, req, res }), AVATAR_TIMEOUT)
   )
 
   if (isRejected) printErrors(reason)

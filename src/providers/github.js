@@ -4,8 +4,8 @@ const { stringify } = require('querystring')
 
 const { AVATAR_SIZE } = require('../constant')
 
-module.exports = async function github (username) {
-  return `https://github.com/${username}.png?${stringify({
+module.exports = async function github ({ input }) {
+  return `https://github.com/${input}.png?${stringify({
     size: AVATAR_SIZE
   })}`
 }
