@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.1 (2023-06-04)
+
+
+### Bug Fixes
+
+* pass arguments properly ([6991992](https://github.com/Kikobeats/unavatar/commit/6991992a6b3d449c8486dbc8bd4ea3c1bb7e80c1)), closes [#252](https://github.com/Kikobeats/unavatar/issues/252)
+
 ## 3.3.0 (2023-06-04)
 
 
