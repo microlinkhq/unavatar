@@ -15,7 +15,7 @@ const ExtendableError = require('../util/error')
 const { STATUS_CODES } = require('http')
 const { AVATAR_TIMEOUT } = require('../constant')
 
-const is = input => {
+const is = ({ input }) => {
   if (isEmail(input)) return 'email'
   if (urlRegex({ strict: false }).test(input)) return 'domain'
   return 'username'
@@ -72,10 +72,10 @@ const getAvatar = async (fn, ...args) => {
   })
 }
 
-module.exports = async input => {
-  const collection = providersBy[is(input)]
+module.exports = async args => {
+  const collection = providersBy[is(args)]
   const promises = collection.map(providerName =>
-    pTimeout(getAvatar(providers[providerName], input), AVATAR_TIMEOUT)
+    pTimeout(getAvatar(providers[providerName], args), AVATAR_TIMEOUT)
   )
   return pAny(promises)
 }
