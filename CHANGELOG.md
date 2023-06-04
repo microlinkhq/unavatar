@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.3.0 (2023-06-04)
+
+
+### Features
+
+* requests are cancelables ([#251](https://github.com/Kikobeats/unavatar/issues/251)) ([8ed1878](https://github.com/Kikobeats/unavatar/commit/8ed187897886aa1cd0d24f1f22b0bb48eaed8e52))
+
 ### 3.2.7 (2023-05-14)
 
 ### 3.2.6 (2023-05-05)
