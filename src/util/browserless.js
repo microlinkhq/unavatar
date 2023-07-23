@@ -13,15 +13,11 @@ const getArgs = () => {
   const CACHE_DIR = path.join(PUPPETEER_DIR, 'cache')
 
   const args = createBrowser.driver.defaultArgs.concat([
+    '--allow-running-insecure-content', // https://source.chromium.org/search?q=lang:cpp+symbol:kAllowRunningInsecureContent&ss=chromium
     '--disk-cache-size=33554432', // https://source.chromium.org/search?q=lang:cpp+symbol:kDiskCacheSize&ss=chromium
     '--enable-features=SharedArrayBuffer', // https://source.chromium.org/search?q=file:content_features.cc&ss=chromium
-    '--ignore-certificate-errors',
-    '--allow-running-insecure-content', // https://source.chromium.org/search?q=lang:cpp+symbol:kAllowRunningInsecureContent&ss=chromium
-    '--disable-gpu',
-    '--enable-resource-load-scheduler=false',
-    '--font-render-hinting=none', // could be 'none', 'medium'
-    `--user-data-dir=${DATA_DIR}`,
-    `--disk-cache-dir=${CACHE_DIR}`
+    `--disk-cache-dir=${CACHE_DIR}`,
+    `--user-data-dir=${DATA_DIR}`
   ])
 
   return { PUPPETEER_DIR, DATA_DIR, CACHE_DIR, args }
