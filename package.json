@@ -115,7 +115,7 @@
     "p-cancelable": "2.1.1",
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
-    "puppeteer": "~20.9.0",
+    "puppeteer": "~21.0.0",
     "qsm": "~2.1.2",
     "router-http": "~1.0.2",
     "send-http": "~1.0.4",
