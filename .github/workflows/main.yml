@@ -29,7 +29,10 @@ jobs:
           git push origin ${{ github.head_ref }}
 
   release:
-    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') && !startsWith(github.event.head_commit.message, 'docs:') && !startsWith(github.event.head_commit.message, 'ci:') }}
+    if: |
+      !startsWith(github.event.head_commit.message, 'chore(release):') &&
+      !startsWith(github.event.head_commit.message, 'docs:') &&
+      !startsWith(github.event.head_commit.message, 'ci:')
     needs: [contributors]
     runs-on: ubuntu-latest
     steps:

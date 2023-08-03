@@ -199,7 +199,8 @@
   },
   "nano-staged": {
     "*.js,!*.min.js,": [
-      "prettier-standard"
+      "prettier-standard",
+      "standard --fix"
     ],
     "*.md": [
       "standard-markdown"
