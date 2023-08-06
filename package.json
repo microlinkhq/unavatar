@@ -122,6 +122,7 @@
     "serve-static": "~1.15.0",
     "srcset": "~4.0.0",
     "tangerine": "~1.5.3",
+    "top-crawler-agents": "~1.0.0",
     "top-user-agents": "~1.0.59",
     "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
