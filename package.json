@@ -100,7 +100,7 @@
     "debug-logfmt": "~1.0.4",
     "got": "~11.8.6",
     "helmet": "~7.0.0",
-    "html-get": "~2.11.3",
+    "html-get": "~2.13.0",
     "http-compression": "~1.0.10",
     "https-tls": "~1.0.12",
     "ioredis": "~5.3.2",
