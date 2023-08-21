@@ -162,7 +162,7 @@
     "src"
   ],
   "scripts": {
-    "build": "gulp build && untracked > .nowignore",
+    "build": "gulp build && untracked > .vercelignore",
     "clean": "rm -rf node_modules",
     "contributors": "(npx git-authors-cli && npx finepack --sort-ignore-object-at ava && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
