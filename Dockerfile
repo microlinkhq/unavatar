@@ -10,15 +10,14 @@ ENV CXX=clang++
 # install pnpm
 RUN npm install -g pnpm
 
-RUN userdel blessuser && \
-  groupadd --gid 1000 node && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
-
 WORKDIR $APP_DIR
 
 COPY package.json .npmrc ./
 RUN pnpm install --prod
 
 COPY . .
+
+USER blessuser
 
 EXPOSE 3000
 
