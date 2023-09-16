@@ -12,7 +12,7 @@ RUN npm install -g pnpm
 
 WORKDIR $APP_DIR
 
-COPY package.json .npmrc ./
+COPY package.json .npmrc .puppeteerrc.js ./
 RUN pnpm install --prod
 
 COPY . .

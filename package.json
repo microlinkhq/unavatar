@@ -172,6 +172,7 @@
     "dev:docs:server": "browser-sync start public --server public --files \"index.html, README.md, public/**/*.(css|js)\"",
     "dev:docs:src": "gulp",
     "lint": "standard-markdown && standard",
+    "postinstall": "node node_modules/puppeteer/install.js",
     "postrelease": "npm run release:tags && npm run release:github",
     "prerelease": "npm run update:check",
     "pretest": "npm run lint",
