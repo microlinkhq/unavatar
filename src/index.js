@@ -40,9 +40,13 @@ const router = createRouter((error, req, res) => {
 
 router
   .use(
+    (req, _, next) => {
+      req.ipAddress = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
+      next()
+    },
+    require('./authentication'),
     (req, res, next) => {
       req.timestamp = timestamp()
-      req.ipAddress = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
       req.query = Array.from(new URLSearchParams(req.query)).reduce(
         (acc, [key, value]) => {
           try {
@@ -72,8 +76,7 @@ router
     serveStatic(path.resolve('public'), {
       immutable: true,
       maxAge: '1y'
-    }),
-    require('./authentication')
+    })
   )
   .get('/:key', (req, res) =>
     ssrCache({
