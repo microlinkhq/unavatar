@@ -32,19 +32,19 @@ const rateLimitError = (() => {
 
 module.exports = rateLimiter
   ? async (req, res, next) => {
-    if (req.headers['x-api-key'] === API_KEY) return next()
-    const { total, reset, remaining } = await rateLimiter.get({
-      id: req.ipAddress
-    })
+      if (req.headers['x-api-key'] === API_KEY) return next()
+      const { total, reset, remaining } = await rateLimiter.get({
+        id: req.ipAddress
+      })
 
-    if (!res.writableEnded) {
-      const _remaining = Math.max(0, remaining - 1)
-      res.setHeader('X-Rate-Limit-Limit', total)
-      res.setHeader('X-Rate-Limit-Remaining', _remaining)
-      res.setHeader('X-Rate-Limit-Reset', reset)
-      debug(req.ipAddress, { total, remaining: _remaining })
+      if (!res.writableEnded) {
+        const _remaining = Math.max(0, remaining - 1)
+        res.setHeader('X-Rate-Limit-Limit', total)
+        res.setHeader('X-Rate-Limit-Remaining', _remaining)
+        res.setHeader('X-Rate-Limit-Reset', reset)
+        debug(req.ipAddress, { total, remaining: _remaining })
+      }
+
+      return remaining ? next() : next(rateLimitError)
     }
-
-    return remaining ? next() : next(rateLimitError)
-  }
   : false
