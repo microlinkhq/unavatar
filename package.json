@@ -84,7 +84,7 @@
   ],
   "dependencies": {
     "@keyvhq/compress": "~2.0.3",
-    "@keyvhq/core": "~2.0.0",
+    "@keyvhq/core": "~2.1.0",
     "@keyvhq/multi": "~2.0.3",
     "@keyvhq/redis": "~2.0.0",
     "@microlink/mql": "~0.11.2",
