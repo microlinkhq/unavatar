@@ -1,5 +1,6 @@
 'use strict'
 
+const timeSpan = require('@kikobeats/time-span')()
 const debug = require('debug-logfmt')('unavatar')
 const serveStatic = require('serve-static')
 const createRouter = require('router-http')
@@ -13,11 +14,6 @@ const ssrCache = require('./send/cache')
 const avatar = require('./avatar')
 
 const { API_URL } = require('./constant')
-
-const timestamp =
-  (start = process.hrtime.bigint()) =>
-    () =>
-      Math.round(Number(process.hrtime.bigint() - start) / 1e6)
 
 const router = createRouter((error, req, res) => {
   const hasError = error !== undefined
@@ -46,7 +42,7 @@ router
     },
     require('./authentication'),
     (req, res, next) => {
-      req.timestamp = timestamp()
+      req.timestamp = timeSpan()
       req.query = Array.from(new URLSearchParams(req.query)).reduce(
         (acc, [key, value]) => {
           try {
@@ -62,7 +58,7 @@ router
         debug(
           `${req.ipAddress} ${new URL(req.url, API_URL).toString()} ${
             res.statusCode
-          } ${req.timestamp()}ms`
+          } ${Math.round(req.timestamp())}ms`
         )
       })
       next()
