@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/*
       - name: Contributors
@@ -42,7 +42,7 @@ jobs:
           fetch-depth: 2
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/*
       - name: Install
