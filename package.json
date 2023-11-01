@@ -91,7 +91,7 @@
     "@microlink/mql": "~0.11.4",
     "@microlink/ping-url": "~1.4.10",
     "async-ratelimiter": "~1.3.11",
-    "browserless": "~10.1.13",
+    "browserless": "~10.2.0",
     "cacheable-lookup": "~6.1.0",
     "cacheable-response": "~2.8.9",
     "cheerio": "~1.0.0-rc.12",
