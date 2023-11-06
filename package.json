@@ -190,8 +190,8 @@
   "license": "MIT",
   "ava": {
     "files": [
-      "test/**/*.js",
-      "!test/helpers.js"
+      "!test/helpers.js",
+      "test/**/*.js"
     ],
     "timeout": "1m"
   },
@@ -209,7 +209,7 @@
       "standard-markdown"
     ],
     "package.json": [
-      "finepack --sort-ignore-object-at ava"
+      "finepack"
     ]
   },
   "pnpm": {
