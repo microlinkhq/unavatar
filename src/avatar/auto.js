@@ -54,8 +54,8 @@ const getAvatarContent = name => async input => {
   return { type: 'url', data: url }
 }
 
-const getAvatar = async (fn, { name, args }) => {
-  const promise = fn(args)
+const getAvatar = async (fn, name, args) => {
+  const promise = Promise.resolve(fn(args))
     .then(getAvatarContent(name))
     .catch(error => {
       isIterable.forEach(error, error => {
@@ -74,7 +74,7 @@ const getAvatar = async (fn, { name, args }) => {
 module.exports = async args => {
   const collection = providersBy[is(args)]
   const promises = collection.map(name =>
-    pTimeout(getAvatar(providers[name], { name, args }), AVATAR_TIMEOUT)
+    pTimeout(getAvatar(providers[name], name, args), AVATAR_TIMEOUT)
   )
   return pAny(promises)
 }
