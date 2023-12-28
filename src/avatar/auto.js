@@ -23,11 +23,10 @@ const is = ({ input }) => {
 
 const getAvatarContent = name => async input => {
   if (typeof input !== 'string' || input === '') {
-    throw new ExtendableError({
-      name,
-      message: `Avatar \`${input}\` is invalid.`,
-      statusCode: 400
-    })
+    const message =
+      input === undefined ? 'not found' : `\`${input}\` is invalid`
+    const statusCode = input === undefined ? 404 : 400
+    throw new ExtendableError({ name, message, statusCode })
   }
 
   if (dataUriRegex().test(input)) {
