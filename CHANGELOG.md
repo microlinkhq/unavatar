@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.5](https://github.com/Kikobeats/unavatar/compare/v3.3.4...v3.3.5) (2023-12-28)
+
+
+### Bug Fixes
+
+* linter ([66bba8c](https://github.com/Kikobeats/unavatar/commit/66bba8c31320ca8de0ca9a19351621164269d888))
+* puppeteer setup ([2a02c22](https://github.com/Kikobeats/unavatar/commit/2a02c227ad9e6f060a7e7f502e1e73ae72c1f6e0))
+
 ### 3.3.4 (2023-06-28)
 
 ### 3.3.3 (2023-06-28)
