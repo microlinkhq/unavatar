@@ -5,7 +5,7 @@ const cheerio = require('cheerio')
 
 const getHTML = require('../util/html-get')
 
-module.exports = PCancelable.fn(async function gitlab ({ input }, onCancel) {
+module.exports = PCancelable.fn(async function youtube ({ input }, onCancel) {
   const promise = getHTML(`https://www.youtube.com/@${input}`)
   onCancel(() => promise.onCancel())
   const { html } = await promise

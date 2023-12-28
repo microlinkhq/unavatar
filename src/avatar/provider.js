@@ -2,7 +2,4 @@
 
 const { getAvatar } = require('./auto')
 
-module.exports =
-  fn =>
-    async (...args) =>
-      getAvatar(fn, ...args)
+module.exports = (name, fn) => args => getAvatar(fn, name, args)

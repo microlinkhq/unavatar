@@ -134,7 +134,7 @@
     "@commitlint/config-conventional": "latest",
     "@ksmithut/prettier-standard": "latest",
     "async-listen": "latest",
-    "ava": "latest",
+    "ava": "5",
     "browser-sync": "latest",
     "concurrently": "latest",
     "conventional-github-releaser": "latest",
@@ -168,7 +168,7 @@
     "clean": "rm -rf node_modules",
     "contributors": "(npx git-authors-cli && npx finepack --sort-ignore-object-at ava && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "deploy": "now -e NODE_ENV=production --public && now alias && now rm unavatar --safe --yes",
-    "dev": "TZ=UTC watchexec --clear --on-busy-update=restart node src/server.js",
+    "dev": "TZ=UTC watchexec --clear=clear --on-busy-update=restart 'fkill \"Google Chrome for Testing\" --silent && node src/server.js'",
     "dev:docker": "docker build --platform linux/amd64 -t unavatar . && docker run --platform linux/amd64 --name unavatar -e NODE_ENV=staging -p 3000:3000 --rm unavatar",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
     "dev:docs:server": "browser-sync start public --server public --files \"index.html, README.md, public/**/*.(css|js)\"",
@@ -190,9 +190,11 @@
   "private": true,
   "license": "MIT",
   "ava": {
+    "workerThreads": false,
+    "serial": true,
     "files": [
-      "!test/helpers.js",
-      "test/**/*.js"
+      "test/**/*.js",
+      "!test/helpers.js"
     ],
     "timeout": "1m"
   },

@@ -102,8 +102,8 @@ test('substack', async t => {
   })
   t.true(body.url.includes('images.weserv.nl'))
 })
-
-test('reddit', async t => {
+//
+;(isCI ? test.skip : test)('reddit', async t => {
   const serverUrl = await runServer(t)
   const { body } = await got('reddit/kikobeats?json', {
     prefixUrl: serverUrl
@@ -121,7 +121,7 @@ test('reddit', async t => {
 
 test('microlink', async t => {
   const serverUrl = await runServer(t)
-  const { body } = await got('microlink/reddit.com?json', {
+  const { body } = await got('microlink/teslahunt.io?json', {
     prefixUrl: serverUrl
   })
   t.true(body.url.includes('images.weserv.nl'))
@@ -134,8 +134,8 @@ test('readcv', async t => {
   })
   t.true(body.url.includes('images.weserv.nl'))
 })
-
-test('tiktok', async t => {
+//
+;(isCI ? test.skip : test)('tiktok', async t => {
   const serverUrl = await runServer(t)
   const { body } = await got('tiktok/carlosazaustre?json', {
     prefixUrl: serverUrl

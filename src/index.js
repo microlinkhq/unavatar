@@ -85,7 +85,7 @@ router
 
 forEach(providers, (fn, provider) =>
   router.get(`/${provider}/:key`, (req, res) =>
-    ssrCache({ req, res, fn: avatar.resolve(avatar.provider(fn)) })
+    ssrCache({ req, res, fn: avatar.resolve(avatar.provider(provider, fn)) })
   )
 )
 

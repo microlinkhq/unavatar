@@ -23,11 +23,10 @@ const is = ({ input }) => {
 
 const getAvatarContent = name => async input => {
   if (typeof input !== 'string' || input === '') {
-    throw new ExtendableError({
-      name,
-      message: `Avatar \`${input}\` is invalid.`,
-      statusCode: 400
-    })
+    const message =
+      input === undefined ? 'not found' : `\`${input}\` is invalid`
+    const statusCode = input === undefined ? 404 : 400
+    throw new ExtendableError({ name, message, statusCode })
   }
 
   if (dataUriRegex().test(input)) {
@@ -55,27 +54,27 @@ const getAvatarContent = name => async input => {
   return { type: 'url', data: url }
 }
 
-const getAvatar = async (fn, ...args) => {
-  const promise = Promise.resolve(fn(...args))
-    .then(getAvatarContent(fn.name))
+const getAvatar = async (fn, name, args) => {
+  const promise = Promise.resolve(fn(args))
+    .then(getAvatarContent(name))
     .catch(error => {
       isIterable.forEach(error, error => {
         error.statusCode = error.statusCode ?? error.response?.statusCode
-        error.name = fn.name
+        error.name = name
       })
       throw error
     })
 
   return pTimeout(promise, AVATAR_TIMEOUT).catch(error => {
-    error.name = fn.name
+    error.name = name
     throw error
   })
 }
 
 module.exports = async args => {
   const collection = providersBy[is(args)]
-  const promises = collection.map(providerName =>
-    pTimeout(getAvatar(providers[providerName], args), AVATAR_TIMEOUT)
+  const promises = collection.map(name =>
+    pTimeout(getAvatar(providers[name], name, args), AVATAR_TIMEOUT)
   )
   return pAny(promises)
 }
