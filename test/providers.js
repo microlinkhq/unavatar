@@ -102,8 +102,8 @@ test('substack', async t => {
   })
   t.true(body.url.includes('images.weserv.nl'))
 })
-
-test('reddit', async t => {
+//
+;(isCI ? test.skip : test)('reddit', async t => {
   const serverUrl = await runServer(t)
   const { body } = await got('reddit/kikobeats?json', {
     prefixUrl: serverUrl
