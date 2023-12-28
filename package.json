@@ -190,6 +190,7 @@
   "private": true,
   "license": "MIT",
   "ava": {
+    "workerThreads": false,
     "serial": true,
     "files": [
       "test/**/*.js",
