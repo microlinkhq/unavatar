@@ -6,7 +6,7 @@ const KeyvMulti = require('@keyvhq/multi')
 const Keyv = require('@keyvhq/core')
 const assert = require('assert')
 
-const redis = require('./redis')
+const redis = require('./redis').cache
 
 const { CACHE_TTL } = require('../constant')
 

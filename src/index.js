@@ -13,7 +13,7 @@ const { providers } = require('./providers')
 const ssrCache = require('./send/cache')
 const avatar = require('./avatar')
 
-const { API_URL } = require('./constant')
+const { isProduction, API_URL } = require('./constant')
 
 const router = createRouter((error, req, res) => {
   const hasError = error !== undefined
@@ -41,6 +41,7 @@ router
       next()
     },
     require('./authentication'),
+    isProduction && require('./ua'),
     (req, res, next) => {
       req.timestamp = timeSpan()
       req.query = Array.from(new URLSearchParams(req.query)).reduce(

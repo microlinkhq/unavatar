@@ -19,6 +19,7 @@ const API_URL =
 
 module.exports = {
   ...process.env,
+  isProduction: NODE_ENV === 'production',
   API_URL,
   ALLOWED_REQ_HEADERS,
   AVATAR_SIZE,

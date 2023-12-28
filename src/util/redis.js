@@ -2,12 +2,18 @@
 
 const Redis = require('ioredis')
 
-const { REDIS_URI } = require('../constant')
+const { REDIS_URI, REDIS_UA_URI } = require('../constant')
 
-module.exports = REDIS_URI
-  ? new Redis(REDIS_URI, {
+const createClient = uri =>
+  uri
+    ? new Redis(uri, {
       lazyConnect: true,
       enableAutoPipelining: true,
       maxRetriesPerRequest: 2
     })
-  : undefined
+    : undefined
+
+module.exports = {
+  cache: createClient(REDIS_URI),
+  ua: createClient(REDIS_UA_URI)
+}
