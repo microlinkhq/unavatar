@@ -12,7 +12,7 @@ module.exports = PCancelable.fn(async function reddit ({ input }, onCancel) {
   onCancel(() => promise.onCancel())
   const { html } = await promise
   const $ = cheerio.load(html)
-  return $('img[alt="User avatar"]').attr('src')
+  return $('img[alt*="avatar"]').attr('src')
 })
 
 module.exports.supported = {
