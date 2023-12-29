@@ -134,7 +134,7 @@
     "@commitlint/config-conventional": "latest",
     "@ksmithut/prettier-standard": "latest",
     "async-listen": "latest",
-    "ava": "5",
+    "ava": "6",
     "browser-sync": "latest",
     "concurrently": "latest",
     "conventional-github-releaser": "latest",
