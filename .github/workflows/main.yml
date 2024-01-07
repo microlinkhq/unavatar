@@ -54,7 +54,7 @@ jobs:
         run: npm test
       - name: Release
         env:
-          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           git config --global user.email ${{ secrets.GIT_EMAIL }}
