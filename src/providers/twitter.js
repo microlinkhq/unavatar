@@ -4,7 +4,9 @@ const uniqueRandomArray = require('unique-random-array')
 const PCancelable = require('p-cancelable')
 const cheerio = require('cheerio')
 
-const randomCrawlerAgent = uniqueRandomArray(require('top-crawler-agents'))
+const randomCrawlerAgent = uniqueRandomArray(
+  require('top-crawler-agents').filter(agent => agent.startsWith('Slackbot'))
+)
 
 const getHTML = require('../util/html-get')
 
@@ -16,11 +18,7 @@ const avatarUrl = str =>
 
 module.exports = PCancelable.fn(async function twitter ({ input }, onCancel) {
   const promise = getHTML(`https://twitter.com/${input}`, {
-    headers: { 'user-agent': randomCrawlerAgent() },
-    puppeteerOpts: {
-      waitUntil: 'networkidle2',
-      abortTypes: ['image', 'stylesheet', 'font']
-    }
+    headers: { 'user-agent': randomCrawlerAgent() }
   })
   onCancel(() => promise.onCancel())
   const { html } = await promise
