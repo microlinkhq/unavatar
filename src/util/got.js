@@ -18,7 +18,6 @@ const userAgentHook = options => {
 const gotOpts = {
   dnsCache: require('./cacheable-lookup'),
   https: { rejectUnauthorized: false },
-  headers: { 'user-agent': undefined },
   hooks: { beforeRequest: [userAgentHook, tlsHook] }
 }
 
