@@ -11,6 +11,8 @@ const { API_URL, NODE_ENV, PORT } = require('./constant')
 
 const server = createServer(require('.'))
 
+require('./util/req-frequency')(server)
+
 server.listen(PORT, () => {
   debug({
     status: 'listening',
