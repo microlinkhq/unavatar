@@ -1,7 +1,8 @@
 'use strict'
 
 process.env.DEBUG =
-  process.env.DEBUG || '*,-puppeteer*,-send*,-ioredis*,-cacheable-response*'
+  process.env.DEBUG ||
+  '*,-html-get*,-puppeteer*,-send*,-ioredis*,-cacheable-response*,-browserless*'
 
 const debug = require('debug-logfmt')('unavatar')
 const { createServer } = require('http')

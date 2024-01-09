@@ -182,7 +182,7 @@
     "release": "standard-version -a",
     "release:github": "github-generate-release",
     "release:tags": "git push --follow-tags origin HEAD:master",
-    "start": "TZ=UTC NODE_ENV=production DEBUG=\"unavatar*\" node src/server.js",
+    "start": "NODE_ENV=production node src/server.js",
     "test": "ava",
     "update": "ncu -u",
     "update:check": "ncu -- --error-level 2"
