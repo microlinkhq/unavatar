@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.4.0 (2024-01-09)
+
+
+### Features
+
+* use in memory rate limiter ([416c978](https://github.com/Kikobeats/unavatar/commit/416c9785701a15922390ba5da895de590efe8f9d))
+
 ### [3.3.13](https://github.com/Kikobeats/unavatar/compare/v3.3.12...v3.3.13) (2024-01-08)
 
 ### 3.3.12 (2024-01-07)
