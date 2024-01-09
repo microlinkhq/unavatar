@@ -11,7 +11,9 @@ const {
   AVATAR_TIMEOUT = 25000,
   CACHE_TTL = ms('1y'),
   NODE_ENV = 'development',
-  PORT = 3000
+  PORT = 3000,
+  RATE_LIMIT_WINDOW = 86400,
+  RATE_LIMIT = 50
 } = process.env
 
 const API_URL =
@@ -27,5 +29,7 @@ module.exports = {
   CACHE_TTL,
   NODE_ENV,
   PORT,
-  TMP_FOLDER
+  TMP_FOLDER,
+  RATE_LIMIT_WINDOW,
+  RATE_LIMIT
 }
