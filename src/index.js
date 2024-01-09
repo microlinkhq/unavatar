@@ -40,6 +40,16 @@ router
       req.ipAddress = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
       next()
     },
+    require('helmet')({
+      crossOriginResourcePolicy: false,
+      contentSecurityPolicy: false
+    }),
+    require('http-compression')(),
+    require('cors')(),
+    serveStatic(path.resolve('public'), {
+      immutable: true,
+      maxAge: '1y'
+    }),
     require('./authentication'),
     isProduction && require('./ua'),
     (req, res, next) => {
@@ -63,17 +73,7 @@ router
         )
       })
       next()
-    },
-    require('helmet')({
-      crossOriginResourcePolicy: false,
-      contentSecurityPolicy: false
-    }),
-    require('http-compression')(),
-    require('cors')(),
-    serveStatic(path.resolve('public'), {
-      immutable: true,
-      maxAge: '1y'
-    })
+    }
   )
   .get('/:key', (req, res) =>
     ssrCache({
