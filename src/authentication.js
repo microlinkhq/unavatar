@@ -1,9 +1,14 @@
 'use strict'
 
-const rateLimiter = require('./util/rate-limiter')
+const { RateLimiterMemory } = require('rate-limiter-flexible')
 const debug = require('debug-logfmt')('unavatar:rate')
 
-const { API_KEY } = require('./constant')
+const { API_KEY, RATE_LIMIT_WINDOW, RATE_LIMIT } = require('./constant')
+
+const rateLimiter = new RateLimiterMemory({
+  points: RATE_LIMIT,
+  duration: RATE_LIMIT_WINDOW
+})
 
 const more = (() => {
   const email = 'hello@microlink.io'
@@ -30,21 +35,21 @@ const rateLimitError = (() => {
   return rateLimitError
 })()
 
-module.exports = rateLimiter
-  ? async (req, res, next) => {
-    if (req.headers['x-api-key'] === API_KEY) return next()
-    const { total, reset, remaining } = await rateLimiter.get({
-      id: req.ipAddress
-    })
+module.exports = async (req, res, next) => {
+  if (req.headers['x-api-key'] === API_KEY) return next()
 
-    if (!res.writableEnded) {
-      const _remaining = Math.max(0, remaining - 1)
-      res.setHeader('X-Rate-Limit-Limit', total)
-      res.setHeader('X-Rate-Limit-Remaining', _remaining)
-      res.setHeader('X-Rate-Limit-Reset', reset)
-      debug(req.ipAddress, { total, remaining: _remaining })
-    }
+  const { msBeforeNext, remainingPoints: remaining } = await rateLimiter
+    .consume(req.ipAddress)
+    .catch(error => error)
 
-    return remaining ? next() : next(rateLimitError)
+  if (!res.writableEnded) {
+    res.setHeader('X-Rate-Limit-Limit', RATE_LIMIT)
+    res.setHeader('X-Rate-Limit-Remaining', remaining)
+    res.setHeader('X-Rate-Limit-Reset', new Date(Date.now() + msBeforeNext))
+    debug(req.ipAddress, { total: RATE_LIMIT, remaining })
   }
-  : false
+
+  if (remaining) return next()
+  res.setHeader('Retry-After', msBeforeNext / 1000)
+  return next(rateLimitError)
+}
