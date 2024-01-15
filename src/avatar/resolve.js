@@ -1,9 +1,10 @@
 'use strict'
 
 const debug = require('debug-logfmt')('unavatar:resolve')
+const reachableUrl = require('../util/reachable-url')
 const isAbsoluteUrl = require('is-absolute-url')
+const memoizeOne = require('async-memoize-one')
 const { getTtl } = require('../send/cache')
-const memoizeOne = require('memoize-one')
 const isUrlHttp = require('is-url-http')
 const pTimeout = require('p-timeout')
 const pReflect = require('p-reflect')
@@ -44,16 +45,18 @@ const optimizeUrl = async (url, query) => {
   }).toString()}`
 }
 
-const getDefaultFallbackUrl = memoizeOne(
-  ({ protocol, host }) => `${protocol}://${host}/fallback.png`
-)
+const getDefaultFallbackUrl = ({ protocol, host }) =>
+  this.url || (this.url = `${protocol}://${host}/fallback.png`)
 
-const getFallbackUrl = memoizeOne(({ query, protocol, host }) => {
+const getFallbackUrl = memoizeOne(async ({ query, protocol, host }) => {
   const { fallback } = query
   if (fallback === false) return null
-
-  return isUrlHttp(fallback) && isAbsoluteUrl(fallback)
-    ? fallback
+  if (!isUrlHttp(fallback) || !isAbsoluteUrl(fallback)) {
+    return getDefaultFallbackUrl({ protocol, host })
+  }
+  const { statusCode, url } = await reachableUrl(fallback)
+  return reachableUrl.isReachable({ statusCode })
+    ? url
     : getDefaultFallbackUrl({ protocol, host })
 })
 
@@ -74,7 +77,7 @@ module.exports = fn => async (req, res) => {
   }
 
   if (value === undefined) {
-    const data = getFallbackUrl({ query, protocol, host })
+    const data = await getFallbackUrl({ query, protocol, host })
     value = data ? { type: 'url', data } : null
   }
 
