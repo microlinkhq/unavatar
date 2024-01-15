@@ -1,23 +1,22 @@
 'use strict'
 
-const ms = require('ms')
+const { parse } = require('@lukeed/ms')
 
 const memoize = require('../util/memoize')
 const send = require('.')
 
-const { CACHE_TTL } = require('../constant')
+const { TTL_DEFAULT, TTL_MIN, TTL_MAX } = require('../constant')
 
 const getTtl = memoize(ttl => {
-  if (ttl === undefined || ttl === null) return CACHE_TTL
-  const value = ms(ttl)
-  if (Number.isNaN(Number(value))) return CACHE_TTL
-  if (value < ms('1h') || value > ms('28d')) return CACHE_TTL
+  if (ttl === undefined || ttl === null) return TTL_DEFAULT
+  const value = typeof ttl === 'number' ? ttl : parse(ttl)
+  if (value === undefined || value < TTL_MIN || value > TTL_MAX) { return TTL_DEFAULT }
   return value
 })
 
 module.exports = require('cacheable-response')({
   logger: require('debug-logfmt')('cacheable-response'),
-  ttl: CACHE_TTL,
+  ttl: TTL_DEFAULT,
   staleTtl: false,
   get: async ({ req, res, fn }) => ({
     ttl: getTtl(req.query.ttl),

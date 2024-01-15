@@ -5,6 +5,7 @@ const debug = require('debug-logfmt')('unavatar')
 const serveStatic = require('serve-static')
 const createRouter = require('router-http')
 const onFinished = require('on-finished')
+const { format } = require('@lukeed/ms')
 const { forEach } = require('lodash')
 const send = require('send-http')
 const path = require('path')
@@ -69,7 +70,7 @@ router
         debug(
           `${req.ipAddress} ${new URL(req.url, API_URL).toString()} ${
             res.statusCode
-          } ${Math.round(req.timestamp())}ms`
+          } ${format(Math.round(req.timestamp()))}`
         )
       })
       next()

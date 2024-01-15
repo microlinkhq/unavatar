@@ -5,10 +5,10 @@ const Tangerine = require('tangerine')
 
 const { createMultiCache, createRedisCache } = require('./keyv')
 
-const { CACHE_TTL } = require('../constant')
+const { TTL_DEFAULT } = require('../constant')
 
 module.exports = new CacheableLookup({
-  maxTtl: CACHE_TTL,
+  maxTtl: TTL_DEFAULT,
   cache: createMultiCache(createRedisCache({ namespace: 'dns' })),
   resolver: new Tangerine(
     {

@@ -1,7 +1,14 @@
 'use strict'
 
+const debug = require('debug-logfmt')('unavatar:authentication')
 const { RateLimiterMemory } = require('rate-limiter-flexible')
-const debug = require('debug-logfmt')('unavatar:rate')
+const FrequencyCounter = require('frequency-counter')
+const onFinished = require('on-finished')
+const { format } = require('@lukeed/ms')
+
+const START = Date.now()
+const reqsMin = new FrequencyCounter(60)
+let reqs = 0
 
 const { API_KEY, RATE_LIMIT_WINDOW, RATE_LIMIT } = require('./constant')
 
@@ -36,20 +43,35 @@ const rateLimitError = (() => {
 })()
 
 module.exports = async (req, res, next) => {
+  ++reqs && reqsMin.inc()
+  onFinished(res, () => --reqs)
+
   if (req.headers['x-api-key'] === API_KEY) return next()
 
-  const { msBeforeNext, remainingPoints: remaining } = await rateLimiter
+  const { msBeforeNext, remainingPoints: quotaRemaining } = await rateLimiter
     .consume(req.ipAddress)
     .catch(error => error)
 
   if (!res.writableEnded) {
     res.setHeader('X-Rate-Limit-Limit', RATE_LIMIT)
-    res.setHeader('X-Rate-Limit-Remaining', remaining)
+    res.setHeader('X-Rate-Limit-Remaining', quotaRemaining)
     res.setHeader('X-Rate-Limit-Reset', new Date(Date.now() + msBeforeNext))
-    debug(req.ipAddress, { total: RATE_LIMIT, remaining })
+
+    const uptime = format(Date.now() - START)
+    const perMinute = reqsMin.freq()
+    const perSecond = Number(perMinute / 60).toFixed(1)
+
+    debug(req.ipAddress, {
+      uptime,
+      reqs,
+      'req/m': perMinute,
+      'req/s': perSecond,
+      quotaTotal: RATE_LIMIT,
+      quotaRemaining
+    })
   }
 
-  if (remaining) return next()
+  if (quotaRemaining) return next()
   res.setHeader('Retry-After', msBeforeNext / 1000)
   return next(rateLimitError)
 }

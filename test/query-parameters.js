@@ -1,10 +1,10 @@
 'use strict'
 
+const { parse } = require('@lukeed/ms')
 const test = require('ava')
 const got = require('got')
-const ms = require('ms')
 
-const { CACHE_TTL } = require('../src/constant')
+const { TTL_DEFAULT } = require('../src/constant')
 
 const { runServer } = require('./helpers')
 const { getTtl } = require('../src/send/cache')
@@ -52,13 +52,14 @@ test('fallback # use default value if fallback provided is not reachable', async
 })
 
 test('ttl', t => {
-  t.is(getTtl(), CACHE_TTL)
-  t.is(getTtl(null), CACHE_TTL)
-  t.is(getTtl(undefined), CACHE_TTL)
-  t.is(getTtl(0), CACHE_TTL)
-  t.is(getTtl('foo'), CACHE_TTL)
-  t.is(getTtl('29d'), CACHE_TTL)
-  t.is(getTtl('29d'), CACHE_TTL)
-  t.is(getTtl(ms('2h')), CACHE_TTL)
-  t.is(getTtl('2h'), ms('2h'))
+  t.is(getTtl(), TTL_DEFAULT)
+  t.is(getTtl(''), TTL_DEFAULT)
+  t.is(getTtl(null), TTL_DEFAULT)
+  t.is(getTtl(undefined), TTL_DEFAULT)
+  t.is(getTtl(0), TTL_DEFAULT)
+  t.is(getTtl('foo'), TTL_DEFAULT)
+  t.is(getTtl('29d'), TTL_DEFAULT)
+  t.is(getTtl('29d'), TTL_DEFAULT)
+  t.is(getTtl(parse('2h')), parse('2h'))
+  t.is(getTtl('2h'), parse('2h'))
 })
