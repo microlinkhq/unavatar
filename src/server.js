@@ -21,3 +21,9 @@ server.listen(PORT, () => {
     address: API_URL
   })
 })
+
+process.on('uncaughtException', error => {
+  debug.error('uncaughtException', {
+    requestUrl: error.response?.requestUrl
+  })
+})

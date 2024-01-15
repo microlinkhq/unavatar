@@ -36,6 +36,21 @@ test('fallback', async t => {
   t.is(headers['content-type'], 'application/json; charset=utf-8')
 })
 
+test('fallback # use default value if fallback provided is not reachable', async t => {
+  const serverUrl = await runServer(t)
+
+  const { headers, body } = await got(
+    'github/__notexistprofile__?fallback=https://nexmoe.com/thisis404.png&json',
+    {
+      prefixUrl: serverUrl,
+      responseType: 'json'
+    }
+  )
+
+  t.is(body.url, `${serverUrl.toString()}fallback.png`)
+  t.is(headers['content-type'], 'application/json; charset=utf-8')
+})
+
 test('ttl', t => {
   t.is(getTtl(), CACHE_TTL)
   t.is(getTtl(null), CACHE_TTL)
