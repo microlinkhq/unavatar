@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.5.0 (2024-01-15)
+
+
+### Features
+
+* add req-frequency ([32bf91e](https://github.com/Kikobeats/unavatar/commit/32bf91ebed11d084748c825a0d72e0cd955b6ac6))
+
+
+### Bug Fixes
+
+* ensure fallback url is reachable ([c173f3c](https://github.com/Kikobeats/unavatar/commit/c173f3c858324d085a6aac85760fb41e4079ea25))
+
 ## 3.4.0 (2024-01-09)
 
 
