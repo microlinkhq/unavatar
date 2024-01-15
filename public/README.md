@@ -26,7 +26,7 @@ So, no matter what type of query you use, **unavatar.io** has you covered. You c
 
 ### TTL
 
-Type: `string`<br/>
+Type: `number`|`string`<br/>
 Default: `'24h'`<br/>
 Range: from `'1h'` to `'28d'`
 

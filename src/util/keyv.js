@@ -8,12 +8,12 @@ const assert = require('assert')
 
 const redis = require('./redis')
 
-const { CACHE_TTL } = require('../constant')
+const { TTL_DEFAULT } = require('../constant')
 
 const createMultiCache = remote =>
   new Keyv({ store: new KeyvMulti({ remote }) })
 
-const createKeyv = opts => new Keyv({ ttl: CACHE_TTL, ...opts })
+const createKeyv = opts => new Keyv({ ttl: TTL_DEFAULT, ...opts })
 
 const createKeyvNamespace = opts => {
   assert(opts.namespace, '`opts.namespace` is required.')

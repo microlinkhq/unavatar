@@ -9,7 +9,6 @@ const isUrlHttp = require('is-url-http')
 const pTimeout = require('p-timeout')
 const pReflect = require('p-reflect')
 const { omit } = require('lodash')
-const ms = require('ms')
 
 const isIterable = require('../util/is-iterable')
 
@@ -40,7 +39,7 @@ const optimizeUrl = async (url, query) => {
     il: '',
     n: -1,
     w: AVATAR_SIZE,
-    ttl: ms(getTtl(ttl)),
+    ttl: getTtl(ttl),
     ...rest
   }).toString()}`
 }
