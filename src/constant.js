@@ -1,7 +1,7 @@
 'use strict'
 
-const { parse } = require('@lukeed/ms')
 const { existsSync } = require('fs')
+const ms = require('ms')
 
 const TMP_FOLDER = existsSync('/dev/shm') ? '/dev/shm' : '/tmp'
 
@@ -9,9 +9,9 @@ const {
   ALLOWED_REQ_HEADERS = ['accept-encoding', 'accept', 'user-agent'],
   AVATAR_SIZE = 400,
   AVATAR_TIMEOUT = 25000,
-  TTL_DEFAULT = parse('1y'),
-  TTL_MIN = parse('1h'),
-  TTL_MAX = parse('28d'),
+  TTL_DEFAULT = ms('1y'),
+  TTL_MIN = ms('1h'),
+  TTL_MAX = ms('28d'),
   NODE_ENV = 'development',
   PORT = 3000,
   RATE_LIMIT_WINDOW = 86400,

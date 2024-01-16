@@ -1,6 +1,6 @@
 'use strict'
 
-const { parse } = require('@lukeed/ms')
+const ms = require('ms')
 
 const memoize = require('../util/memoize')
 const send = require('.')
@@ -9,8 +9,10 @@ const { TTL_DEFAULT, TTL_MIN, TTL_MAX } = require('../constant')
 
 const getTtl = memoize(ttl => {
   if (ttl === undefined || ttl === null) return TTL_DEFAULT
-  const value = typeof ttl === 'number' ? ttl : parse(ttl)
-  if (value === undefined || value < TTL_MIN || value > TTL_MAX) { return TTL_DEFAULT }
+  const value = typeof ttl === 'number' ? ttl : ms(ttl)
+  if (value === undefined || value < TTL_MIN || value > TTL_MAX) {
+    return TTL_DEFAULT
+  }
   return value
 })
 

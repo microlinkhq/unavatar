@@ -1,17 +1,16 @@
 'use strict'
 
+const timeSpan = require('@kikobeats/time-span')({
+  format: n => ms(Math.round(n))
+})
 const debug = require('debug-logfmt')('unavatar')
 const serveStatic = require('serve-static')
 const createRouter = require('router-http')
 const onFinished = require('on-finished')
-const { format } = require('@lukeed/ms')
 const { forEach } = require('lodash')
 const send = require('send-http')
 const path = require('path')
-
-const timeSpan = require('@kikobeats/time-span')({
-  format: n => format(Math.round(n))
-})
+const ms = require('ms')
 
 const { providers } = require('./providers')
 const ssrCache = require('./send/cache')
@@ -73,7 +72,7 @@ router
         debug(
           `${req.ipAddress} ${new URL(req.url, API_URL).toString()} ${
             res.statusCode
-          } ${req.timestamp()}`
+          } – ${req.timestamp()}`
         )
       })
       next()

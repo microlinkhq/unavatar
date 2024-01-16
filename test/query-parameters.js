@@ -1,8 +1,8 @@
 'use strict'
 
-const { parse } = require('@lukeed/ms')
 const test = require('ava')
 const got = require('got')
+const ms = require('ms')
 
 const { TTL_DEFAULT } = require('../src/constant')
 
@@ -60,6 +60,6 @@ test('ttl', t => {
   t.is(getTtl('foo'), TTL_DEFAULT)
   t.is(getTtl('29d'), TTL_DEFAULT)
   t.is(getTtl('29d'), TTL_DEFAULT)
-  t.is(getTtl(parse('2h')), parse('2h'))
-  t.is(getTtl('2h'), parse('2h'))
+  t.is(getTtl(ms('2h')), ms('2h'))
+  t.is(getTtl('2h'), ms('2h'))
 })

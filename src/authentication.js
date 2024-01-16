@@ -1,12 +1,12 @@
 'use strict'
 
+const timeSpan = require('@kikobeats/time-span')({ format: require('ms') })
 const debug = require('debug-logfmt')('unavatar:authentication')
 const { RateLimiterMemory } = require('rate-limiter-flexible')
 const FrequencyCounter = require('frequency-counter')
 const onFinished = require('on-finished')
-const { format } = require('@lukeed/ms')
 
-const START = Date.now()
+const duration = timeSpan()
 const reqsMin = new FrequencyCounter(60)
 let reqs = 0
 
@@ -57,12 +57,11 @@ module.exports = async (req, res, next) => {
     res.setHeader('X-Rate-Limit-Remaining', quotaRemaining)
     res.setHeader('X-Rate-Limit-Reset', new Date(Date.now() + msBeforeNext))
 
-    const uptime = format(Date.now() - START)
     const perMinute = reqsMin.freq()
     const perSecond = Number(perMinute / 60).toFixed(1)
 
     debug(req.ipAddress, {
-      uptime,
+      uptime: duration(),
       reqs,
       'req/m': perMinute,
       'req/s': perSecond,
