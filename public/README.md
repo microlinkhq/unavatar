@@ -78,7 +78,7 @@ You can verify for your rate limit state checking the following headers in the r
 - `x-rate-limit-remaining`: The number of requests remaining in the current rate limit window.
 - `x-rate-limit-reset`: The time at which the current rate limit window resets in UTC epoch seconds.
 
-When you reach the API quota limit, you will experience HTTP 429 errors, meaning you need to wait until the API quota reset. If you need need more quota, <a target="_blank" rel="noopener noreferrer" href="mailto:hello@microlink.io?subject=unavatar.io%20API%20key&amp;body=Hello%2C%0D%0A%0D%0AWe%20wanted%20unlimited%20usage%20for%20unavatar.io.%0D%0A%0D%0APlease%2C%20tell%20us%20how%20to%20proceed.">contact us</a>.
+When you reach the API quota limit, you will experience HTTP 429 errors, meaning you need to wait until the API quota reset. If you need more quota, <a target="_blank" rel="noopener noreferrer" href="mailto:hello@microlink.io?subject=unavatar.io%20API%20key&amp;body=Hello%2C%0D%0A%0D%0AWe%20wanted%20unlimited%20usage%20for%20unavatar.io.%0D%0A%0D%0APlease%2C%20tell%20us%20how%20to%20proceed.">contact us</a>.
 
 ## Providers
 
