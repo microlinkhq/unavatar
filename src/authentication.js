@@ -5,6 +5,7 @@ const debug = require('debug-logfmt')('unavatar:authentication')
 const { RateLimiterMemory } = require('rate-limiter-flexible')
 const FrequencyCounter = require('frequency-counter')
 const onFinished = require('on-finished')
+const os = require('os')
 
 const duration = timeSpan()
 const reqsMin = new FrequencyCounter(60)
@@ -62,6 +63,7 @@ module.exports = async (req, res, next) => {
 
     debug(req.ipAddress, {
       uptime: duration(),
+      load: os.loadavg().map(n => n.toFixed(2)),
       reqs,
       'req/m': perMinute,
       'req/s': perSecond,

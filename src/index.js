@@ -78,6 +78,7 @@ router
       next()
     }
   )
+  .get('ping', (_, res) => send(res, 200, 'pong'))
   .get('/:key', (req, res) =>
     ssrCache({
       req,

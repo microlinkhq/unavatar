@@ -1,31 +1,22 @@
 app = "unavatar"
-kill_signal = "SIGINT"
+kill_signal = "SIGTERM"
 kill_timeout = 5
-processes = []
 
-[experimental]
-  allowed_public_ports = []
-  auto_rollback = true
-
-[[services]]
-  http_checks = []
+[http_service]
   internal_port = 3000
-  processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
+  force_https = false
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
 
-  # [services.concurrency]
-  #   hard_limit = 8
-  #   soft_limit = 4
-  #   type = "requests"
+[http_service.concurrency]
+  type = "requests"
+  soft_limit = 5
+  hard_limit = 10
 
-  [[services.ports]]
-    force_https = false
-    handlers = ["http"]
-    port = 80
-
-  [[services.tcp_checks]]
-    grace_period = "1s"
-    interval = "15s"
-    restart_limit = 0
-    timeout = "2s"
+[[http_service.checks]]
+  grace_period = "3s"
+  interval = "30s"
+  method = "GET"
+  timeout = "1s"
+  path = "/ping"
