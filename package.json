@@ -92,7 +92,7 @@
     "@keyvhq/multi": "~2.1.0",
     "@keyvhq/redis": "~2.1.0",
     "@kikobeats/time-span": "~1.0.4",
-    "@microlink/mql": "~0.12.3",
+    "@microlink/mql": "~0.13.4",
     "@microlink/ping-url": "~1.4.12",
     "@microlink/ua": "~1.2.3",
     "async-memoize-one": "~1.1.7",
