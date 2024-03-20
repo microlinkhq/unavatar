@@ -96,7 +96,7 @@
     "@microlink/ping-url": "~1.4.12",
     "@microlink/ua": "~1.2.3",
     "async-memoize-one": "~1.1.7",
-    "browserless": "~10.3.0",
+    "browserless": "~10.4.0",
     "cacheable-lookup": "~6.1.0",
     "cacheable-response": "~2.8.12",
     "cheerio": "~1.0.0-rc.12",
