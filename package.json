@@ -98,7 +98,7 @@
     "async-memoize-one": "~1.1.7",
     "browserless": "~10.4.0",
     "cacheable-lookup": "~6.1.0",
-    "cacheable-response": "~2.8.12",
+    "cacheable-response": "~2.9.0",
     "cheerio": "~1.0.0-rc.12",
     "cors": "~2.8.5",
     "data-uri-regex": "~0.1.4",
