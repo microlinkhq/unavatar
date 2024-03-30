@@ -94,8 +94,7 @@ test('telegram', async t => {
   })
   t.true(body.url.includes('images.weserv.nl'))
 })
-
-test('substack', async t => {
+;(isCI ? test.skip : test)('substack', async t => {
   const serverUrl = await runServer(t)
   const { body } = await got('substack/bankless?json', {
     prefixUrl: serverUrl
