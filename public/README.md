@@ -202,6 +202,14 @@ It resolves user avatar against **twitter.com**.
 
 e.g., https://unavatar.io/twitter/kikobeats
 
+### Twitch
+
+Type: `username`
+
+It resolves user avatar against **twitch.tv**.
+
+e.g., https://unavatar.io/twitter/midudev
+
 ### YouTube
 
 Type: `username`

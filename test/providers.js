@@ -47,7 +47,7 @@ test('soundcloud', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 //
-;(isCI ? test.skip : test)('deviantart', async t => {
+test('deviantart', async t => {
   const serverUrl = await runServer(t)
   const { body } = await got('deviantart/spyed?json', {
     prefixUrl: serverUrl
@@ -94,8 +94,7 @@ test('telegram', async t => {
   })
   t.true(body.url.includes('images.weserv.nl'))
 })
-
-test('substack', async t => {
+;(isCI ? test.skip : test)('substack', async t => {
   const serverUrl = await runServer(t)
   const { body } = await got('substack/bankless?json', {
     prefixUrl: serverUrl
@@ -119,6 +118,14 @@ test('substack', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
+test('twitch', async t => {
+  const serverUrl = await runServer(t)
+  const { body } = await got('twitch/midudev?json', {
+    prefixUrl: serverUrl
+  })
+  t.true(body.url.includes('images.weserv.nl'))
+})
+
 test('microlink', async t => {
   const serverUrl = await runServer(t)
   const { body } = await got('microlink/teslahunt.io?json', {
@@ -135,7 +142,7 @@ test('readcv', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 //
-;(isCI ? test.skip : test)('tiktok', async t => {
+test.skip('tiktok', async t => {
   const serverUrl = await runServer(t)
   const { body } = await got('tiktok/carlosazaustre?json', {
     prefixUrl: serverUrl
