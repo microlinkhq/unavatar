@@ -67,8 +67,7 @@ module.exports = async (req, res, next) => {
       reqs,
       'req/m': perMinute,
       'req/s': perSecond,
-      quotaTotal: RATE_LIMIT,
-      quotaRemaining
+      quota: `${quotaRemaining}/${RATE_LIMIT}`
     })
   }
 

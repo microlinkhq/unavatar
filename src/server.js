@@ -20,6 +20,32 @@ server.listen(PORT, () => {
   })
 })
 
+if (NODE_ENV === 'production') {
+  /**
+   * It uses Fly.io v2 to scale to zero, similar to AWS Lambda
+   * https://community.fly.io/t/implementing-scale-to-zero-is-super-easy/12415
+   */
+  const keepAlive = (duration => {
+    let timer
+    const keepAlive = () => {
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        server.close(() => {
+          debug({
+            status: 'shutting down',
+            reason: `No request received in ${duration / 1000}s`
+          })
+          process.exit(0)
+        })
+      }, duration)
+    }
+    keepAlive()
+    return keepAlive
+  })(10000)
+
+  server.on('request', keepAlive)
+}
+
 process.on('uncaughtException', error => {
   debug.error('uncaughtException', {
     message: error.message || error,

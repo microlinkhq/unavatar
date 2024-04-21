@@ -11,12 +11,5 @@ kill_timeout = 5
 
 [http_service.concurrency]
   type = "requests"
-  soft_limit = 5
-  hard_limit = 10
-
-[[http_service.checks]]
-  grace_period = "3s"
-  interval = "30s"
-  method = "GET"
-  timeout = "1s"
-  path = "/ping"
+  soft_limit = 3
+  hard_limit = 5
