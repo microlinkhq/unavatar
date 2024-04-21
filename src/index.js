@@ -18,7 +18,7 @@ const avatar = require('./avatar')
 
 const { isProduction, API_URL } = require('./constant')
 
-const router = createRouter((error, req, res) => {
+const router = createRouter((error, _, res) => {
   const hasError = error !== undefined
   let statusCode = 404
   let data = 'Not Found'
