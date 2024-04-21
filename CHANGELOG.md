@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.5.6 (2024-04-21)
+
+
+### Bug Fixes
+
+* skip ua if REDIS_URI_UA is missing ([df8481c](https://github.com/Kikobeats/unavatar/commit/df8481c667ac7983e000d67312358c36f2fcbea7))
+
 ### 3.5.5 (2024-04-17)
 
 ### [3.5.4](https://github.com/Kikobeats/unavatar/compare/v3.5.2...v3.5.4) (2024-04-03)
