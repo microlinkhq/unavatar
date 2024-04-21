@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.6.0 (2024-04-21)
+
+
+### Features
+
+* better flyio pattern ([ed2326e](https://github.com/Kikobeats/unavatar/commit/ed2326e6257067143548f94e5b6d12884b4a4e91))
+
 ### 3.5.6 (2024-04-21)
 
 
