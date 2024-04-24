@@ -8,6 +8,10 @@ ENV CC=clang
 ENV CXX=clang++
 ENV PUPPETEER_SKIP_CHROME_HEADLESS_SHELL_DOWNLOAD=true
 
+# install node20
+RUN . $NVM_DIR/nvm.sh && nvm_dir="${NVM_DIR:-~/.nvm}" && nvm unload && rm -rf "$nvm_dir"
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs
+
 # install pnpm
 RUN npm install -g pnpm
 
