@@ -207,7 +207,12 @@
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
-    ]
+    ],
+    "rules": {
+      "body-max-line-length": [
+        0
+      ]
+    }
   },
   "nano-staged": {
     "*.js": [
@@ -220,12 +225,6 @@
     "package.json": [
       "finepack"
     ]
-  },
-  "pnpm": {
-    "overrides": {
-      "@kikobeats/cacheable-request>keyv": "npm:@keyvhq/core@~2.1.0",
-      "cacheable-request@^7.0.2": "npm:@kikobeats/cacheable-request@7.0.3"
-    }
   },
   "simple-git-hooks": {
     "commit-msg": "npx commitlint --edit",
