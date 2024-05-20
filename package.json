@@ -130,7 +130,7 @@
     "tangerine": "~1.5.4",
     "top-crawler-agents": "~1.0.26",
     "top-user-agents": "~2.1.20",
-    "unique-random-array": "~2.0.0",
+    "unique-random-array": "~4.0.0",
     "url-regex": "~5.0.0"
   },
   "devDependencies": {
