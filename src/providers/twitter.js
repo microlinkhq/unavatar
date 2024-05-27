@@ -10,14 +10,15 @@ const randomCrawlerAgent = uniqueRandomArray(
 
 const getHTML = require('../util/html-get')
 
-const REGEX_IMG_MODIFIERS = /_(?:bigger|mini|normal|x96)\./
-const ORIGINAL_IMG_SIZE = '_400x400'
-
-const avatarUrl = str =>
-  str?.replace(REGEX_IMG_MODIFIERS, `${ORIGINAL_IMG_SIZE}.`)
+const avatarUrl = str => {
+  if (str?.endsWith('_200x200.jpg')) {
+    str = str.replace('_200x200.jpg', '_400x400.jpg')
+  }
+  return str
+}
 
 module.exports = PCancelable.fn(async function twitter ({ input }, onCancel) {
-  const promise = getHTML(`https://twitter.com/${input}`, {
+  const promise = getHTML(`https://x.com/${input}`, {
     headers: { 'user-agent': randomCrawlerAgent() }
   })
   onCancel(() => promise.onCancel())
