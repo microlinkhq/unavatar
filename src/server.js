@@ -20,7 +20,11 @@ server.listen(PORT, () => {
   })
 })
 
+let isClosing = false
+
 if (NODE_ENV === 'production') {
+  process.on('SIGTERM', () => (isClosing = true))
+
   /**
    * It uses Fly.io v2 to scale to zero, similar to AWS Lambda
    * https://community.fly.io/t/implementing-scale-to-zero-is-super-easy/12415
@@ -43,7 +47,7 @@ if (NODE_ENV === 'production') {
     return keepAlive
   })(10000)
 
-  server.on('request', keepAlive)
+  server.on('request', () => !isClosing && keepAlive())
 }
 
 process.on('uncaughtException', error => {
