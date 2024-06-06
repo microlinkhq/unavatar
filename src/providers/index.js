@@ -19,7 +19,7 @@ const providers = {
   telegram: require('./telegram'),
   // tiktok: require('./tiktok'),
   twitch: require('./twitch'),
-  twitter: require('./twitter'),
+  x: require('./x'),
   youtube: require('./youtube')
 }
 

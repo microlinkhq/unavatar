@@ -39,7 +39,11 @@ const router = createRouter((error, _, res) => {
 
 router
   .use(
-    (req, _, next) => {
+    (req, res, next) => {
+      if (req.url.startsWith('/twitter')) {
+        res.writeHead(301, { Location: req.url.replace('/twitter', '/x') })
+        res.end()
+      }
       req.ipAddress = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
       next()
     },
