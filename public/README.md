@@ -208,7 +208,7 @@ Type: `username`
 
 It resolves user avatar against **twitch.tv**.
 
-e.g., https://unavatar.io/twitter/midudev
+e.g., https://unavatar.io/twitch/midudev
 
 ### YouTube
 
