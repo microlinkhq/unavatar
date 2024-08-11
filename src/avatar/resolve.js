@@ -50,7 +50,7 @@ const getDefaultFallbackUrl = ({ protocol, host }) =>
 const getFallbackUrl = memoizeOne(async ({ query, protocol, host }) => {
   const { fallback } = query
   if (fallback === false) return null
-  if (fallback === 'transparent') return 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
+  if (fallback.startsWith('data:')) return fallback
   if (!isUrlHttp(fallback) || !isAbsoluteUrl(fallback)) {
     return getDefaultFallbackUrl({ protocol, host })
   }
