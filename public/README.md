@@ -52,11 +52,13 @@ or **avatar.vercel.sh**:
 
 e.g., https://unavatar.io/github/37t?fallback=https://avatar.vercel.sh/37t?size=400
 
-or even an static image:
+or a static image:
 
 e.g., https://unavatar.io/github/37t?fallback=https://avatars.githubusercontent.com/u/66378906?v=4
 
-Passing `fallback=transparent` will return a transparent, base64 encoded 1x1 pixel GIF. This can be useful when you want to use your own background colour or image as a fallback.
+or even as base64 encoded image. This allows you to return a transparent, base64 encoded 1x1 pixel GIF, which can be useful when you want to use your own background colour or image as a fallback.
+
+e.g., https://unavatar.io/github/37t?fallback=data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==
 
 You can pass `fallback=false` for explicitly disable this behavior. In that case, a *404 Not Found* HTTP status code will returned when is not possible to get the user avatar.
 
