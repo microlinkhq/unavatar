@@ -56,6 +56,8 @@ or even an static image:
 
 e.g., https://unavatar.io/github/37t?fallback=https://avatars.githubusercontent.com/u/66378906?v=4
 
+Passing `fallback=transparent` will return a transparent, base64 encoded 1x1 pixel GIF. This can be useful when you want to use your own background colour or image as a fallback.
+
 You can pass `fallback=false` for explicitly disable this behavior. In that case, a *404 Not Found* HTTP status code will returned when is not possible to get the user avatar.
 
 ### JSON
