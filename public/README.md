@@ -56,7 +56,7 @@ or a static image:
 
 e.g., https://unavatar.io/github/37t?fallback=https://avatars.githubusercontent.com/u/66378906?v=4
 
-or even as base64 encoded image. This allows you to return a transparent, base64 encoded 1x1 pixel GIF, which can be useful when you want to use your own background colour or image as a fallback.
+or even a base64 encoded image. This allows you to return a transparent, base64 encoded 1x1 pixel GIF, which can be useful when you want to use your own background colour or image as a fallback.
 
 e.g., https://unavatar.io/github/37t?fallback=data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==
 
