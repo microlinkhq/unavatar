@@ -50,7 +50,7 @@ const getDefaultFallbackUrl = ({ protocol, host }) =>
 const getFallbackUrl = memoizeOne(async ({ query, protocol, host }) => {
   const { fallback } = query
   if (fallback === false) return null
-  if (fallback.startsWith('data:')) return fallback
+  if (fallback.toLowerCase().startsWith('data:')) return fallback
   if (!isUrlHttp(fallback) || !isAbsoluteUrl(fallback)) {
     return getDefaultFallbackUrl({ protocol, host })
   }
