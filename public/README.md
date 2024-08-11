@@ -60,7 +60,7 @@ or even a base64 encoded image. This allows you to return a transparent, base64 
 
 e.g., https://unavatar.io/github/37t?fallback=data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==
 
-You can pass `fallback=false` for explicitly disable this behavior. In that case, a *404 Not Found* HTTP status code will returned when is not possible to get the user avatar.
+You can pass `fallback=false` to explicitly disable this behavior. In this case, a *404 Not Found* HTTP status code will returned when is not possible to get the user avatar.
 
 ### JSON
 
