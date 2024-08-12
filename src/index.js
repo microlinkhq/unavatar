@@ -8,7 +8,6 @@ const serveStatic = require('serve-static')
 const createRouter = require('router-http')
 const onFinished = require('on-finished')
 const { forEach } = require('lodash')
-const send = require('send-http')
 const path = require('path')
 const ms = require('ms')
 
@@ -34,7 +33,8 @@ const router = createRouter((error, _, res) => {
     }
   }
 
-  return send(res, statusCode, data)
+  res.statusCode = statusCode
+  res.end(data)
 })
 
 router
@@ -82,7 +82,7 @@ router
       next()
     }
   )
-  .get('ping', (_, res) => send(res, 200, 'pong'))
+  .get('ping', (_, res) => res.end('pong'))
   .get('/:key', (req, res) =>
     ssrCache({
       req,
