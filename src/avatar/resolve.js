@@ -79,7 +79,9 @@ module.exports = fn => async (req, res) => {
 
   if (value === undefined) {
     const data = await getFallbackUrl({ query, protocol, host })
-    value = data ? (dataUriRegex().test(data) ? { type: 'buffer', data } : { type: 'url', data }) : null
+    value = data
+      ? { type: dataUriRegex().test(data) ? 'buffer' : 'url', data }
+      : null
   }
 
   return value
