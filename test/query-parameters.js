@@ -1,5 +1,6 @@
 'use strict'
 
+const { dataUriToBuffer } = require('data-uri-to-buffer')
 const test = require('ava')
 const got = require('got')
 const ms = require('ms')
@@ -34,6 +35,41 @@ test('fallback', async t => {
 
   t.is(body.url, 'https://i.imgur.com/0d1TFfQ.jpg')
   t.is(headers['content-type'], 'application/json; charset=utf-8')
+})
+
+test('fallback # data uri', async t => {
+  {
+    const dataURI =
+      'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
+    const serverUrl = await runServer(t)
+
+    const { headers, body } = await got(
+      `github/__notexistprofile__?fallback=${encodeURIComponent(dataURI)}&json`,
+      {
+        prefixUrl: serverUrl,
+        responseType: 'json'
+      }
+    )
+
+    t.is(body.url, dataURI)
+    t.is(headers['content-type'], 'application/json; charset=utf-8')
+  }
+  {
+    const dataURI =
+      'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
+    const serverUrl = await runServer(t)
+
+    const { headers, body } = await got(
+      `github/__notexistprofile__?fallback=${encodeURIComponent(dataURI)}`,
+      {
+        prefixUrl: serverUrl,
+        responseType: 'buffer'
+      }
+    )
+
+    t.true(body.equals(dataUriToBuffer(dataURI)))
+    t.is(headers['content-type'], 'application/octet-stream')
+  }
 })
 
 test('fallback # use default value if fallback provided is not reachable', async t => {
