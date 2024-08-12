@@ -15,7 +15,7 @@ module.exports = ({ type, data, req, res }) => {
   const { query } = req
   const statusCode = data ? 200 : 404
   return query.json
-    ? send(res, statusCode, JSON.stringify({ url: data }))
+    ? send(res, statusCode, { url: data })
     : type === 'buffer'
       ? send(res, statusCode, dataUriToBuffer(data))
       : got.stream(data, { headers: pickHeaders(req.headers) }).pipe(res)
