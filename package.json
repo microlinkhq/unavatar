@@ -133,7 +133,7 @@
     "rate-limiter-flexible": "~5.0.3",
     "router-http": "~1.0.8",
     "send-http": "~1.0.6",
-    "serve-static": "~1.15.0",
+    "serve-static": "~1.16.0",
     "srcset": "~4.0.0",
     "tangerine": "~1.5.9",
     "top-crawler-agents": "~1.0.27",
