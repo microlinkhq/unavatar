@@ -111,11 +111,11 @@
     "cors": "~2.8.5",
     "data-uri-regex": "~0.1.4",
     "data-uri-to-buffer": "~5.0.1",
-    "debug-logfmt": "~1.2.2",
+    "debug-logfmt": "~1.2.3",
     "frequency-counter": "~1.0.1",
     "got": "~11.8.6",
     "helmet": "~7.1.0",
-    "html-get": "~2.16.9",
+    "html-get": "~2.16.11",
     "http-compression": "~1.0.20",
     "https-tls": "~1.0.22",
     "ioredis": "~5.4.1",
@@ -133,11 +133,11 @@
     "rate-limiter-flexible": "~5.0.3",
     "router-http": "~1.0.8",
     "send-http": "~1.0.6",
-    "serve-static": "~1.16.0",
+    "serve-static": "~1.16.2",
     "srcset": "~4.0.0",
     "tangerine": "~1.5.9",
     "top-crawler-agents": "~1.0.27",
-    "top-user-agents": "~2.1.22",
+    "top-user-agents": "~2.1.23",
     "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
   },
@@ -169,7 +169,7 @@
     "untracked": "latest"
   },
   "engines": {
-    "node": ">= 20"
+    "node": "22"
   },
   "files": [
     "bin",
@@ -181,7 +181,7 @@
     "build": "gulp build && untracked > .vercelignore",
     "clean": "rm -rf node_modules",
     "contributors": "(npx git-authors-cli && npx finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
-    "dev": "TZ=UTC watchexec --clear=clear --on-busy-update=restart 'fkill \"Google Chrome for Testing\" --silent && node src/server.js'",
+    "dev": "TZ=UTC watchexec --clear=clear --on-busy-update=restart 'fkill \"Google Chrome for Testing\" --silent && NODE_OPTIONS='--no-deprecation' node src/server.js'",
     "dev:docker": "docker build --platform linux/amd64 -t unavatar . && docker run --platform linux/amd64 --name unavatar -e NODE_ENV=staging -p 3000:3000 --rm unavatar",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
     "dev:docs:server": "browser-sync start public --server public --files \"index.html, README.md, public/**/*.(css|js)\"",
@@ -194,7 +194,6 @@
     "release": "standard-version -a",
     "release:github": "github-generate-release",
     "release:tags": "git push --follow-tags origin HEAD:master",
-    "start": "NODE_ENV=production node src/server.js",
     "test": "ava"
   },
   "private": true,
