@@ -9,7 +9,9 @@ const { createServer } = require('http')
 
 const { API_URL, NODE_ENV, PORT } = require('./constant')
 
-const server = createServer(require('.'))
+const server = createServer((req, res) =>
+  require('./util/uuid').withUUID(() => require('.')(req, res))
+)
 
 server.listen(PORT, () => {
   debug({
@@ -53,6 +55,7 @@ if (NODE_ENV === 'production') {
 process.on('uncaughtException', error => {
   debug.error('uncaughtException', {
     message: error.message || error,
-    requestUrl: error.response?.requestUrl
+    requestUrl: error.response?.requestUrl,
+    stack: error.stack
   })
 })
