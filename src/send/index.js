@@ -14,9 +14,16 @@ const pickHeaders = headers =>
 module.exports = ({ type, data, req, res }) => {
   const { query } = req
   const statusCode = data ? 200 : 404
-  return query.json
-    ? send(res, statusCode, { url: data })
-    : type === 'buffer'
-      ? send(res, statusCode, dataUriToBuffer(data))
-      : got.stream(data, { headers: pickHeaders(req.headers) }).pipe(res)
+
+  if (query.json) {
+    return send(res, statusCode, { url: data })
+  }
+
+  if (type === 'buffer' || data === undefined) {
+    const responseData = data === undefined ? data : dataUriToBuffer(data)
+    return send(res, statusCode, responseData)
+  }
+
+  const stream = got.stream(data, { headers: pickHeaders(req.headers) })
+  return stream.pipe(res)
 }
