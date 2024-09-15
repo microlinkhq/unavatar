@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.6.32 (2024-09-15)
+
+
+### Bug Fixes
+
+* handle no data no fallback ([3ddeb1a](https://github.com/Kikobeats/unavatar/commit/3ddeb1a13dae2d3b3f2a4ec330872ebf273021da))
+
 ### 3.6.31 (2024-09-13)
 
 ### 3.6.30 (2024-09-10)
