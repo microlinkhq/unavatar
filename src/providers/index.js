@@ -20,7 +20,8 @@ const providers = {
   // tiktok: require('./tiktok'),
   twitch: require('./twitch'),
   x: require('./x'),
-  youtube: require('./youtube')
+  youtube: require('./youtube'),
+  onlyfans: require('./onlyfans')
 }
 
 const providersBy = reduce(
