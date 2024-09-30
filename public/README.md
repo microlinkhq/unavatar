@@ -142,13 +142,13 @@ It resolves user avatar against **gravatar.com**.
 
 e.g., https://unavatar.io/gravatar/sindresorhus@gmail.com
 
-### Instagram
+<!-- ### Instagram
 
 Type: `username`
 
 It resolves user avatar against **instagram.com**.
 
-e.g., https://unavatar.io/instagram/willsmith
+e.g., https://unavatar.io/instagram/willsmith -->
 
 ### Microlink
 
@@ -166,13 +166,13 @@ It resolves user avatar against **read.cv**.
 
 e.g., https://unavatar.io/readcv/elenatorro
 
-### Reddit
+<!-- ### Reddit
 
 Type: `username`
 
 It resolves user avatar against **reddit.com**.
 
-e.g., https://unavatar.io/reddit/kikobeats
+e.g., https://unavatar.io/reddit/kikobeats -->
 
 ### SoundCloud
 

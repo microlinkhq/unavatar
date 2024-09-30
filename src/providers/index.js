@@ -13,7 +13,7 @@ const providers = {
   // instagram: require('./instagram'),
   microlink: require('./microlink'),
   readcv: require('./readcv'),
-  reddit: require('./reddit'),
+  // reddit: require('./reddit'),
   soundcloud: require('./soundcloud'),
   substack: require('./substack'),
   telegram: require('./telegram'),
