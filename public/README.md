@@ -198,13 +198,13 @@ It resolves user avatar against **telegram.com**.
 
 e.g., https://unavatar.io/telegram/drsdavidsoft
 
-### Twitter
+<!-- ### TikTok
 
 Type: `username`
 
-It resolves user avatar against **twitter.com**.
+It resolves user avatar against **tiktok.com**.
 
-e.g., https://unavatar.io/twitter/kikobeats
+e.g., https://unavatar.io/tiktok/carlosazaustre -->
 
 ### Twitch
 
@@ -213,6 +213,14 @@ Type: `username`
 It resolves user avatar against **twitch.tv**.
 
 e.g., https://unavatar.io/twitch/midudev
+
+### X/Twitter
+
+Type: `username`
+
+It resolves user avatar against **x.com**.
+
+e.g., https://unavatar.io/x/kikobeats
 
 ### YouTube
 
