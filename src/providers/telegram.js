@@ -6,7 +6,7 @@ const cheerio = require('cheerio')
 const getHTML = require('../util/html-get')
 
 module.exports = PCancelable.fn(async function telegram ({ input }, onCancel) {
-  const promise = getHTML(`https://t.me/${input}`, { prerender: false })
+  const promise = getHTML(`https://t.me/${input}`)
   const { html } = await promise
   onCancel(() => promise.onCancel())
   const $ = cheerio.load(html)
