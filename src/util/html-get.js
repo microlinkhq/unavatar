@@ -12,10 +12,10 @@ module.exports = async (url, { puppeteerOpts, ...opts } = {}) => {
   const browserContext = await browser.createContext()
 
   const result = await getHTML(url, {
+    prerender: false,
     ...opts,
     getBrowserless: () => browserContext,
     puppeteerOpts: {
-      abortTypes: ['image', 'stylesheet', 'font', 'script'],
       timeout: AVATAR_TIMEOUT,
       ...puppeteerOpts
     },
