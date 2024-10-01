@@ -158,6 +158,12 @@ It resolves user avatar using **microlink.io**.
 
 e.g., https://unavatar.io/microlink/microlink.io
 
+### OnlyFans
+
+It resolves user avatar using **onlyfans.com**.
+
+e.g., https://unavatar.io/onlyfans/amandaribas
+
 ### Read.cv
 
 Type: `username`

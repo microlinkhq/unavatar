@@ -61,7 +61,7 @@ test('soundcloud', async t => {
   t.is(statusCode, 200)
   t.true(body.url.includes('images.weserv.nl'))
 })
-//
+
 test('deviantart', async t => {
   const serverUrl = await runServer(t)
   const { body, statusCode } = await got('deviantart/spyed?json', {
@@ -126,7 +126,6 @@ test('telegram', async t => {
   t.is(statusCode, 200)
   t.true(body.url.includes('images.weserv.nl'))
 })
-//
 ;(isCI ? test.skip : test)('reddit', async t => {
   const serverUrl = await runServer(t)
   const { body, statusCode } = await got('reddit/kikobeats?json', {
@@ -135,7 +134,6 @@ test('telegram', async t => {
   t.is(statusCode, 200)
   t.true(body.url.includes('images.weserv.nl'))
 })
-//
 ;(isCI ? test.skip : test)('instagram', async t => {
   const serverUrl = await runServer(t)
   const { body, statusCode } = await got('instagram/willsmith?json', {
@@ -171,10 +169,18 @@ test('readcv', async t => {
   t.is(statusCode, 200)
   t.true(body.url.includes('images.weserv.nl'))
 })
-//
-test.skip('tiktok', async t => {
+;(isCI ? test.skip : test)('tiktok', async t => {
   const serverUrl = await runServer(t)
   const { body, statusCode } = await got('tiktok/carlosazaustre?json', {
+    prefixUrl: serverUrl
+  })
+  t.is(statusCode, 200)
+  t.true(body.url.includes('images.weserv.nl'))
+})
+
+test('onlyfans', async t => {
+  const serverUrl = await runServer(t)
+  const { body, statusCode } = await got('onlyfans/amandaribas?json', {
     prefixUrl: serverUrl
   })
   t.is(statusCode, 200)
