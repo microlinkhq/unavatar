@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.7.0 (2024-10-01)
+
+
+### Features
+
+* add onlyfans ([0cfe669](https://github.com/Kikobeats/unavatar/commit/0cfe669ed2c090915846069781aead93ff4f20fc))
+
 ### 3.6.36 (2024-09-30)
 
 ### 3.6.35 (2024-09-30)
