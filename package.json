@@ -135,7 +135,7 @@
     "send-http": "~1.0.6",
     "serve-static": "~1.16.2",
     "srcset": "~4.0.0",
-    "tangerine": "~1.5.9",
+    "tangerine": "~1.6.0",
     "top-crawler-agents": "~1.0.27",
     "top-user-agents": "~2.1.23",
     "unique-random-array": "~2.0.0",
