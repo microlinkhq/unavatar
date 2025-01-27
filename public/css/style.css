@@ -75,6 +75,10 @@ body {
   }
 }
 
+a.github-corner {
+  z-index: 1;
+}
+
 .github-corner svg {
   border-bottom: 0;
   position: fixed;
