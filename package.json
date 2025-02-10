@@ -118,7 +118,7 @@
     "html-get": "~2.18.5",
     "http-compression": "~1.1.1",
     "https-tls": "~1.0.23",
-    "ioredis": "~5.4.2",
+    "ioredis": "~5.5.0",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.3.9",
