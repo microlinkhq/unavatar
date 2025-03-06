@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.7.14 (2025-03-06)
+
+
+### Bug Fixes
+
+* flyio configuration ([5e1fdc6](https://github.com/Kikobeats/unavatar/commit/5e1fdc6b031cd79157eea9c1fac9aac651a5a144))
+
 ### 3.7.13 (2025-02-09)
 
 ### 3.7.12 (2025-01-30)
