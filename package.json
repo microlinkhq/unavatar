@@ -95,16 +95,16 @@
     "youtube"
   ],
   "dependencies": {
-    "@keyvhq/compress": "~2.1.5",
-    "@keyvhq/core": "~2.1.1",
-    "@keyvhq/multi": "~2.1.5",
-    "@keyvhq/redis": "~2.1.5",
+    "@keyvhq/compress": "~2.1.7",
+    "@keyvhq/core": "~2.1.7",
+    "@keyvhq/multi": "~2.1.7",
+    "@keyvhq/redis": "~2.1.7",
     "@kikobeats/time-span": "~1.0.5",
     "@microlink/mql": "~0.13.14",
     "@microlink/ping-url": "~1.4.15",
     "@microlink/ua": "~1.2.5",
     "async-memoize-one": "~1.1.8",
-    "browserless": "~10.7.2",
+    "browserless": "~10.7.3",
     "cacheable-lookup": "~6.1.0",
     "cacheable-response": "~2.10.2",
     "cheerio": "~1.0.0",
@@ -115,10 +115,10 @@
     "frequency-counter": "~1.0.1",
     "got": "~11.8.6",
     "helmet": "~8.0.0",
-    "html-get": "~2.18.5",
+    "html-get": "~2.20.0",
     "http-compression": "~1.1.1",
     "https-tls": "~1.0.23",
-    "ioredis": "~5.4.2",
+    "ioredis": "~5.6.0",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.3.9",
@@ -129,7 +129,7 @@
     "p-cancelable": "2.1.1",
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
-    "puppeteer": "~24.2.0",
+    "puppeteer": "~24.4.0",
     "rate-limiter-flexible": "~5.0.5",
     "router-http": "~1.0.10",
     "send-http": "~1.0.6",
@@ -137,7 +137,7 @@
     "srcset": "~4.0.0",
     "tangerine": "~1.6.0",
     "top-crawler-agents": "~1.0.28",
-    "top-user-agents": "~2.1.33",
+    "top-user-agents": "~2.1.38",
     "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
   },
@@ -187,7 +187,6 @@
     "dev:docs:server": "browser-sync start public --server public --files \"index.html, README.md, public/**/*.(css|js)\"",
     "dev:docs:src": "gulp",
     "lint": "standard-markdown && standard",
-    "postinstall": "node node_modules/puppeteer/install.mjs",
     "postrelease": "npm run release:tags && npm run release:github",
     "pretest": "npm run lint",
     "pretty": "prettier-standard index.js {core,test,bin}/**/*.js --single-quote",
@@ -228,6 +227,9 @@
     "package.json": [
       "finepack"
     ]
+  },
+  "pnpm": {
+    "neverBuiltDependencies": []
   },
   "simple-git-hooks": {
     "commit-msg": "npx commitlint --edit",
