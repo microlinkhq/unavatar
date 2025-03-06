@@ -6,7 +6,6 @@ ENV APP_DIR=/home/node/app
 ENV LANG="C.UTF-8"
 ENV CC=clang
 ENV CXX=clang++
-ENV PUPPETEER_SKIP_CHROME_HEADLESS_SHELL_DOWNLOAD=true
 ENV NODE_OPTIONS='--no-deprecation'
 
 # install node20
