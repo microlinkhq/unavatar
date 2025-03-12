@@ -2,7 +2,6 @@
 
 const uniqueRandomArray = require('unique-random-array')
 const PCancelable = require('p-cancelable')
-const cheerio = require('cheerio')
 
 const randomCrawlerAgent = uniqueRandomArray(
   require('top-crawler-agents').filter(agent => agent.startsWith('Slackbot'))
@@ -22,8 +21,7 @@ module.exports = PCancelable.fn(async function twitter ({ input }, onCancel) {
     headers: { 'user-agent': randomCrawlerAgent() }
   })
   onCancel(() => promise.onCancel())
-  const { html } = await promise
-  const $ = cheerio.load(html)
+  const { $ } = await promise
   return avatarUrl($('meta[property="og:image"]').attr('content'))
 })
 

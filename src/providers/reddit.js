@@ -1,7 +1,6 @@
 'use strict'
 
 const PCancelable = require('p-cancelable')
-const cheerio = require('cheerio')
 
 const getHTML = require('../util/html-get')
 
@@ -10,8 +9,7 @@ module.exports = PCancelable.fn(async function reddit ({ input }, onCancel) {
     headers: { 'accept-language': 'en' }
   })
   onCancel(() => promise.onCancel())
-  const { html } = await promise
-  const $ = cheerio.load(html)
+  const { $ } = await promise
   return $('img[alt*="avatar"]').attr('src')
 })
 
