@@ -15,6 +15,7 @@ module.exports = async (url, { puppeteerOpts, ...opts } = {}) => {
     prerender: false,
     ...opts,
     getBrowserless: () => browserContext,
+    serializeHtml: $ => ({ $ }),
     puppeteerOpts: {
       timeout: AVATAR_TIMEOUT,
       ...puppeteerOpts

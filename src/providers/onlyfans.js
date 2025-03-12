@@ -1,7 +1,6 @@
 'use strict'
 
 const PCancelable = require('p-cancelable')
-const cheerio = require('cheerio')
 
 const getHTML = require('../util/html-get')
 
@@ -11,8 +10,7 @@ module.exports = PCancelable.fn(async function onlyfans ({ input }, onCancel) {
     puppeteerOpts: { abortTypes: ['other', 'image', 'font'] }
   })
   onCancel(() => promise.onCancel())
-  const { html } = await promise
-  const $ = cheerio.load(html)
+  const { $ } = await promise
   const json = JSON.parse(
     $('script[type="application/ld+json"]').contents().text()
   )
