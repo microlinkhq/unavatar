@@ -182,7 +182,7 @@
     "clean": "rm -rf node_modules",
     "contributors": "(npx git-authors-cli && npx finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "dev": "TZ=UTC watchexec --clear=clear --on-busy-update=restart 'fkill \"Google Chrome for Testing\" --silent && NODE_OPTIONS='--no-deprecation' node src/server.js'",
-    "dev:docker": "docker build --platform linux/amd64 -t unavatar . && docker run --platform linux/amd64 --name unavatar -e NODE_ENV=staging -p 3000:3000 --rm unavatar",
+    "dev:docker": "docker build --platform linux/arm64/v8 -t unavatar . && docker run --platform linux/arm64/v8 --name unavatar -e NODE_ENV=staging -p 3000:3000 --rm unavatar",
     "dev:docs": "concurrently \"npm run dev:docs:server\" \"npm run dev:docs:src\"",
     "dev:docs:server": "browser-sync start public --server public --files \"index.html, README.md, public/**/*.(css|js)\"",
     "dev:docs:src": "gulp",

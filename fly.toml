@@ -11,9 +11,13 @@ kill_timeout = 5
 
 [http_service.concurrency]
   type = "requests"
-  soft_limit = 3
-  hard_limit = 5
+  soft_limit = 2
+  hard_limit = 4
 
 [[restart]]
   policy = "on-failure"
   max_retries = 5
+
+## some useful fly commands
+# fly status # to see how many machines are running
+# fly scale vm shared-cpu-2x --vm-memory=1024 # upgrade machines
