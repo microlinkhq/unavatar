@@ -4,9 +4,9 @@ FROM browserless/base:latest
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APP_DIR=/home/node/app
 ENV LANG="C.UTF-8"
-ENV CC=clang
-ENV CXX=clang++
-ENV NODE_OPTIONS='--no-deprecation'
+#ENV CC=clang
+#ENV CXX=clang++
+#ENV NODE_OPTIONS='--no-deprecation'
 
 # install node20
 RUN . $NVM_DIR/nvm.sh && nvm_dir="${NVM_DIR:-~/.nvm}" && nvm unload && rm -rf "$nvm_dir"
