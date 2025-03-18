@@ -114,7 +114,7 @@
     "debug-logfmt": "~1.2.3",
     "frequency-counter": "~1.0.1",
     "got": "~11.8.6",
-    "helmet": "~8.0.0",
+    "helmet": "~8.1.0",
     "html-get": "~2.21.1",
     "http-compression": "~1.1.1",
     "https-tls": "~1.0.23",
