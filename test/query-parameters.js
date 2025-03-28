@@ -76,7 +76,7 @@ test('fallback # use default value if fallback provided is not reachable', async
   const serverUrl = await runServer(t)
 
   const { headers, body } = await got(
-    'github/__notexistprofile__?fallback=https://nexmoe.com/thisis404.png&json',
+    'github/__notexistprofile__?fallback=https://nexmoew.com/thisis404.png&json',
     {
       prefixUrl: serverUrl,
       responseType: 'json'
