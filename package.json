@@ -129,7 +129,7 @@
     "p-cancelable": "2.1.1",
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
-    "puppeteer": "~24.6.0",
+    "puppeteer": "~24.7.1",
     "rate-limiter-flexible": "~7.0.0",
     "router-http": "~1.0.10",
     "send-http": "~1.0.6",
