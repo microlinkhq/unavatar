@@ -100,7 +100,7 @@
     "@keyvhq/multi": "~2.1.7",
     "@keyvhq/redis": "~2.1.7",
     "@kikobeats/time-span": "~1.0.5",
-    "@microlink/mql": "~0.13.14",
+    "@microlink/mql": "~0.14.0",
     "@microlink/ping-url": "~1.4.15",
     "@microlink/ua": "~1.2.5",
     "async-memoize-one": "~1.1.8",
