@@ -24,16 +24,16 @@ const API_URL =
 module.exports = {
   ...process.env,
   isProduction: NODE_ENV === 'production',
-  API_URL,
   ALLOWED_REQ_HEADERS,
+  API_URL,
   AVATAR_SIZE,
   AVATAR_TIMEOUT: Number(AVATAR_TIMEOUT),
-  TTL_DEFAULT,
-  TTL_MIN,
-  TTL_MAX,
   NODE_ENV,
   PORT,
-  TMP_FOLDER,
+  RATE_LIMIT,
   RATE_LIMIT_WINDOW,
-  RATE_LIMIT
+  TMP_FOLDER,
+  TTL_DEFAULT,
+  TTL_MAX,
+  TTL_MIN
 }
