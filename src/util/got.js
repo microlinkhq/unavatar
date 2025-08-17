@@ -2,6 +2,7 @@
 
 const uniqueRandomArray = require('unique-random-array')
 const tlsHook = require('https-tls/hook')
+const uaHints = require('ua-hints')
 const got = require('got')
 
 const randomUserAgent = uniqueRandomArray(require('top-user-agents'))
@@ -11,7 +12,14 @@ const userAgentHook = options => {
     options.headers['user-agent'] ===
     'got (https://github.com/sindresorhus/got)'
   ) {
-    options.headers['user-agent'] = randomUserAgent()
+    const userAgent = randomUserAgent()
+    options.headers['user-agent'] = userAgent
+  }
+
+  for (const [key, value] of Object.entries(
+    uaHints(options.headers['user-agent'])
+  )) {
+    options.headers[key] = value
   }
 }
 
