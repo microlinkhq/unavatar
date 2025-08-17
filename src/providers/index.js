@@ -12,7 +12,6 @@ const providers = {
   gravatar: require('./gravatar'),
   // instagram: require('./instagram'),
   microlink: require('./microlink'),
-  readcv: require('./readcv'),
   // reddit: require('./reddit'),
   soundcloud: require('./soundcloud'),
   substack: require('./substack'),
