@@ -160,15 +160,6 @@ test('microlink', async t => {
   t.is(statusCode, 200)
   t.true(body.url.includes('images.weserv.nl'))
 })
-
-test('readcv', async t => {
-  const serverUrl = await runServer(t)
-  const { body, statusCode } = await got('readcv/elenatorro?json', {
-    prefixUrl: serverUrl
-  })
-  t.is(statusCode, 200)
-  t.true(body.url.includes('images.weserv.nl'))
-})
 ;(isCI ? test.skip : test)('tiktok', async t => {
   const serverUrl = await runServer(t)
   const { body, statusCode } = await got('tiktok/carlosazaustre?json', {
