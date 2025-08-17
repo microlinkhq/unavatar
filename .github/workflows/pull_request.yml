@@ -21,6 +21,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
+      - name: Setup Redis
+        uses: supercharge/redis-github-action@1.8.0
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
         with:
