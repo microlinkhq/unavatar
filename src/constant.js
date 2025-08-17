@@ -15,7 +15,8 @@ const {
   NODE_ENV = 'development',
   PORT = 3000,
   RATE_LIMIT_WINDOW = 86400,
-  RATE_LIMIT = 50
+  RATE_LIMIT = 50,
+  REDIS_URI = 'redis://localhost:6379'
 } = process.env
 
 const API_URL =
@@ -24,16 +25,17 @@ const API_URL =
 module.exports = {
   ...process.env,
   isProduction: NODE_ENV === 'production',
-  API_URL,
   ALLOWED_REQ_HEADERS,
+  API_URL,
   AVATAR_SIZE,
   AVATAR_TIMEOUT: Number(AVATAR_TIMEOUT),
-  TTL_DEFAULT,
-  TTL_MIN,
-  TTL_MAX,
   NODE_ENV,
   PORT,
-  TMP_FOLDER,
   RATE_LIMIT_WINDOW,
-  RATE_LIMIT
+  RATE_LIMIT,
+  REDIS_URI,
+  TMP_FOLDER,
+  TTL_DEFAULT,
+  TTL_MAX,
+  TTL_MIN
 }
