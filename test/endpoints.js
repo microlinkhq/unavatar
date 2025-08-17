@@ -120,7 +120,7 @@ test('telegram', async t => {
 })
 ;(isCI ? test.skip : test)('substack', async t => {
   const serverUrl = await runServer(t)
-  const { body, statusCode } = await got('substack/bankless?json', {
+  const { body, statusCode } = await got('substack/failingwithdata?json', {
     prefixUrl: serverUrl
   })
   t.is(statusCode, 200)
