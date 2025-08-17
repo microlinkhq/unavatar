@@ -2,6 +2,7 @@
 
 const PCancelable = require('p-cancelable')
 const mql = require('@microlink/mql')
+const { get } = require('lodash')
 
 module.exports = PCancelable.fn(async function microlink (
   { input, req },
@@ -12,7 +13,7 @@ module.exports = PCancelable.fn(async function microlink (
   })
   onCancel(() => promise.onCancel())
   const { data } = await promise
-  return data.logo?.url
+  return get(data, 'logo.url')
 })
 
 module.exports.supported = {

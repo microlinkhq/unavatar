@@ -10,10 +10,9 @@ module.exports = PCancelable.fn(async function tiktok ({ input }, onCancel) {
   onCancel(() => promise.onCancel())
   const { $ } = await promise
 
-  const json = JSON.parse(
-    $('#__UNIVERSAL_DATA_FOR_REHYDRATION__').contents().text()
-  )
-  return get(json, [
+  const text = $('#__UNIVERSAL_DATA_FOR_REHYDRATION__').contents().text()
+  if (!text) return
+  return get(JSON.parse(text), [
     '__DEFAULT_SCOPE__',
     'webapp.user-detail',
     'userInfo',
