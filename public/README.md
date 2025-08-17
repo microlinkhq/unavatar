@@ -164,14 +164,6 @@ It resolves user avatar using **onlyfans.com**.
 
 e.g., https://unavatar.io/onlyfans/amandaribas
 
-### Read.cv
-
-Type: `username`
-
-It resolves user avatar against **read.cv**.
-
-e.g., https://unavatar.io/readcv/elenatorro
-
 <!-- ### Reddit
 
 Type: `username`

@@ -1,6 +1,7 @@
 'use strict'
 
 const PCancelable = require('p-cancelable')
+const { get } = require('lodash')
 
 const getHTML = require('../util/html-get')
 
@@ -11,10 +12,10 @@ module.exports = PCancelable.fn(async function onlyfans ({ input }, onCancel) {
   })
   onCancel(() => promise.onCancel())
   const { $ } = await promise
-  const json = JSON.parse(
-    $('script[type="application/ld+json"]').contents().text()
-  )
-  return json.mainEntity.image
+
+  const text = $('script[type="application/ld+json"]').contents().text()
+  if (!text) return
+  return get(JSON.parse(text), 'mainEntity.image')
 })
 
 module.exports.supported = {

@@ -120,7 +120,7 @@ test('telegram', async t => {
 })
 ;(isCI ? test.skip : test)('substack', async t => {
   const serverUrl = await runServer(t)
-  const { body, statusCode } = await got('substack/bankless?json', {
+  const { body, statusCode } = await got('substack/failingwithdata?json', {
     prefixUrl: serverUrl
   })
   t.is(statusCode, 200)
@@ -161,15 +161,7 @@ test('microlink', async t => {
   t.true(body.url.includes('images.weserv.nl'))
 })
 
-test('readcv', async t => {
-  const serverUrl = await runServer(t)
-  const { body, statusCode } = await got('readcv/elenatorro?json', {
-    prefixUrl: serverUrl
-  })
-  t.is(statusCode, 200)
-  t.true(body.url.includes('images.weserv.nl'))
-})
-;(isCI ? test.skip : test)('tiktok', async t => {
+test('tiktok', async t => {
   const serverUrl = await runServer(t)
   const { body, statusCode } = await got('tiktok/carlosazaustre?json', {
     prefixUrl: serverUrl
