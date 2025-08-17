@@ -126,7 +126,8 @@ test('telegram', async t => {
   t.is(statusCode, 200)
   t.true(body.url.includes('images.weserv.nl'))
 })
-;(isCI ? test.skip : test)('reddit', async t => {
+
+test('reddit', async t => {
   const serverUrl = await runServer(t)
   const { body, statusCode } = await got('reddit/kikobeats?json', {
     prefixUrl: serverUrl

@@ -139,6 +139,7 @@
     "tangerine": "~1.6.0",
     "top-crawler-agents": "~1.0.28",
     "top-user-agents": "~2.1.39",
+    "ua-hints": "~1.0.1",
     "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
   },
