@@ -52,6 +52,9 @@ jobs:
           version: latest
           run_install: true
       - name: Test
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          REDIS_URI_METERED_BILLING: ${{ secrets.REDIS_URI_METERED_BILLING }}
         run: npm test
       - name: Release
         env:

@@ -36,11 +36,12 @@ if (NODE_ENV === 'production') {
     const keepAlive = () => {
       clearTimeout(timer)
       timer = setTimeout(() => {
-        server.close(() => {
+        server.close(async () => {
           debug({
             status: 'shutting down',
             reason: `No request received in ${duration / 1000}s`
           })
+          await require('./billing').teardown()
           process.exit(0)
         })
       }, duration)

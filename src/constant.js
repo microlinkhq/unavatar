@@ -16,11 +16,13 @@ const {
   PORT = 3000,
   RATE_LIMIT_WINDOW = 86400,
   RATE_LIMIT = 50,
-  REDIS_URI = 'redis://localhost:6379'
+  REDIS_METERED_BILLING_PREFIX = ''
 } = process.env
 
 const API_URL =
   NODE_ENV === 'production' ? 'https://unavatar.io' : `http://127.0.0.1:${PORT}`
+
+const isTest = NODE_ENV === 'test'
 
 module.exports = {
   ...process.env,
@@ -33,7 +35,9 @@ module.exports = {
   PORT,
   RATE_LIMIT_WINDOW,
   RATE_LIMIT,
-  REDIS_URI,
+  REDIS_METERED_BILLING_PREFIX: isTest
+    ? 'unavatar-test:'
+    : REDIS_METERED_BILLING_PREFIX,
   TMP_FOLDER,
   TTL_DEFAULT,
   TTL_MAX,
