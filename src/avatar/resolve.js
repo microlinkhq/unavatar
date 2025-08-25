@@ -84,5 +84,7 @@ module.exports = fn => async (req, res) => {
       : null
   }
 
+  if (req.customerId) require('../billing').add(req.customerId)
+
   return value
 }

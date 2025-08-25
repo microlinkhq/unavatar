@@ -6,25 +6,18 @@ const FrequencyCounter = require('frequency-counter')
 const onFinished = require('on-finished')
 const os = require('os')
 
+const { getCustomerId } = require('./paid')
+
 const duration = timeSpan()
 const reqsMin = new FrequencyCounter(60)
 let reqsCounter = 0
-
-const more = (() => {
-  const email = 'hello@microlink.io'
-  const subject = encodeURIComponent('[unavatar] Buy an API key')
-  const body = encodeURIComponent(
-    'Hello,\nI want to buy an unavatar.sh API key. Please tell me how to proceed.'
-  )
-  return `mailto:${email}?subject=${subject}&body=${body}`
-})()
 
 const rateLimitError = ({ code, statusCode, message }) => {
   const rateLimitError = new Error(
     JSON.stringify({
       status: 'fail',
       code,
-      more,
+      more: require('./more'),
       message
     })
   )
@@ -38,22 +31,23 @@ module.exports = async (req, res, next) => {
   onFinished(res, () => --reqsCounter)
 
   const apiKey = req.headers['x-api-key']
+  if (apiKey) {
+    const customerId = await getCustomerId(apiKey)
+    if (!customerId) {
+      return next(
+        rateLimitError({
+          code: 'EAPIKEY',
+          statusCode: 401,
+          message: 'Invalid API key'
+        })
+      )
+    }
 
-  if (apiKey && !(await require('./paid').hasKey(apiKey))) {
-    return next(
-      rateLimitError({
-        code: 'EAPIKEY',
-        statusCode: 401,
-        message: 'Invalid API key'
-      })
-    )
+    req.customerId = customerId
+    return next()
   }
 
-  const { token, rateLimiter } = apiKey
-    ? { token: apiKey, rateLimiter: require('./paid') }
-    : { token: req.ipAddress, rateLimiter: require('./free') }
-
-  const usage = await rateLimiter(token)
+  const usage = await require('./free')(req.ipAddress)
 
   if (!res.writableEnded) {
     res.setHeader('X-Rate-Limit-Limit', usage.limit)
@@ -86,7 +80,7 @@ module.exports = async (req, res, next) => {
       code: 'ERATE',
       statusCode: 429,
       message:
-        'Your daily rate limit has been reached. You need to wait or buy a plan.'
+        'Daily rate limit reached. Visit unavatar.io/pay-as-you-go to upgrade.'
     })
   )
 }

@@ -1,17 +1,33 @@
 'use strict'
 
-const redis = require('../util/redis')
+const redis = require('../util/redis/metered-billing')
 
-const openkey = require('openkey')({ redis, prefix: 'unavatar:' })
+const { REDIS_METERED_BILLING_PREFIX } = require('../constant')
 
-const CACHE = Object.create(null)
+const create = ({ prefix = REDIS_METERED_BILLING_PREFIX } = {}) => {
+  const openkey = require('openkey')({ redis, prefix })
 
-const hasKey = async token => {
-  if (CACHE[token]) return CACHE[token]
-  CACHE[token] = (await openkey.keys.retrieve(token)) !== null
-  return CACHE[token]
+  const CACHE = Object.create(null)
+
+  const getCustomerId = async token => {
+    const cached = CACHE[token]
+    if (cached) return cached
+
+    const data = await openkey.keys.retrieve(token)
+
+    if (data !== null && data.enabled) {
+      CACHE[token] = data.metadata.customerId
+      return CACHE[token]
+    }
+
+    return null
+  }
+
+  return {
+    getCustomerId,
+    CACHE
+  }
 }
 
-module.exports = token => openkey.usage.increment(token)
-module.exports.openkey = openkey
-module.exports.hasKey = hasKey
+module.exports = create()
+module.exports.create = create
