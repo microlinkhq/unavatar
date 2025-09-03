@@ -54,7 +54,7 @@ jobs:
       - name: Test
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          REDIS_URI_METERED_BILLING: ${{ secrets.REDIS_URI_METERED_BILLING }}
+          REDIS_URI_METERED_BILLING: redis://localhost:6379
         run: npm test
       - name: Release
         env:
