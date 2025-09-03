@@ -104,7 +104,7 @@
     "@microlink/ping-url": "~1.4.16",
     "@microlink/ua": "~1.2.6",
     "async-memoize-one": "~1.1.9",
-    "browserless": "~10.7.13",
+    "browserless": "~10.8.0",
     "cacheable-lookup": "~6.1.0",
     "cacheable-response": "~2.10.4",
     "cheerio": "~1.1.2",
