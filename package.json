@@ -119,7 +119,7 @@
     "http-compression": "~1.1.2",
     "https-tls": "~1.0.24",
     "ioredis": "~5.7.0",
-    "is-absolute-url": "~3.0.3",
+    "is-absolute-url": "~5.0.0",
     "is-email-like": "~1.0.0",
     "is-url-http": "~2.3.10",
     "lodash": "~4.17.21",
