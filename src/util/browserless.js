@@ -19,11 +19,6 @@ const getArgs = () => {
     `--disk-cache-dir=${CACHE_DIR}`,
     `--user-data-dir=${DATA_DIR}`,
     '--disable-font-subpixel-positioning', // https://github.com/puppeteer/puppeteer/issues/2410#issuecomment-2886054614
-    '--no-startup-window',
-    '--disable-gpu',
-    '--use-gl=angle',
-    '--use-angle=swiftshader',
-    '--enable-unsafe-swiftshader',
     '--renderer-process-limit=2'
   ])
 
@@ -33,7 +28,6 @@ const getArgs = () => {
 const browser = createBrowser({
   args: getArgs().args,
   puppeteer,
-  waitForInitialPage: false,
   pipe: true,
   dumpio: true
 })

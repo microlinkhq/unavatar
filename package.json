@@ -104,7 +104,7 @@
     "@microlink/ping-url": "~1.4.16",
     "@microlink/ua": "~1.2.6",
     "async-memoize-one": "~1.1.9",
-    "browserless": "~10.9.4",
+    "browserless": "~10.9.6",
     "cacheable-lookup": "~6.1.0",
     "cacheable-response": "~2.10.4",
     "cheerio": "~1.1.2",
@@ -140,7 +140,7 @@
     "stripe": "18",
     "tangerine": "~1.6.0",
     "top-crawler-agents": "~1.0.34",
-    "top-user-agents": "~2.1.71",
+    "top-user-agents": "~2.1.72",
     "ua-hints": "~1.0.1",
     "unique-random-array": "~2.0.0",
     "url-regex": "~5.0.0"
