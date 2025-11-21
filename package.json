@@ -132,7 +132,7 @@
     "p-reflect": "~2.1.0",
     "p-timeout": "~4.1.0",
     "puppeteer": "~24.26.0",
-    "rate-limiter-flexible": "~8.1.0",
+    "rate-limiter-flexible": "~8.2.1",
     "router-http": "~1.0.11",
     "send-http": "~1.0.6",
     "serve-static": "~2.2.0",
