@@ -12,6 +12,8 @@ Welcome to **unavatar.io**, the ultimate avatar service that offers everything y
 
 In summary, **unavatar.io** provides versatility, speed, optimization, and effortless integration, making it the ultimate avatar retrieval service.
 
+It's proudly powered by [microlink.io](https://microlink.io), the headless browser API that handles all the heavy lifting behind the scenes to ensure your avatars are always ready.
+
 ## Quick start
 
 The service is a single endpoint exposed in **unavatar.io** that can resolve:
