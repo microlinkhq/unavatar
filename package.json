@@ -142,7 +142,7 @@
     "serve-static": "~2.2.0",
     "srcset": "~4.0.0",
     "stripe": "19",
-    "tangerine": "~1.6.0",
+    "tangerine": "~2.0.2",
     "top-crawler-agents": "~1.0.34",
     "top-user-agents": "~2.1.72",
     "ua-hints": "~1.0.1",
