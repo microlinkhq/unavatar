@@ -15,11 +15,12 @@
   --gray12: #000;
   /* theme */
   --primary-color: var(--gray10);
+  --accent-color: #1a95e0;
   --selection-color: #f9e4ac;
   --bg-color: #fff;
-  --serif-font: 'Space Grotesk', sans-serif;
-  --sans-serif-font: var(--serif-font);
-  --code-font: Source Code Pro, Menlo, monospace;
+  --serif-font: 'Bricolage Grotesque', sans-serif;
+  --sans-serif-font: 'Geist', sans-serif;
+  --code-font: 'Geist Mono', monospace;
   --codebox-border-color: var(--gray3);
   --codebox-color: var(--gray12);
 }
@@ -31,6 +32,7 @@
 ::-moz-selection {
   background: var(--selection-color);
 }
+
 * {
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
@@ -38,6 +40,38 @@
   -webkit-text-size-adjust: none;
   -webkit-touch-callout: none;
   box-sizing: border-box;
+}
+
+/* Hide the TOC and hr in the main content since it's already in the sidebar */
+.markdown-section > ul:first-of-type,
+.markdown-section > ul:first-of-type + hr {
+  display: none;
+}
+
+/* Markdown table styling */
+.markdown-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+}
+
+.markdown-section th,
+.markdown-section td {
+  text-align: left;
+  padding: 1.5rem 2rem 1.5rem 0.5rem;
+}
+
+.markdown-section th {
+  border-bottom: 1px solid var(--codebox-border-color);
+  padding-bottom: 1rem;
+}
+
+.markdown-section tbody tr {
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.markdown-section tbody tr:hover {
+  background-color: var(--gray1);
 }
 
 body,
@@ -195,12 +229,12 @@ body.sticky .sidebar-toggle {
   position: relative;
 }
 
-.markdown-section>* {
+.markdown-section > * {
   box-sizing: border-box;
   font-size: inherit;
 }
 
-.markdown-section> :first-child {
+.markdown-section > :first-child {
   margin-top: 0 !important;
 }
 
@@ -249,18 +283,18 @@ body {
 
 .markdown-section :is(h1, h2, h3, h4, h5) {
   font-family: var(--serif-font);
-  letter-spacing: -.016em;
+  letter-spacing: -0.016em;
   line-height: 1.25;
 }
 
 .markdown-section :is(h1, h2, h3, h4, h5) a:hover::after {
-  content: "";
+  content: '';
   position: relative;
   width: 14px;
   height: 14px;
   margin-left: 6px;
   top: -2px;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22feather%20feather-link-2%22%3E%3Cpath%20d%3D%22M15%207h3a5%205%200%200%201%205%205%205%205%200%200%201-5%205h-3m-6%200H6a5%205%200%200%201-5-5%205%205%200%200%201%205-5h3%22%3E%3C%2Fpath%3E%3Cline%20x1%3D%228%22%20y1%3D%2212%22%20x2%3D%2216%22%20y2%3D%2212%22%3E%3C%2Fline%3E%3C%2Fsvg%3E");
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22feather%20feather-link-2%22%3E%3Cpath%20d%3D%22M15%207h3a5%205%200%200%201%205%205%205%205%200%200%201-5%205h-3m-6%200H6a5%205%200%200%201-5-5%205%205%200%200%201%205-5h3%22%3E%3C%2Fpath%3E%3Cline%20x1%3D%228%22%20y1%3D%2212%22%20x2%3D%2216%22%20y2%3D%2212%22%3E%3C%2Fline%3E%3C%2Fsvg%3E');
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -274,7 +308,12 @@ body {
 
 .markdown-section :is(li, p) a {
   text-decoration: none;
-  border-bottom: 2px solid var(--gray3);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.markdown-section :is(li, p) a:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color) !important;
 }
 
 .markdown-section :is(p, li) a:hover {
@@ -284,13 +323,14 @@ body {
 .markdown-section p a[href^="http"]::after,
 .markdown-section p a[href^="https://"]::after,
 .markdown-section li a[href^="http"]::after,
-.markdown-section li a[href^="https://"]::after {
-  content: "";
+.markdown-section li a[href^="https://"]::after
+{
+  content: '';
   width: 11px;
   height: 11px;
   margin-left: 2px;
   top: 0;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22feather%20feather-arrow-up-right%22%3E%3Cline%20x1%3D%227%22%20y1%3D%2217%22%20x2%3D%2217%22%20y2%3D%227%22%3E%3C%2Fline%3E%3Cpolyline%20points%3D%227%207%2017%207%2017%2017%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22feather%20feather-arrow-up-right%22%3E%3Cline%20x1%3D%227%22%20y1%3D%2217%22%20x2%3D%2217%22%20y2%3D%227%22%3E%3C%2Fline%3E%3Cpolyline%20points%3D%227%207%2017%207%2017%2017%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -300,8 +340,9 @@ body {
 .markdown-section p a[href^="http"]:hover::after,
 .markdown-section li a[href^="http"]:hover::after,
 .markdown-section p a[href^="https://"]:hover::after,
-.markdown-section li a[href^="https://"]:hover::after {
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22feather%20feather-arrow-right%22%3E%3Cline%20x1%3D%225%22%20y1%3D%2212%22%20x2%3D%2219%22%20y2%3D%2212%22%3E%3C%2Fline%3E%3Cpolyline%20points%3D%2212%205%2019%2012%2012%2019%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+.markdown-section li a[href^="https://"]:hover::after
+{
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22feather%20feather-arrow-right%22%3E%3Cline%20x1%3D%225%22%20y1%3D%2212%22%20x2%3D%2219%22%20y2%3D%2212%22%3E%3C%2Fline%3E%3Cpolyline%20points%3D%2212%205%2019%2012%2012%2019%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
 }
 
 .markdown-section h1 {
@@ -333,9 +374,9 @@ body {
 }
 
 .markdown-section :is(p, ul) {
-  letter-spacing: .004em;
+  letter-spacing: 0.004em;
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
 .markdown-section ul {
@@ -346,7 +387,7 @@ body {
   margin-bottom: 1rem;
 }
 
-.markdown-section :is(li,p) code {
+.markdown-section :is(li, p) code {
   background: var(--bg-color);
   border-radius: 3px;
   border: 1px solid var(--codebox-border-color);
@@ -372,4 +413,25 @@ body {
 .app-name-link img {
   width: 32px;
   height: 32px;
+}
+
+/* Minimal styling for <pre><code> blocks */
+pre {
+  border: 1px solid var(--codebox-border-color);
+  border-radius: 4px;
+  padding: 1em 1.2em;
+  margin: 2em 0;
+  overflow-x: auto;
+  font-family: var(--code-font);
+  font-size: 0.75em;
+  color: var(--codebox-color);
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
 }
