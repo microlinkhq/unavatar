@@ -47,6 +47,32 @@
   display: none;
 }
 
+/* Markdown table styling */
+.markdown-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+}
+
+.markdown-section th,
+.markdown-section td {
+  text-align: left;
+  padding: 1.5rem 2rem 1.5rem 0.5rem;
+}
+
+.markdown-section th {
+  border-bottom: 1px solid var(--codebox-border-color);
+  padding-bottom: 1rem;
+}
+
+.markdown-section tbody tr {
+  transition: background-color 0.15s cubic-bezier(.4,0,.2,1);
+}
+
+.markdown-section tbody tr:hover {
+  background-color: var(--gray1);
+}
+
 body,
 html {
   height: 100%;
