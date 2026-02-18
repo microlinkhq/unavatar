@@ -31,6 +31,7 @@
 ::-moz-selection {
   background: var(--selection-color);
 }
+
 * {
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
@@ -38,6 +39,12 @@
   -webkit-text-size-adjust: none;
   -webkit-touch-callout: none;
   box-sizing: border-box;
+}
+
+/* Hide the TOC and hr in the main content since it's already in the sidebar */
+.markdown-section > ul,
+.markdown-section > ul + hr {
+  display: none;
 }
 
 body,

@@ -34,6 +34,8 @@
 - [Response Errors](#response-errors)
 - [Contact](#contact)
 
+---
+
 Welcome to **unavatar.io**, the ultimate avatar service that offers everything you need to easily retrieve user avatars:
 
 - **Versatile**: A wide range of platforms and services including Facebook, Instagram, YouTube, Twitter, Gravatar, etc., meaning you can rule all of them just querying against unavatar.
