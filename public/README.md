@@ -30,7 +30,7 @@
   - [X/Twitter](#xtwitter)
   - [YouTube](#youtube)
 - [Response Format](#response-format)
-  - [Response Headers](#response-headers)
+- [Response Headers](#response-headers)
 - [Response Errors](#response-errors)
 - [Contact](#contact)
 
@@ -38,15 +38,13 @@
 
 Welcome to **unavatar.io**, the ultimate avatar service that offers everything you need to easily retrieve user avatars:
 
-- **Versatile**: A wide range of platforms and services including Facebook, Instagram, YouTube, Twitter, Gravatar, etc., meaning you can rule all of them just querying against unavatar.
+- **Versatile**: A wide range of platforms and services including [TikTok](#tiktok), [Instagram](#instagram), [YouTube](#youtube), [X/Twitter](#xtwitter), [Gravatar](#gravatar), etc., meaning you can rule all of them just querying against unavatar.
 
 - **Speed**: Designed to be fast and efficient, all requests are being cached and delivered +200 global datacenters, allowing you to consume avatars instantly, counting more than 20 millions requests per month.
 
 - **Optimize**: All the images are not only compressed on-the-fly to reduce their size and save bandwith, but also optimized to maintain a high-quality ratio. They are ready for immediate use, enhancing the overall optimization of your website or application.
 
 - **Integration**: The service seamlessly incorporates into your current applications or websites with ease. We offer straightforward documentation and comprehensive support to ensure a quick and effortless onboarding experience.
-
-In summary, **unavatar.io** provides versatility, speed, optimization, and effortless integration, making it the ultimate avatar retrieval service.
 
 It's proudly powered by [microlink.io](https://microlink.io), the headless browser API that handles all the heavy lifting behind the scenes to ensure your avatars are always ready.
 
@@ -383,7 +381,7 @@ When an endpoint returns JSON, the shape is predictable so you can parse it reli
 | `more`    | `string (URL)` | most `fail`/`error` responses | Documentation URL with troubleshooting details.  |
 | `report`  | `string`       | some `error` responses        | Support contact channel (for example `mailto:`). |
 
-### Response Headers
+## Response Headers
 
 These headers help you understand pricing, limits, and request diagnostics.
 
