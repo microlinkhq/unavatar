@@ -141,7 +141,7 @@
     "send-http": "~1.0.6",
     "serve-static": "~2.2.0",
     "srcset": "~4.0.0",
-    "stripe": "19",
+    "stripe": "20",
     "tangerine": "~1.6.0",
     "top-crawler-agents": "~1.0.34",
     "top-user-agents": "~2.1.72",
