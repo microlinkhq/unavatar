@@ -18,6 +18,7 @@
   - [Instagram](#instagram)
   - [Microlink](#microlink)
   - [OnlyFans](#onlyfans)
+  - [OpenStreetMap](#openstreetmap)
   - [Reddit](#reddit)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -150,30 +151,31 @@ Based on that, a subset of providers will be used for resolving the user query, 
 
 Alternatively, you can query for an individual provider.
 
-| Provider                  | email | username | domain | phone |
-| ------------------------- | :---: | :------: | :----: | :---: |
-| [Bluesky](#bluesky)       |       |    ✓     |        |       |
-| [DeviantArt](#deviantart) |       |    ✓     |        |       |
-| [Dribbble](#dribbble)     |       |    ✓     |        |       |
-| [DuckDuckGo](#duckduckgo) |       |          |   ✓    |       |
-| [GitHub](#github)         |       |    ✓     |        |       |
-| [GitLab](#gitlab)         |       |    ✓     |        |       |
-| [Google](#google)         |       |          |   ✓    |       |
-| [Gravatar](#gravatar)     |   ✓   |          |        |       |
-| [Instagram](#instagram)   |       |    ✓     |        |       |
-| [Microlink](#microlink)   |       |          |   ✓    |       |
-| [OnlyFans](#onlyfans)     |       |    ✓     |        |       |
-| [Reddit](#reddit)         |       |    ✓     |        |       |
-| [SoundCloud](#soundcloud) |       |    ✓     |        |       |
-| [Spotify](#spotify)       |       |    ✓     |        |       |
-| [Substack](#substack)     |       |    ✓     |        |       |
-| [Telegram](#telegram)     |       |    ✓     |        |       |
-| [TikTok](#tiktok)         |       |    ✓     |        |       |
-| [Twitch](#twitch)         |       |    ✓     |        |       |
-| [Vimeo](#vimeo)           |       |    ✓     |        |       |
-| [WhatsApp](#whatsapp)     |       |          |        |   ✓   |
-| [X/Twitter](#xtwitter)    |       |    ✓     |        |       |
-| [YouTube](#youtube)       |       |    ✓     |        |       |
+| Provider                        | email | username | domain | phone |
+| ------------------------------- | :---: | :------: | :----: | :---: |
+| [Bluesky](#bluesky)             |       |    ✓     |        |       |
+| [DeviantArt](#deviantart)       |       |    ✓     |        |       |
+| [Dribbble](#dribbble)           |       |    ✓     |        |       |
+| [DuckDuckGo](#duckduckgo)       |       |          |   ✓    |       |
+| [GitHub](#github)               |       |    ✓     |        |       |
+| [GitLab](#gitlab)               |       |    ✓     |        |       |
+| [Google](#google)               |       |          |   ✓    |       |
+| [Gravatar](#gravatar)           |   ✓   |          |        |       |
+| [Instagram](#instagram)         |       |    ✓     |        |       |
+| [Microlink](#microlink)         |       |          |   ✓    |       |
+| [OnlyFans](#onlyfans)           |       |    ✓     |        |       |
+| [OpenStreetMap](#openstreetmap) |       |    ✓     |        |       |
+| [Reddit](#reddit)               |       |    ✓     |        |       |
+| [SoundCloud](#soundcloud)       |       |    ✓     |        |       |
+| [Spotify](#spotify)             |       |    ✓     |        |       |
+| [Substack](#substack)           |       |    ✓     |        |       |
+| [Telegram](#telegram)           |       |    ✓     |        |       |
+| [TikTok](#tiktok)               |       |    ✓     |        |       |
+| [Twitch](#twitch)               |       |    ✓     |        |       |
+| [Vimeo](#vimeo)                 |       |    ✓     |        |       |
+| [WhatsApp](#whatsapp)           |       |          |        |   ✓   |
+| [X/Twitter](#xtwitter)          |       |    ✓     |        |       |
+| [YouTube](#youtube)             |       |    ✓     |        |       |
 
 ### Bluesky
 
@@ -262,6 +264,19 @@ e.g., https://unavatar.io/microlink/microlink.io
 It resolves user avatar using **onlyfans.com**.
 
 e.g., https://unavatar.io/onlyfans/amandaribas
+
+### OpenStreetMap
+
+**supported**: `username`
+
+It resolves user avatar using **openstreetmap.org**.
+
+The input accepts:
+
+- Numeric user ID (API): https://unavatar.io/openstreetmap/98672
+- Username (profile page): https://unavatar.io/openstreetmap/Terence%20Eden
+
+e.g., https://unavatar.io/openstreetmap/98672
 
 ### Reddit
 
