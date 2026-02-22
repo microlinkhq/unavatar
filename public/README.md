@@ -51,13 +51,13 @@ It's proudly powered by [microlink.io](https://microlink.io), the headless brows
 
 ## Quick start
 
-The service is a single endpoint exposed in **unavatar.io** that can resolve:
+The service is exposed in **unavatar.io** via provider endpoints:
 
-- an **email**: https://unavatar.io/sindresorhus@gmail.com
-- an **username**: https://unavatar.io/kikobeats
-- a **domain**: https://unavatar.io/reddit.com
+- an **email**: [unavatar.io/gravatar/sindresorhus@gmail.com](https://unavatar.io/gravatar/sindresorhus@gmail.com)
+- an **username**: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
+- a **domain**: [unavatar.io/google/reddit.com](https://unavatar.io/google/reddit.com)
 
-So, no matter what type of query you use, **unavatar.io** has you covered. You can read more about that in [providers](#providers).
+Use the `/:provider/:key` format for all lookups. You can read more about available providers in [providers](#providers).
 
 ## Query parameters
 
@@ -153,6 +153,7 @@ Alternatively, you can query for an individual provider.
 
 | Provider                        | email | username | domain | phone |
 | ------------------------------- | :---: | :------: | :----: | :---: |
+| [Apple Music](#apple-music)     |       |    ✓     |        |       |
 | [Bluesky](#bluesky)             |       |    ✓     |        |       |
 | [DeviantArt](#deviantart)       |       |    ✓     |        |       |
 | [Dribbble](#dribbble)           |       |    ✓     |        |       |
@@ -165,6 +166,7 @@ Alternatively, you can query for an individual provider.
 | [Microlink](#microlink)         |       |          |   ✓    |       |
 | [OnlyFans](#onlyfans)           |       |    ✓     |        |       |
 | [OpenStreetMap](#openstreetmap) |       |    ✓     |        |       |
+| [Patreon](#patreon)             |       |    ✓     |        |       |
 | [Reddit](#reddit)               |       |    ✓     |        |       |
 | [SoundCloud](#soundcloud)       |       |    ✓     |        |       |
 | [Spotify](#spotify)             |       |    ✓     |        |       |
@@ -177,13 +179,37 @@ Alternatively, you can query for an individual provider.
 | [X/Twitter](#xtwitter)          |       |    ✓     |        |       |
 | [YouTube](#youtube)             |       |    ✓     |        |       |
 
+### Apple Music
+
+**supported**: `username`
+
+It resolves user avatar against **music.apple.com**.
+
+e.g., [unavatar.io/apple-music/daft%20punk](https://unavatar.io/apple-music/daft%20punk)
+
+The endpoint supports explictiy type as part of the input.
+
+If explicit type is not provided, it searches `artist` and `song` (in that order).
+
+The types supported are:
+
+- artist
+  -  by artist name: [unavatar.io/apple-music/artist:daft%20punk](https://unavatar.io/apple-music/artist:daft%20punk)
+  -  by numeric artist ID: [unavatar.io/apple-music/artist:5468295](https://unavatar.io/apple-music/artist:5468295)
+- album
+  - by album name: [unavatar.io/apple-music/album:discovery](https://unavatar.io/apple-music/album:discovery)
+  - by album ID: [unavatar.io/apple-music/album:78691923](https://unavatar.io/apple-music/album:78691923)
+- song
+  - by song name: [unavatar.io/apple-music/song:harder%20better%20faster%20stronger](https://unavatar.io/apple-music/song:harder%20better%20faster%20stronger)
+  - by song ID: [unavatar.io/apple-music/song:697195787](https://unavatar.io/apple-music/song:697195787)
+
 ### Bluesky
 
 **supported**: `username`
 
 It resolves user avatar against **bsky.app**.
 
-e.g., https://unavatar.io/bluesky/pfrazee.com
+e.g., [unavatar.io/bluesky/pfrazee.com](https://unavatar.io/bluesky/pfrazee.com)
 
 ### DeviantArt
 
@@ -191,7 +217,7 @@ e.g., https://unavatar.io/bluesky/pfrazee.com
 
 It resolves user avatar against **deviantart.com**.
 
-e.g., https://unavatar.io/deviantart/spyed
+e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
 
 ### Dribbble
 
@@ -199,7 +225,7 @@ e.g., https://unavatar.io/deviantart/spyed
 
 It resolves user avatar against **dribbble.com**.
 
-e.g., https://unavatar.io/dribbble/omidnikrah
+e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
 
 ### DuckDuckGo
 
@@ -207,7 +233,7 @@ e.g., https://unavatar.io/dribbble/omidnikrah
 
 It resolves user avatar using **duckduckgo.com**.
 
-e.g., https://unavatar.io/duckduckgo/gummibeer.dev
+e.g., [unavatar.io/duckduckgo/gummibeer.dev](https://unavatar.io/duckduckgo/gummibeer.dev)
 
 ### GitHub
 
@@ -215,7 +241,7 @@ e.g., https://unavatar.io/duckduckgo/gummibeer.dev
 
 It resolves user avatar against **github.com**.
 
-e.g., https://unavatar.io/github/mdo
+e.g., [unavatar.io/github/mdo](https://unavatar.io/github/mdo)
 
 ### GitLab
 
@@ -223,7 +249,7 @@ e.g., https://unavatar.io/github/mdo
 
 It resolves user avatar against **gitlab.com**.
 
-e.g., https://unavatar.io/gitlab/inkscape
+e.g., [unavatar.io/gitlab/inkscape](https://unavatar.io/gitlab/inkscape)
 
 ### Google
 
@@ -231,7 +257,7 @@ e.g., https://unavatar.io/gitlab/inkscape
 
 It resolves user avatar using **google.com**.
 
-e.g., https://unavatar.io/google/netflix.com
+e.g., [unavatar.io/google/netflix.com](https://unavatar.io/google/netflix.com)
 
 ### Gravatar
 
@@ -239,7 +265,7 @@ e.g., https://unavatar.io/google/netflix.com
 
 It resolves user avatar against **gravatar.com**.
 
-e.g., https://unavatar.io/gravatar/sindresorhus@gmail.com
+e.g., [unavatar.io/gravatar/sindresorhus@gmail.com](https://unavatar.io/gravatar/sindresorhus@gmail.com)
 
 ### Instagram
 
@@ -247,7 +273,7 @@ e.g., https://unavatar.io/gravatar/sindresorhus@gmail.com
 
 It resolves user avatar against **instagram.com**.
 
-e.g., https://unavatar.io/instagram/willsmith
+e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 
 ### Microlink
 
@@ -255,7 +281,7 @@ e.g., https://unavatar.io/instagram/willsmith
 
 It resolves user avatar using **microlink.io**.
 
-e.g., https://unavatar.io/microlink/microlink.io
+e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
 
 ### OnlyFans
 
@@ -263,7 +289,7 @@ e.g., https://unavatar.io/microlink/microlink.io
 
 It resolves user avatar using **onlyfans.com**.
 
-e.g., https://unavatar.io/onlyfans/amandaribas
+e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
 
 ### OpenStreetMap
 
@@ -273,10 +299,16 @@ It resolves user avatar using **openstreetmap.org**.
 
 The input accepts:
 
-- Numeric user ID (API): https://unavatar.io/openstreetmap/98672
-- Username (profile page): https://unavatar.io/openstreetmap/Terence%20Eden
+- Numeric user ID, e.g., [unavatar.io/openstreetmap/98672](https://unavatar.io/openstreetmap/98672)
+- Username e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
 
-e.g., https://unavatar.io/openstreetmap/98672
+### Patreon
+
+**supported**: `username`
+
+It resolves user avatar against **patreon.com**.
+
+e.g., [unavatar.io/patreon/kikobeats](https://unavatar.io/patreon/kikobeats)
 
 ### Reddit
 
@@ -284,7 +316,7 @@ e.g., https://unavatar.io/openstreetmap/98672
 
 It resolves user avatar against **reddit.com**.
 
-e.g., https://unavatar.io/reddit/kikobeats
+e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
 
 ### SoundCloud
 
@@ -292,7 +324,7 @@ e.g., https://unavatar.io/reddit/kikobeats
 
 It resolves user avatar against **soundcloud.com**.
 
-e.g., https://unavatar.io/soundcloud/gorillaz
+e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
 
 ### Spotify
 
@@ -300,15 +332,21 @@ e.g., https://unavatar.io/soundcloud/gorillaz
 
 It resolves user avatar against **open.spotify.com**.
 
-The input supports a URI format `type:id`. When no type is provided, it defaults to `user`.
+e.g., [unavatar.io/spotify/kikobeats](https://unavatar.io/spotify/kikobeats)
 
-- `user` (default): https://unavatar.io/spotify/kikobeats
-- `artist`: https://unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA
-- `playlist`: https://unavatar.io/spotify/playlist:37i9dQZF1DXcBWIGoYBM5M
-- `album`: https://unavatar.io/spotify/album:4aawyAB9vmqN3uQ7FjRGTy
-- `show`: https://unavatar.io/spotify/show:6UCtBYL29hRg064d4i5W2i
-- `episode`: https://unavatar.io/spotify/episode:512ojhOuo1ktJprKbVcKyQ
-- `track`: https://unavatar.io/spotify/track:11dFghVXANMlKmJXsNCbNl
+The endpoint supports explictiy type as part of the input.
+
+If explicit type is not provided, it defaults to `user`.
+
+The types supported are:
+
+- `user`: [unavatar.io/spotify/kikobeats](https://unavatar.io/spotify/kikobeats)
+- `artist`: [unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA](https://unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA)
+- `playlist`: [unavatar.io/spotify/playlist:37i9dQZF1DXcBWIGoYBM5M](https://unavatar.io/spotify/playlist:37i9dQZF1DXcBWIGoYBM5M)
+- `album`: [unavatar.io/spotify/album:4aawyAB9vmqN3uQ7FjRGTy](https://unavatar.io/spotify/album:4aawyAB9vmqN3uQ7FjRGTy)
+- `show`: [unavatar.io/spotify/show:6UCtBYL29hRg064d4i5W2i](https://unavatar.io/spotify/show:6UCtBYL29hRg064d4i5W2i)
+- `episode`: [unavatar.io/spotify/episode:512ojhOuo1ktJprKbVcKyQ](https://unavatar.io/spotify/episode:512ojhOuo1ktJprKbVcKyQ)
+- `track`: [unavatar.io/spotify/track:11dFghVXANMlKmJXsNCbNl](https://unavatar.io/spotify/track:11dFghVXANMlKmJXsNCbNl)
 
 ### Substack
 
@@ -316,7 +354,7 @@ The input supports a URI format `type:id`. When no type is provided, it defaults
 
 It resolves user avatar against **substack.com**.
 
-e.g., https://unavatar.io/substack/bankless
+e.g., [unavatar.io/substack/bankless](https://unavatar.io/substack/bankless)
 
 ### Telegram
 
@@ -324,7 +362,7 @@ e.g., https://unavatar.io/substack/bankless
 
 It resolves user avatar against **telegram.com**.
 
-e.g., https://unavatar.io/telegram/drsdavidsoft
+e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
 
 ### TikTok
 
@@ -332,7 +370,7 @@ e.g., https://unavatar.io/telegram/drsdavidsoft
 
 It resolves user avatar against **tiktok.com**.
 
-e.g., https://unavatar.io/tiktok/carlosazaustre
+e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
 
 ### Twitch
 
@@ -340,7 +378,7 @@ e.g., https://unavatar.io/tiktok/carlosazaustre
 
 It resolves user avatar against **twitch.tv**.
 
-e.g., https://unavatar.io/twitch/midudev
+e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
 
 ### Vimeo
 
@@ -348,7 +386,7 @@ e.g., https://unavatar.io/twitch/midudev
 
 It resolves user avatar against **vimeo.com**.
 
-e.g., https://unavatar.io/vimeo/staff
+e.g., [unavatar.io/vimeo/staff](https://unavatar.io/vimeo/staff)
 
 ### WhatsApp
 
@@ -358,10 +396,10 @@ It resolves user avatar against **whatsapp.com**.
 
 The input supports a URI format `type:id`. When no type is provided, it defaults to `phone`.
 
-- `phone` (default): https://unavatar.io/whatsapp/34612345678
-- `channel`: https://unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789
-- `chat`: https://unavatar.io/whatsapp/chat:ABC1234DEFghi
-- `group`: https://unavatar.io/whatsapp/group:ABC1234DEFghi
+- `phone` (default): [unavatar.io/whatsapp/34612345678](https://unavatar.io/whatsapp/34612345678)
+- `channel`: [unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789](https://unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789)
+- `chat`: [unavatar.io/whatsapp/chat:ABC1234DEFghi](https://unavatar.io/whatsapp/chat:ABC1234DEFghi)
+- `group`: [unavatar.io/whatsapp/group:ABC1234DEFghi](https://unavatar.io/whatsapp/group:ABC1234DEFghi)
 
 ### X/Twitter
 
@@ -369,7 +407,7 @@ The input supports a URI format `type:id`. When no type is provided, it defaults
 
 It resolves user avatar against **x.com**.
 
-e.g., https://unavatar.io/x/kikobeats
+e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
 
 ### YouTube
 
@@ -377,7 +415,7 @@ e.g., https://unavatar.io/x/kikobeats
 
 It resolves user avatar against **youtube.com**.
 
-e.g., https://unavatar.io/youtube/casey
+e.g., [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 
 ## Response Format
 
