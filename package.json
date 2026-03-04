@@ -4,6 +4,7 @@
   "homepage": "https://unavatar.io",
   "version": "3.7.47",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "bin": {
     "unavatar": "bin/server"
   },
