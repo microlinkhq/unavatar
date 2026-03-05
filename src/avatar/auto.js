@@ -80,7 +80,7 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   const resolveAutoByType = async (inputType, args) => {
     const collection = providersBy[inputType]
     const promises = collection.map(provider =>
-      pTimeout(getAvatar(providers[provider], provider, args), REQUEST_TIMEOUT)
+      getAvatar(providers[provider], provider, args)
     )
     return pAny(promises)
   }
