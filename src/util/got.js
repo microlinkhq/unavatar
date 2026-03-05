@@ -5,15 +5,25 @@ const tlsHook = require('https-tls/hook')
 const uaHints = require('ua-hints')
 const got = require('got')
 
-const randomUserAgent = uniqueRandomArray(require('top-user-agents'))
+const topUserAgents = require('top-user-agents')
+const randomUserAgent = uniqueRandomArray(topUserAgents)
+const precomputedUaHints = new Map(topUserAgents.map(userAgent => [userAgent, uaHints(userAgent)]))
+
+const getUaHints = userAgent => {
+  const precomputed = precomputedUaHints.get(userAgent)
+  if (precomputed !== undefined) return precomputed
+
+  return uaHints(userAgent)
+}
 
 const userAgentHook = options => {
-  if (options.headers['user-agent'] === 'got (https://github.com/sindresorhus/got)') {
-    const userAgent = randomUserAgent()
+  let userAgent = options.headers['user-agent']
+  if (userAgent === 'got (https://github.com/sindresorhus/got)') {
+    userAgent = randomUserAgent()
     options.headers['user-agent'] = userAgent
   }
 
-  for (const [key, value] of Object.entries(uaHints(options.headers['user-agent']))) {
+  for (const [key, value] of Object.entries(getUaHints(userAgent))) {
     options.headers[key] = value
   }
 }
