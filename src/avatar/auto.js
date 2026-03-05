@@ -2,18 +2,22 @@
 
 const isAbsoluteUrl = require('is-absolute-url')
 const dataUriRegex = require('data-uri-regex')
+const stableRegex = require('stable-regex')
+const urlRegex = require('url-regex-safe')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
-const urlRegex = require('url-regex')
 const pAny = require('p-any')
 
 const httpStatus = require('../util/http-status')
 const isIterable = require('../util/is-iterable')
 const ExtendableError = require('../util/error')
 
+const DATA_URI_REGEX = dataUriRegex()
+const DOMAIN_REGEX = urlRegex({ strict: false })
+
 const getInputType = input => {
   if (isEmail(input)) return 'email'
-  if (urlRegex({ strict: false }).test(input)) return 'domain'
+  if (stableRegex(DOMAIN_REGEX, input)) return 'domain'
   return 'username'
 }
 
@@ -22,12 +26,16 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
 
   const getAvatarContent = provider => async output => {
     if (typeof output !== 'string' || output === '') {
-      const message = output === undefined ? 'not found' : `\`${output}\` is invalid`
-      const statusCode = output === undefined ? httpStatus.NOT_FOUND : httpStatus.UNPROCESSABLE_ENTITY
+      const message =
+        output === undefined ? 'not found' : `\`${output}\` is invalid`
+      const statusCode =
+        output === undefined
+          ? httpStatus.NOT_FOUND
+          : httpStatus.UNPROCESSABLE_ENTITY
       throw new ExtendableError({ provider, message, statusCode })
     }
 
-    if (dataUriRegex().test(output)) {
+    if (stableRegex(DATA_URI_REGEX, output)) {
       return { type: 'buffer', data: output }
     }
 
