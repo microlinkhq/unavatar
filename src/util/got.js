@@ -7,14 +7,20 @@ const got = require('got')
 
 const topUserAgents = require('top-user-agents')
 const randomUserAgent = uniqueRandomArray(topUserAgents)
-const precomputedUaHints = new Map(topUserAgents.map(userAgent => [userAgent, uaHints(userAgent)]))
 
-const getUaHints = userAgent => {
-  const precomputed = precomputedUaHints.get(userAgent)
-  if (precomputed !== undefined) return precomputed
+const precomputedUaHints = new Map(
+  topUserAgents.map(userAgent => [userAgent, uaHints(userAgent)])
+)
 
-  return uaHints(userAgent)
-}
+const precomputedUaHintEntries = new Map(
+  topUserAgents.map(userAgent => [
+    userAgent,
+    Object.entries(precomputedUaHints.get(userAgent))
+  ])
+)
+
+const getUaHintEntries = userAgent =>
+  precomputedUaHintEntries.get(userAgent) || Object.entries(uaHints(userAgent))
 
 const userAgentHook = options => {
   let userAgent = options.headers['user-agent']
@@ -23,7 +29,9 @@ const userAgentHook = options => {
     options.headers['user-agent'] = userAgent
   }
 
-  for (const [key, value] of Object.entries(getUaHints(userAgent))) {
+  const uaHintEntries = getUaHintEntries(userAgent)
+  for (let index = 0; index < uaHintEntries.length; index++) {
+    const [key, value] = uaHintEntries[index]
     options.headers[key] = value
   }
 }
