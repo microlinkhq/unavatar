@@ -130,13 +130,15 @@
     "p-cancelable": "2.1.1",
     "p-timeout": "~4.1.0",
     "puppeteer": "~24.37.5",
+    "re2": "~1.23.3",
     "srcset": "~4.0.0",
+    "stable-regex": "~1.0.0",
     "tangerine": "~2.0.2",
     "top-crawler-agents": "~1.0.34",
     "top-user-agents": "~2.1.95",
     "ua-hints": "~1.0.1",
     "unique-random-array": "~2.0.0",
-    "url-regex": "~5.0.0"
+    "url-regex-safe": "~4.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "latest",
