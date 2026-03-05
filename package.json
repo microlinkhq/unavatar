@@ -129,7 +129,7 @@
     "p-any": "~3.0.0",
     "p-cancelable": "2.1.1",
     "p-timeout": "~4.1.0",
-    "puppeteer": "~24.37.5",
+    "puppeteer": "~24.38.0",
     "re2": "~1.23.3",
     "srcset": "~4.0.0",
     "stable-regex": "~1.0.0",
