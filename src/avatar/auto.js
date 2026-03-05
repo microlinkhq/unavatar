@@ -4,7 +4,7 @@ const isAbsoluteUrl = require('is-absolute-url')
 const dataUriRegex = require('data-uri-regex')
 const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
-const urlRegex = require('url-regex')
+const urlRegex = require('url-regex-safe')
 const pAny = require('p-any')
 
 const { providers, providersBy } = require('../providers')

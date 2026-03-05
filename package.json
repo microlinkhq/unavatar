@@ -147,7 +147,7 @@
     "top-user-agents": "~2.1.72",
     "ua-hints": "~1.0.1",
     "unique-random-array": "~2.0.0",
-    "url-regex": "~5.0.0"
+    "url-regex-safe": "~4.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "latest",
