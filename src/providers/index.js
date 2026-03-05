@@ -1,37 +1,60 @@
 'use strict'
 
-const { reduce } = require('lodash')
-
-const providers = {
-  deviantart: require('./deviantart'),
-  dribbble: require('./dribbble'),
-  duckduckgo: require('./duckduckgo'),
-  github: require('./github'),
-  gitlab: require('./gitlab'),
-  google: require('./google'),
-  gravatar: require('./gravatar'),
-  instagram: require('./instagram'),
-  microlink: require('./microlink'),
-  reddit: require('./reddit'),
-  soundcloud: require('./soundcloud'),
-  substack: require('./substack'),
-  telegram: require('./telegram'),
-  tiktok: require('./tiktok'),
-  twitch: require('./twitch'),
-  x: require('./x'),
-  youtube: require('./youtube'),
-  onlyfans: require('./onlyfans')
+const providersBy = {
+  email: ['gravatar'],
+  username: [
+    'apple-music',
+    'bluesky',
+    'deviantart',
+    'dribbble',
+    'github',
+    'gitlab',
+    'instagram',
+    'onlyfans',
+    'openstreetmap',
+    'patreon',
+    'reddit',
+    'soundcloud',
+    'spotify',
+    'substack',
+    'telegram',
+    'tiktok',
+    'twitch',
+    'vimeo',
+    'x',
+    'youtube'
+  ],
+  domain: ['microlink']
 }
 
-const providersBy = reduce(
-  providers,
-  (acc, { supported }, provider) => {
-    if (supported.email) acc.email.push(provider)
-    if (supported.username) acc.username.push(provider)
-    if (supported.domain) acc.domain.push(provider)
-    return acc
-  },
-  { email: [], username: [], domain: [] }
-)
+module.exports = ctx => {
+  const providers = {
+    'apple-music': require('./apple-music')(ctx),
+    bluesky: require('./bluesky')(ctx),
+    deviantart: require('./deviantart')(ctx),
+    dribbble: require('./dribbble')(ctx),
+    duckduckgo: require('./duckduckgo')(ctx),
+    github: require('./github')(ctx),
+    gitlab: require('./gitlab')(ctx),
+    google: require('./google')(ctx),
+    gravatar: require('./gravatar')(ctx),
+    instagram: require('./instagram')(ctx),
+    microlink: require('./microlink')(ctx),
+    onlyfans: require('./onlyfans')(ctx),
+    openstreetmap: require('./openstreetmap')(ctx),
+    patreon: require('./patreon')(ctx),
+    reddit: require('./reddit')(ctx),
+    soundcloud: require('./soundcloud')(ctx),
+    spotify: require('./spotify')(ctx),
+    substack: require('./substack')(ctx),
+    telegram: require('./telegram')(ctx),
+    tiktok: require('./tiktok')(ctx),
+    twitch: require('./twitch')(ctx),
+    vimeo: require('./vimeo')(ctx),
+    whatsapp: require('./whatsapp')(ctx),
+    x: require('./x')(ctx),
+    youtube: require('./youtube')(ctx)
+  }
 
-module.exports = { providers, providersBy }
+  return { providers, providersBy }
+}

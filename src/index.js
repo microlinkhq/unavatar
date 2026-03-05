@@ -1,107 +1,52 @@
 'use strict'
 
-const timeSpan = require('@kikobeats/time-span')({
-  format: n => ms(Math.round(n))
-})
-const debug = require('debug-logfmt')('unavatar')
-const serveStatic = require('serve-static')
-const createRouter = require('router-http')
-const onFinished = require('on-finished')
-const { forEach } = require('lodash')
-const send = require('send-http')
-const path = require('path')
-const ms = require('ms')
+const DEFAULTS = require('./constant')
 
-const { providers } = require('./providers')
-const ssrCache = require('./send/cache')
-const avatar = require('./avatar')
+module.exports = ({ constants: userConstants } = {}) => {
+  const constants = { ...DEFAULTS, ...userConstants }
 
-const { isProduction, API_URL } = require('./constant')
-
-const router = createRouter((error, _, res) => {
-  const hasError = error !== undefined
-  let statusCode = 404
-  let data = 'Not Found'
-
-  if (hasError) {
-    statusCode = error.statusCode ?? 500
-    data = error.message ?? 'Internal Server Error'
-    if (error.statusCode === undefined) console.error(error)
-    if ('headers' in error) {
-      for (const [key, value] of Object.entries(error.headers)) {
-        res.setHeader(key, value)
-      }
-    }
+  if (userConstants?.REQUEST_TIMEOUT && !userConstants?.PROXY_TIMEOUT) {
+    constants.PROXY_TIMEOUT = Math.floor(constants.REQUEST_TIMEOUT * (1 / 3))
+  }
+  if (userConstants?.REQUEST_TIMEOUT && !userConstants?.DNS_TIMEOUT) {
+    constants.DNS_TIMEOUT = Math.floor(constants.REQUEST_TIMEOUT * (1 / 5))
   }
 
-  return send(res, statusCode, data)
-})
+  const { createMemoryCache, createRedisCache } = require('./util/keyv')(constants)
+  const cacheableLookup = require('./util/cacheable-lookup')({ ...constants, createMemoryCache })
+  const got = require('./util/got')({ cacheableLookup })
+  const reachableUrl = require('./util/reachable-url')({ got, createMemoryCache })
+  const createBrowser = require('./util/browserless')(constants)
+  const getHTML = require('./util/html-get')({ createBrowser, got })
+  const { createHtmlProvider, getOgImage } = require('./util/html-provider')({ ...constants, getHTML })
 
-router
-  .use(
-    (req, res, next) => {
-      if (req.url.startsWith('/twitter')) {
-        res.writeHead(301, { Location: req.url.replace('/twitter', '/x') })
-        return res.end()
-      }
+  const providerCtx = { constants, createHtmlProvider, getOgImage, got, createRedisCache }
+  const { providers, providersBy } = require('./providers')(providerCtx)
 
-      if (req.url.startsWith('/pay-as-you-go')) {
-        const more = require('./authentication/more')
-        res.writeHead(303, { Location: more })
-        return res.end()
-      }
+  const { auto, getInputType, getAvatar } = require('./avatar/auto')({
+    constants,
+    providers,
+    providersBy,
+    reachableUrl
+  })
 
-      req.ipAddress = req.headers['cf-connecting-ip'] || '::ffff:127.0.0.1'
-      return next()
-    },
-    require('helmet')({
-      crossOriginResourcePolicy: false,
-      contentSecurityPolicy: false
-    }),
-    require('http-compression')(),
-    require('cors')(),
-    serveStatic(path.resolve('public'), {
-      immutable: true,
-      maxAge: '1y'
-    }),
-    require('./authentication'),
-    isProduction && require('./ua'),
-    (req, res, next) => {
-      req.timestamp = timeSpan()
-      req.query = Array.from(new URLSearchParams(req.query)).reduce(
-        (acc, [key, value]) => {
-          try {
-            acc[key] = value === '' ? true : JSON.parse(value)
-          } catch (err) {
-            acc[key] = value
-          }
-          return acc
-        },
-        {}
-      )
-      onFinished(res, () => {
-        debug(
-          `${req.ipAddress} ${new URL(req.url, API_URL).toString()} ${
-            res.statusCode
-          } – ${req.timestamp()}`
-        )
-      })
-      return next()
-    }
-  )
-  .get('ping', (_, res) => send(res, 200, 'pong'))
-  .get('/:key', (req, res) =>
-    ssrCache({
-      req,
-      res,
-      fn: avatar.resolve(avatar.auto)
-    })
-  )
+  const normalizeArgs = input =>
+    typeof input === 'string' ? { input } : input
 
-forEach(providers, (fn, provider) =>
-  router.get(`/${provider}/:key`, (req, res) =>
-    ssrCache({ req, res, fn: avatar.resolve(avatar.provider(provider, fn)) })
-  )
-)
+  const unavatar = input => auto(normalizeArgs(input))
 
-module.exports = router
+  Object.keys(providers).forEach(name => {
+    unavatar[name] = input => getAvatar(providers[name], name, normalizeArgs(input))
+  })
+
+  unavatar.auto = auto
+  unavatar.getInputType = getInputType
+  unavatar.getAvatar = getAvatar
+  unavatar.providers = providers
+  unavatar.providersBy = providersBy
+  unavatar.reachableUrl = reachableUrl
+  unavatar.got = got
+  unavatar.createBrowser = createBrowser
+
+  return unavatar
+}

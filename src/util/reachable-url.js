@@ -2,19 +2,20 @@
 
 const createPingUrl = require('@microlink/ping-url')
 
-const { gotOpts } = require('./got')
-const { createRedisCache } = require('./keyv')
+module.exports = ({ got, createMemoryCache }) => {
+  const pingCache = createMemoryCache({ namespace: 'ping' })
 
-const pingCache = createRedisCache({ namespace: 'ping' })
-
-const pingUrl = createPingUrl(pingCache, {
-  value: ({ url, statusCode }) => ({ url, statusCode })
-})
-
-module.exports = (url, opts) =>
-  pingUrl(url, {
-    ...gotOpts,
-    ...opts
+  const pingUrl = createPingUrl(pingCache, {
+    value: ({ url, statusCode }) => ({ url, statusCode })
   })
 
-module.exports.isReachable = createPingUrl.isReachable
+  const reachableUrl = (url, opts) =>
+    pingUrl(url, {
+      ...got.gotOpts,
+      ...opts
+    })
+
+  reachableUrl.isReachable = createPingUrl.isReachable
+
+  return reachableUrl
+}

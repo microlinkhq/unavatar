@@ -7,76 +7,88 @@ const pTimeout = require('p-timeout')
 const urlRegex = require('url-regex')
 const pAny = require('p-any')
 
-const { providers, providersBy } = require('../providers')
-const reachableUrl = require('../util/reachable-url')
+const httpStatus = require('../util/http-status')
 const isIterable = require('../util/is-iterable')
 const ExtendableError = require('../util/error')
 
-const { STATUS_CODES } = require('http')
-const { AVATAR_TIMEOUT } = require('../constant')
-
-const is = ({ input }) => {
+const getInputType = input => {
   if (isEmail(input)) return 'email'
   if (urlRegex({ strict: false }).test(input)) return 'domain'
   return 'username'
 }
 
-const getAvatarContent = name => async input => {
-  if (typeof input !== 'string' || input === '') {
-    const message =
-      input === undefined ? 'not found' : `\`${input}\` is invalid`
-    const statusCode = input === undefined ? 404 : 400
-    throw new ExtendableError({ name, message, statusCode })
-  }
+const factory = ({ constants, providers, providersBy, reachableUrl }) => {
+  const { REQUEST_TIMEOUT } = constants
 
-  if (dataUriRegex().test(input)) {
-    return { type: 'buffer', data: input }
-  }
+  const getAvatarContent = provider => async output => {
+    if (typeof output !== 'string' || output === '') {
+      const message = output === undefined ? 'not found' : `\`${output}\` is invalid`
+      const statusCode = output === undefined ? httpStatus.NOT_FOUND : httpStatus.UNPROCESSABLE_ENTITY
+      throw new ExtendableError({ provider, message, statusCode })
+    }
 
-  if (!isAbsoluteUrl(input)) {
-    throw new ExtendableError({
-      message: 'The URL must to be absolute.',
-      name,
-      statusCode: 400
-    })
-  }
+    if (dataUriRegex().test(output)) {
+      return { type: 'buffer', data: output }
+    }
 
-  const { statusCode, url } = await reachableUrl(input)
-
-  if (!reachableUrl.isReachable({ statusCode })) {
-    throw new ExtendableError({
-      message: STATUS_CODES[statusCode],
-      name,
-      statusCode
-    })
-  }
-
-  return { type: 'url', data: url }
-}
-
-const getAvatar = async (fn, name, args) => {
-  const promise = Promise.resolve(fn(args))
-    .then(getAvatarContent(name))
-    .catch(error => {
-      isIterable.forEach(error, error => {
-        error.statusCode = error.statusCode ?? error.response?.statusCode
-        error.name = name
+    if (!isAbsoluteUrl(output)) {
+      throw new ExtendableError({
+        message: 'The URL must to be absolute.',
+        provider,
+        statusCode: 400
       })
+    }
+
+    const { statusCode, url } = await reachableUrl(output)
+
+    if (!reachableUrl.isReachable({ statusCode })) {
+      throw new ExtendableError({
+        message: httpStatus(statusCode),
+        provider,
+        statusCode
+      })
+    }
+
+    return { type: 'url', data: url, provider }
+  }
+
+  const getAvatar = async (fn, provider, args) => {
+    const promise = Promise.resolve(fn(args))
+      .then(getAvatarContent(provider))
+      .catch(error => {
+        isIterable.forEach(error, error => {
+          error.statusCode = error.statusCode ?? error.response?.statusCode
+          error.provider = provider
+        })
+        throw error
+      })
+
+    return pTimeout(promise, REQUEST_TIMEOUT).catch(error => {
+      error.provider = provider
       throw error
     })
+  }
 
-  return pTimeout(promise, AVATAR_TIMEOUT).catch(error => {
-    error.name = name
-    throw error
-  })
+  const resolveAutoByType = async (inputType, args) => {
+    const collection = providersBy[inputType]
+    const promises = collection.map(provider =>
+      pTimeout(getAvatar(providers[provider], provider, args), REQUEST_TIMEOUT)
+    )
+    return pAny(promises)
+  }
+
+  const auto = inputTypeOrArgs => {
+    if (typeof inputTypeOrArgs === 'string') {
+      return args => resolveAutoByType(inputTypeOrArgs, args)
+    }
+
+    const args = inputTypeOrArgs
+    return resolveAutoByType(getInputType(args.input), args)
+  }
+
+  return { auto, getInputType, getAvatar }
 }
 
-module.exports = async args => {
-  const collection = providersBy[is(args)]
-  const promises = collection.map(name =>
-    pTimeout(getAvatar(providers[name], name, args), AVATAR_TIMEOUT)
-  )
-  return pAny(promises)
-}
+factory.getInputType = getInputType
 
-module.exports.getAvatar = getAvatar
+module.exports = factory

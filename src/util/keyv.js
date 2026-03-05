@@ -6,23 +6,22 @@ const KeyvMulti = require('@keyvhq/multi')
 const Keyv = require('@keyvhq/core')
 const assert = require('assert')
 
-const redis = require('./redis')
+module.exports = ({ TTL_DEFAULT }) => {
+  const createMultiCache = remote => new Keyv({ store: new KeyvMulti({ remote }) })
 
-const { TTL_DEFAULT } = require('../constant')
+  const createKeyv = opts => new Keyv({ ttl: TTL_DEFAULT, ...opts })
 
-const createMultiCache = remote =>
-  new Keyv({ store: new KeyvMulti({ remote }) })
+  const createKeyvNamespace = opts => {
+    assert(opts.namespace, '`opts.namespace` is required.')
+    return keyvCompress(createKeyv(opts))
+  }
 
-const createKeyv = opts => new Keyv({ ttl: TTL_DEFAULT, ...opts })
+  const createMemoryCache = opts => createKeyvNamespace({ ...opts, store: new Map() })
 
-const createKeyvNamespace = opts => {
-  assert(opts.namespace, '`opts.namespace` is required.')
-  return keyvCompress(createKeyv(opts))
+  const createRedisCache = (opts = {}) => {
+    const store = new Map()
+    return createKeyvNamespace({ ...opts, store })
+  }
+
+  return { createMemoryCache, createMultiCache, createRedisCache }
 }
-
-const createRedisCache = opts => {
-  const store = redis ? new KeyvRedis(redis, { emitErrors: false }) : new Map()
-  return createKeyvNamespace({ ...opts, store })
-}
-
-module.exports = { createMultiCache, createRedisCache }
