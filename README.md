@@ -335,6 +335,15 @@ It resolves user avatar against **youtube.com**.
 
 e.g., [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 
+The endpoint supports specific input formats.
+
+If the input starts with `UC` and has 24 characters, it is treated as a channel ID. Otherwise, it is treated as a handle.
+
+Available inputs:
+
+- `username`: [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey) or [unavatar.io/youtube/@casey](https://unavatar.io/youtube/@casey)
+- `channel`: [unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw](https://unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw)
+
 ## Response Format
 
 A response is returning the user avatar by default.

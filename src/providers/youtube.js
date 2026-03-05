@@ -3,6 +3,16 @@
 module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'youtube',
-    url: input => `https://www.youtube.com/@${input}`,
+    url: input => {
+      let path
+      if (input.startsWith('@')) {
+        path = input
+      } else if (input.startsWith('UC') && input.length === 24) {
+        path = `channel/${input}`
+      } else {
+        path = `@${input}`
+      }
+      return `https://www.youtube.com/${path}`
+    },
     getter: getOgImage
   })
