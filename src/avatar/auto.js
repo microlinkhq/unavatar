@@ -23,6 +23,12 @@ const getInputType = input => {
 
 const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   const { REQUEST_TIMEOUT } = constants
+  const providerEntriesByType = Object.fromEntries(
+    Object.entries(providersBy).map(([inputType, providerNames]) => [
+      inputType,
+      providerNames.map(provider => [provider, providers[provider]])
+    ])
+  )
 
   const getAvatarContent = provider => async output => {
     if (typeof output !== 'string' || output === '') {
@@ -78,10 +84,14 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   }
 
   const resolveAutoByType = async (inputType, args) => {
-    const collection = providersBy[inputType]
-    const promises = collection.map(provider =>
-      pTimeout(getAvatar(providers[provider], provider, args), REQUEST_TIMEOUT)
-    )
+    const collection = providerEntriesByType[inputType]
+    const promises = new Array(collection.length)
+
+    for (let index = 0; index < collection.length; index++) {
+      const [provider, fn] = collection[index]
+      promises[index] = getAvatar(fn, provider, args)
+    }
+
     return pAny(promises)
   }
 
