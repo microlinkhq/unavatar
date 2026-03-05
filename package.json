@@ -107,7 +107,7 @@
     "youtube"
   ],
   "dependencies": {
-    "@keyvhq/compress": "~2.1.15",
+    "@keyvhq/compress": "~2.2.0",
     "@keyvhq/core": "~2.1.15",
     "@keyvhq/memoize": "~2.1.16",
     "@keyvhq/multi": "~2.1.15",
