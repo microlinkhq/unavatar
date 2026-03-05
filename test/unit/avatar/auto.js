@@ -14,6 +14,10 @@ test('getInputType classifies domain input', t => {
   t.is(autoFactory.getInputType('reddit.com'), 'domain')
 })
 
+test('getInputType classifies localhost input as domain', t => {
+  t.is(autoFactory.getInputType('localhost'), 'domain')
+})
+
 test('getInputType classifies username input', t => {
   t.is(autoFactory.getInputType('kikobeats'), 'username')
 })

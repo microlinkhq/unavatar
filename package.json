@@ -2,7 +2,7 @@
   "name": "@unavatar/core",
   "description": "Get unified user avatar from social networks, including Instagram, SoundCloud, Telegram, Twitter, YouTube & more.",
   "homepage": "https://unavatar.io",
-  "version": "3.7.49",
+  "version": "3.7.50",
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js",
@@ -133,7 +133,7 @@
     "re2": "~1.23.3",
     "srcset": "~4.0.0",
     "stable-regex": "~1.0.0",
-    "tangerine": "~2.0.2",
+    "tangerine": "~2.1.0",
     "top-crawler-agents": "~1.0.34",
     "top-user-agents": "~2.1.95",
     "ua-hints": "~1.0.1",
