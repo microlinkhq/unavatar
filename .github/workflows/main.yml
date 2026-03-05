@@ -19,11 +19,16 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: true
       - name: Contributors
         run: |
           git config --global user.email ${{ secrets.GIT_EMAIL }}
           git config --global user.name ${{ secrets.GIT_USERNAME }}
-          npm run contributors
+          pnpm contributors
       - name: Push changes
         run: |
           git push origin ${{ github.head_ref }}
@@ -44,18 +49,19 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-      - name: Setup Redis
-        uses: supercharge/redis-github-action@1.8.0
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
         with:
           version: latest
           run_install: true
       - name: Test
-        env:
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          REDIS_URI_METERED_BILLING: redis://localhost:6379
-        run: npm test
+        run: pnpm test
+      - name: Report
+        run: npx c8 report --reporter=text-lcov > coverage/lcov.info
+      - name: Coverage
+        uses: coverallsapp/github-action@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -64,18 +70,4 @@ jobs:
           git config --global user.email ${{ secrets.GIT_EMAIL }}
           git config --global user.name ${{ secrets.GIT_USERNAME }}
           git pull origin master
-          npm run release
-  deploy:
-    needs: [release]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install
-        uses: superfly/flyctl-actions/setup-flyctl@master
-      - name: Deploy
-        run: flyctl deploy --remote-only --detach
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          pnpm release

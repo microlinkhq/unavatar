@@ -1,35 +1,43 @@
 'use strict'
 
 const createBrowser = require('browserless')
+const { randomUUID } = require('crypto')
 const puppeteer = require('puppeteer')
-
 const path = require('path')
 
-const { TMP_FOLDER } = require('../constant')
+module.exports = ({ TMP_FOLDER, isTest }) => {
+  const PUPPETEER_BASE_DIR = path.join(TMP_FOLDER, 'puppeteer')
 
-const getArgs = () => {
-  const PUPPETEER_DIR = path.join(TMP_FOLDER, `puppeteer-${Date.now()}`)
-  const DATA_DIR = path.join(PUPPETEER_DIR, 'profile')
-  const CACHE_DIR = path.join(PUPPETEER_DIR, 'cache')
+  const getPuppeteerDir = isTest
+    ? () => path.join(`${PUPPETEER_BASE_DIR}-${randomUUID()}`)
+    : () => PUPPETEER_BASE_DIR
 
-  const args = createBrowser.driver.defaultArgs.concat([
-    '--allow-running-insecure-content', // https://source.chromium.org/search?q=lang:cpp+symbol:kAllowRunningInsecureContent&ss=chromium
-    '--disk-cache-size=33554432', // https://source.chromium.org/search?q=lang:cpp+symbol:kDiskCacheSize&ss=chromium
-    '--enable-features=SharedArrayBuffer', // https://source.chromium.org/search?q=file:content_features.cc&ss=chromium
-    `--disk-cache-dir=${CACHE_DIR}`,
-    `--user-data-dir=${DATA_DIR}`,
-    '--disable-font-subpixel-positioning', // https://github.com/puppeteer/puppeteer/issues/2410#issuecomment-2886054614
-    '--renderer-process-limit=2'
-  ])
+  const getArgs = () => {
+    const PUPPETEER_DIR = getPuppeteerDir()
+    const DATA_DIR = path.join(PUPPETEER_DIR, 'profile')
+    const CACHE_DIR = path.join(PUPPETEER_DIR, 'cache')
 
-  return { PUPPETEER_DIR, DATA_DIR, CACHE_DIR, args }
+    const args = createBrowser.driver.defaultArgs.concat([
+      '--allow-running-insecure-content',
+      `--disk-cache-dir=${CACHE_DIR}`,
+      `--user-data-dir=${DATA_DIR}`
+    ])
+
+    return { PUPPETEER_DIR, DATA_DIR, CACHE_DIR, args }
+  }
+
+  let browser
+
+  return () => {
+    if (!browser) {
+      browser = createBrowser({
+        args: getArgs().args,
+        dumpio: false,
+        pipe: true,
+        puppeteer,
+        waitForInitialPage: false
+      })
+    }
+    return browser
+  }
 }
-
-const browser = createBrowser({
-  args: getArgs().args,
-  puppeteer,
-  pipe: true,
-  dumpio: true
-})
-
-module.exports = () => browser

@@ -1,23 +1,15 @@
 'use strict'
 
-const { stringify } = require('querystring')
 const crypto = require('crypto')
 
-const { AVATAR_SIZE } = require('../constant')
+const stringify = require('../util/stringify')
 
 const md5 = str => crypto.createHash('md5').update(str).digest('hex')
 
-module.exports = function gravatar ({ input }) {
-  return `https://gravatar.com/avatar/${md5(
-    input.trim().toLowerCase()
-  )}?${stringify({
-    size: AVATAR_SIZE,
-    d: '404'
-  })}`
-}
-
-module.exports.supported = {
-  email: true,
-  username: false,
-  domain: false
-}
+module.exports = ({ constants }) =>
+  function gravatar ({ input }) {
+    return `https://gravatar.com/avatar/${md5(input.trim().toLowerCase())}?${stringify({
+      size: constants.AVATAR_SIZE,
+      d: '404'
+    })}`
+  }

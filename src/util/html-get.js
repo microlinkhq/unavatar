@@ -1,34 +1,25 @@
 'use strict'
 
-const getHTML = require('html-get')
+module.exports = ({ createBrowser, got }) =>
+  async function (url, { puppeteerOpts, timeout, gotOpts, ...opts } = {}) {
+    const browser = await createBrowser()
+    const browserContext = await browser.createContext()
 
-const createBrowser = require('./browserless')
-const { gotOpts } = require('./got')
+    const promise = require('html-get')(url, {
+      prerender: false,
+      ...opts,
+      getBrowserless: () => browserContext,
+      serializeHtml: $ => ({ $ }),
+      puppeteerOpts: {
+        timeout,
+        ...puppeteerOpts
+      },
+      gotOpts: {
+        timeout,
+        ...got.gotOpts,
+        ...gotOpts
+      }
+    })
 
-const { AVATAR_TIMEOUT } = require('../constant')
-
-module.exports = async (url, { puppeteerOpts, ...opts } = {}) => {
-  const browser = await createBrowser()
-  const browserContext = await browser.createContext()
-
-  const result = await getHTML(url, {
-    prerender: false,
-    ...opts,
-    getBrowserless: () => browserContext,
-    serializeHtml: $ => ({ $ }),
-    puppeteerOpts: {
-      timeout: AVATAR_TIMEOUT,
-      ...puppeteerOpts
-    },
-    gotOpts: {
-      ...gotOpts,
-      timeout: AVATAR_TIMEOUT
-    }
-  })
-
-  await Promise.resolve(browserContext).then(browserless =>
-    browserless.destroyContext()
-  )
-
-  return result
-}
+    return Promise.resolve(promise).finally(() => browserContext.destroyContext())
+  }

@@ -1,32 +1,35 @@
 'use strict'
 
 const uniqueRandomArray = require('unique-random-array')
-const PCancelable = require('p-cancelable')
+const { $jsonld } = require('@metascraper/helpers')
 
 const randomCrawlerAgent = uniqueRandomArray(
   require('top-crawler-agents').filter(agent => agent.startsWith('Slackbot'))
 )
 
-const getHTML = require('../util/html-get')
-
-const avatarUrl = str => {
-  if (str?.endsWith('_200x200.jpg')) {
-    str = str.replace('_200x200.jpg', '_400x400.jpg')
+const toHighResolution = url => {
+  if (url?.endsWith('_200x200.jpg')) {
+    return url.replace('_200x200.jpg', '_400x400.jpg')
   }
-  return str
+  if (url?.endsWith('_normal.jpg')) {
+    return url.replace('_normal.jpg', '_400x400.jpg')
+  }
+  return url
 }
 
-module.exports = PCancelable.fn(async function twitter ({ input }, onCancel) {
-  const promise = getHTML(`https://x.com/${input}`, {
-    headers: { 'user-agent': randomCrawlerAgent() }
+const getProfileImage = $ =>
+  toHighResolution(
+    $jsonld('mainEntity.image.contentUrl')($) || $('meta[property="og:image"]').attr('content')
+  )
+
+const factory = ({ createHtmlProvider }) =>
+  createHtmlProvider({
+    name: 'x',
+    url: input => `https://x.com/${input}`,
+    getter: getProfileImage,
+    htmlOpts: () => ({ headers: { 'user-agent': randomCrawlerAgent() } })
   })
-  onCancel(() => promise.onCancel())
-  const { $ } = await promise
-  return avatarUrl($('meta[property="og:image"]').attr('content'))
-})
 
-module.exports.supported = {
-  email: false,
-  username: true,
-  domain: false
-}
+factory.getProfileImage = getProfileImage
+
+module.exports = factory

@@ -1,18 +1,35 @@
 'use strict'
 
-const PCancelable = require('p-cancelable')
+const { $jsonld } = require('@metascraper/helpers')
+const { parse: parseSrcset } = require('srcset')
 
-const getHTML = require('../util/html-get')
+const getBestSrcsetUrl = srcset => {
+  if (typeof srcset !== 'string' || srcset.trim() === '') return
 
-module.exports = PCancelable.fn(async function substack ({ input }, onCancel) {
-  const promise = getHTML(`https://${input}.substack.com`)
-  onCancel(() => promise.onCancel())
-  const { $ } = await promise
-  return $('picture > source').attr('srcset')
-})
+  const candidates = parseSrcset(srcset).map(candidate => ({
+    url: candidate.url,
+    score: candidate.width ?? candidate.density ?? 0
+  }))
 
-module.exports.supported = {
-  email: false,
-  username: true,
-  domain: false
+  if (candidates.length === 0) return
+  return candidates.reduce((best, current) => (current.score > best.score ? current : best)).url
 }
+
+const getPictureAvatar = $ => {
+  const pictureImg = $('picture img')
+  const srcset = pictureImg.attr('srcset')
+  return getBestSrcsetUrl(srcset) || pictureImg.attr('src')
+}
+
+const getAvatarUrl = $ => $jsonld('publisher.logo.url')($) || getPictureAvatar($)
+
+const factory = ({ createHtmlProvider }) =>
+  createHtmlProvider({
+    name: 'substack',
+    url: input => `https://${input}.substack.com`,
+    getter: getAvatarUrl
+  })
+
+factory.getAvatarUrl = getAvatarUrl
+
+module.exports = factory

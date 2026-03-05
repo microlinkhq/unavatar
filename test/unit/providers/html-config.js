@@ -1,0 +1,85 @@
+'use strict'
+
+const test = require('ava')
+const cheerio = require('cheerio')
+const proxyquire = require('proxyquire').noPreserveCache()
+
+const createHtmlProvider = opts => opts
+const getOgImage = $ => $('meta[property="og:image"]').attr('content')
+
+test('html provider modules expose expected URL builders', t => {
+  const bluesky = proxyquire('../../../src/providers/bluesky', {
+    '@metascraper/helpers': {
+      $jsonld: path => () => `jsonld:${path}`
+    }
+  })({ createHtmlProvider })
+  t.is(bluesky.url('kikobeats.bsky.social'), 'https://bsky.app/profile/kikobeats.bsky.social')
+  t.is(bluesky.getter({}), 'jsonld:mainEntity.image')
+
+  const deviantart = require('../../../src/providers/deviantart')({ createHtmlProvider, getOgImage })
+  t.is(deviantart.url('spyed'), 'https://www.deviantart.com/spyed')
+
+  const gitlab = require('../../../src/providers/gitlab')({ createHtmlProvider, getOgImage })
+  t.is(gitlab.url('kikobeats'), 'https://gitlab.com/kikobeats')
+
+  const instagram = require('../../../src/providers/instagram')({ createHtmlProvider, getOgImage })
+  t.is(instagram.url('willsmith'), 'https://www.instagram.com/willsmith')
+
+  const twitch = require('../../../src/providers/twitch')({ createHtmlProvider, getOgImage })
+  t.is(twitch.url('midudev'), 'https://www.twitch.tv/midudev')
+
+  const vimeo = require('../../../src/providers/vimeo')({ createHtmlProvider, getOgImage })
+  t.is(vimeo.url('kikobeats'), 'https://vimeo.com/kikobeats')
+
+  const youtube = require('../../../src/providers/youtube')({ createHtmlProvider, getOgImage })
+  t.is(youtube.url('natelive7'), 'https://www.youtube.com/@natelive7')
+})
+
+test('dribbble, reddit and telegram getters read expected HTML attributes', t => {
+  const dribbble = require('../../../src/providers/dribbble')({ createHtmlProvider })
+  const dribbbleHtml = cheerio.load(
+    '<img class="profile-avatar" src="https://a.com/dribbble.png" />'
+  )
+  t.is(dribbble.url('omidnikrah'), 'https://dribbble.com/omidnikrah')
+  t.is(dribbble.getter(dribbbleHtml), 'https://a.com/dribbble.png')
+
+  const reddit = require('../../../src/providers/reddit')({ createHtmlProvider })
+  const redditHtml = cheerio.load('<img alt="avatar image" src="https://a.com/reddit.png" />')
+  t.is(reddit.url('kikobeats'), 'https://www.reddit.com/user/kikobeats/')
+  t.is(reddit.getter(redditHtml), 'https://a.com/reddit.png')
+  t.deepEqual(reddit.htmlOpts(), { headers: { 'accept-language': 'en' } })
+
+  const telegram = require('../../../src/providers/telegram')({ createHtmlProvider })
+  const telegramHtml = cheerio.load(
+    '<img class="tgme_page_photo_image" src="https://a.com/tg.png" />'
+  )
+  t.is(telegram.url('drsdavidsoft'), 'https://t.me/drsdavidsoft')
+  t.is(telegram.getter(telegramHtml), 'https://a.com/tg.png')
+})
+
+test('soundcloud and substack provider options are derived from helper modules', t => {
+  const soundcloud = proxyquire('../../../src/providers/soundcloud', {
+    'unique-random-array': () => () => 'mobile-agent'
+  })({ createHtmlProvider, getOgImage })
+
+  t.is(soundcloud.url('kikobeats'), 'https://soundcloud.com/kikobeats')
+  t.deepEqual(soundcloud.htmlOpts(), { headers: { 'user-agent': 'mobile-agent' } })
+
+  const substack = proxyquire('../../../src/providers/substack', {
+    '@metascraper/helpers': {
+      $jsonld: path => () => `jsonld:${path}`
+    }
+  })({ createHtmlProvider })
+
+  t.is(substack.url('failingwithdata'), 'https://failingwithdata.substack.com')
+  t.is(substack.getter({}), 'jsonld:publisher.logo.url')
+
+  const patreon = proxyquire('../../../src/providers/patreon', {
+    '@metascraper/helpers': {
+      $jsonld: path => () => `jsonld:${path}`
+    }
+  })({ createHtmlProvider })
+
+  t.is(patreon.url('kikobeats'), 'https://www.patreon.com/kikobeats')
+  t.is(patreon.getter({}), 'jsonld:mainEntity.image.thumbnailUrl')
+})

@@ -1,15 +1,8 @@
 'use strict'
 
-const PCancelable = require('p-cancelable')
 const { get } = require('lodash')
 
-const getHTML = require('../util/html-get')
-
-module.exports = PCancelable.fn(async function tiktok ({ input }, onCancel) {
-  const promise = getHTML(`https://www.tiktok.com/@${input}`)
-  onCancel(() => promise.onCancel())
-  const { $ } = await promise
-
+const getAvatarUrl = $ => {
   const text = $('#__UNIVERSAL_DATA_FOR_REHYDRATION__').contents().text()
   if (!text) return
   return get(JSON.parse(text), [
@@ -19,10 +12,15 @@ module.exports = PCancelable.fn(async function tiktok ({ input }, onCancel) {
     'user',
     'avatarLarger'
   ])
-})
-
-module.exports.supported = {
-  email: false,
-  username: true,
-  domain: false
 }
+
+const factory = ({ createHtmlProvider }) =>
+  createHtmlProvider({
+    name: 'tiktok',
+    url: input => `https://www.tiktok.com/@${input}`,
+    getter: getAvatarUrl
+  })
+
+factory.getAvatarUrl = getAvatarUrl
+
+module.exports = factory

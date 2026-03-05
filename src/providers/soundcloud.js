@@ -1,21 +1,17 @@
 'use strict'
 
-const PCancelable = require('p-cancelable')
+const uniqueRandomArray = require('unique-random-array')
 
-const getHTML = require('../util/html-get')
+/**
+ * SoundCloud is serving an old app for desktop users,
+ * so we need to use a mobile user agent to get the avatar.
+ */
+const randomUserAgent = uniqueRandomArray(require('top-user-agents/mobile'))
 
-module.exports = PCancelable.fn(async function soundcloud (
-  { input },
-  onCancel
-) {
-  const promise = getHTML(`https://soundcloud.com/${input}`)
-  onCancel(() => promise.onCancel())
-  const { $ } = await promise
-  return $('meta[property="og:image"]').attr('content')
-})
-
-module.exports.supported = {
-  email: false,
-  username: true,
-  domain: false
-}
+module.exports = ({ createHtmlProvider, getOgImage }) =>
+  createHtmlProvider({
+    name: 'soundcloud',
+    url: input => `https://soundcloud.com/${input}`,
+    getter: getOgImage,
+    htmlOpts: () => ({ headers: { 'user-agent': randomUserAgent() } })
+  })
