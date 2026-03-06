@@ -362,7 +362,7 @@ test('createHtmlProvider retries residential when datacenter returns 429', async
   t.true(setHeader.calledWith('x-proxy-tier', 'residential'))
 })
 
-test('createHtmlProvider logs html debug info when result is empty', async t => {
+test('createHtmlProvider logs html debug info when result is empty and debug enabled', async t => {
   const debugError = sinon.stub()
   const debugLog = sinon.stub()
   const debug = Object.assign(debugLog, {
@@ -376,6 +376,51 @@ test('createHtmlProvider logs html debug info when result is empty', async t => 
   })
   const $ = cheerio.load(
     '<html><head><title>Test Profile</title><meta property="og:image" content="https://cdn.example.com/avatar.png" /></head><body><h1>Blocked</h1></body></html>'
+  )
+
+  const { createHtmlProvider } = proxyquire('../../../src/util/html-provider', {
+    'debug-logfmt': () => debug
+  })({
+    PROXY_TIMEOUT: 8000,
+    DEBUG_HTML_TO_FILE: true,
+    getHTML: sinon.stub().resolves({ $, statusCode: 200 })
+  })
+
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://www.reddit.com/user/kikobeats/',
+    getter: () => undefined
+  })
+
+  await runProvider(provider)
+
+  t.true(
+    debugError.calledWithMatch(
+      sinon.match({
+        tier: 'origin',
+        provider: 'test-provider'
+      }),
+      sinon.match(
+        value => value.status === undefined && value.statusCode === 200 && value.htmlLength > 0
+      )
+    )
+  )
+})
+
+test('createHtmlProvider skips html serialization when debug is disabled', async t => {
+  const debugError = sinon.stub()
+  const debugLog = sinon.stub()
+  const debug = Object.assign(debugLog, {
+    error: debugError,
+    duration: (...baseArgs) => {
+      const durationLog = (...args) => debugLog(...baseArgs, ...args)
+      durationLog.error = (...args) => debugError(...baseArgs, ...args)
+      durationLog.info = (...args) => debugLog(...baseArgs, ...args)
+      return durationLog
+    }
+  })
+  const $ = cheerio.load(
+    '<html><head><title>Test Profile</title></head><body><h1>Blocked</h1></body></html>'
   )
 
   const { createHtmlProvider } = proxyquire('../../../src/util/html-provider', {
@@ -400,7 +445,7 @@ test('createHtmlProvider logs html debug info when result is empty', async t => 
         provider: 'test-provider'
       }),
       sinon.match(
-        value => value.status === undefined && value.statusCode === 200 && value.htmlLength > 0
+        value => value.statusCode === 200 && value.htmlLength === undefined
       )
     )
   )
