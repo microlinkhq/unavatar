@@ -72,22 +72,26 @@ module.exports = ({ PROXY_TIMEOUT, DEBUG_HTML_TO_FILE, getHTML }) => {
       const getResult = async ($, statusCode, log, tier) => {
         const result = getter($)
         if (typeof result !== 'string' || result === '') {
-          const { html, ...htmlDebugInfo } = await getHtmlDebugInfo($)
-          const requestId = typeof res.getHeader === 'function'
-            ? res.getHeader('x-request-id')
-            : undefined
-          const htmlFile = await writeHtmlDebugFile({
-            debugEnabled: DEBUG_HTML_TO_FILE,
-            provider: name,
-            tier,
-            requestId,
-            html
-          }).catch(() => undefined)
+          let htmlDebugInfo = {}
+
+          if (DEBUG_HTML_TO_FILE) {
+            const { html, ...info } = await getHtmlDebugInfo($)
+            const requestId = typeof res.getHeader === 'function'
+              ? res.getHeader('x-request-id')
+              : undefined
+            const htmlFile = await writeHtmlDebugFile({
+              debugEnabled: true,
+              provider: name,
+              tier,
+              requestId,
+              html
+            }).catch(() => undefined)
+            htmlDebugInfo = { ...info, ...(htmlFile ? { htmlFile } : {}) }
+          }
 
           log.error({
             statusCode,
-            ...htmlDebugInfo,
-            ...(htmlFile ? { htmlFile } : {})
+            ...htmlDebugInfo
           })
 
           throw createEmptyProviderValueError({ provider: name, statusCode })
