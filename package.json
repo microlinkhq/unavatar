@@ -124,7 +124,7 @@
     "data-uri-regex": "~0.1.4",
     "debug-logfmt": "~1.4.7",
     "got": "~11.8.6",
-    "html-get": "~2.21.21",
+    "html-get": "~2.22.0",
     "https-tls": "~1.0.24",
     "is-absolute-url": "~3.0.3",
     "is-email-like": "~1.0.0",
