@@ -6,10 +6,10 @@ const proxyquire = require('proxyquire').noPreserveCache()
 
 test('reachable-url composes ping-url with cache and merged got options', async t => {
   const ping = sinon.stub().resolves({ statusCode: 200, url: 'https://example.com' })
-  const createMemoryCache = sinon.stub().returns({ name: 'ping-cache' })
+  const pingCache = { name: 'ping-cache' }
 
   const createPingUrl = sinon.stub().callsFake((cache, opts) => {
-    t.deepEqual(cache, { name: 'ping-cache' })
+    t.deepEqual(cache, pingCache)
     t.is(typeof opts.value, 'function')
     t.deepEqual(opts.value({ url: 'https://example.com', statusCode: 200, ignored: true }), {
       url: 'https://example.com',
@@ -25,13 +25,12 @@ test('reachable-url composes ping-url with cache and merged got options', async 
 
   const reachableUrl = reachableUrlFactory({
     got: { gotOpts: { timeout: 1234, retry: { limit: 0 } } },
-    createMemoryCache
+    pingCache
   })
 
   const value = await reachableUrl('https://example.com/avatar.png', { retry: { limit: 1 } })
 
   t.deepEqual(value, { statusCode: 200, url: 'https://example.com' })
-  t.true(createMemoryCache.calledOnceWithExactly({ namespace: 'ping' }))
   t.true(
     ping.calledOnceWithExactly('https://example.com/avatar.png', {
       timeout: 1234,

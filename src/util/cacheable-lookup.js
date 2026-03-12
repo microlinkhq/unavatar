@@ -3,10 +3,10 @@
 const CacheableLookup = require('cacheable-lookup')
 const Tangerine = require('tangerine')
 
-module.exports = ({ TTL_DEFAULT, DNS_TIMEOUT, DNS_SERVERS, createMemoryCache }) =>
+module.exports = ({ TTL_DEFAULT, DNS_TIMEOUT, DNS_SERVERS, cache }) =>
   new CacheableLookup({
     maxTtl: TTL_DEFAULT,
-    cache: createMemoryCache({ namespace: 'dns' }),
+    cache,
     resolver: new Tangerine(
       {
         cache: false,

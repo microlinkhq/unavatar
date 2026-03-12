@@ -11,7 +11,7 @@ const createProviderWith = ({ gotStub }) =>
     }
   })({
     got: gotStub,
-    createRedisCache: () => new Keyv({ namespace: 'itunes-search-test', store: new Map() }),
+    itunesSearchCache: new Keyv({ namespace: 'itunes-search-test', store: new Map() }),
     createHtmlProvider:
       ({ url }) =>
         async ({ input }) =>
