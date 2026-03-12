@@ -19,7 +19,7 @@ module.exports = ({ TTL_DEFAULT, redis }) => {
   }
 
   const createRedisCache = (opts = {}) => {
-    const store = redis ? KeyvOffline(new KeyvRedis(redis)) : new Map()
+    const store = redis ? new KeyvOffline(new KeyvRedis(redis)) : new Map()
     return createKeyvNamespace({ ...opts, store })
   }
 
