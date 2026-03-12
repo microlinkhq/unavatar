@@ -115,6 +115,7 @@
     "@keyvhq/core": "~2.1.15",
     "@keyvhq/memoize": "~2.1.16",
     "@keyvhq/multi": "~2.1.15",
+    "@keyvhq/offline": "~2.2.0",
     "@keyvhq/redis": "~2.1.15",
     "@metascraper/helpers": "~5.49.24",
     "@microlink/mql": "~0.14.2",

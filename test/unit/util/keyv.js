@@ -64,18 +64,6 @@ test('createRedisCache uses KeyvOffline + KeyvRedis when redis is provided', t =
   t.is(cache.type, 'compressed')
 })
 
-test('createMemoryCache always uses Map store', t => {
-  const { keyv, KeyvRedis, keyvCompress, Keyv } = buildKeyv()
-
-  const cache = keyv.createMemoryCache({ namespace: 'dns' })
-
-  t.false(KeyvRedis.called)
-  t.true(keyvCompress.calledOnce)
-  t.true(Keyv.calledOnce)
-  t.is(cache.type, 'compressed')
-  t.true(cache.input.opts.store instanceof Map)
-})
-
 test('createRedisCache requires namespace option', t => {
   const { keyv } = buildKeyv()
   const error = t.throws(() => keyv.createRedisCache({}))

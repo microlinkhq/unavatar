@@ -18,13 +18,10 @@ module.exports = ({ TTL_DEFAULT, redis }) => {
     return keyvCompress(createKeyv(opts))
   }
 
-  const createMemoryCache = opts =>
-    createKeyvNamespace({ ...opts, store: new Map() })
-
   const createRedisCache = (opts = {}) => {
     const store = redis ? KeyvOffline(new KeyvRedis(redis)) : new Map()
     return createKeyvNamespace({ ...opts, store })
   }
 
-  return { createMemoryCache, createMultiCache, createRedisCache }
+  return { createMultiCache, createRedisCache }
 }
