@@ -2,7 +2,7 @@
 
 const DEFAULTS = require('./constant')
 
-module.exports = ({ constants: userConstants } = {}) => {
+module.exports = ({ constants: userConstants, onFetchHTML } = {}) => {
   const constants = { ...DEFAULTS, ...userConstants }
 
   if (userConstants?.REQUEST_TIMEOUT && !userConstants?.PROXY_TIMEOUT) {
@@ -18,7 +18,11 @@ module.exports = ({ constants: userConstants } = {}) => {
   const reachableUrl = require('./util/reachable-url')({ got, createMemoryCache })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
-  const { createHtmlProvider, getOgImage } = require('./util/html-provider')({ ...constants, getHTML })
+  const { createHtmlProvider, getOgImage } = require('./util/html-provider')({
+    ...constants,
+    getHTML,
+    onFetchHTML
+  })
 
   const providerCtx = { constants, createHtmlProvider, getOgImage, got, createRedisCache }
   const { providers, providersBy } = require('./providers')(providerCtx)
