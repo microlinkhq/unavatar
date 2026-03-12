@@ -74,7 +74,9 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
         return onFetchHTML({ attempt, provider: name, providerUrl, req, res })
       }
 
-      return attempt()
+      const result = await attempt()
+      if (result === NOT_FOUND) return undefined
+      return result
     }
 
     provider.getUrl = url

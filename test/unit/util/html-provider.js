@@ -84,11 +84,33 @@ test('createHtmlProvider throws when upstream status is 500 and getter is empty'
   })
 })
 
-test('createHtmlProvider returns NOT_FOUND when status is 404', async t => {
+test('createHtmlProvider returns undefined when status is 404 and no onFetchHTML', async t => {
   const provider = createProvider({
     providerUrl: 'https://www.reddit.com/user/kikobeats/',
     getterResult: '/assets/avatar.svg',
     responseStatusCode: 404
+  })
+
+  const result = await runProvider(provider)
+
+  t.is(result, undefined)
+})
+
+test('attempt returns NOT_FOUND symbol when status is 404 via onFetchHTML', async t => {
+  const { NOT_FOUND } = require('../../../src/util/html-provider')
+
+  const onFetchHTML = async ({ attempt }) => attempt()
+
+  const { createHtmlProvider } = require('../../../src/util/html-provider')({
+    PROXY_TIMEOUT: 8000,
+    getHTML: async () => ({ $: {}, statusCode: 404 }),
+    onFetchHTML
+  })
+
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://www.reddit.com/user/kikobeats/',
+    getter: () => '/assets/avatar.svg'
   })
 
   const result = await runProvider(provider)
