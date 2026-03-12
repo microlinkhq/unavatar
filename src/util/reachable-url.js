@@ -2,9 +2,7 @@
 
 const createPingUrl = require('@microlink/ping-url')
 
-module.exports = ({ got, createMemoryCache }) => {
-  const pingCache = createMemoryCache({ namespace: 'ping' })
-
+module.exports = ({ got, pingCache }) => {
   const pingUrl = createPingUrl(pingCache, {
     value: ({ url, statusCode }) => ({ url, statusCode })
   })

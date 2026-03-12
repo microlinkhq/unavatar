@@ -3,6 +3,7 @@
 const test = require('ava')
 const path = require('path')
 const fs = require('fs')
+const Keyv = require('@keyvhq/core')
 
 const DEFAULTS = require('../../../src/constant')
 
@@ -11,7 +12,7 @@ const mockCtx = {
   createHtmlProvider: opts => async function () {},
   getOgImage: () => undefined,
   got: Object.assign(() => {}, { gotOpts: {} }),
-  createRedisCache: () => new Map()
+  itunesSearchCache: new Keyv({ store: new Map() })
 }
 
 const { providers, providersBy } = require('../../../src/providers')(mockCtx)

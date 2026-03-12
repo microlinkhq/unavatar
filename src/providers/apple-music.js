@@ -2,7 +2,6 @@
 
 const { $jsonld } = require('@metascraper/helpers')
 const memoize = require('@keyvhq/memoize')
-const ms = require('ms')
 
 const APPLE_MUSIC_ID_REGEX = /^\d+$/
 const APPLE_MUSIC_STOREFRONT = 'us'
@@ -13,7 +12,6 @@ const APPLE_MUSIC_ENTITY_TYPES = {
 }
 
 const APPLE_MUSIC_SEARCH_TYPES = ['artist', 'song', 'album']
-const ITUNES_SEARCH_CACHE_TTL = ms('7d')
 
 const isNumericId = value => {
   if (typeof value === 'number') {
@@ -37,12 +35,7 @@ const parseInput = input => {
   return { hasExplicitType, type, id }
 }
 
-module.exports = ({ createHtmlProvider, createRedisCache, got }) => {
-  const itunesSearchCache = createRedisCache({
-    namespace: 'itunes-search',
-    ttl: ITUNES_SEARCH_CACHE_TTL
-  })
-
+module.exports = ({ createHtmlProvider, itunesSearchCache, got }) => {
   const searchEntityId = memoize(
     async ({ query, type }) => {
       const entityConfig = APPLE_MUSIC_ENTITY_TYPES[type]
@@ -61,10 +54,7 @@ module.exports = ({ createHtmlProvider, createRedisCache, got }) => {
       return isNumericId(entityId) ? String(entityId) : null
     },
     itunesSearchCache,
-    {
-      key: ({ query, type }) => `${type}:${query.trim().toLowerCase()}`,
-      ttl: ITUNES_SEARCH_CACHE_TTL
-    }
+    { key: ({ query, type }) => `${type}:${query.trim().toLowerCase()}` }
   )
 
   const appleMusicURI = async input => {

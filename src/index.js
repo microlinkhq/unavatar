@@ -2,7 +2,7 @@
 
 const DEFAULTS = require('./constant')
 
-module.exports = ({ constants: userConstants } = {}) => {
+module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
   const constants = { ...DEFAULTS, ...userConstants }
 
   if (userConstants?.REQUEST_TIMEOUT && !userConstants?.PROXY_TIMEOUT) {
@@ -12,15 +12,20 @@ module.exports = ({ constants: userConstants } = {}) => {
     constants.DNS_TIMEOUT = Math.floor(constants.REQUEST_TIMEOUT * (1 / 5))
   }
 
-  const { createMemoryCache, createRedisCache } = require('./util/keyv')(constants)
-  const cacheableLookup = require('./util/cacheable-lookup')({ ...constants, createMemoryCache })
+  const { createMultiCache, createRedisCache } = require('./util/keyv')({ ...constants, redis })
+  const cache = require('./util/cache')({ createMultiCache, createRedisCache })
+  const cacheableLookup = require('./util/cacheable-lookup')({ ...constants, cache: cache.dnsCache })
   const got = require('./util/got')({ cacheableLookup })
-  const reachableUrl = require('./util/reachable-url')({ got, createMemoryCache })
+  const reachableUrl = require('./util/reachable-url')({ got, pingCache: cache.pingCache })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
-  const { createHtmlProvider, getOgImage } = require('./util/html-provider')({ ...constants, getHTML })
+  const { createHtmlProvider, getOgImage } = require('./util/html-provider')({
+    ...constants,
+    getHTML,
+    onFetchHTML
+  })
 
-  const providerCtx = { constants, createHtmlProvider, getOgImage, got, createRedisCache }
+  const providerCtx = { constants, createHtmlProvider, getOgImage, got, itunesSearchCache: cache.itunesSearchCache }
   const { providers, providersBy } = require('./providers')(providerCtx)
 
   const { auto, getInputType, getAvatar } = require('./avatar/auto')({
