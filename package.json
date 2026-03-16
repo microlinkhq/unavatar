@@ -118,7 +118,7 @@
     "@keyvhq/offline": "~2.2.0",
     "@keyvhq/redis": "~2.1.15",
     "@metascraper/helpers": "~5.49.24",
-    "@microlink/mql": "~0.14.2",
+    "@microlink/mql": "~0.15.1",
     "@microlink/ping-url": "~1.4.16",
     "browserless": "~10.12.0",
     "cacheable-lookup": "~6.1.0",
