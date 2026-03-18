@@ -11,6 +11,7 @@ const providersBy = {
     'gitlab',
     'instagram',
     'linkedin',
+    'mastodon',
     'onlyfans',
     'openstreetmap',
     'patreon',
