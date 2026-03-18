@@ -205,6 +205,7 @@
       "finepack"
     ]
   },
+  "packageManager": "pnpm@10.32.1",
   "pnpm": {
     "neverBuiltDependencies": []
   },

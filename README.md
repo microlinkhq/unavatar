@@ -17,6 +17,7 @@
   - [Google](#google)
   - [Gravatar](#gravatar)
   - [Instagram](#instagram)
+  - [LinkedIn](#linkedin)
   - [Microlink](#microlink)
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
@@ -222,6 +223,12 @@ e.g., [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hel
 It resolves user avatar against **instagram.com**.
 
 e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
+
+### LinkedIn
+
+It resolves user avatar against **linkedin.com**.
+
+e.g., [unavatar.io/linkedin/kikobeats](https://unavatar.io/linkedin/kikobeats)
 
 ### Microlink
 
