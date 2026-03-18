@@ -18,6 +18,7 @@
   - [Gravatar](#gravatar)
   - [Instagram](#instagram)
   - [LinkedIn](#linkedin)
+  - [Mastodon](#mastodon)
   - [Microlink](#microlink)
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
@@ -229,6 +230,15 @@ e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 It resolves user avatar against **linkedin.com**.
 
 e.g., [unavatar.io/linkedin/kikobeats](https://unavatar.io/linkedin/kikobeats)
+
+### Mastodon
+
+It resolves user avatar from any **Mastodon** instance using the public account lookup API.
+
+Because Mastodon is federated, the input must include both the username and the server. The following formats are supported:
+
+- `@user@server`: [unavatar.io/mastodon/@kiko@indieweb.social](https://unavatar.io/mastodon/@kiko@indieweb.social)
+- `user@server`: [unavatar.io/mastodon/kpwags@hachyderm.io](https://unavatar.io/mastodon/kpwags@hachyderm.io)
 
 ### Microlink
 

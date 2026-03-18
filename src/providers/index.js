@@ -41,6 +41,7 @@ module.exports = ctx => {
     gravatar: require('./gravatar')(ctx),
     instagram: require('./instagram')(ctx),
     linkedin: require('./linkedin')(ctx),
+    mastodon: require('./mastodon')(ctx),
     microlink: require('./microlink')(ctx),
     onlyfans: require('./onlyfans')(ctx),
     openstreetmap: require('./openstreetmap')(ctx),
