@@ -15,6 +15,7 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
   const { createMultiCache, createRedisCache } = require('./util/keyv')({ ...constants, redis })
   const cache = require('./util/cache')({ createMultiCache, createRedisCache })
   const cacheableLookup = require('./util/cacheable-lookup')({ ...constants, cache: cache.dnsCache })
+  const isReservedIp = require('./util/is-reserved-ip')({ cacheableLookup })
   const got = require('./util/got')({ cacheableLookup })
   const reachableUrl = require('./util/reachable-url')({ got, pingCache: cache.pingCache })
   const createBrowser = require('./util/browserless')(constants)
@@ -25,7 +26,14 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
     onFetchHTML
   })
 
-  const providerCtx = { constants, createHtmlProvider, getOgImage, got, itunesSearchCache: cache.itunesSearchCache }
+  const providerCtx = {
+    constants,
+    createHtmlProvider,
+    getOgImage,
+    got,
+    isReservedIp,
+    itunesSearchCache: cache.itunesSearchCache
+  }
   const { providers, providersBy } = require('./providers')(providerCtx)
 
   const { auto, getInputType, getAvatar } = require('./avatar/auto')({
