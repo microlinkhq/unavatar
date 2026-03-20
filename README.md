@@ -14,12 +14,12 @@
   - [DuckDuckGo](#duckduckgo)
   - [GitHub](#github)
   - [GitLab](#gitlab)
+  - [LinkedIn](#linkedin)
   - [Google](#google)
   - [Gravatar](#gravatar)
   - [Instagram](#instagram)
-  - [LinkedIn](#linkedin)
-  - [Mastodon](#mastodon)
   - [Microlink](#microlink)
+  - [Mastodon](#mastodon)
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
   - [Patreon](#patreon)
@@ -45,13 +45,13 @@ Welcome to **unavatar.io**, the ultimate avatar service that offers everything y
 
 - **Versatile**: A wide range of platforms and services including [TikTok](#tiktok), [Instagram](#instagram), [YouTube](#youtube), [X/Twitter](#xtwitter), [Gravatar](#gravatar), etc., meaning you can rule all of them just querying against unavatar.
 
-- **Speed**: Designed to be fast and efficient, all requests are being cached and delivered +200 global datacenters, allowing you to consume avatars instantly, counting more than 20 millions requests per month.
+- **Speed**: Designed to be fast and efficient with a 97% cache hit rate, serving 24.3 TB of data across 522M requests.
 
 - **Optimize**: All the images are not only compressed on-the-fly to reduce their size and save bandwith, but also optimized to maintain a high-quality ratio. They are ready for immediate use, enhancing the overall optimization of your website or application.
 
 - **Integration**: The service seamlessly incorporates into your current applications or websites with ease. We offer straightforward documentation and comprehensive support to ensure a quick and effortless onboarding experience.
 
-It's proudly powered by [microlink.io](https://microlink.io), the headless browser API that handles all the heavy lifting behind the scenes to ensure your avatars are always ready.
+It's proudly powered by [microlink.io](https://microlink.io/), the headless browser API that handles all the heavy lifting behind the scenes to ensure your avatars are always ready.
 
 ## Quick start
 
@@ -67,8 +67,8 @@ Use the `/:provider/:key` format for all lookups. You can read more about availa
 
 ### TTL
 
-Type: `number`|`string`<br/>
-Default: `'24h'`<br/>
+Type: `number` or `string`<br>
+Default: `'24h'`<br>
 Range: from `'1h'` to `'28d'`
 
 It determines the maximum quantity of time an avatar is considered fresh.
@@ -81,7 +81,7 @@ The same resource will continue to be used until reach TTL expiration. After tha
 
 ### Fallback
 
-Type: `string`|`boolean`
+Type: `string` or `boolean`
 
 When it can't be possible to get a user avatar, a fallback image is returned instead, and it can be personalized to fit better with your website or application style.
 
@@ -115,7 +115,7 @@ e.g., [unavatar.io/github/kikobeats?json](https://unavatar.io/github/kikobeats?j
 
 ## Pricing
 
-The service is **FREE** for everyone, no registration required, with a daily rate limit of **50 requests** per IP address. 
+The service is **FREE** for everyone, no registration required, with a daily rate limit of **50 requests** per IP address.
 
 For preventing abusive usage, the service has associated a daily rate limit based on requests IP address.
 
@@ -125,25 +125,23 @@ You can verify for your rate limit state checking the following headers in the r
 - `x-rate-limit-remaining`: The number of requests remaining in the current rate limit window.
 - `x-rate-limit-reset`: The time at which the current rate limit window resets in UTC epoch seconds.
 
-For higher usage, the **[PRO](https://unavatar.io/checkout)** plan is a usage-based plan billed monthly that removes rate limits and unlocks custom TTL.
+For higher usage, the plan is a usage-based plan billed monthly that removes rate limits and unlocks custom TTL.
 
-Every request has a cost in tokens (**$0.001 per token**) based on the proxy tier needed to resolve the avatar:
+Every request has a cost in tokens (**\$0.001 per token**) based on the proxy tier needed to resolve the avatar:
 
-| Proxy tier  | Tokens |  Cost  |
-| ----------- | :----: | :----: |
-| Origin      |   1    | $0.001 |
-| Datacenter  |   +2   | $0.003 |
-| Residential |   +4   | $0.007 |
+| Proxy tier  | Tokens | Cost    |
+|-------------|--------|---------|
+| Origin      | 1      | \$0.001 |
+| Datacenter  | +2     | \$0.003 |
+| Residential | +4     | \$0.007 |
 
 The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
 
-```bash
-$ curl -I -H "x-api-key: YOUR_API_KEY" https://unavatar.io/instagram/kikobeats
+    $ curl -I -H "x-api-key: YOUR_API_KEY" https://unavatar.io/instagram/kikobeats
 
-x-pricing-tier: pro
-x-proxy-tier: origin
-x-unavatar-cost: 1
-```
+    x-pricing-tier: pro
+    x-proxy-tier: origin
+    x-unavatar-cost: 1
 
 To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After completing the payment, you'll receive an API key.
 
@@ -151,19 +149,19 @@ To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After co
 
 ### Apple Music
 
-It resolves user avatar against **music.apple.com**.
+Get artwork for any Apple Music artist, album, or song. Search by name or look up directly by numeric Apple Music ID.
 
 e.g., [unavatar.io/apple-music/daft%20punk](https://unavatar.io/apple-music/daft%20punk)
 
-The endpoint supports explictiy type as part of the input.
+The endpoint supports explicit type as part of the input.
 
 If explicit type is not provided, it searches `artist` and `song` (in that order).
 
-Available types:
+Available URI format inputs:
 
 - artist
-  -  by artist name: [unavatar.io/apple-music/artist:daft%20punk](https://unavatar.io/apple-music/artist:daft%20punk)
-  -  by numeric artist ID: [unavatar.io/apple-music/artist:5468295](https://unavatar.io/apple-music/artist:5468295)
+  - by artist name: [unavatar.io/apple-music/artist:daft%20punk](https://unavatar.io/apple-music/artist:daft%20punk)
+  - by numeric artist ID: [unavatar.io/apple-music/artist:5468295](https://unavatar.io/apple-music/artist:5468295)
 - album
   - by album name: [unavatar.io/apple-music/album:discovery](https://unavatar.io/apple-music/album:discovery)
   - by album ID: [unavatar.io/apple-music/album:78691923](https://unavatar.io/apple-music/album:78691923)
@@ -173,122 +171,155 @@ Available types:
 
 ### Bluesky
 
-It resolves user avatar against **bsky.app**.
+Get any Bluesky user's profile picture by their handle. Domain-style handles are supported.
 
-e.g., [unavatar.io/bluesky/pfrazee.com](https://unavatar.io/bluesky/pfrazee.com)
+Available inputs:
+
+- User handle, e.g., [unavatar.io/bluesky/pfrazee.com](https://unavatar.io/bluesky/pfrazee.com)
+- Domain handle, e.g., [unavatar.io/bluesky/bsky.app](https://unavatar.io/bluesky/bsky.app)
 
 ### DeviantArt
 
-It resolves user avatar against **deviantart.com**.
+Get any DeviantArt user's profile picture by their username.
 
-e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
+Available inputs:
+
+- Username, e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
 
 ### Dribbble
 
-It resolves user avatar against **dribbble.com**.
+Get any Dribbble designer's profile picture by their username.
 
-e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
+Available inputs:
+
+- Username, e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
 
 ### DuckDuckGo
 
-It resolves user avatar using **duckduckgo.com**.
+Get the favicon or logo for any domain via DuckDuckGo's icon service. Useful as a fallback when a domain doesn't expose its favicon directly.
 
-e.g., [unavatar.io/duckduckgo/gummibeer.dev](https://unavatar.io/duckduckgo/gummibeer.dev)
+Available inputs:
+
+- Domain, e.g., [unavatar.io/duckduckgo/gummibeer.dev](https://unavatar.io/duckduckgo/gummibeer.dev)
 
 ### GitHub
 
-It resolves user avatar against **github.com**.
+Get any GitHub user or organization's profile picture by their username.
 
-e.g., [unavatar.io/github/mdo](https://unavatar.io/github/mdo)
+Available inputs:
+
+- User, e.g., [unavatar.io/github/mdo](https://unavatar.io/github/mdo)
+- Organization, e.g., [unavatar.io/github/vercel](https://unavatar.io/github/vercel)
 
 ### GitLab
 
-It resolves user avatar against **gitlab.com**.
+Get any GitLab user or group's profile picture by their username.
 
-e.g., [unavatar.io/gitlab/inkscape](https://unavatar.io/gitlab/inkscape)
+Available inputs:
 
-### Google
-
-It resolves user avatar using **google.com**.
-
-e.g., [unavatar.io/google/netflix.com](https://unavatar.io/google/netflix.com)
-
-### Gravatar
-
-It resolves user avatar against **gravatar.com**.
-
-e.g., [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
-
-### Instagram
-
-It resolves user avatar against **instagram.com**.
-
-e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
+- User, e.g., [unavatar.io/gitlab/sytses](https://unavatar.io/gitlab/sytses)
+- Group, e.g., [unavatar.io/gitlab/inkscape](https://unavatar.io/gitlab/inkscape)
 
 ### LinkedIn
 
-It resolves user avatar against **linkedin.com**.
+Get any LinkedIn user's profile picture by their public profile slug.
 
-e.g., [unavatar.io/linkedin/kikobeats](https://unavatar.io/linkedin/kikobeats)
+Available inputs:
 
-### Mastodon
+- Profile slug, e.g., [unavatar.io/linkedin/kikobeats](https://unavatar.io/linkedin/kikobeats)
 
-It resolves user avatar from any **Mastodon** instance using the public account lookup API.
+### Google
 
-Because Mastodon is federated, the input must include both the username and the server. The following formats are supported:
+Get the favicon or logo for any domain using Google's favicon service.
 
-- `user@server`: [unavatar.io/mastodon/kpwags@hachyderm.io](https://unavatar.io/mastodon/kpwags@hachyderm.io)
+Available inputs:
+
+- Domain, e.g., [unavatar.io/google/netflix.com](https://unavatar.io/google/netflix.com)
+
+### Gravatar
+
+Get any user's avatar by their email address via Gravatar. The most widely used global avatar service — if your users have a Gravatar set up, this is the fastest way to retrieve it.
+
+Available inputs:
+
+- Email address, e.g., [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
+
+### Instagram
+
+Get any Instagram user's profile picture by their username. No authentication or API tokens needed — just pass the username.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 
 ### Microlink
 
-It resolves user avatar using **microlink.io**.
+Extract the logo or representative image from any URL. The page is rendered and the best available image is selected — useful for getting brand logos from any website.
 
-e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
+Available inputs:
+
+- Domain, e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
+
+### Mastodon
+
+Get any Mastodon user's profile picture from any instance using the public account lookup API. Pass the handle as `user@server` so the account resolves on the correct home instance.
+
+Available inputs:
+
+- user@server, e.g., [unavatar.io/mastodon/kpwags@hachyderm.io](https://unavatar.io/mastodon/kpwags@hachyderm.io)
 
 ### OnlyFans
 
-It resolves user avatar using **onlyfans.com**.
+Get any OnlyFans creator's profile picture by their username.
 
-e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
+Available inputs:
+
+- Username, e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
 
 ### OpenStreetMap
 
-It resolves user avatar using **openstreetmap.org**.
+Get any OpenStreetMap contributor's profile picture. Accepts either a numeric user ID or a username.
 
-The input accepts:
+Available inputs:
 
 - Numeric user ID, e.g., [unavatar.io/openstreetmap/98672](https://unavatar.io/openstreetmap/98672)
-- Username e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
+- Username, e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
 
 ### Patreon
 
-It resolves user avatar against **patreon.com**.
+Get any Patreon creator's profile picture by their username.
 
-e.g., [unavatar.io/patreon/kikobeats](https://unavatar.io/patreon/kikobeats)
+Available inputs:
+
+- Username, e.g., [unavatar.io/patreon/kikobeats](https://unavatar.io/patreon/kikobeats)
 
 ### Reddit
 
-It resolves user avatar against **reddit.com**.
+Get any Reddit user's avatar by their username.
 
-e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
+Available inputs:
+
+- Username, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
 
 ### SoundCloud
 
-It resolves user avatar against **soundcloud.com**.
+Get any SoundCloud artist's profile picture by their username.
 
-e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
+Available inputs:
+
+- Username, e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
 
 ### Spotify
 
-It resolves user avatar against **open.spotify.com**.
+Get artwork for any Spotify entity — users, artists, albums, playlists, shows, episodes, or tracks. Look up by username or Spotify ID.
 
 e.g., [unavatar.io/spotify/kikobeats](https://unavatar.io/spotify/kikobeats)
 
-The endpoint supports explictiy type as part of the input.
+The endpoint supports explicit type as part of the input.
 
 If explicit type is not provided, it defaults to `user`.
 
-Available types:
+Available URI format inputs:
 
 - `user`: [unavatar.io/spotify/kikobeats](https://unavatar.io/spotify/kikobeats)
 - `artist`: [unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA](https://unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA)
@@ -300,39 +331,51 @@ Available types:
 
 ### Substack
 
-It resolves user avatar against **substack.com**.
+Get any Substack author's profile picture by their publication username.
 
-e.g., [unavatar.io/substack/bankless](https://unavatar.io/substack/bankless)
+Available inputs:
+
+- Publication username, e.g., [unavatar.io/substack/bankless](https://unavatar.io/substack/bankless)
 
 ### Telegram
 
-It resolves user avatar against **telegram.com**.
+Get any Telegram user's profile picture by their username.
 
-e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
+Available inputs:
+
+- Username, e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
 
 ### TikTok
 
-It resolves user avatar against **tiktok.com**.
+Get any TikTok user's profile picture by their username. No authentication or API tokens needed — just pass the username.
 
-e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
+Available inputs:
+
+- Username, e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
 
 ### Twitch
 
-It resolves user avatar against **twitch.tv**.
+Get any Twitch streamer's profile picture by their username.
 
-e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
+Available inputs:
+
+- Username, e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
 
 ### Vimeo
 
-It resolves user avatar against **vimeo.com**.
+Get any Vimeo user's profile picture by their username.
 
-e.g., [unavatar.io/vimeo/staff](https://unavatar.io/vimeo/staff)
+Available inputs:
+
+- Username, e.g., [unavatar.io/vimeo/staff](https://unavatar.io/vimeo/staff)
 
 ### WhatsApp
 
-It resolves user avatar against **whatsapp.com**.
+Get the profile picture for a WhatsApp phone number, channel, chat, or group.
 
 The input supports a URI format `type:id`. When no type is provided, it defaults to `phone`.
+
+Available URI format inputs:
 
 - `phone` (default): [unavatar.io/whatsapp/34612345678](https://unavatar.io/whatsapp/34612345678)
 - `channel`: [unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789](https://unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789)
@@ -341,13 +384,15 @@ The input supports a URI format `type:id`. When no type is provided, it defaults
 
 ### X/Twitter
 
-It resolves user avatar against **x.com**.
+Get any X (formerly Twitter) user's profile picture by their username.
 
-e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
+Available inputs:
+
+- Username, e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
 
 ### YouTube
 
-It resolves user avatar against **youtube.com**.
+Get any YouTube channel's thumbnail by their handle, legacy username, or channel ID.
 
 e.g., [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 
@@ -368,29 +413,29 @@ However, you can get a [json](#json) as response payload.
 
 When an endpoint returns JSON, the shape is predictable so you can parse it reliably in your app:
 
-| Field     | Type           | Present in                    | Description                                      |
-| --------- | -------------- | ----------------------------- | ------------------------------------------------ |
-| `status`  | `string`       | all JSON responses            | One of: `success`, `fail`, `error`.              |
-| `message` | `string`       | all JSON responses            | Human-readable summary for display/logging.      |
-| `data`    | `object`       | `success`                     | Response payload for successful requests.        |
-| `code`    | `string`       | `fail`, `error`               | Stable machine-readable error code.              |
-| `more`    | `string (URL)` | most `fail`/`error` responses | Documentation URL with troubleshooting details.  |
-| `report`  | `string`       | some `error` responses        | Support contact channel (for example `mailto:`). |
+| Field | Type | Present in | Description |
+|----|----|----|----|
+| `status` | `string` | all JSON responses | One of: `success`, `fail`, `error`. |
+| `message` | `string` | all JSON responses | Human-readable summary for display/logging. |
+| `data` | `object` | `success` | Response payload for successful requests. |
+| `code` | `string` | `fail`, `error` | Stable machine-readable error code. |
+| `more` | `string (URL)` | most `fail`/`error` responses | Documentation URL with troubleshooting details. |
+| `report` | `string` | some `error` responses | Support contact channel (for example `mailto:`). |
 
 ## Response Headers
 
 These headers help you understand pricing, limits, and request diagnostics.
 
-| Header                   | Purpose                                                   |
-| ------------------------ | --------------------------------------------------------- |
-| `x-pricing-tier`         | `free` or `pro` — the plan used for this request          |
-| `x-timestamp`            | Server timestamp when request was received                |
-| `x-unavatar-cost`        | Token cost of the request (avatar routes only)            |
-| `x-proxy-tier`           | Proxy tier used: `origin`, `datacenter`, or `residential` |
-| `x-rate-limit-limit`     | Maximum requests allowed per window (free tier only)      |
-| `x-rate-limit-remaining` | Remaining requests in current window (free tier only)     |
-| `x-rate-limit-reset`     | UTC epoch seconds when window resets (free tier only)     |
-| `retry-after`            | Seconds until rate limit resets (only on 429 responses)   |
+| Header | Purpose |
+|----|----|
+| `x-pricing-tier` | `free` or `pro` — the plan used for this request |
+| `x-timestamp` | Server timestamp when request was received |
+| `x-unavatar-cost` | Token cost of the request (avatar routes only) |
+| `x-proxy-tier` | Proxy tier used: `origin`, `datacenter`, or `residential` |
+| `x-rate-limit-limit` | Maximum requests allowed per window (free tier only) |
+| `x-rate-limit-remaining` | Remaining requests in current window (free tier only) |
+| `x-rate-limit-reset` | UTC epoch seconds when window resets (free tier only) |
+| `retry-after` | Seconds until rate limit resets (only on 429 responses) |
 
 ## Response Errors
 
@@ -405,7 +450,7 @@ Expected errors are known operational cases returned with stable codes.
 - `report` (when present) indicates how to contact support for server errors.
 
 | HTTP | Code                 | Typical trigger                             |
-| ---- | -------------------- | ------------------------------------------- |
+|------|----------------------|---------------------------------------------|
 | 400  | `ESESSIONID`         | Missing `session_id` in `/checkout/success` |
 | 400  | `ESESSION`           | Checkout session not paid or not found      |
 | 400  | `ESIGNATURE`         | Missing `stripe-signature` header           |
@@ -429,4 +474,4 @@ Expected errors are known operational cases returned with stable codes.
 
 ## Contact
 
-If you have any suggestion or bug to report, please contact to ust mailing to hello@unavatar.io.
+If you have any suggestion or bug to report, please contact to ust mailing to [hello@unavatar.io](mailto:hello@unavatar.io).
