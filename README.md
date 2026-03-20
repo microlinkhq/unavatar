@@ -237,7 +237,6 @@ It resolves user avatar from any **Mastodon** instance using the public account 
 
 Because Mastodon is federated, the input must include both the username and the server. The following formats are supported:
 
-- `@user@server`: [unavatar.io/mastodon/@kiko@indieweb.social](https://unavatar.io/mastodon/@kiko@indieweb.social)
 - `user@server`: [unavatar.io/mastodon/kpwags@hachyderm.io](https://unavatar.io/mastodon/kpwags@hachyderm.io)
 
 ### Microlink
