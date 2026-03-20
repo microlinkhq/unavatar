@@ -4,7 +4,8 @@ const test = require('ava')
 const sinon = require('sinon')
 
 const { parseMastodonInput } = require('../../../src/providers/mastodon')({
-  got: () => {}
+  got: () => {},
+  isReservedIp: async () => false
 })
 
 test('parses @user@server format', t => {
@@ -31,6 +32,9 @@ test('returns null for malformed handles', t => {
   t.is(parseMastodonInput('@user@a@127.0.0.1'), null)
 })
 
+const createMastodon = (got, isReservedIp) =>
+  require('../../../src/providers/mastodon')({ got, isReservedIp })
+
 test('provider calls the instance lookup API and returns avatar', async t => {
   const avatarUrl =
     'https://files.mastodon.social/accounts/avatars/original/avatar.png'
@@ -38,7 +42,7 @@ test('provider calls the instance lookup API and returns avatar', async t => {
     body: { avatar: avatarUrl }
   })
 
-  const mastodon = require('../../../src/providers/mastodon')({ got })
+  const mastodon = createMastodon(got, async () => false)
   const result = await mastodon({ input: '@kiko@indieweb.social' })
 
   t.is(result, avatarUrl)
@@ -51,7 +55,7 @@ test('provider calls the instance lookup API and returns avatar', async t => {
 
 test('provider returns undefined for unparseable input', async t => {
   const got = sinon.stub()
-  const mastodon = require('../../../src/providers/mastodon')({ got })
+  const mastodon = createMastodon(got, async () => false)
   const result = await mastodon({ input: 'justausername' })
 
   t.is(result, undefined)
@@ -60,11 +64,30 @@ test('provider returns undefined for unparseable input', async t => {
 
 test('provider does not call lookup for malformed handles', async t => {
   const got = sinon.stub()
-  const mastodon = require('../../../src/providers/mastodon')({ got })
+  const mastodon = createMastodon(got, async () => false)
 
   for (const input of ['@@localhost:8080', '@user@', '@user@a@127.0.0.1']) {
     const result = await mastodon({ input })
     t.is(result, undefined)
+  }
+
+  t.false(got.called)
+})
+
+test('provider blocks reserved IP addresses (SSRF)', async t => {
+  const got = sinon.stub()
+  const mastodon = createMastodon(got, async () => true)
+
+  for (const input of [
+    '@user@127.0.0.1',
+    '@user@169.254.169.254',
+    '@user@10.0.0.1',
+    '@user@192.168.1.1',
+    '@user@0.0.0.0',
+    '@user@localhost'
+  ]) {
+    const result = await mastodon({ input })
+    t.is(result, undefined, `should block ${input}`)
   }
 
   t.false(got.called)

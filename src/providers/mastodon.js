@@ -34,12 +34,15 @@ const parseMastodonInput = input => {
   }
 }
 
-module.exports = ({ got }) => {
+module.exports = ({ got, isReservedIp }) => {
   const mastodon = async function ({ input }) {
     const parsed = parseMastodonInput(input)
     if (!parsed) return undefined
 
     const { username, server } = parsed
+
+    if (await isReservedIp(server)) return undefined
+
     const { body } = await got(
       `https://${server}/api/v1/accounts/lookup?acct=${encodeURIComponent(
         username
