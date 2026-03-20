@@ -57,9 +57,9 @@ It's proudly powered by [microlink.io](https://microlink.io/), the headless brow
 
 The service is exposed in **unavatar.io** via provider endpoints:
 
-- an **email**: unavatar.io/gravatar/hello@microlink.io
-- an **username**: unavatar.io/github/kikobeats
-- a **domain**: unavatar.io/google/reddit.com
+- an **email**: [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
+- an **username**: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
+- a **domain**: [unavatar.io/google/reddit.com](https://unavatar.io/google/reddit.com)
 
 Use the `/:provider/:key` format for all lookups. You can read more about available providers in [providers](#providers).
 
@@ -67,13 +67,13 @@ Use the `/:provider/:key` format for all lookups. You can read more about availa
 
 ### TTL
 
-Type: `number` or `string`\
-Default: `'24h'`\
+Type: `number` or `string`<br>
+Default: `'24h'`<br>
 Range: from `'1h'` to `'28d'`
 
 It determines the maximum quantity of time an avatar is considered fresh.
 
-e.g., unavatar.io/github/kikobeats?ttl=1h
+e.g., [unavatar.io/github/kikobeats?ttl=1h](https://unavatar.io/github/kikobeats?ttl=1h)
 
 When you look up for a user avatar for the very first time, the service will determine it and cache it respecting TTL value.
 
@@ -87,19 +87,19 @@ When it can't be possible to get a user avatar, a fallback image is returned ins
 
 You can get one from **boringavatars.com**:
 
-e.g., unavatar.io/github/37t?fallback=https://source.boringavatars.com/marble/120/1337_user?colors=264653r,2a9d8f,e9c46a,f4a261,e76f51
+e.g., [unavatar.io/github/37t?fallback=https://source.boringavatars.com/marble/120/1337_user?colors=264653r,2a9d8f,e9c46a,f4a261,e76f51](https://unavatar.io/github/37t?fallback=https://source.boringavatars.com/marble/120/1337_user?colors=264653r,2a9d8f,e9c46a,f4a261,e76f51)
 
 or **avatar.vercel.sh**:
 
-e.g., unavatar.io/github/37t?fallback=https://avatar.vercel.sh/37t?size=400
+e.g., [unavatar.io/github/37t?fallback=https://avatar.vercel.sh/37t?size=400](https://unavatar.io/github/37t?fallback=https://avatar.vercel.sh/37t?size=400)
 
 or a static image:
 
-e.g., unavatar.io/github/37t?fallback=https://avatars.githubusercontent.com/u/66378906?v=4
+e.g., [unavatar.io/github/37t?fallback=https://avatars.githubusercontent.com/u/66378906?v=4](https://unavatar.io/github/37t?fallback=https://avatars.githubusercontent.com/u/66378906?v=4)
 
 or even a base64 encoded image. This allows you to return a transparent, base64 encoded 1x1 pixel GIF, which can be useful when you want to use your own background colour or image as a fallback.
 
-e.g., unavatar.io/github/37t?fallback=data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==
+e.g., [unavatar.io/github/37t?fallback=data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==](https://unavatar.io/github/37t?fallback=data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
 
 You can pass `fallback=false` to explicitly disable this behavior. In this case, a *404 Not Found* HTTP status code will returned when is not possible to get the user avatar.
 
@@ -111,7 +111,7 @@ This is in this way to make easier consume the service from HTML markup.
 
 In case you want to get a JSON payload as response, just pass `json=true`:
 
-e.g., unavatar.io/github/kikobeats?json
+e.g., [unavatar.io/github/kikobeats?json](https://unavatar.io/github/kikobeats?json)
 
 ## Pricing
 
@@ -151,7 +151,7 @@ To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After co
 
 Get artwork for any Apple Music artist, album, or song. Search by name or look up directly by numeric Apple Music ID.
 
-e.g., unavatar.io/apple-music/daft%20punk
+e.g., [unavatar.io/apple-music/daft%20punk](https://unavatar.io/apple-music/daft%20punk)
 
 The endpoint supports explicit type as part of the input.
 
@@ -160,14 +160,14 @@ If explicit type is not provided, it searches `artist` and `song` (in that order
 Available URI format inputs:
 
 - artist
-  - by artist name: unavatar.io/apple-music/artist:daft%20punk
-  - by numeric artist ID: unavatar.io/apple-music/artist:5468295
+  - by artist name: [unavatar.io/apple-music/artist:daft%20punk](https://unavatar.io/apple-music/artist:daft%20punk)
+  - by numeric artist ID: [unavatar.io/apple-music/artist:5468295](https://unavatar.io/apple-music/artist:5468295)
 - album
-  - by album name: unavatar.io/apple-music/album:discovery
-  - by album ID: unavatar.io/apple-music/album:78691923
+  - by album name: [unavatar.io/apple-music/album:discovery](https://unavatar.io/apple-music/album:discovery)
+  - by album ID: [unavatar.io/apple-music/album:78691923](https://unavatar.io/apple-music/album:78691923)
 - song
-  - by song name: unavatar.io/apple-music/song:harder%20better%20faster%20stronger
-  - by song ID: unavatar.io/apple-music/song:697195787
+  - by song name: [unavatar.io/apple-music/song:harder%20better%20faster%20stronger](https://unavatar.io/apple-music/song:harder%20better%20faster%20stronger)
+  - by song ID: [unavatar.io/apple-music/song:697195787](https://unavatar.io/apple-music/song:697195787)
 
 ### Bluesky
 
@@ -175,8 +175,8 @@ Get any Bluesky user's profile picture by their handle. Domain-style handles are
 
 Available inputs:
 
-- User handle, e.g., unavatar.io/bluesky/pfrazee.com
-- Domain handle, e.g., unavatar.io/bluesky/bsky.app
+- User handle, e.g., [unavatar.io/bluesky/pfrazee.com](https://unavatar.io/bluesky/pfrazee.com)
+- Domain handle, e.g., [unavatar.io/bluesky/bsky.app](https://unavatar.io/bluesky/bsky.app)
 
 ### DeviantArt
 
@@ -184,7 +184,7 @@ Get any DeviantArt user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/deviantart/spyed
+- Username, e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
 
 ### Dribbble
 
@@ -192,7 +192,7 @@ Get any Dribbble designer's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/dribbble/omidnikrah
+- Username, e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
 
 ### DuckDuckGo
 
@@ -200,7 +200,7 @@ Get the favicon or logo for any domain via DuckDuckGo's icon service. Useful as 
 
 Available inputs:
 
-- Domain, e.g., unavatar.io/duckduckgo/gummibeer.dev
+- Domain, e.g., [unavatar.io/duckduckgo/gummibeer.dev](https://unavatar.io/duckduckgo/gummibeer.dev)
 
 ### GitHub
 
@@ -208,8 +208,8 @@ Get any GitHub user or organization's profile picture by their username.
 
 Available inputs:
 
-- User, e.g., unavatar.io/github/mdo
-- Organization, e.g., unavatar.io/github/vercel
+- User, e.g., [unavatar.io/github/mdo](https://unavatar.io/github/mdo)
+- Organization, e.g., [unavatar.io/github/vercel](https://unavatar.io/github/vercel)
 
 ### GitLab
 
@@ -217,8 +217,8 @@ Get any GitLab user or group's profile picture by their username.
 
 Available inputs:
 
-- User, e.g., unavatar.io/gitlab/sytses
-- Group, e.g., unavatar.io/gitlab/inkscape
+- User, e.g., [unavatar.io/gitlab/sytses](https://unavatar.io/gitlab/sytses)
+- Group, e.g., [unavatar.io/gitlab/inkscape](https://unavatar.io/gitlab/inkscape)
 
 ### LinkedIn
 
@@ -226,7 +226,7 @@ Get any LinkedIn user's profile picture by their public profile slug.
 
 Available inputs:
 
-- Profile slug, e.g., unavatar.io/linkedin/kikobeats
+- Profile slug, e.g., [unavatar.io/linkedin/kikobeats](https://unavatar.io/linkedin/kikobeats)
 
 ### Google
 
@@ -234,7 +234,7 @@ Get the favicon or logo for any domain using Google's favicon service.
 
 Available inputs:
 
-- Domain, e.g., unavatar.io/google/netflix.com
+- Domain, e.g., [unavatar.io/google/netflix.com](https://unavatar.io/google/netflix.com)
 
 ### Gravatar
 
@@ -242,7 +242,7 @@ Get any user's avatar by their email address via Gravatar. The most widely used 
 
 Available inputs:
 
-- Email address, e.g., unavatar.io/gravatar/hello@microlink.io
+- Email address, e.g., [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
 
 ### Instagram
 
@@ -250,7 +250,7 @@ Get any Instagram user's profile picture by their username. No authentication or
 
 Available inputs:
 
-- Username, e.g., unavatar.io/instagram/willsmith
+- Username, e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 
 ### Microlink
 
@@ -258,7 +258,7 @@ Extract the logo or representative image from any URL. The page is rendered and 
 
 Available inputs:
 
-- Domain, e.g., unavatar.io/microlink/microlink.io
+- Domain, e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
 
 ### Mastodon
 
@@ -266,7 +266,7 @@ Get any Mastodon user's profile picture from any instance using the public accou
 
 Available inputs:
 
-- user@server, e.g., unavatar.io/mastodon/kpwags@hachyderm.io
+- user@server, e.g., [unavatar.io/mastodon/kpwags@hachyderm.io](https://unavatar.io/mastodon/kpwags@hachyderm.io)
 
 ### OnlyFans
 
@@ -274,7 +274,7 @@ Get any OnlyFans creator's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/onlyfans/amandaribas
+- Username, e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
 
 ### OpenStreetMap
 
@@ -282,8 +282,8 @@ Get any OpenStreetMap contributor's profile picture. Accepts either a numeric us
 
 Available inputs:
 
-- Numeric user ID, e.g., unavatar.io/openstreetmap/98672
-- Username, e.g., unavatar.io/openstreetmap/Terence%20Eden
+- Numeric user ID, e.g., [unavatar.io/openstreetmap/98672](https://unavatar.io/openstreetmap/98672)
+- Username, e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
 
 ### Patreon
 
@@ -291,7 +291,7 @@ Get any Patreon creator's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/patreon/kikobeats
+- Username, e.g., [unavatar.io/patreon/kikobeats](https://unavatar.io/patreon/kikobeats)
 
 ### Reddit
 
@@ -299,7 +299,7 @@ Get any Reddit user's avatar by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/reddit/kikobeats
+- Username, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
 
 ### SoundCloud
 
@@ -307,13 +307,13 @@ Get any SoundCloud artist's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/soundcloud/gorillaz
+- Username, e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
 
 ### Spotify
 
 Get artwork for any Spotify entity — users, artists, albums, playlists, shows, episodes, or tracks. Look up by username or Spotify ID.
 
-e.g., unavatar.io/spotify/kikobeats
+e.g., [unavatar.io/spotify/kikobeats](https://unavatar.io/spotify/kikobeats)
 
 The endpoint supports explicit type as part of the input.
 
@@ -321,13 +321,13 @@ If explicit type is not provided, it defaults to `user`.
 
 Available URI format inputs:
 
-- `user`: unavatar.io/spotify/kikobeats
-- `artist`: unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA
-- `playlist`: unavatar.io/spotify/playlist:37i9dQZF1DXcBWIGoYBM5M
-- `album`: unavatar.io/spotify/album:4aawyAB9vmqN3uQ7FjRGTy
-- `show`: unavatar.io/spotify/show:6UCtBYL29hRg064d4i5W2i
-- `episode`: unavatar.io/spotify/episode:512ojhOuo1ktJprKbVcKyQ
-- `track`: unavatar.io/spotify/track:11dFghVXANMlKmJXsNCbNl
+- `user`: [unavatar.io/spotify/kikobeats](https://unavatar.io/spotify/kikobeats)
+- `artist`: [unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA](https://unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA)
+- `playlist`: [unavatar.io/spotify/playlist:37i9dQZF1DXcBWIGoYBM5M](https://unavatar.io/spotify/playlist:37i9dQZF1DXcBWIGoYBM5M)
+- `album`: [unavatar.io/spotify/album:4aawyAB9vmqN3uQ7FjRGTy](https://unavatar.io/spotify/album:4aawyAB9vmqN3uQ7FjRGTy)
+- `show`: [unavatar.io/spotify/show:6UCtBYL29hRg064d4i5W2i](https://unavatar.io/spotify/show:6UCtBYL29hRg064d4i5W2i)
+- `episode`: [unavatar.io/spotify/episode:512ojhOuo1ktJprKbVcKyQ](https://unavatar.io/spotify/episode:512ojhOuo1ktJprKbVcKyQ)
+- `track`: [unavatar.io/spotify/track:11dFghVXANMlKmJXsNCbNl](https://unavatar.io/spotify/track:11dFghVXANMlKmJXsNCbNl)
 
 ### Substack
 
@@ -335,7 +335,7 @@ Get any Substack author's profile picture by their publication username.
 
 Available inputs:
 
-- Publication username, e.g., unavatar.io/substack/bankless
+- Publication username, e.g., [unavatar.io/substack/bankless](https://unavatar.io/substack/bankless)
 
 ### Telegram
 
@@ -343,7 +343,7 @@ Get any Telegram user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/telegram/drsdavidsoft
+- Username, e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
 
 ### TikTok
 
@@ -351,7 +351,7 @@ Get any TikTok user's profile picture by their username. No authentication or AP
 
 Available inputs:
 
-- Username, e.g., unavatar.io/tiktok/carlosazaustre
+- Username, e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
 
 ### Twitch
 
@@ -359,7 +359,7 @@ Get any Twitch streamer's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/twitch/midudev
+- Username, e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
 
 ### Vimeo
 
@@ -367,7 +367,7 @@ Get any Vimeo user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/vimeo/staff
+- Username, e.g., [unavatar.io/vimeo/staff](https://unavatar.io/vimeo/staff)
 
 ### WhatsApp
 
@@ -377,10 +377,10 @@ The input supports a URI format `type:id`. When no type is provided, it defaults
 
 Available URI format inputs:
 
-- `phone` (default): unavatar.io/whatsapp/34612345678
-- `channel`: unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789
-- `chat`: unavatar.io/whatsapp/chat:ABC1234DEFghi
-- `group`: unavatar.io/whatsapp/group:ABC1234DEFghi
+- `phone` (default): [unavatar.io/whatsapp/34612345678](https://unavatar.io/whatsapp/34612345678)
+- `channel`: [unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789](https://unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789)
+- `chat`: [unavatar.io/whatsapp/chat:ABC1234DEFghi](https://unavatar.io/whatsapp/chat:ABC1234DEFghi)
+- `group`: [unavatar.io/whatsapp/group:ABC1234DEFghi](https://unavatar.io/whatsapp/group:ABC1234DEFghi)
 
 ### X/Twitter
 
@@ -388,13 +388,13 @@ Get any X (formerly Twitter) user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., unavatar.io/x/kikobeats
+- Username, e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
 
 ### YouTube
 
 Get any YouTube channel's thumbnail by their handle, legacy username, or channel ID.
 
-e.g., unavatar.io/youtube/casey
+e.g., [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 
 The endpoint supports specific input formats.
 
@@ -402,8 +402,8 @@ If the input starts with `UC` and has 24 characters, it is treated as a channel 
 
 Available inputs:
 
-- `username`: unavatar.io/youtube/casey or unavatar.io/youtube/@casey
-- `channel`: unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw
+- `username`: [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey) or [unavatar.io/youtube/@casey](https://unavatar.io/youtube/@casey)
+- `channel`: [unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw](https://unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw)
 
 ## Response Format
 
