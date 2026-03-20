@@ -1,13 +1,36 @@
 'use strict'
 
+const isValidServer = server => {
+  try {
+    const url = new URL(`https://${server}`)
+    return (
+      Boolean(url.hostname) &&
+      url.username === '' &&
+      url.password === '' &&
+      url.pathname === '/' &&
+      url.search === '' &&
+      url.hash === '' &&
+      url.host.toLowerCase() === server.toLowerCase()
+    )
+  } catch {
+    return false
+  }
+}
+
 const parseMastodonInput = input => {
-  const cleaned = input.replace(/^@/, '')
-  const atIndex = cleaned.indexOf('@')
-  if (atIndex === -1) return null
+  if (typeof input !== 'string') return null
+
+  const cleaned = input.startsWith('@') ? input.slice(1) : input
+  const parts = cleaned.split('@')
+  if (parts.length !== 2) return null
+
+  const [username, server] = parts
+  if (!username || !server) return null
+  if (!isValidServer(server)) return null
 
   return {
-    username: cleaned.slice(0, atIndex),
-    server: cleaned.slice(atIndex + 1)
+    username,
+    server
   }
 }
 
