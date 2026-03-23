@@ -121,7 +121,7 @@
     "@keyvhq/multi": "~2.1.15",
     "@keyvhq/offline": "~2.2.0",
     "@keyvhq/redis": "~2.1.15",
-    "@metascraper/helpers": "~5.49.24",
+    "@metascraper/helpers": "~5.50.0",
     "@microlink/mql": "~0.15.1",
     "@microlink/ping-url": "~1.4.16",
     "browserless": "~10.12.0",
