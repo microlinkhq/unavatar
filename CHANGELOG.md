@@ -1,3 +1,8 @@
+## 3.7.67 (2026-03-24)
+
+### Bug Fixes
+
+* **instagram:** use crawler user agent ([db0bce3](https://github.com/Kikobeats/unavatar/commit/db0bce3d8d19f042aeadf4e879c8c39a4b145d72))
 ## 3.7.66 (2026-03-24)
 
 ### Bug Fixes
