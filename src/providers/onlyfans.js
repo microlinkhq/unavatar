@@ -15,6 +15,9 @@ module.exports = ({ createHtmlProvider }) =>
     getter: getAvatarUrl,
     htmlOpts: () => ({
       prerender: true,
-      puppeteerOpts: { waitUntil: 'networkidle2', abortTypes: ['other', 'image', 'font'] }
+      puppeteerOpts: {
+        waitForSelector: '#app',
+        abortTypes: ['other', 'image', 'font']
+      }
     })
   })
