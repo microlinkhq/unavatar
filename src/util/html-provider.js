@@ -35,6 +35,11 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
 
         const { $, statusCode } = await getHTML(providerUrl, fetchOpts)
 
+        attempt.lastHtml =
+          typeof $ === 'function' && typeof $.html === 'function'
+            ? $.html()
+            : undefined
+
         if (isStatusCodeMissing(statusCode)) {
           log.error({ statusCode, status: 'missing_status_code' })
           throw createEmptyProviderValueError({ provider: name, statusCode })
@@ -51,10 +56,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
             provider: name,
             statusCode
           })
-          error.html =
-            typeof $ === 'function' && typeof $.html === 'function'
-              ? $.html()
-              : undefined
+          error.html = attempt.lastHtml
 
           log.error({ statusCode })
 

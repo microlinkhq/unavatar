@@ -7,10 +7,25 @@ const mri = require('mri')
 
 module.exports = ({ baseUrl }) => {
   const { _, ...flags } = mri(process.argv.slice(2), {
-    default: {}
+    default: {},
+    alias: { H: 'header' }
   })
 
   const [input] = _
+
+  const parseHeaders = raw => {
+    const entries = raw == null ? [] : Array.isArray(raw) ? raw : [raw]
+    return entries.reduce((headers, entry) => {
+      const idx = entry.indexOf(':')
+      if (idx === -1) return headers
+      const name = entry.slice(0, idx).trim()
+      const value = entry.slice(idx + 1).trim()
+      if (name) headers[name.toLowerCase()] = value
+      return headers
+    }, {})
+  }
+
+  const customHeaders = parseHeaders(flags.header)
 
   if (!input) {
     console.error('Usage: unavatar <input> | unavatar <provider>/<key> | unavatar ping')
@@ -87,7 +102,10 @@ module.exports = ({ baseUrl }) => {
     }
   }
 
-  got(apiUrl.toString(), { headers: { 'x-api-key': flags.apiKey }, responseType: 'json' })
+  const requestHeaders = { ...customHeaders }
+  if (flags.apiKey) requestHeaders['x-api-key'] = flags.apiKey
+
+  got(apiUrl.toString(), { headers: requestHeaders, responseType: 'json' })
     .then(({ body, headers, statusCode, timings }) => {
       apiHeaders = headers
       apiStatusCode = statusCode

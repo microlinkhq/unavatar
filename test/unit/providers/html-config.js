@@ -119,4 +119,13 @@ test('soundcloud and substack provider options are derived from helper modules',
 
   t.is(patreon.url('kikobeats'), 'https://www.patreon.com/kikobeats')
   t.is(patreon.getter({}), 'jsonld:mainEntity.image.thumbnailUrl')
+
+  const instagram = proxyquire('../../../src/providers/instagram', {
+    '../util/crawler-agent': () => 'crawler-agent'
+  })({ createHtmlProvider, getOgImage })
+
+  t.is(instagram.url('willsmith'), 'https://www.instagram.com/willsmith')
+  t.deepEqual(instagram.htmlOpts(), {
+    headers: { 'user-agent': 'crawler-agent' }
+  })
 })

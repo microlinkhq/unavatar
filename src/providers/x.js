@@ -1,11 +1,8 @@
 'use strict'
 
-const uniqueRandomArray = require('unique-random-array')
 const { $jsonld } = require('@metascraper/helpers')
 
-const randomCrawlerAgent = uniqueRandomArray(
-  require('top-crawler-agents').filter(agent => agent.startsWith('Slackbot'))
-)
+const randomCrawlerAgent = require('../util/crawler-agent')
 
 const toHighResolution = url => {
   if (url?.endsWith('_200x200.jpg')) {
