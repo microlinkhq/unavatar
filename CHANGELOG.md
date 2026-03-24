@@ -1,3 +1,8 @@
+## 3.7.66 (2026-03-24)
+
+### Bug Fixes
+
+* **onlyfans:** race condition ([1356beb](https://github.com/Kikobeats/unavatar/commit/1356beb11c979edd500d1b6b9e75577095bf1f74))
 ## 3.7.65 (2026-03-23)
 ## 3.7.64 (2026-03-20)
 ## 3.7.63 (2026-03-20)
