@@ -144,6 +144,31 @@ test('soundcloud and substack provider options are derived from helper modules',
   })
 })
 
+test('linkedin getter returns false when og:image is missing', t => {
+  const linkedin = require('../../../src/providers/linkedin')({
+    createHtmlProvider,
+    getOgImage
+  })
+
+  const $ = cheerio.load('<html><title>LinkedIn Login</title></html>')
+  t.is(linkedin.getter($), false)
+})
+
+test('linkedin getter returns og:image URL for valid profile page', t => {
+  const linkedin = require('../../../src/providers/linkedin')({
+    createHtmlProvider,
+    getOgImage
+  })
+
+  const avatarUrl = 'https://media.licdn.com/dms/image/v2/profile-photo.jpg'
+  const $ = cheerio.load(
+    '<html><title>Kiko Beats | LinkedIn</title>' +
+      `<meta property="og:image" content="${avatarUrl}" />` +
+      '</html>'
+  )
+  t.is(linkedin.getter($), avatarUrl)
+})
+
 test('instagram getter returns false when title is login wall', t => {
   const instagram = proxyquire('../../../src/providers/instagram', {
     '../util/crawler-agent': () => 'crawler-agent'
