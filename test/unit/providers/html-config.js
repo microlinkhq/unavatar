@@ -129,3 +129,26 @@ test('soundcloud and substack provider options are derived from helper modules',
     headers: { 'user-agent': 'crawler-agent' }
   })
 })
+
+test('instagram getter returns false when title is login wall', t => {
+  const instagram = proxyquire('../../../src/providers/instagram', {
+    '../util/crawler-agent': () => 'crawler-agent'
+  })({ createHtmlProvider, getOgImage })
+
+  const $ = cheerio.load('<html><title>Login • Instagram</title></html>')
+  t.is(instagram.getter($), false)
+})
+
+test('instagram getter returns og:image URL for valid profile page', t => {
+  const instagram = proxyquire('../../../src/providers/instagram', {
+    '../util/crawler-agent': () => 'crawler-agent'
+  })({ createHtmlProvider, getOgImage })
+
+  const avatarUrl = 'https://scontent-mad2-1.cdninstagram.com/v/t51.82787-19/photo.jpg'
+  const $ = cheerio.load(
+    '<html><title>Will Smith (@willsmith) • Instagram</title>' +
+    `<meta property="og:image" content="${avatarUrl}" />` +
+    '</html>'
+  )
+  t.is(instagram.getter($), avatarUrl)
+})
