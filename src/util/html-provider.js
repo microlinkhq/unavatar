@@ -19,7 +19,9 @@ const createEmptyProviderValueError = ({ provider, statusCode }) =>
   })
 
 
-const getOgImage = $ => $('meta[property="og:image"]').attr('content')
+const getOgImage = $ =>
+  $('meta[property="og:image"]').attr('content') ||
+  $('meta[name="og:image"]').attr('content')
 
 module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
   /**

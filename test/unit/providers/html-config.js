@@ -92,6 +92,18 @@ test('dribbble, reddit and telegram getters read expected HTML attributes', t =>
   t.is(telegram.getter(telegramHtml), 'https://a.com/tg.png')
 })
 
+test('printables provider prepends @ and uses crawler user-agent', t => {
+  const printables = proxyquire('../../../src/providers/printables', {
+    '../util/crawler-agent': () => 'crawler-agent'
+  })({ createHtmlProvider, getOgImage })
+
+  t.is(printables.url('DukeDoks'), 'https://www.printables.com/@DukeDoks')
+  t.is(printables.url('@DukeDoks'), 'https://www.printables.com/@DukeDoks')
+  t.deepEqual(printables.htmlOpts(), {
+    headers: { 'user-agent': 'crawler-agent' }
+  })
+})
+
 test('soundcloud and substack provider options are derived from helper modules', t => {
   const soundcloud = proxyquire('../../../src/providers/soundcloud', {
     'unique-random-array': () => () => 'mobile-agent'
