@@ -5,7 +5,9 @@ const cheerio = require('cheerio')
 const proxyquire = require('proxyquire').noPreserveCache()
 
 const createHtmlProvider = opts => opts
-const getOgImage = $ => $('meta[property="og:image"]').attr('content')
+const getOgImage = $ =>
+  $('meta[property="og:image"]').attr('content') ||
+  $('meta[name="og:image"]').attr('content')
 
 test('html provider modules expose expected URL builders', t => {
   const bluesky = proxyquire('../../../src/providers/bluesky', {
@@ -92,6 +94,18 @@ test('dribbble, reddit and telegram getters read expected HTML attributes', t =>
   t.is(telegram.getter(telegramHtml), 'https://a.com/tg.png')
 })
 
+test('printables provider prepends @ and uses crawler user-agent', t => {
+  const printables = proxyquire('../../../src/providers/printables', {
+    '../util/crawler-agent': () => 'crawler-agent'
+  })({ createHtmlProvider, getOgImage })
+
+  t.is(printables.url('DukeDoks'), 'https://www.printables.com/@DukeDoks')
+  t.is(printables.url('@DukeDoks'), 'https://www.printables.com/@DukeDoks')
+  t.deepEqual(printables.htmlOpts(), {
+    headers: { 'user-agent': 'crawler-agent' }
+  })
+})
+
 test('soundcloud and substack provider options are derived from helper modules', t => {
   const soundcloud = proxyquire('../../../src/providers/soundcloud', {
     'unique-random-array': () => () => 'mobile-agent'
@@ -144,11 +158,12 @@ test('instagram getter returns og:image URL for valid profile page', t => {
     '../util/crawler-agent': () => 'crawler-agent'
   })({ createHtmlProvider, getOgImage })
 
-  const avatarUrl = 'https://scontent-mad2-1.cdninstagram.com/v/t51.82787-19/photo.jpg'
+  const avatarUrl =
+    'https://scontent-mad2-1.cdninstagram.com/v/t51.82787-19/photo.jpg'
   const $ = cheerio.load(
     '<html><title>Will Smith (@willsmith) • Instagram</title>' +
-    `<meta property="og:image" content="${avatarUrl}" />` +
-    '</html>'
+      `<meta property="og:image" content="${avatarUrl}" />` +
+      '</html>'
   )
   t.is(instagram.getter($), avatarUrl)
 })
