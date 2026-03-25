@@ -5,7 +5,9 @@ const cheerio = require('cheerio')
 const proxyquire = require('proxyquire').noPreserveCache()
 
 const createHtmlProvider = opts => opts
-const getOgImage = $ => $('meta[property="og:image"]').attr('content')
+const getOgImage = $ =>
+  $('meta[property="og:image"]').attr('content') ||
+  $('meta[name="og:image"]').attr('content')
 
 test('html provider modules expose expected URL builders', t => {
   const bluesky = proxyquire('../../../src/providers/bluesky', {
@@ -156,11 +158,12 @@ test('instagram getter returns og:image URL for valid profile page', t => {
     '../util/crawler-agent': () => 'crawler-agent'
   })({ createHtmlProvider, getOgImage })
 
-  const avatarUrl = 'https://scontent-mad2-1.cdninstagram.com/v/t51.82787-19/photo.jpg'
+  const avatarUrl =
+    'https://scontent-mad2-1.cdninstagram.com/v/t51.82787-19/photo.jpg'
   const $ = cheerio.load(
     '<html><title>Will Smith (@willsmith) • Instagram</title>' +
-    `<meta property="og:image" content="${avatarUrl}" />` +
-    '</html>'
+      `<meta property="og:image" content="${avatarUrl}" />` +
+      '</html>'
   )
   t.is(instagram.getter($), avatarUrl)
 })
