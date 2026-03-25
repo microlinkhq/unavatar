@@ -1,3 +1,8 @@
+## 3.7.71 (2026-03-25)
+
+### Bug Fixes
+
+* **linkedin:** return false if value is not get ([eddb0f4](https://github.com/Kikobeats/unavatar/commit/eddb0f42e6ccb74e46d321449bfa0dc99c9021a5))
 ## 3.7.70 (2026-03-25)
 ## 3.7.69 (2026-03-25)
 ## 3.7.68 (2026-03-24)
