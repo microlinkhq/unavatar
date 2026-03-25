@@ -118,11 +118,35 @@ test('attempt returns NOT_FOUND symbol when status is 404 via onFetchHTML', asyn
   t.is(result, NOT_FOUND)
 })
 
-test('createHtmlProvider throws when status code is missing', async t => {
+test('createHtmlProvider throws when status code is undefined', async t => {
   const provider = createProvider({
     providerUrl: 'https://www.reddit.com/user/kikobeats/',
     getterResult: '/assets/avatar.svg',
     getHTML: async () => ({ $: {}, statusCode: undefined })
+  })
+
+  await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+})
+
+test('createHtmlProvider throws when status code is null', async t => {
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: null })
+  })
+
+  await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+})
+
+test('createHtmlProvider throws when status code is empty string', async t => {
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: '' })
   })
 
   await t.throwsAsync(runProvider(provider), {
@@ -248,6 +272,50 @@ test('createHtmlProvider attaches html to error when getter returns empty', asyn
 
   t.is(typeof error.html, 'string')
   t.true(error.html.includes('<h1>Blocked</h1>'))
+})
+
+test('createHtmlProvider sets blocked and attaches html on error when getter returns false', async t => {
+  const $ = cheerio.load('<html><title>Login • Instagram</title></html>')
+
+  const { createHtmlProvider } = require('../../../src/util/html-provider')({
+    PROXY_TIMEOUT: 8000,
+    getHTML: async () => ({ $, statusCode: 200 })
+  })
+
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://www.instagram.com/willsmith',
+    getter: () => false
+  })
+
+  const error = await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.true(error.blocked)
+  t.is(typeof error.html, 'string')
+  t.true(error.html.includes('Login'))
+})
+
+test('createHtmlProvider does not set blocked when getter returns undefined', async t => {
+  const $ = cheerio.load('<html><body></body></html>')
+
+  const { createHtmlProvider } = require('../../../src/util/html-provider')({
+    PROXY_TIMEOUT: 8000,
+    getHTML: async () => ({ $, statusCode: 200 })
+  })
+
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://www.instagram.com/willsmith',
+    getter: () => undefined
+  })
+
+  const error = await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.is(error.blocked, undefined)
 })
 
 test('module exports NOT_FOUND symbol', t => {
