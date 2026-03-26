@@ -4,8 +4,7 @@ const { get } = require('lodash')
 
 const getAvatarUrl = $ => {
   const text = $('script[type="application/ld+json"]').contents().text()
-  if (!text) return
-  return get(JSON.parse(text), 'mainEntity.image')
+  return text ? get(JSON.parse(text), 'mainEntity.image') : undefined
 }
 
 module.exports = ({ createHtmlProvider }) =>
@@ -21,3 +20,5 @@ module.exports = ({ createHtmlProvider }) =>
       }
     })
   })
+
+module.exports.getAvatarUrl = getAvatarUrl

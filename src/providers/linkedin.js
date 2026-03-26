@@ -1,6 +1,6 @@
 'use strict'
 
-const linkedinUrl = input => {
+const getAvatarUrl = input => {
   const [first, second] = input.split(':')
   const type = second ? first : 'user'
   const id = second ?? first
@@ -11,6 +11,8 @@ const linkedinUrl = input => {
 module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'linkedin',
-    url: linkedinUrl,
+    url: getAvatarUrl,
     getter: getOgImage
   })
+
+module.exports.getAvatarUrl = getAvatarUrl

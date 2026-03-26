@@ -12,7 +12,9 @@ const getBestSrcsetUrl = srcset => {
   }))
 
   if (candidates.length === 0) return
-  return candidates.reduce((best, current) => (current.score > best.score ? current : best)).url
+  return candidates.reduce((best, current) =>
+    current.score > best.score ? current : best
+  ).url
 }
 
 const getPictureAvatar = $ => {
@@ -21,15 +23,14 @@ const getPictureAvatar = $ => {
   return getBestSrcsetUrl(srcset) || pictureImg.attr('src')
 }
 
-const getAvatarUrl = $ => $jsonld('publisher.logo.url')($) || getPictureAvatar($)
+const getAvatarUrl = $ =>
+  $jsonld('publisher.logo.url')($) || getPictureAvatar($)
 
-const factory = ({ createHtmlProvider }) =>
+module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'substack',
     url: input => `https://${input}.substack.com`,
     getter: getAvatarUrl
   })
 
-factory.getAvatarUrl = getAvatarUrl
-
-module.exports = factory
+module.exports.getAvatarUrl = getAvatarUrl

@@ -50,7 +50,7 @@ test('.getAvatar prefers JSON-LD over RSC when both exist', t => {
         }</script>
       </head>
       <body>
-        <script>self.__next_f.push([1,"avatarPhotoImageUrls\\":\{\\"original\\":\\"https://c10.patreonusercontent.com/4/patreon-media/p/campaign/123/avatar/eyJxIjoxMDB9/42.png?token-hash=rsc\\"}"])</script>
+        <script>self.__next_f.push([1,"avatarPhotoImageUrls\\":{\\"original\\":\\"https://c10.patreonusercontent.com/4/patreon-media/p/campaign/123/avatar/eyJxIjoxMDB9/42.png?token-hash=rsc\\"}"])</script>
       </body>
     </html>
   `
@@ -69,7 +69,7 @@ test('.getAvatar extracts original quality avatar from RSC payload (Creator Worl
         <script type="application/ld+json"></script>
       </head>
       <body>
-        <script>self.__next_f.push([1,"avatarPhotoImageUrls\\":\{\\"original\\":\\"https://c10.patreonusercontent.com/4/patreon-media/p/campaign/6934869/hash/eyJxIjoxMDB9/42.png?token-hash=orig\\u0026token-time=123\\",\\"default\\":\\"https://c10.patreonusercontent.com/4/patreon-media/p/campaign/6934869/hash/eyJ3Ijo2MjB9/42.png?token-hash=def620\\u0026token-time=123\\"}"])</script>
+        <script>self.__next_f.push([1,"avatarPhotoImageUrls\\":{\\"original\\":\\"https://c10.patreonusercontent.com/4/patreon-media/p/campaign/6934869/hash/eyJxIjoxMDB9/42.png?token-hash=orig\\u0026token-time=123\\",\\"default\\":\\"https://c10.patreonusercontent.com/4/patreon-media/p/campaign/6934869/hash/eyJ3Ijo2MjB9/42.png?token-hash=def620\\u0026token-time=123\\"}"])</script>
       </body>
     </html>
   `

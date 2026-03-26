@@ -3,10 +3,7 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const { parseMastodonInput } = require('../../../src/providers/mastodon')({
-  got: () => {},
-  isReservedIp: async () => false
-})
+const { parseMastodonInput } = require('../../../src/providers/mastodon')
 
 test('parses @user@server format', t => {
   t.deepEqual(parseMastodonInput('@kiko@indieweb.social'), {

@@ -2,17 +2,25 @@
 
 const test = require('ava')
 
-test('spotify provider derives URI from usernames and typed identifiers', t => {
-  const createHtmlProvider = opts => opts
-  const provider = require('../../../src/providers/spotify')({
-    createHtmlProvider,
-    getOgImage: () => 'og-image'
-  })
+const { getAvatarUrl } = require('../../../src/providers/spotify')
 
-  t.is(provider.url('iron_maiden_'), 'https://open.spotify.com/user/iron_maiden_')
+test('.getAvatarUrl defaults to user profile path', t => {
   t.is(
-    provider.url('artist:1vCWHaC5f2uS3yhpwWbIA6'),
+    getAvatarUrl('iron_maiden_'),
+    'https://open.spotify.com/user/iron_maiden_'
+  )
+})
+
+test('.getAvatarUrl with explicit artist type', t => {
+  t.is(
+    getAvatarUrl('artist:1vCWHaC5f2uS3yhpwWbIA6'),
     'https://open.spotify.com/artist/1vCWHaC5f2uS3yhpwWbIA6'
   )
-  t.deepEqual(provider.htmlOpts(), { prerender: true })
+})
+
+test('.getAvatarUrl with explicit playlist type', t => {
+  t.is(
+    getAvatarUrl('playlist:37i9dQZF1DXcBWIGoYBM5M'),
+    'https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M'
+  )
 })

@@ -2,35 +2,37 @@
 
 const test = require('ava')
 
-test('whatsapp provider maps input types to expected URLs', t => {
-  const createHtmlProvider = opts => opts
-  const provider = require('../../../src/providers/whatsapp')({
-    createHtmlProvider,
-    getOgImage: () => 'og-image'
-  })
+const { getAvatarUrl } = require('../../../src/providers/whatsapp')
 
-  t.is(provider.url('34660021551'), 'https://api.whatsapp.com/send/?phone=34660021551')
+test('.getAvatarUrl defaults to phone type', t => {
   t.is(
-    provider.url('channel:0029VaARuQ7KwqSXh9fiMc0m'),
+    getAvatarUrl('34660021551'),
+    'https://api.whatsapp.com/send/?phone=34660021551'
+  )
+})
+
+test('.getAvatarUrl with channel type', t => {
+  t.is(
+    getAvatarUrl('channel:0029VaARuQ7KwqSXh9fiMc0m'),
     'https://www.whatsapp.com/channel/0029VaARuQ7KwqSXh9fiMc0m'
   )
+})
+
+test('.getAvatarUrl with chat type', t => {
   t.is(
-    provider.url('chat:GDoR4ELqJtb2bMy1JI2Hfq'),
-    'https://chat.whatsapp.com/GDoR4ELqJtb2bMy1JI2Hfq'
-  )
-  t.is(
-    provider.url('group:GDoR4ELqJtb2bMy1JI2Hfq'),
+    getAvatarUrl('chat:GDoR4ELqJtb2bMy1JI2Hfq'),
     'https://chat.whatsapp.com/GDoR4ELqJtb2bMy1JI2Hfq'
   )
 })
 
-test('whatsapp provider throws for unsupported input type', t => {
-  const createHtmlProvider = opts => opts
-  const provider = require('../../../src/providers/whatsapp')({
-    createHtmlProvider,
-    getOgImage: () => 'og-image'
-  })
+test('.getAvatarUrl with group type', t => {
+  t.is(
+    getAvatarUrl('group:GDoR4ELqJtb2bMy1JI2Hfq'),
+    'https://chat.whatsapp.com/GDoR4ELqJtb2bMy1JI2Hfq'
+  )
+})
 
-  const error = t.throws(() => provider.url('unsupported:value'))
+test('.getAvatarUrl throws for unsupported type', t => {
+  const error = t.throws(() => getAvatarUrl('unsupported:value'))
   t.is(error.message, 'Unsupported WhatsApp type: unsupported')
 })
