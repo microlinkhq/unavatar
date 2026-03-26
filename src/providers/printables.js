@@ -1,7 +1,5 @@
 'use strict'
 
-const randomCrawlerAgent = require('../util/crawler-agent')
-
 module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'printables',
@@ -9,6 +7,5 @@ module.exports = ({ createHtmlProvider, getOgImage }) =>
       `https://www.printables.com/${
         input.startsWith('@') ? input : `@${input}`
       }`,
-    getter: getOgImage,
-    htmlOpts: () => ({ headers: { 'user-agent': randomCrawlerAgent() } })
+    getter: getOgImage
   })
