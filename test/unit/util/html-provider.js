@@ -10,13 +10,16 @@ const createProvider = (opts = {}) => {
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
     onFetchHTML: undefined,
-    getHTML: opts.getHTML ?? (async () => ({ $: {}, statusCode: opts.responseStatusCode ?? 200 }))
+    getHTML:
+      opts.getHTML ??
+      (async () => ({ $: {}, statusCode: opts.responseStatusCode ?? 200 }))
   })
 
   return createHtmlProvider({
     name: 'test-provider',
     url: () => opts.providerUrl ?? 'https://www.openstreetmap.org/user/Terence',
     getter: () => opts.getterResult,
+    isBlocked: opts.isBlocked,
     htmlOpts: opts.htmlOpts
   })
 }
@@ -200,7 +203,9 @@ test('createHtmlProvider forwards gotOpts to getHTML when attempt is called with
 
 test('createHtmlProvider delegates to onFetchHTML when provided', async t => {
   const getHTML = sinon.stub().resolves({ $: {}, statusCode: 200 })
-  const onFetchHTML = sinon.stub().resolves('https://hook-returned.example/avatar.png')
+  const onFetchHTML = sinon
+    .stub()
+    .resolves('https://hook-returned.example/avatar.png')
 
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
@@ -274,7 +279,7 @@ test('createHtmlProvider attaches html to error when getter returns empty', asyn
   t.true(error.html.includes('<h1>Blocked</h1>'))
 })
 
-test('createHtmlProvider sets blocked and attaches html on error when getter returns false', async t => {
+test('createHtmlProvider sets blocked and attaches html on error when isBlocked returns true', async t => {
   const $ = cheerio.load('<html><title>Login • Instagram</title></html>')
 
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
@@ -285,7 +290,8 @@ test('createHtmlProvider sets blocked and attaches html on error when getter ret
   const provider = createHtmlProvider({
     name: 'test-provider',
     url: () => 'https://www.instagram.com/willsmith',
-    getter: () => false
+    getter: () => undefined,
+    isBlocked: $ => $('title').text().includes('Login')
   })
 
   const error = await t.throwsAsync(runProvider(provider), {
@@ -316,6 +322,42 @@ test('createHtmlProvider does not set blocked when getter returns undefined', as
   })
 
   t.is(error.blocked, undefined)
+})
+
+test('createHtmlProvider sets blocked when isBlocked returns true', async t => {
+  const provider = createProvider({
+    getterResult: undefined,
+    isBlocked: () => true
+  })
+
+  const error = await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.true(error.blocked)
+})
+
+test('createHtmlProvider sets blocked via is-antibot when HTML contains antibot signals', async t => {
+  const html =
+    '<html><head><title>Blocked</title></head><body><div class="cf-turnstile"></div></body></html>'
+  const $ = cheerio.load(html)
+
+  const { createHtmlProvider } = require('../../../src/util/html-provider')({
+    PROXY_TIMEOUT: 8000,
+    getHTML: async () => ({ $, statusCode: 200 })
+  })
+
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://ko-fi.com/someone',
+    getter: () => undefined
+  })
+
+  const error = await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.true(error.blocked)
 })
 
 test('module exports NOT_FOUND symbol', t => {
