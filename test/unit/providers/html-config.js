@@ -144,14 +144,14 @@ test('soundcloud and substack provider options are derived from helper modules',
   })
 })
 
-test('linkedin getter returns false when og:image is missing', t => {
+test('linkedin getter returns undefined when og:image is missing', t => {
   const linkedin = require('../../../src/providers/linkedin')({
     createHtmlProvider,
     getOgImage
   })
 
   const $ = cheerio.load('<html><title>LinkedIn Login</title></html>')
-  t.is(linkedin.getter($), false)
+  t.is(linkedin.getter($), undefined)
 })
 
 test('linkedin getter returns og:image URL for valid profile page', t => {
@@ -169,13 +169,13 @@ test('linkedin getter returns og:image URL for valid profile page', t => {
   t.is(linkedin.getter($), avatarUrl)
 })
 
-test('instagram getter returns false when title is login wall', t => {
+test('instagram getter returns undefined when og:image is missing', t => {
   const instagram = proxyquire('../../../src/providers/instagram', {
     '../util/crawler-agent': () => 'crawler-agent'
   })({ createHtmlProvider, getOgImage })
 
   const $ = cheerio.load('<html><title>Login • Instagram</title></html>')
-  t.is(instagram.getter($), false)
+  t.is(instagram.getter($), undefined)
 })
 
 test('instagram getter returns og:image URL for valid profile page', t => {

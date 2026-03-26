@@ -2,6 +2,7 @@
 
 const { normalizeUrl } = require('@metascraper/helpers')
 const debug = require('debug-logfmt')('html-provider')
+const isAntibot = require('is-antibot')
 
 const httpStatus = require('./http-status')
 const ExtendableError = require('./error')
@@ -18,7 +19,6 @@ const createEmptyProviderValueError = ({ provider, statusCode }) =>
     message: 'Empty value returned by the provider.'
   })
 
-
 const getOgImage = $ =>
   $('meta[property="og:image"]').attr('content') ||
   $('meta[name="og:image"]').attr('content')
@@ -28,14 +28,16 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
    * @param {object} opts
    * @param {string} opts.name - Provider identifier used in logs and metrics.
    * @param {(input: string) => string | Promise<string>} opts.url - Builds the URL to fetch for a given input.
-   * @param {($: cheerio.CheerioAPI) => string | false | undefined} opts.getter
+   * @param {($: cheerio.CheerioAPI) => string | undefined} opts.getter
    *   Extracts the avatar URL from the fetched HTML.
    *   - `string`    — avatar URL found (success).
    *   - `undefined`  — avatar not found (normal failure, no retry).
-   *   - `false`     — page is blocked; error.blocked will be set to true.
+   * @param {($: cheerio.CheerioAPI) => boolean} [opts.isBlocked]
+   *   Optional provider-specific blocked-page detector, checked after the
+   *   default `is-antibot` check when getter returns empty/undefined.
    * @param {() => object} [opts.htmlOpts] - Returns extra options merged into the fetch call.
    */
-  const createHtmlProvider = ({ name, url, getter, htmlOpts }) => {
+  const createHtmlProvider = ({ name, url, getter, isBlocked, htmlOpts }) => {
     const provider = async function ({ input, req = {}, res = {} }) {
       const providerUrl = await url(input)
       const context = { provider: name, input, providerUrl }
@@ -71,9 +73,16 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
             statusCode
           })
           error.html = attempt.lastHtml
-          if (result === false) error.blocked = true
 
-          log.error({ statusCode, status: result === false ? 'blocked' : undefined })
+          const { detected: antibotDetected } = isAntibot({
+            body: attempt.lastHtml
+          })
+          if (antibotDetected || isBlocked?.($) === true) error.blocked = true
+
+          log.error({
+            statusCode,
+            status: error.blocked ? 'blocked' : undefined
+          })
 
           throw error
         }
