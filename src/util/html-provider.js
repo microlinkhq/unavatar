@@ -4,6 +4,7 @@ const { normalizeUrl } = require('@metascraper/helpers')
 const debug = require('debug-logfmt')('html-provider')
 const isAntibot = require('is-antibot')
 
+const randomCrawlerAgent = require('./crawler-agent')
 const httpStatus = require('./http-status')
 const ExtendableError = require('./error')
 
@@ -43,7 +44,15 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
       const context = { provider: name, input, providerUrl }
 
       const attempt = async gotOpts => {
-        const defaultOpts = { ...htmlOpts?.(), timeout: PROXY_TIMEOUT }
+        const providerOpts = htmlOpts?.() ?? {}
+        const defaultOpts = {
+          ...providerOpts,
+          headers: {
+            'user-agent': randomCrawlerAgent(),
+            ...providerOpts.headers
+          },
+          timeout: PROXY_TIMEOUT
+        }
         const fetchOpts = gotOpts ? { ...defaultOpts, ...gotOpts } : defaultOpts
         const tier = fetchOpts.tier ?? 'origin'
 

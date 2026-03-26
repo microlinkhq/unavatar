@@ -94,16 +94,14 @@ test('dribbble, reddit and telegram getters read expected HTML attributes', t =>
   t.is(telegram.getter(telegramHtml), 'https://a.com/tg.png')
 })
 
-test('printables provider prepends @ and uses crawler user-agent', t => {
-  const printables = proxyquire('../../../src/providers/printables', {
-    '../util/crawler-agent': () => 'crawler-agent'
-  })({ createHtmlProvider, getOgImage })
+test('printables provider prepends @ to input', t => {
+  const printables = require('../../../src/providers/printables')({
+    createHtmlProvider,
+    getOgImage
+  })
 
   t.is(printables.url('DukeDoks'), 'https://www.printables.com/@DukeDoks')
   t.is(printables.url('@DukeDoks'), 'https://www.printables.com/@DukeDoks')
-  t.deepEqual(printables.htmlOpts(), {
-    headers: { 'user-agent': 'crawler-agent' }
-  })
 })
 
 test('soundcloud and substack provider options are derived from helper modules', t => {
@@ -133,15 +131,6 @@ test('soundcloud and substack provider options are derived from helper modules',
 
   t.is(patreon.url('kikobeats'), 'https://www.patreon.com/kikobeats')
   t.is(patreon.getter({}), 'jsonld:mainEntity.image.contentUrl')
-
-  const instagram = proxyquire('../../../src/providers/instagram', {
-    '../util/crawler-agent': () => 'crawler-agent'
-  })({ createHtmlProvider, getOgImage })
-
-  t.is(instagram.url('willsmith'), 'https://www.instagram.com/willsmith')
-  t.deepEqual(instagram.htmlOpts(), {
-    headers: { 'user-agent': 'crawler-agent' }
-  })
 })
 
 test('linkedin getter returns undefined when og:image is missing', t => {
@@ -170,18 +159,20 @@ test('linkedin getter returns og:image URL for valid profile page', t => {
 })
 
 test('instagram getter returns undefined when og:image is missing', t => {
-  const instagram = proxyquire('../../../src/providers/instagram', {
-    '../util/crawler-agent': () => 'crawler-agent'
-  })({ createHtmlProvider, getOgImage })
+  const instagram = require('../../../src/providers/instagram')({
+    createHtmlProvider,
+    getOgImage
+  })
 
   const $ = cheerio.load('<html><title>Login • Instagram</title></html>')
   t.is(instagram.getter($), undefined)
 })
 
 test('instagram getter returns og:image URL for valid profile page', t => {
-  const instagram = proxyquire('../../../src/providers/instagram', {
-    '../util/crawler-agent': () => 'crawler-agent'
-  })({ createHtmlProvider, getOgImage })
+  const instagram = require('../../../src/providers/instagram')({
+    createHtmlProvider,
+    getOgImage
+  })
 
   const avatarUrl =
     'https://scontent-mad2-1.cdninstagram.com/v/t51.82787-19/photo.jpg'

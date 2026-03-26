@@ -2,8 +2,6 @@
 
 const { $jsonld } = require('@metascraper/helpers')
 
-const randomCrawlerAgent = require('../util/crawler-agent')
-
 const toHighResolution = url => {
   if (url?.endsWith('_200x200.jpg')) {
     return url.replace('_200x200.jpg', '_400x400.jpg')
@@ -16,15 +14,15 @@ const toHighResolution = url => {
 
 const getProfileImage = $ =>
   toHighResolution(
-    $jsonld('mainEntity.image.contentUrl')($) || $('meta[property="og:image"]').attr('content')
+    $jsonld('mainEntity.image.contentUrl')($) ||
+      $('meta[property="og:image"]').attr('content')
   )
 
 const factory = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'x',
     url: input => `https://x.com/${input}`,
-    getter: getProfileImage,
-    htmlOpts: () => ({ headers: { 'user-agent': randomCrawlerAgent() } })
+    getter: getProfileImage
   })
 
 factory.getProfileImage = getProfileImage
