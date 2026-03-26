@@ -87,16 +87,20 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           })
           error.html = attempt.lastHtml
 
-          const { detected: antibotDetected } = isAntibot({
-            url: providerUrl,
-            headers: responseHeaders,
-            body: attempt.lastHtml
-          })
+          const { detected: antibotDetected, provider: antibotProvider } =
+            isAntibot({
+              url: providerUrl,
+              headers: responseHeaders,
+              body: attempt.lastHtml
+            })
+
           if (antibotDetected || isBlocked?.($) === true) error.blocked = true
 
           log.error({
             statusCode,
-            status: error.blocked ? 'blocked' : undefined
+            status: error.blocked ? 'blocked' : undefined,
+            antibot: antibotProvider ?? undefined,
+            userAgent: fetchOpts.headers['user-agent']
           })
 
           throw error
