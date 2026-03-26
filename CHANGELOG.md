@@ -1,3 +1,8 @@
+## 3.7.74 (2026-03-26)
+
+### Bug Fixes
+
+* **antibot:** pass headers and url ([40316e1](https://github.com/Kikobeats/unavatar/commit/40316e1f9ea8d6f27ef296b827580b22bffb28d9))
 ## 3.7.73 (2026-03-26)
 ## 3.7.72 (2026-03-25)
 ## 3.7.71 (2026-03-25)
