@@ -18,13 +18,11 @@ const getProfileImage = $ =>
       $('meta[property="og:image"]').attr('content')
   )
 
-const factory = ({ createHtmlProvider }) =>
+module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'x',
     url: input => `https://x.com/${input}`,
     getter: getProfileImage
   })
 
-factory.getProfileImage = getProfileImage
-
-module.exports = factory
+module.exports.getProfileImage = getProfileImage

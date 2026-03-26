@@ -26,13 +26,11 @@ const getRscAvatar = $ => {
 const getAvatar = $ =>
   $jsonld('mainEntity.image.contentUrl')($) || getRscAvatar($)
 
-const factory = ({ createHtmlProvider }) =>
+module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'patreon',
     url: username => `https://www.patreon.com/${username}`,
     getter: getAvatar
   })
 
-factory.getAvatar = getAvatar
-
-module.exports = factory
+module.exports.getAvatar = getAvatar

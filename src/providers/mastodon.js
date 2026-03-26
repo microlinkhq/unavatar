@@ -53,6 +53,7 @@ module.exports = ({ got, isReservedIp }) => {
     return body?.avatar
   }
 
-  mastodon.parseMastodonInput = parseMastodonInput
   return mastodon
 }
+
+module.exports.parseMastodonInput = parseMastodonInput

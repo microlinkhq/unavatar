@@ -14,13 +14,11 @@ const getAvatarUrl = $ => {
   ])
 }
 
-const factory = ({ createHtmlProvider }) =>
+module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'tiktok',
     url: input => `https://www.tiktok.com/@${input}`,
     getter: getAvatarUrl
   })
 
-factory.getAvatarUrl = getAvatarUrl
-
-module.exports = factory
+module.exports.getAvatarUrl = getAvatarUrl

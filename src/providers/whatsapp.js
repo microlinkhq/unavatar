@@ -8,7 +8,7 @@ const whatsappURI = input => {
   }
 }
 
-const whatsappURL = input => {
+const getAvatarUrl = input => {
   const { type, id } = whatsappURI(input)
   switch (type) {
     case 'phone':
@@ -26,6 +26,8 @@ const whatsappURL = input => {
 module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'whatsapp',
-    url: whatsappURL,
+    url: getAvatarUrl,
     getter: getOgImage
   })
+
+module.exports.getAvatarUrl = getAvatarUrl

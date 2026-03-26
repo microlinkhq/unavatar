@@ -1,18 +1,20 @@
 'use strict'
 
-const spotifyUri = input => {
+const getAvatarUrl = input => {
   const [first, second] = input.split(':')
   const type = second ? first : 'user'
   const id = second ?? first
-  return `${type}/${id}`
+  return `https://open.spotify.com/${type}/${id}`
 }
 
 module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'spotify',
-    url: input => `https://open.spotify.com/${spotifyUri(input)}`,
+    url: getAvatarUrl,
     getter: getOgImage,
     htmlOpts: () => ({
       prerender: true
     })
   })
+
+module.exports.getAvatarUrl = getAvatarUrl
