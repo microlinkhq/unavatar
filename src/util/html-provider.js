@@ -49,7 +49,11 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
 
         const log = debug.duration({ ...context, tier })
 
-        const { $, statusCode } = await getHTML(providerUrl, fetchOpts)
+        const {
+          $,
+          statusCode,
+          headers: responseHeaders = {}
+        } = await getHTML(providerUrl, fetchOpts)
 
         attempt.lastHtml =
           typeof $ === 'function' && typeof $.html === 'function'
@@ -75,6 +79,8 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           error.html = attempt.lastHtml
 
           const { detected: antibotDetected } = isAntibot({
+            url: providerUrl,
+            headers: responseHeaders,
             body: attempt.lastHtml
           })
           if (antibotDetected || isBlocked?.($) === true) error.blocked = true
