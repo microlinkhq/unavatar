@@ -44,6 +44,12 @@ test('html provider modules expose expected URL builders', t => {
     getOgImage
   })
   t.is(linkedin.url('kikobeats'), 'https://www.linkedin.com/in/kikobeats')
+  t.is(linkedin.url('user:kikobeats'), 'https://www.linkedin.com/in/kikobeats')
+  t.is(
+    linkedin.url('company:unavatar'),
+    'https://www.linkedin.com/company/unavatar'
+  )
+  t.is(linkedin.url('school:mit'), 'https://www.linkedin.com/school/mit')
 
   const twitch = require('../../../src/providers/twitch')({
     createHtmlProvider,
