@@ -1,5 +1,6 @@
 ![logo](https://unavatar.io/banner.png ':id=banner')
 
+- [Introduction](#introduction)
 - [Quick start](#quick-start)
 - [Query parameters](#query-parameters)
   - [TTL](#ttl)
@@ -16,13 +17,15 @@
   - [GitLab](#gitlab)
   - [LinkedIn](#linkedin)
   - [Google](#google)
-  - [Gravatar](#gravatar)
   - [Instagram](#instagram)
+  - [Ko-fi](#ko-fi)
+  - [Medium](#medium)
   - [Microlink](#microlink)
   - [Mastodon](#mastodon)
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
   - [Patreon](#patreon)
+  - [Printables](#printables)
   - [Reddit](#reddit)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -32,18 +35,17 @@
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
   - [WhatsApp](#whatsapp)
-  - [X/Twitter](#xtwitter)
   - [YouTube](#youtube)
 - [Response Format](#response-format)
 - [Response Headers](#response-headers)
-- [Response Errors](#response-errors)
-- [Contact](#contact)
 
 ---
 
+## Introduction
+
 Welcome to **unavatar.io**, the ultimate avatar service that offers everything you need to easily retrieve user avatars:
 
-- **Versatile**: A wide range of platforms and services including [TikTok](#tiktok), [Instagram](#instagram), [YouTube](#youtube), [X/Twitter](#xtwitter), [Gravatar](#gravatar), etc., meaning you can rule all of them just querying against unavatar.
+- **Versatile**: A wide range of platforms and services including [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), etc., meaning you can rule all of them just querying against unavatar.
 
 - **Speed**: Designed to be fast and efficient with a 97% cache hit rate, serving 24.3 TB of data across 522M requests.
 
@@ -61,14 +63,14 @@ The service is exposed in **unavatar.io** via provider endpoints:
 - an **username**: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
 - a **domain**: [unavatar.io/google/reddit.com](https://unavatar.io/google/reddit.com)
 
-Use the `/:provider/:key` format for all lookups. You can read more about available providers in [providers](#providers).
+Use the `/:provider/:key` format for all lookups. You can read more about available providers in [providers](https://unavatar.io/docs#providers).
 
 ## Query parameters
 
 ### TTL
 
-Type: `number` or `string`<br>
-Default: `'24h'`<br>
+Type: `number` or `string`\
+Default: `'24h'`\
 Range: from `'1h'` to `'28d'`
 
 It determines the maximum quantity of time an avatar is considered fresh.
@@ -125,23 +127,25 @@ You can verify for your rate limit state checking the following headers in the r
 - `x-rate-limit-remaining`: The number of requests remaining in the current rate limit window.
 - `x-rate-limit-reset`: The time at which the current rate limit window resets in UTC epoch seconds.
 
-For higher usage, the plan is a usage-based plan billed monthly that removes rate limits and unlocks custom TTL.
+For higher usage, the **[PRO](https://unavatar.io/checkout)** plan is a usage-based plan billed monthly that removes rate limits and unlocks custom TTL.
 
 Every request has a cost in tokens (**\$0.001 per token**) based on the proxy tier needed to resolve the avatar:
 
 | Proxy tier  | Tokens | Cost    |
-|-------------|--------|---------|
+| ----------- | ------ | ------- |
 | Origin      | 1      | \$0.001 |
 | Datacenter  | +2     | \$0.003 |
 | Residential | +4     | \$0.007 |
 
 The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
 
-    $ curl -I -H "x-api-key: YOUR_API_KEY" https://unavatar.io/instagram/kikobeats
+``` bash
+$ curl -I -H "x-api-key: YOUR_API_KEY" https://[unavatar.io/instagram/kikobeats](https://unavatar.io/instagram/kikobeats)
 
-    x-pricing-tier: pro
-    x-proxy-tier: origin
-    x-unavatar-cost: 1
+x-pricing-tier: pro
+x-proxy-tier: origin
+x-unavatar-cost: 1
+```
 
 To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After completing the payment, you'll receive an API key.
 
@@ -151,7 +155,7 @@ To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After co
 
 Get artwork for any Apple Music artist, album, or song. Search by name or look up directly by numeric Apple Music ID.
 
-e.g., [unavatar.io/apple-music/daft%20punk](https://unavatar.io/apple-music/daft%20punk)
+e.g., [unavatar.io/apple-music/artist:daft%20punk](https://unavatar.io/apple-music/artist:daft%20punk)
 
 The endpoint supports explicit type as part of the input.
 
@@ -184,7 +188,7 @@ Get any DeviantArt user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
+- slug, e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
 
 ### Dribbble
 
@@ -192,7 +196,7 @@ Get any Dribbble designer's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
+- slug, e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
 
 ### DuckDuckGo
 
@@ -200,7 +204,7 @@ Get the favicon or logo for any domain via DuckDuckGo's icon service. Useful as 
 
 Available inputs:
 
-- Domain, e.g., [unavatar.io/duckduckgo/gummibeer.dev](https://unavatar.io/duckduckgo/gummibeer.dev)
+- Domain, e.g., [unavatar.io/duckduckgo/microsoft.com](https://unavatar.io/duckduckgo/microsoft.com)
 
 ### GitHub
 
@@ -213,20 +217,27 @@ Available inputs:
 
 ### GitLab
 
-Get any GitLab user or group's profile picture by their username.
+Get any GitLab user or organization's profile picture by their username.
 
 Available inputs:
 
 - User, e.g., [unavatar.io/gitlab/sytses](https://unavatar.io/gitlab/sytses)
-- Group, e.g., [unavatar.io/gitlab/inkscape](https://unavatar.io/gitlab/inkscape)
+- Organization, e.g., [unavatar.io/gitlab/inkscape](https://unavatar.io/gitlab/inkscape)
 
 ### LinkedIn
 
-Get any LinkedIn user's profile picture by their public profile slug.
+Get any LinkedIn user or company profile picture by their public profile slug.
 
-Available inputs:
+e.g., [unavatar.io/linkedin/user:wesbos](https://unavatar.io/linkedin/user:wesbos)
 
-- Profile slug, e.g., [unavatar.io/linkedin/kikobeats](https://unavatar.io/linkedin/kikobeats)
+The input supports a URI format `type:id`.
+
+When no type is provided, it defaults to `user` (user profile).
+
+Available URI format inputs:
+
+- `user` (default): [unavatar.io/linkedin/user:wesbos](https://unavatar.io/linkedin/user:wesbos)
+- `company`: [unavatar.io/linkedin/company:microlinkhq](https://unavatar.io/linkedin/company:microlinkhq)
 
 ### Google
 
@@ -234,9 +245,7 @@ Get the favicon or logo for any domain using Google's favicon service.
 
 Available inputs:
 
-- Domain, e.g., [unavatar.io/google/netflix.com](https://unavatar.io/google/netflix.com)
-
-### Gravatar
+- Domain, e.g., [unavatar.io/google/stremio.com](https://unavatar.io/google/stremio.com)
 
 Get any user's avatar by their email address via Gravatar. The most widely used global avatar service — if your users have a Gravatar set up, this is the fastest way to retrieve it.
 
@@ -250,7 +259,23 @@ Get any Instagram user's profile picture by their username. No authentication or
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
+- slug, e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
+
+### Ko-fi
+
+Get any Ko-fi page's profile picture by their public creator page slug.
+
+Available inputs:
+
+- Page slug, e.g., [unavatar.io/ko-fi/geekshock](https://unavatar.io/ko-fi/geekshock)
+
+### Medium
+
+Get any Medium author's profile picture by their username.
+
+Available inputs:
+
+- slug, e.g., [unavatar.io/medium/juancalmaraz](https://unavatar.io/medium/juancalmaraz)
 
 ### Microlink
 
@@ -274,7 +299,7 @@ Get any OnlyFans creator's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
+- slug, e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
 
 ### OpenStreetMap
 
@@ -283,7 +308,7 @@ Get any OpenStreetMap contributor's profile picture. Accepts either a numeric us
 Available inputs:
 
 - Numeric user ID, e.g., [unavatar.io/openstreetmap/98672](https://unavatar.io/openstreetmap/98672)
-- Username, e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
+- slug, e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
 
 ### Patreon
 
@@ -291,7 +316,15 @@ Get any Patreon creator's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/patreon/kikobeats](https://unavatar.io/patreon/kikobeats)
+- slug, e.g., [unavatar.io/patreon/gametestro](https://unavatar.io/patreon/gametestro)
+
+### Printables
+
+Get any Printables user's profile picture by their username.
+
+Available inputs:
+
+- slug, e.g., [unavatar.io/printables/DukeDoks](https://unavatar.io/printables/DukeDoks)
 
 ### Reddit
 
@@ -299,7 +332,7 @@ Get any Reddit user's avatar by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
+- slug, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
 
 ### SoundCloud
 
@@ -307,13 +340,13 @@ Get any SoundCloud artist's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
+- slug, e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
 
 ### Spotify
 
 Get artwork for any Spotify entity — users, artists, albums, playlists, shows, episodes, or tracks. Look up by username or Spotify ID.
 
-e.g., [unavatar.io/spotify/kikobeats](https://unavatar.io/spotify/kikobeats)
+e.g., [unavatar.io/spotify/album:7I9Wh2IgvI3Nnr8Z1ZSWby](https://unavatar.io/spotify/album:7I9Wh2IgvI3Nnr8Z1ZSWby)
 
 The endpoint supports explicit type as part of the input.
 
@@ -321,13 +354,13 @@ If explicit type is not provided, it defaults to `user`.
 
 Available URI format inputs:
 
-- `user`: [unavatar.io/spotify/kikobeats](https://unavatar.io/spotify/kikobeats)
-- `artist`: [unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA](https://unavatar.io/spotify/artist:6sFIWsNpZYqbRiDnNOkZCA)
-- `playlist`: [unavatar.io/spotify/playlist:37i9dQZF1DXcBWIGoYBM5M](https://unavatar.io/spotify/playlist:37i9dQZF1DXcBWIGoYBM5M)
-- `album`: [unavatar.io/spotify/album:4aawyAB9vmqN3uQ7FjRGTy](https://unavatar.io/spotify/album:4aawyAB9vmqN3uQ7FjRGTy)
-- `show`: [unavatar.io/spotify/show:6UCtBYL29hRg064d4i5W2i](https://unavatar.io/spotify/show:6UCtBYL29hRg064d4i5W2i)
-- `episode`: [unavatar.io/spotify/episode:512ojhOuo1ktJprKbVcKyQ](https://unavatar.io/spotify/episode:512ojhOuo1ktJprKbVcKyQ)
-- `track`: [unavatar.io/spotify/track:11dFghVXANMlKmJXsNCbNl](https://unavatar.io/spotify/track:11dFghVXANMlKmJXsNCbNl)
+- `album`: [unavatar.io/spotify/album:7I9Wh2IgvI3Nnr8Z1ZSWby](https://unavatar.io/spotify/album:7I9Wh2IgvI3Nnr8Z1ZSWby)
+- `artist`: [unavatar.io/spotify/artist:1vCWHaC5f2uS3yhpwWbIA6](https://unavatar.io/spotify/artist:1vCWHaC5f2uS3yhpwWbIA6)
+- `episode`: [unavatar.io/spotify/episode:1YNm34Q8ofC2CDTYYLaFMj](https://unavatar.io/spotify/episode:1YNm34Q8ofC2CDTYYLaFMj)
+- `playlist`: [unavatar.io/spotify/playlist:37i9dQZF1DZ06evO3KIUZW](https://unavatar.io/spotify/playlist:37i9dQZF1DZ06evO3KIUZW)
+- `show`: [unavatar.io/spotify/show:0iykbhPkRz53QF8LR2UyNO](https://unavatar.io/spotify/show:0iykbhPkRz53QF8LR2UyNO)
+- `track`: [unavatar.io/spotify/track:4OROzZUy6gOWN4UGQVaZMF](https://unavatar.io/spotify/track:4OROzZUy6gOWN4UGQVaZMF)
+- `user` (default): [unavatar.io/spotify/user:kikobeats](https://unavatar.io/spotify/user:kikobeats)
 
 ### Substack
 
@@ -343,7 +376,7 @@ Get any Telegram user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
+- slug, e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
 
 ### TikTok
 
@@ -351,7 +384,7 @@ Get any TikTok user's profile picture by their username. No authentication or AP
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
+- slug, e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
 
 ### Twitch
 
@@ -359,7 +392,7 @@ Get any Twitch streamer's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
+- slug, e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
 
 ### Vimeo
 
@@ -367,28 +400,29 @@ Get any Vimeo user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/vimeo/staff](https://unavatar.io/vimeo/staff)
+- slug, e.g., [unavatar.io/vimeo/ladieswithlenses](https://unavatar.io/vimeo/ladieswithlenses)
 
 ### WhatsApp
 
 Get the profile picture for a WhatsApp phone number, channel, chat, or group.
 
-The input supports a URI format `type:id`. When no type is provided, it defaults to `phone`.
+e.g., [unavatar.io/whatsapp/phone:34660021551](https://unavatar.io/whatsapp/phone:34660021551)
+
+The input supports a URI format `type:id`.
+
+When no type is provided, it defaults to `phone`.
 
 Available URI format inputs:
 
-- `phone` (default): [unavatar.io/whatsapp/34612345678](https://unavatar.io/whatsapp/34612345678)
-- `channel`: [unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789](https://unavatar.io/whatsapp/channel:0029VaABC1234abcDEF56789)
-- `chat`: [unavatar.io/whatsapp/chat:ABC1234DEFghi](https://unavatar.io/whatsapp/chat:ABC1234DEFghi)
-- `group`: [unavatar.io/whatsapp/group:ABC1234DEFghi](https://unavatar.io/whatsapp/group:ABC1234DEFghi)
-
-### X/Twitter
+- `phone` (default): [unavatar.io/whatsapp/phone:34660021551](https://unavatar.io/whatsapp/phone:34660021551)
+- `channel`: [unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m](https://unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m)
+- `chat`: [unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz](https://unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz)
 
 Get any X (formerly Twitter) user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
+- slug, e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
 
 ### YouTube
 
@@ -409,35 +443,33 @@ Available inputs:
 
 A response is returning the user avatar by default.
 
-However, you can get a [json](#json) as response payload.
+However, you can get a [json](https://unavatar.io/docs#json) as response payload.
 
 When an endpoint returns JSON, the shape is predictable so you can parse it reliably in your app:
 
-| Field | Type | Present in | Description |
-|----|----|----|----|
-| `status` | `string` | all JSON responses | One of: `success`, `fail`, `error`. |
-| `message` | `string` | all JSON responses | Human-readable summary for display/logging. |
-| `data` | `object` | `success` | Response payload for successful requests. |
-| `code` | `string` | `fail`, `error` | Stable machine-readable error code. |
-| `more` | `string (URL)` | most `fail`/`error` responses | Documentation URL with troubleshooting details. |
-| `report` | `string` | some `error` responses | Support contact channel (for example `mailto:`). |
+| Field     | Type           | Present in                      | Description                                      |
+| --------- | -------------- | ------------------------------- | ------------------------------------------------ |
+| `status`  | `string`       | all JSON responses              | One of: `success`, `fail`, `error`.              |
+| `message` | `string`       | all JSON responses              | Human-readable summary for display/logging.      |
+| `data`    | `object`       | `success`                       | Response payload for successful requests.        |
+| `code`    | `string`       | `fail`, `error`                 | Stable machine-readable error code.              |
+| `more`    | `string (URL)` | most `fail` / `error` responses | Documentation URL with troubleshooting details.  |
+| `report`  | `string`       | some `error` responses          | Support contact channel (for example `mailto:`). |
 
 ## Response Headers
 
 These headers help you understand pricing, limits, and request diagnostics.
 
-| Header | Purpose |
-|----|----|
-| `x-pricing-tier` | `free` or `pro` — the plan used for this request |
-| `x-timestamp` | Server timestamp when request was received |
-| `x-unavatar-cost` | Token cost of the request (avatar routes only) |
-| `x-proxy-tier` | Proxy tier used: `origin`, `datacenter`, or `residential` |
-| `x-rate-limit-limit` | Maximum requests allowed per window (free tier only) |
-| `x-rate-limit-remaining` | Remaining requests in current window (free tier only) |
-| `x-rate-limit-reset` | UTC epoch seconds when window resets (free tier only) |
-| `retry-after` | Seconds until rate limit resets (only on 429 responses) |
-
-## Response Errors
+| Header                   | Purpose                                                   |
+| ------------------------ | --------------------------------------------------------- |
+| `x-pricing-tier`         | `free` or `pro` — the plan used for this request          |
+| `x-timestamp`            | Server timestamp when request was received                |
+| `x-unavatar-cost`        | Token cost of the request (avatar routes only)            |
+| `x-proxy-tier`           | Proxy tier used: `origin`, `datacenter`, or `residential` |
+| `x-rate-limit-limit`     | Maximum requests allowed per window (free tier only)      |
+| `x-rate-limit-remaining` | Remaining requests in current window (free tier only)     |
+| `x-rate-limit-reset`     | UTC epoch seconds when window resets (free tier only)     |
+| `retry-after`            | Seconds until rate limit resets (only on 429 responses)   |
 
 Expected errors are known operational cases returned with stable codes.
 
@@ -450,7 +482,7 @@ Expected errors are known operational cases returned with stable codes.
 - `report` (when present) indicates how to contact support for server errors.
 
 | HTTP | Code                 | Typical trigger                             |
-|------|----------------------|---------------------------------------------|
+| ---- | -------------------- | ------------------------------------------- |
 | 400  | `ESESSIONID`         | Missing `session_id` in `/checkout/success` |
 | 400  | `ESESSION`           | Checkout session not paid or not found      |
 | 400  | `ESIGNATURE`         | Missing `stripe-signature` header           |

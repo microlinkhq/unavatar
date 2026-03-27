@@ -1,0 +1,30 @@
+name: Sync README from llms.txt
+
+on:
+  repository_dispatch:
+    types:
+      - llms-txt-updated
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Fetch llms.txt
+        run: curl -sSfL https://unavatar.io/llms.txt -o README.md
+
+      - name: Commit changes
+        run: |
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USERNAME }}"
+          git add README.md
+          if git diff --cached --quiet; then
+            echo "No changes to README.md"
+          else
+            git commit -m "build: sync README from llms.txt"
+            git push
+          fi
