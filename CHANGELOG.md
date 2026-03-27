@@ -1,3 +1,8 @@
+## 3.8.0 (2026-03-27)
+
+### Features
+
+* add medium ([#522](https://github.com/Kikobeats/unavatar/issues/522)) ([b107943](https://github.com/Kikobeats/unavatar/commit/b1079433707efc95397379025165981c480e3d94))
 ## 3.7.80 (2026-03-26)
 ## 3.7.79 (2026-03-26)
 ## 3.7.78 (2026-03-26)
