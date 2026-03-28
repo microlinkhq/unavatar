@@ -25,8 +25,7 @@ const createProvider = (opts = {}) => {
 }
 
 const runProvider = (provider, args = {}) =>
-  provider({
-    input: args.input ?? 'test',
+  provider(args.input ?? 'test', {
     req: args.req ?? { query: {} },
     res: args.res ?? { setHeader: () => {} }
   })

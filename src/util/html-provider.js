@@ -39,9 +39,8 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
    * @param {() => object} [opts.htmlOpts] - Returns extra options merged into the fetch call.
    */
   const createHtmlProvider = ({ name, url, getter, isBlocked, htmlOpts }) => {
-    const provider = async function ({ input, req = {}, res = {} }) {
+    const provider = async function (input, context) {
       const providerUrl = await url(input)
-      const context = { provider: name, input, providerUrl }
 
       const attempt = async gotOpts => {
         const providerOpts = htmlOpts?.() ?? {}
@@ -56,7 +55,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
         const fetchOpts = gotOpts ? { ...defaultOpts, ...gotOpts } : defaultOpts
         const tier = fetchOpts.tier ?? 'origin'
 
-        const log = debug.duration({ ...context, tier })
+        const log = debug.duration({ provider: name, input, providerUrl, tier })
 
         const {
           $,
@@ -116,7 +115,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
       }
 
       if (typeof onFetchHTML === 'function') {
-        return onFetchHTML({ attempt, provider: name, providerUrl, req, res })
+        return onFetchHTML({ ...context, attempt, provider: name, providerUrl })
       }
 
       const result = await attempt()

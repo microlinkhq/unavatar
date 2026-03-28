@@ -66,8 +66,8 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     return { type: 'url', data: url, provider }
   }
 
-  const getAvatar = async (fn, provider, args) => {
-    const promise = Promise.resolve(fn(args))
+  const getAvatar = async (fn, provider, input, context) => {
+    const promise = Promise.resolve(fn(input, context))
       .then(getAvatarContent(provider))
       .catch(error => {
         isIterable.forEach(error, error => {
@@ -83,26 +83,20 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     })
   }
 
-  const resolveAutoByType = async (inputType, args) => {
+  const resolveAutoByType = async (inputType, input, context) => {
     const collection = providerEntriesByType[inputType]
     const promises = new Array(collection.length)
 
     for (let index = 0; index < collection.length; index++) {
       const [provider, fn] = collection[index]
-      promises[index] = getAvatar(fn, provider, args)
+      promises[index] = getAvatar(fn, provider, input, context)
     }
 
     return pAny(promises)
   }
 
-  const auto = inputTypeOrArgs => {
-    if (typeof inputTypeOrArgs === 'string') {
-      return args => resolveAutoByType(inputTypeOrArgs, args)
-    }
-
-    const args = inputTypeOrArgs
-    return resolveAutoByType(getInputType(args.input), args)
-  }
+  const auto = inputType => (input, context) =>
+    resolveAutoByType(inputType, input, context)
 
   return { auto, getInputType, getAvatar }
 }

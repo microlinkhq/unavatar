@@ -12,12 +12,21 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
     constants.DNS_TIMEOUT = Math.floor(constants.REQUEST_TIMEOUT * (1 / 5))
   }
 
-  const { createMultiCache, createRedisCache } = require('./util/keyv')({ ...constants, redis })
+  const { createMultiCache, createRedisCache } = require('./util/keyv')({
+    ...constants,
+    redis
+  })
   const cache = require('./util/cache')({ createMultiCache, createRedisCache })
-  const cacheableLookup = require('./util/cacheable-lookup')({ ...constants, cache: cache.dnsCache })
+  const cacheableLookup = require('./util/cacheable-lookup')({
+    ...constants,
+    cache: cache.dnsCache
+  })
   const isReservedIp = require('./util/is-reserved-ip')({ cacheableLookup })
   const got = require('./util/got')({ cacheableLookup })
-  const reachableUrl = require('./util/reachable-url')({ got, pingCache: cache.pingCache })
+  const reachableUrl = require('./util/reachable-url')({
+    got,
+    pingCache: cache.pingCache
+  })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
   const { createHtmlProvider, getOgImage } = require('./util/html-provider')({
@@ -43,13 +52,10 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
     reachableUrl
   })
 
-  const normalizeArgs = input =>
-    typeof input === 'string' ? { input } : input
-
-  const unavatar = input => auto(normalizeArgs(input))
+  const unavatar = input => auto(getInputType(input))(input, {})
 
   Object.keys(providers).forEach(name => {
-    unavatar[name] = input => getAvatar(providers[name], name, normalizeArgs(input))
+    unavatar[name] = input => getAvatar(providers[name], name, input, {})
   })
 
   unavatar.auto = auto

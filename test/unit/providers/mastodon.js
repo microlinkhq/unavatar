@@ -40,7 +40,7 @@ test('provider calls the instance lookup API and returns avatar', async t => {
   })
 
   const mastodon = createMastodon(got, async () => false)
-  const result = await mastodon({ input: '@kiko@indieweb.social' })
+  const result = await mastodon('@kiko@indieweb.social')
 
   t.is(result, avatarUrl)
   t.true(got.calledOnce)
@@ -53,7 +53,7 @@ test('provider calls the instance lookup API and returns avatar', async t => {
 test('provider returns undefined for unparseable input', async t => {
   const got = sinon.stub()
   const mastodon = createMastodon(got, async () => false)
-  const result = await mastodon({ input: 'justausername' })
+  const result = await mastodon('justausername')
 
   t.is(result, undefined)
   t.false(got.called)
@@ -64,7 +64,7 @@ test('provider does not call lookup for malformed handles', async t => {
   const mastodon = createMastodon(got, async () => false)
 
   for (const input of ['@@localhost:8080', '@user@', '@user@a@127.0.0.1']) {
-    const result = await mastodon({ input })
+    const result = await mastodon(input)
     t.is(result, undefined)
   }
 
@@ -83,7 +83,7 @@ test('provider blocks reserved IP addresses (SSRF)', async t => {
     '@user@0.0.0.0',
     '@user@localhost'
   ]) {
-    const result = await mastodon({ input })
+    const result = await mastodon(input)
     t.is(result, undefined, `should block ${input}`)
   }
 

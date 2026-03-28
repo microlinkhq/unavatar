@@ -40,7 +40,7 @@ test('returns avatar URL for numeric user id', async t => {
     }
   })
 
-  const url = await provider({ input: '98672' })
+  const url = await provider('98672')
 
   t.is(url, 'https://www.gravatar.com/avatar/abc.jpg?s=100')
   t.false(htmlProviderCalled)
@@ -53,15 +53,13 @@ test('returns avatar URL for username', async t => {
     got: async () => {
       gotCalled = true
     },
-    createHtmlProvider:
-      () =>
-        async ({ input }) => {
-          t.is(input, 'Terence Eden')
-          return 'https://www.gravatar.com/avatar/abc.jpg?s=100'
-        }
+    createHtmlProvider: () => async input => {
+      t.is(input, 'Terence Eden')
+      return 'https://www.gravatar.com/avatar/abc.jpg?s=100'
+    }
   })
 
-  const url = await provider({ input: 'Terence Eden' })
+  const url = await provider('Terence Eden')
 
   t.is(url, 'https://www.gravatar.com/avatar/abc.jpg?s=100')
   t.false(gotCalled)
@@ -75,7 +73,7 @@ test('returns undefined for username when html provider does not resolve', async
     createHtmlProvider: () => async () => undefined
   })
 
-  const url = await provider({ input: 'missing user' })
+  const url = await provider('missing user')
 
   t.is(url, undefined)
 })
