@@ -38,7 +38,7 @@ test('auto(type) uses the provided input type resolver', async t => {
   })
 
   const resolver = auto('domain')
-  const result = await resolver({ input: 'kikobeats' })
+  const result = await resolver('kikobeats')
 
   t.is(typeof resolver, 'function')
   t.true(provider.calledOnce)
@@ -79,11 +79,11 @@ test('auto(type) is deterministic with stateful data URI regex', async t => {
 
   const resolver = auto('domain')
 
-  t.deepEqual(await resolver({ input: 'reddit.com' }), {
+  t.deepEqual(await resolver('reddit.com'), {
     type: 'buffer',
     data: 'data:image/png;base64,AAAA'
   })
-  t.deepEqual(await resolver({ input: 'reddit.com' }), {
+  t.deepEqual(await resolver('reddit.com'), {
     type: 'buffer',
     data: 'data:image/png;base64,AAAA'
   })

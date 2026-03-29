@@ -12,12 +12,12 @@ module.exports = ({ got, createHtmlProvider }) => {
     getter: $ => $('img.user_image').attr('src')
   })
 
-  return function openstreetmap (ctx) {
-    return OPENSTREETMAP_USER_ID_REGEX.test(ctx.input)
-      ? got(`${OPENSTREETMAP_API_URL}/${ctx.input}.json`, {
+  return function openstreetmap (input, context) {
+    return OPENSTREETMAP_USER_ID_REGEX.test(input)
+      ? got(`${OPENSTREETMAP_API_URL}/${input}.json`, {
         responseType: 'json'
       }).then(({ body }) => body?.user?.img?.href)
-      : fromUsername(ctx)
+      : fromUsername(input, context)
   }
 }
 

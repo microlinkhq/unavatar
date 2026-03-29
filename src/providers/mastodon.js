@@ -35,7 +35,7 @@ const parseMastodonInput = input => {
 }
 
 module.exports = ({ got, isReservedIp }) => {
-  const mastodon = async function ({ input }) {
+  const mastodon = async function (input) {
     const parsed = parseMastodonInput(input)
     if (!parsed) return undefined
 

@@ -11,10 +11,13 @@ const createProviderWith = ({ gotStub }) =>
     }
   })({
     got: gotStub,
-    itunesSearchCache: new Keyv({ namespace: 'itunes-search-test', store: new Map() }),
+    itunesSearchCache: new Keyv({
+      namespace: 'itunes-search-test',
+      store: new Map()
+    }),
     createHtmlProvider:
       ({ url }) =>
-        async ({ input }) =>
+        async input =>
           url(input)
   })
 
@@ -28,7 +31,7 @@ test('apple-music provider keeps numeric typed artist ids as-is', async t => {
     }
   })
 
-  const url = await provider({ input: 'artist:5468295' })
+  const url = await provider('artist:5468295')
 
   t.is(url, 'https://music.apple.com/us/artist/5468295')
   t.false(gotCalled)
@@ -39,13 +42,13 @@ test('apple-music provider treats untyped numeric values as queries', async t =>
   const provider = createProviderWith({
     gotStub: async url => {
       calls.push(url)
-      if (url.includes('entity=musicArtist')) return { results: [{ artistId: 'not-a-number' }] }
-      if (url.includes('entity=song')) return { results: [{ trackId: 697195787 }] }
+      if (url.includes('entity=musicArtist')) { return { results: [{ artistId: 'not-a-number' }] } }
+      if (url.includes('entity=song')) { return { results: [{ trackId: 697195787 }] } }
       return { results: [{ collectionId: 'not-a-number' }] }
     }
   })
 
-  const url = await provider({ input: '697195787' })
+  const url = await provider('697195787')
 
   t.is(url, 'https://music.apple.com/us/song/697195787')
   t.is(calls.length, 2)
@@ -66,7 +69,7 @@ test('apple-music provider resolves artist ids from iTunes search', async t => {
     }
   })
 
-  const url = await provider({ input: 'daft punk' })
+  const url = await provider('daft punk')
 
   t.is(url, 'https://music.apple.com/us/artist/5468295')
 })
@@ -85,8 +88,8 @@ test('apple-music provider memoizes iTunes lookups across repeated calls', async
     }
   })
 
-  const first = await provider({ input: 'daft punk' })
-  const second = await provider({ input: 'daft punk' })
+  const first = await provider('daft punk')
+  const second = await provider('daft punk')
 
   t.is(first, 'https://music.apple.com/us/artist/5468295')
   t.is(second, 'https://music.apple.com/us/artist/5468295')
@@ -98,13 +101,13 @@ test('apple-music provider default query falls back from artist to song', async 
   const provider = createProviderWith({
     gotStub: async url => {
       calls.push(url)
-      if (url.includes('entity=musicArtist')) return { results: [{ artistId: 'not-a-number' }] }
-      if (url.includes('entity=song')) return { results: [{ trackId: 697195787 }] }
+      if (url.includes('entity=musicArtist')) { return { results: [{ artistId: 'not-a-number' }] } }
+      if (url.includes('entity=song')) { return { results: [{ trackId: 697195787 }] } }
       return { results: [{ collectionId: 'not-a-number' }] }
     }
   })
 
-  const url = await provider({ input: 'harder better faster stronger' })
+  const url = await provider('harder better faster stronger')
 
   t.is(url, 'https://music.apple.com/us/song/697195787')
   t.is(calls.length, 2)
@@ -117,12 +120,14 @@ test('apple-music provider default query falls back from artist and song to albu
   const provider = createProviderWith({
     gotStub: async url => {
       calls.push(url)
-      if (url.includes('entity=album')) return { results: [{ collectionId: 697194953 }] }
-      return { results: [{ artistId: 'not-a-number', trackId: 'not-a-number' }] }
+      if (url.includes('entity=album')) { return { results: [{ collectionId: 697194953 }] } }
+      return {
+        results: [{ artistId: 'not-a-number', trackId: 'not-a-number' }]
+      }
     }
   })
 
-  const url = await provider({ input: 'discovery' })
+  const url = await provider('discovery')
 
   t.is(url, 'https://music.apple.com/us/album/697194953')
   t.is(calls.length, 3)
@@ -144,7 +149,7 @@ test('apple-music provider resolves typed artist names from iTunes search', asyn
     }
   })
 
-  const url = await provider({ input: 'artist:daft punk' })
+  const url = await provider('artist:daft punk')
 
   t.is(url, 'https://music.apple.com/us/artist/5468295')
 })
@@ -158,7 +163,7 @@ test('apple-music provider keeps numeric typed album ids as-is', async t => {
     }
   })
 
-  const url = await provider({ input: 'album:1441164495' })
+  const url = await provider('album:1441164495')
 
   t.is(url, 'https://music.apple.com/us/album/1441164495')
   t.false(gotCalled)
@@ -177,7 +182,7 @@ test('apple-music provider resolves typed album names from iTunes search', async
     }
   })
 
-  const url = await provider({ input: 'album:discovery' })
+  const url = await provider('album:discovery')
 
   t.is(url, 'https://music.apple.com/us/album/697194953')
 })
@@ -187,7 +192,7 @@ test('apple-music provider falls back to encoded search query when iTunes id is 
     gotStub: async () => ({ results: [{ artistId: 'not-a-number' }] })
   })
 
-  const url = await provider({ input: 'daft punk' })
+  const url = await provider('daft punk')
 
   t.is(url, 'https://music.apple.com/us/search?term=daft%20punk')
 })
@@ -197,7 +202,7 @@ test('apple-music provider falls back to encoded album query when iTunes id is i
     gotStub: async () => ({ results: [{ collectionId: 'not-a-number' }] })
   })
 
-  const url = await provider({ input: 'album:random access memories' })
+  const url = await provider('album:random access memories')
 
   t.is(url, 'https://music.apple.com/us/album/random%20access%20memories')
 })
@@ -206,7 +211,9 @@ test('apple-music provider resolves typed song names from iTunes search', async 
   const provider = createProviderWith({
     gotStub: async (url, opts) => {
       t.true(
-        url.includes('https://itunes.apple.com/search?term=harder%20better%20faster%20stronger')
+        url.includes(
+          'https://itunes.apple.com/search?term=harder%20better%20faster%20stronger'
+        )
       )
       t.true(url.includes('entity=song'))
       t.true(url.includes('limit=1'))
@@ -217,7 +224,7 @@ test('apple-music provider resolves typed song names from iTunes search', async 
     }
   })
 
-  const url = await provider({ input: 'song:harder better faster stronger' })
+  const url = await provider('song:harder better faster stronger')
 
   t.is(url, 'https://music.apple.com/us/song/697195787')
 })
@@ -231,7 +238,7 @@ test('apple-music provider keeps numeric typed song ids as-is', async t => {
     }
   })
 
-  const url = await provider({ input: 'song:697195787' })
+  const url = await provider('song:697195787')
 
   t.is(url, 'https://music.apple.com/us/song/697195787')
   t.false(gotCalled)
@@ -242,7 +249,10 @@ test('apple-music provider falls back to encoded song query when iTunes id is in
     gotStub: async () => ({ results: [{ trackId: 'not-a-number' }] })
   })
 
-  const url = await provider({ input: 'song:harder better faster stronger' })
+  const url = await provider('song:harder better faster stronger')
 
-  t.is(url, 'https://music.apple.com/us/song/harder%20better%20faster%20stronger')
+  t.is(
+    url,
+    'https://music.apple.com/us/song/harder%20better%20faster%20stronger'
+  )
 })

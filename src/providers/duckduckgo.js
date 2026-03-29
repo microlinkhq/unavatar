@@ -1,6 +1,6 @@
 'use strict'
 
 module.exports = () =>
-  function duckduckgo ({ input }) {
+  function duckduckgo (input) {
     return `https://icons.duckduckgo.com/ip3/${input}.ico`
   }
