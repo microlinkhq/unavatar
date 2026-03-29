@@ -1,3 +1,8 @@
+## 3.9.0 (2026-03-29)
+
+### Features
+
+* better provider contract ([#523](https://github.com/Kikobeats/unavatar/issues/523)) ([794cbfb](https://github.com/Kikobeats/unavatar/commit/794cbfb665267396945aa380c8cc762ea220d6b7))
 ## 3.8.0 (2026-03-27)
 
 ### Features
