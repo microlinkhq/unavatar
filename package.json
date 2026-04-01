@@ -132,7 +132,7 @@
     "html-get": "~2.22.0",
     "https-tls": "~1.0.24",
     "ipaddr.js": "~2.3.0",
-    "is-absolute-url": "~3.0.3",
+    "is-absolute-url": "~4.0.1",
     "is-antibot": "~1.4.1",
     "is-email-like": "~1.0.0",
     "lodash": "~4.17.23",
