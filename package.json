@@ -128,7 +128,7 @@
     "cacheable-lookup": "~6.1.0",
     "data-uri-regex": "~0.1.4",
     "debug-logfmt": "~1.4.7",
-    "got": "~11.8.6",
+    "got": "~15.0.0",
     "html-get": "~2.22.0",
     "https-tls": "~1.0.24",
     "ipaddr.js": "~2.3.0",
