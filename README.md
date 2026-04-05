@@ -1,4 +1,48 @@
-![logo](https://unavatar.io/banner.png ':id=banner')
+![logo](https://unavatar.io/api/og?v=mt3m9z9rz ':id=banner')
+
+- [Table of Contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Quick start](#quick-start)
+- [Query parameters](#query-parameters)
+  - [TTL](#ttl)
+  - [Fallback](#fallback)
+  - [JSON](#json)
+- [Pricing](#pricing)
+- [Providers](#providers)
+  - [Apple Music](#apple-music)
+  - [Bluesky](#bluesky)
+  - [DeviantArt](#deviantart)
+  - [Dribbble](#dribbble)
+  - [DuckDuckGo](#duckduckgo)
+  - [GitHub](#github)
+  - [GitLab](#gitlab)
+  - [LinkedIn](#linkedin)
+  - [Google](#google)
+  - [Instagram](#instagram)
+  - [Ko-fi](#ko-fi)
+  - [Medium](#medium)
+  - [Microlink](#microlink)
+  - [Mastodon](#mastodon)
+  - [OnlyFans](#onlyfans)
+  - [OpenStreetMap](#openstreetmap)
+  - [Patreon](#patreon)
+  - [Printables](#printables)
+  - [Reddit](#reddit)
+  - [SoundCloud](#soundcloud)
+  - [Spotify](#spotify)
+  - [Substack](#substack)
+  - [Telegram](#telegram)
+  - [TikTok](#tiktok)
+  - [Twitch](#twitch)
+  - [Vimeo](#vimeo)
+  - [WhatsApp](#whatsapp)
+  - [YouTube](#youtube)
+- [Response Format](#response-format)
+- [Response Headers](#response-headers)
+
+---
+
+## Table of Contents
 
 - [Introduction](#introduction)
 - [Quick start](#quick-start)
@@ -47,7 +91,7 @@ Welcome to **unavatar.io**, the ultimate avatar service that offers everything y
 
 - **Versatile**: A wide range of platforms and services including [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), etc., meaning you can rule all of them just querying against unavatar.
 
-- **Speed**: Designed to be fast and efficient with a 97% cache hit rate, serving 24.3 TB of data across 522M requests.
+- **Speed**: Designed to be fast and efficient with a 93% cache hit rate, serving 21.7 TB of data across 728M requests.
 
 - **Optimize**: All the images are not only compressed on-the-fly to reduce their size and save bandwith, but also optimized to maintain a high-quality ratio. They are ready for immediate use, enhancing the overall optimization of your website or application.
 
