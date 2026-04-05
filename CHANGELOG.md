@@ -1,3 +1,8 @@
+## 3.9.30 (2026-04-05)
+
+### Bug Fixes
+
+* **linkedin:** detect 999 status code ([#535](https://github.com/Kikobeats/unavatar/issues/535)) ([92d3982](https://github.com/Kikobeats/unavatar/commit/92d3982721b21e908a0a6d1102342822bd94b19f))
 ## 3.9.29 (2026-04-05)
 ## 3.9.28 (2026-04-05)
 ## 3.9.27 (2026-04-05)
