@@ -111,9 +111,10 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           })
 
           const isRateLimited = statusCode === httpStatus.TOO_MANY_REQUESTS
+          const providerBlocked = isBlocked?.($)
 
           const { detected: antibotDetected, provider: antibotProvider } =
-            isRateLimited
+            isRateLimited || providerBlocked
               ? { detected: false, provider: null }
               : isAntibot({
                 url: providerUrl,
@@ -121,7 +122,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
                 body: attempt.lastHtml
               })
 
-          if (isRateLimited || antibotDetected || isBlocked?.($) === true) {
+          if (isRateLimited || providerBlocked || antibotDetected) {
             error.blocked = true
           }
 
