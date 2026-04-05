@@ -1,3 +1,8 @@
+## 3.9.8 (2026-04-05)
+
+### Bug Fixes
+
+* **instagram:** handle login wall ([#534](https://github.com/Kikobeats/unavatar/issues/534)) ([f09101c](https://github.com/Kikobeats/unavatar/commit/f09101c746eb899ba9f1891686954f8c9a766d5f))
 ## 3.9.7 (2026-04-05)
 ## 3.9.6 (2026-04-05)
 ## 3.9.5 (2026-04-05)
