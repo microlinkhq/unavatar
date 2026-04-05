@@ -1,4 +1,4 @@
-![logo](https://unavatar.io/api/og?v=193myy1sl ':id=banner')
+![logo](https://unavatar.io/api/og?v=j4tq49amo ':id=banner')
 
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
