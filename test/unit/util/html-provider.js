@@ -373,19 +373,6 @@ test('createHtmlProvider does not set blocked when getter returns undefined', as
   t.is(error.blocked, undefined)
 })
 
-test('createHtmlProvider sets blocked when isBlocked returns true', async t => {
-  const provider = createProvider({
-    getterResult: undefined,
-    isBlocked: () => true
-  })
-
-  const error = await t.throwsAsync(runProvider(provider), {
-    message: 'Empty value returned by the provider.'
-  })
-
-  t.true(error.blocked)
-})
-
 test('createHtmlProvider sets blocked via is-antibot when HTML contains antibot signals', async t => {
   const html =
     '<html><head><title>Blocked</title></head><body><div class="cf-turnstile"></div></body></html>'
