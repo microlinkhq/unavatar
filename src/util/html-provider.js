@@ -10,13 +10,20 @@ const ExtendableError = require('./error')
 
 const NOT_FOUND = Symbol('NOT_FOUND')
 
+const EMPTY_PROVIDER_VALUE_CODE = {
+  MISSING_STATUS_CODE: 'missing_status_code',
+  EMPTY_GETTER_RESULT: 'empty_getter_result'
+}
+
 const isStatusCodeMissing = statusCode =>
   statusCode === undefined || statusCode === null || statusCode === ''
 
-const createEmptyProviderValueError = ({ provider, statusCode }) =>
+const createProviderError = ({ provider, statusCode, cause, code }) =>
   new ExtendableError({
     provider,
     statusCode,
+    cause,
+    code,
     message: 'Empty value returned by the provider.'
   })
 
@@ -67,10 +74,22 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           typeof $ === 'function' && typeof $.html === 'function'
             ? $.html()
             : undefined
+        attempt.lastHeaders = responseHeaders
+        attempt.lastStatusCode = statusCode
 
         if (isStatusCodeMissing(statusCode)) {
-          log.error({ statusCode, status: 'missing_status_code' })
-          throw createEmptyProviderValueError({ provider: name, statusCode })
+          const code = EMPTY_PROVIDER_VALUE_CODE.MISSING_STATUS_CODE
+          log.error({ statusCode, status: code })
+          throw createProviderError({
+            provider: name,
+            statusCode,
+            cause: {
+              html: attempt.lastHtml,
+              headers: responseHeaders,
+              statusCode
+            },
+            code
+          })
         }
 
         if (statusCode === httpStatus.NOT_FOUND) {
@@ -80,11 +99,16 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
 
         const result = getter($)
         if (typeof result !== 'string' || result === '') {
-          const error = createEmptyProviderValueError({
+          const error = createProviderError({
             provider: name,
-            statusCode
+            statusCode,
+            code: EMPTY_PROVIDER_VALUE_CODE.EMPTY_GETTER_RESULT,
+            cause: {
+              html: attempt.lastHtml,
+              headers: responseHeaders,
+              statusCode
+            }
           })
-          error.html = attempt.lastHtml
 
           const { detected: antibotDetected, provider: antibotProvider } =
             isAntibot({
