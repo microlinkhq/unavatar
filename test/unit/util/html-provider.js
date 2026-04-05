@@ -58,9 +58,10 @@ test('createHtmlProvider throws when getter output is empty', async t => {
     getterResult: undefined
   })
 
-  await t.throwsAsync(runProvider(provider), {
+  const error = await t.throwsAsync(runProvider(provider), {
     message: 'Empty value returned by the provider.'
   })
+  t.is(error.code, 'empty_getter_result')
 })
 
 test('createHtmlProvider throws when getter output is empty string', async t => {
@@ -127,8 +128,14 @@ test('createHtmlProvider throws when status code is undefined', async t => {
     getHTML: async () => ({ $: {}, statusCode: undefined })
   })
 
-  await t.throwsAsync(runProvider(provider), {
+  const error = await t.throwsAsync(runProvider(provider), {
     message: 'Empty value returned by the provider.'
+  })
+  t.is(error.code, 'missing_status_code')
+  t.deepEqual(error.cause, {
+    html: undefined,
+    headers: {},
+    statusCode: undefined
   })
 })
 
@@ -200,6 +207,42 @@ test('createHtmlProvider forwards gotOpts to getHTML when attempt is called with
   t.true(callOpts.gotOpts?.customOption === true)
 })
 
+test('createHtmlProvider exposes response headers and status code via attempt', async t => {
+  const responseHeaders = {
+    'content-type': 'text/html; charset=utf-8',
+    'cache-control': 'private, no-cache'
+  }
+  const responseStatusCode = 206
+
+  const onFetchHTML = async ({ attempt }) => {
+    await attempt()
+    return {
+      headers: attempt.lastHeaders,
+      statusCode: attempt.lastStatusCode
+    }
+  }
+
+  const { createHtmlProvider } = require('../../../src/util/html-provider')({
+    PROXY_TIMEOUT: 8000,
+    getHTML: async () => ({
+      $: {},
+      statusCode: responseStatusCode,
+      headers: responseHeaders
+    }),
+    onFetchHTML
+  })
+
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://example.com/user',
+    getter: () => 'https://cdn.example.com/avatar.png'
+  })
+
+  const result = await runProvider(provider)
+  t.deepEqual(result.headers, responseHeaders)
+  t.is(result.statusCode, responseStatusCode)
+})
+
 test('createHtmlProvider delegates to onFetchHTML when provided', async t => {
   const getHTML = sinon.stub().resolves({ $: {}, statusCode: 200 })
   const onFetchHTML = sinon
@@ -258,10 +301,14 @@ test('createHtmlProvider passes req and res to onFetchHTML', async t => {
 
 test('createHtmlProvider attaches html to error when getter returns empty', async t => {
   const $ = cheerio.load('<html><body><h1>Blocked</h1></body></html>')
+  const responseHeaders = {
+    server: 'instagram',
+    'content-type': 'text/html; charset=utf-8'
+  }
 
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
-    getHTML: async () => ({ $, statusCode: 200 })
+    getHTML: async () => ({ $, statusCode: 200, headers: responseHeaders })
   })
 
   const provider = createHtmlProvider({
@@ -274,8 +321,10 @@ test('createHtmlProvider attaches html to error when getter returns empty', asyn
     message: 'Empty value returned by the provider.'
   })
 
-  t.is(typeof error.html, 'string')
-  t.true(error.html.includes('<h1>Blocked</h1>'))
+  t.is(typeof error.cause?.html, 'string')
+  t.true(error.cause?.html.includes('<h1>Blocked</h1>'))
+  t.deepEqual(error.cause?.headers, responseHeaders)
+  t.is(error.cause?.statusCode, 200)
 })
 
 test('createHtmlProvider sets blocked and attaches html on error when isBlocked returns true', async t => {
@@ -298,8 +347,9 @@ test('createHtmlProvider sets blocked and attaches html on error when isBlocked 
   })
 
   t.true(error.blocked)
-  t.is(typeof error.html, 'string')
-  t.true(error.html.includes('Login'))
+  t.is(typeof error.cause?.html, 'string')
+  t.true(error.cause?.html.includes('Login'))
+  t.is(error.cause?.statusCode, 200)
 })
 
 test('createHtmlProvider does not set blocked when getter returns undefined', async t => {
