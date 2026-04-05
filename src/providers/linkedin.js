@@ -1,5 +1,7 @@
 'use strict'
 
+const LINKEDIN_BLOCKED_STATUS = 999
+
 const getAvatarUrl = input => {
   const [first, second] = input.split(':')
   const type = second ? first : 'user'
@@ -12,7 +14,8 @@ module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'linkedin',
     url: getAvatarUrl,
-    getter: getOgImage
+    getter: getOgImage,
+    isBlocked: ({ statusCode }) => statusCode === LINKEDIN_BLOCKED_STATUS
   })
 
 module.exports.getAvatarUrl = getAvatarUrl
