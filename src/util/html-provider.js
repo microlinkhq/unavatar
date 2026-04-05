@@ -118,6 +118,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
               ? { detected: false, provider: null }
               : isAntibot({
                 url: providerUrl,
+                statusCode,
                 headers: responseHeaders,
                 body: attempt.lastHtml
               })
