@@ -409,6 +409,30 @@ test('createHtmlProvider sets blocked via is-antibot when HTML contains antibot 
   t.true(error.blocked)
 })
 
+test('createHtmlProvider sets blocked when status code is 429', async t => {
+  const $ = cheerio.load(
+    '<html><head><title>kikobeats</title></head><body></body></html>'
+  )
+
+  const { createHtmlProvider } = require('../../../src/util/html-provider')({
+    PROXY_TIMEOUT: 8000,
+    getHTML: async () => ({ $, statusCode: 429 })
+  })
+
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://www.instagram.com/kikobeats',
+    getter: () => undefined
+  })
+
+  const error = await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.true(error.blocked)
+  t.is(error.cause?.statusCode, 429)
+})
+
 test('module exports NOT_FOUND symbol', t => {
   t.is(typeof NOT_FOUND, 'symbol')
   t.is(NOT_FOUND.toString(), 'Symbol(NOT_FOUND)')
