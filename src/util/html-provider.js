@@ -40,7 +40,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
    *   Extracts the avatar URL from the fetched HTML.
    *   - `string`    — avatar URL found (success).
    *   - `undefined`  — avatar not found (normal failure, no retry).
-   * @param {($: cheerio.CheerioAPI) => boolean} [opts.isBlocked]
+   * @param {(context: { $: cheerio.CheerioAPI, statusCode: number }) => boolean} [opts.isBlocked]
    *   Optional provider-specific blocked-page detector, checked after the
    *   default `is-antibot` check when getter returns empty/undefined.
    * @param {() => object} [opts.htmlOpts] - Returns extra options merged into the fetch call.
@@ -111,7 +111,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           })
 
           const isRateLimited = statusCode === httpStatus.TOO_MANY_REQUESTS
-          const providerBlocked = isBlocked?.($)
+          const providerBlocked = isBlocked?.({ $, statusCode })
 
           const { detected: antibotDetected, provider: antibotProvider } =
             isRateLimited || providerBlocked

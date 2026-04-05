@@ -339,7 +339,7 @@ test('createHtmlProvider sets blocked and attaches html on error when isBlocked 
     name: 'test-provider',
     url: () => 'https://www.instagram.com/willsmith',
     getter: () => undefined,
-    isBlocked: $ => $('title').text().includes('Login')
+    isBlocked: ({ $ }) => $('title').text().includes('Login')
   })
 
   const error = await t.throwsAsync(runProvider(provider), {

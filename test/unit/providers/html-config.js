@@ -183,12 +183,12 @@ test('instagram isBlocked detects login wall', t => {
   const loginPage = cheerio.load(
     '<html><title>Login \u2022 Instagram</title></html>'
   )
-  t.true(instagram.isBlocked(loginPage))
+  t.true(instagram.isBlocked({ $: loginPage }))
 
   const profilePage = cheerio.load(
     '<html><title>Will Smith (@willsmith) \u2022 Instagram</title></html>'
   )
-  t.false(instagram.isBlocked(profilePage))
+  t.false(instagram.isBlocked({ $: profilePage }))
 })
 
 test('instagram getter returns og:image URL for valid profile page', t => {
