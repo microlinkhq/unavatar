@@ -147,7 +147,7 @@
     "top-crawler-agents": "~1.0.35",
     "top-user-agents": "~2.1.105",
     "ua-hints": "~1.0.1",
-    "unique-random-array": "~2.0.0",
+    "unique-random-array": "~3.0.0",
     "url-regex-safe": "~4.0.0"
   },
   "devDependencies": {
