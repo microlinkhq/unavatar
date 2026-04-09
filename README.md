@@ -3,17 +3,17 @@
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Quick start](#quick-start)
+- [Authentication](#authentication)
+- [Pricing](#pricing)
+- [Cache](#cache)
 - [Query parameters](#query-parameters)
   - [TTL](#ttl)
   - [Fallback](#fallback)
   - [JSON](#json)
-- [Pricing](#pricing)
 - [Providers](#providers)
   - [Apple Music](#apple-music)
-  - [Behance](#behance)
   - [Bluesky](#bluesky)
   - [DeviantArt](#deviantart)
-  - [Discord](#discord)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
   - [GitHub](#github)
@@ -30,12 +30,10 @@
   - [Patreon](#patreon)
   - [Printables](#printables)
   - [Reddit](#reddit)
-  - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
   - [Substack](#substack)
   - [Telegram](#telegram)
-  - [Threads](#threads)
   - [TikTok](#tiktok)
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
@@ -50,17 +48,17 @@
 
 - [Introduction](#introduction)
 - [Quick start](#quick-start)
+- [Authentication](#authentication)
+- [Pricing](#pricing)
+- [Cache](#cache)
 - [Query parameters](#query-parameters)
   - [TTL](#ttl)
   - [Fallback](#fallback)
   - [JSON](#json)
-- [Pricing](#pricing)
 - [Providers](#providers)
   - [Apple Music](#apple-music)
-  - [Behance](#behance)
   - [Bluesky](#bluesky)
   - [DeviantArt](#deviantart)
-  - [Discord](#discord)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
   - [GitHub](#github)
@@ -77,12 +75,10 @@
   - [Patreon](#patreon)
   - [Printables](#printables)
   - [Reddit](#reddit)
-  - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
   - [Substack](#substack)
   - [Telegram](#telegram)
-  - [Threads](#threads)
   - [TikTok](#tiktok)
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
@@ -116,6 +112,161 @@ The service is exposed in **unavatar.io** via provider endpoints:
 - a **domain**: [unavatar.io/google/reddit.com](https://unavatar.io/google/reddit.com)
 
 Use the `/:provider/:key` format for all lookups. You can read more about available providers in [providers](https://unavatar.io/docs#providers).
+
+## Authentication
+
+The anonymous requests works without authentication. They are limited to 25 requests/day per IP address.
+
+For [PRO](https://unavatar.io/checkout) users, the requests must include the API key as the `x-api-key` request header:
+
+``` bash
+curl -H "x-api-key: YOUR_API_KEY" "https://[unavatar.io/github/kikobeats"](https://unavatar.io/github/kikobeats")
+```
+
+``` javascript
+await fetch('https://[unavatar.io/github/kikobeats',](https://unavatar.io/github/kikobeats',) {
+  headers: {
+    'x-api-key': process.env.UNAVATAR_API_KEY
+  }
+})
+```
+
+``` python
+import os
+import requests
+
+response = requests.get(
+  'https://[unavatar.io/github/kikobeats',](https://unavatar.io/github/kikobeats',)
+  headers={'x-api-key': os.environ['UNAVATAR_API_KEY']}
+)
+```
+
+``` golang
+package main
+
+import (
+  "net/http"
+  "os"
+)
+
+func main() {
+  req, _ := http.NewRequest("GET", "https://[unavatar.io/github/kikobeats",](https://unavatar.io/github/kikobeats",) nil)
+  req.Header.Set("x-api-key", os.Getenv("UNAVATAR_API_KEY"))
+
+  resp, _ := http.DefaultClient.Do(req)
+  defer resp.Body.Close()
+}
+```
+
+``` ruby
+require 'net/http'
+require 'uri'
+
+uri = URI('https://[unavatar.io/github/kikobeats')](https://unavatar.io/github/kikobeats'))
+request = Net::HTTP::Get.new(uri)
+request['x-api-key'] = ENV['UNAVATAR_API_KEY']
+
+response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+  http.request(request)
+end
+```
+
+``` php
+$ch = curl_init('https://[unavatar.io/github/kikobeats');](https://unavatar.io/github/kikobeats');)
+
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+  'x-api-key: ' . getenv('UNAVATAR_API_KEY'),
+]);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+curl_close($ch);
+```
+
+If the API key is invalid, the service returns `401` with code `EAPIKEY`.
+
+Rate limit status can be verified using these response headers:
+
+| Header                   | Description                                                    |
+| ------------------------ | -------------------------------------------------------------- |
+| `x-rate-limit-limit`     | Maximum anonymous requests allowed in the current daily window |
+| `x-rate-limit-remaining` | Requests remaining in the current window                       |
+| `x-rate-limit-reset`     | UTC epoch seconds when the current window resets               |
+
+``` bash
+$ curl -I https://[unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
+
+x-rate-limit-limit: 25
+x-rate-limit-remaining: 24
+x-rate-limit-reset: 1744243200
+```
+
+## Pricing
+
+Unavatar pricing is simple: you can start on the anonymous free tier, then authenticate with `x-api-key` to get additional included usage and metered billing for higher volume.
+
+| Scenario                                     | Included free usage    | Billing                          |
+| -------------------------------------------- | ---------------------- | -------------------------------- |
+| Anonymous (no API key)                       | 25 requests/day per IP | Free                             |
+| Authenticated origin requests (`x-api-key`)  | 50 origin requests/day | Metered monthly after free quota |
+| Proxy requests (`datacenter`, `residential`) | None                   | Always metered                   |
+
+For higher usage, the **[PRO](https://unavatar.io/checkout)** plan is usage-based billing that includes the 50 free daily origin requests, metered overage, and custom TTL.
+
+Every request has a cost in tokens (**\$0.005 per token**) based on the proxy tier needed to resolve the avatar:
+
+| Proxy tier  | Tokens | Cost    |
+| ----------- | :----: | :-----: |
+| Origin      | 1      | \$0.005 |
+| Datacenter  | +2     | \$0.015 |
+| Residential | +4     | \$0.025 |
+
+The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
+
+``` bash
+$ curl -I -H "x-api-key: YOUR_API_KEY" https://[unavatar.io/instagram/kikobeats](https://unavatar.io/instagram/kikobeats)
+
+x-pricing-tier: pro
+x-proxy-tier: origin
+x-unavatar-cost: 1
+```
+
+To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After completing the payment, you'll receive an API key.
+
+## Cache
+
+Unavatar caches avatar lookups to make repeated requests fast and stable:
+
+- The first request for a resource fetches the avatar from upstream and stores it in cache
+- Following requests are served from cache until the [TTL](https://unavatar.io/docs#ttl) expires.
+
+For example, if you set `ttl=1h`, the cache behavior looks like this:
+
+| Time  | Request                 | Cache status                        | Plan impact                |
+| ----- | ----------------------- | ----------------------------------- | -------------------------- |
+| 10:00 | `GET /github/kikobeats` | MISS (fetched from upstream)        | Counts as 1 origin request |
+| 10:05 | `GET /github/kikobeats` | HIT (served from cache)             | No usage consumed, no cost |
+| 10:40 | `GET /github/kikobeats` | HIT (served from cache)             | No usage consumed, no cost |
+| 11:02 | `GET /github/kikobeats` | MISS (TTL expired, cache refreshed) | Counts as 1 origin request |
+| 11:10 | `GET /github/kikobeats` | HIT (served from cache)             | No usage consumed, no cost |
+
+To check the cache status in real requests, inspect these response headers:
+
+| Header           | What to look for                                                                        |
+| ---------------- | --------------------------------------------------------------------------------------- |
+| `x-cache-status` | `HIT` means served from cache. `MISS` means fetched/refreshed from upstream.            |
+| `cache-control`  | Shows cache policy and effective TTL (for example `public, max-age=3600` for `ttl=1h`). |
+
+``` bash
+$ curl -I -H "x-api-key: YOUR_API_KEY" "https://[unavatar.io/github/kikobeats?ttl=1h"](https://unavatar.io/github/kikobeats?ttl=1h")
+
+cache-control: public, max-age=3600
+x-cache-status: HIT
+```
+
+The same rule applies to anonymous requests: cache hits are free and do not consume the `25 requests/day` limit.
+
+After TTL expiration, the next request refreshes the cache and is billed/rate-limited according to the request tier (`anonymous`, `origin`, `datacenter`, or `residential`).
 
 ## Query parameters
 
@@ -167,40 +318,6 @@ In case you want to get a JSON payload as response, just pass `json=true`:
 
 e.g., [unavatar.io/github/kikobeats?json](https://unavatar.io/github/kikobeats?json)
 
-## Pricing
-
-The service is **FREE** for everyone, no registration required, with a daily rate limit of **50 requests** per IP address.
-
-For preventing abusive usage, the service has associated a daily rate limit based on requests IP address.
-
-You can verify for your rate limit state checking the following headers in the response:
-
-- `x-rate-limit-limit`: The maximum number of requests that the consumer is permitted to make per minute.
-- `x-rate-limit-remaining`: The number of requests remaining in the current rate limit window.
-- `x-rate-limit-reset`: The time at which the current rate limit window resets in UTC epoch seconds.
-
-For higher usage, the **[PRO](https://unavatar.io/checkout)** plan is a usage-based plan billed monthly that removes rate limits and unlocks custom TTL.
-
-Every request has a cost in tokens (**\$0.005 per token**) based on the proxy tier needed to resolve the avatar:
-
-| Proxy tier  | Tokens | Cost    |
-| ----------- | :----: | :-----: |
-| Origin      | 1      | \$0.005 |
-| Datacenter  | +2     | \$0.015 |
-| Residential | +4     | \$0.025 |
-
-The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
-
-``` bash
-$ curl -I -H "x-api-key: YOUR_API_KEY" https://[unavatar.io/instagram/kikobeats](https://unavatar.io/instagram/kikobeats)
-
-x-pricing-tier: pro
-x-proxy-tier: origin
-x-unavatar-cost: 1
-```
-
-To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After completing the payment, you'll receive an API key.
-
 ## Providers
 
 ### Apple Music
@@ -225,14 +342,6 @@ Available URI format inputs:
   - by song name: [unavatar.io/apple-music/song:harder%20better%20faster%20stronger](https://unavatar.io/apple-music/song:harder%20better%20faster%20stronger)
   - by song ID: [unavatar.io/apple-music/song:697195787](https://unavatar.io/apple-music/song:697195787)
 
-### Behance
-
-Get any Behance user's profile picture by their username.
-
-Available inputs:
-
-- slug, e.g., [unavatar.io/behance/kikobeats](https://unavatar.io/behance/kikobeats)
-
 ### Bluesky
 
 Get any Bluesky user's profile picture by their handle. Domain-style handles are supported.
@@ -249,14 +358,6 @@ Get any DeviantArt user's profile picture by their username.
 Available inputs:
 
 - slug, e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
-
-### Discord
-
-Get any Discord server icon by invite code.
-
-Available inputs:
-
-- Invite code, e.g., [unavatar.io/discord/eret](https://unavatar.io/discord/eret)
 
 ### Dribbble
 
@@ -402,14 +503,6 @@ Available inputs:
 
 - slug, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
 
-### Snapchat
-
-Get any Snapchat user's profile picture by their username.
-
-Available inputs:
-
-- slug, e.g., [unavatar.io/snapchat/teddysdaytoday](https://unavatar.io/snapchat/teddysdaytoday) or [unavatar.io/snapchat/@teddysdaytoday](https://unavatar.io/snapchat/@teddysdaytoday)
-
 ### SoundCloud
 
 Get any SoundCloud artist's profile picture by their username.
@@ -453,14 +546,6 @@ Get any Telegram user's profile picture by their username.
 Available inputs:
 
 - slug, e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
-
-### Threads
-
-Get any Threads user's profile picture by their username.
-
-Available inputs:
-
-- slug, e.g., [unavatar.io/threads/zuck](https://unavatar.io/threads/zuck) or [unavatar.io/threads/@zuck](https://unavatar.io/threads/@zuck)
 
 ### TikTok
 
@@ -555,6 +640,18 @@ These headers help you understand pricing, limits, and request diagnostics.
 | `x-rate-limit-reset`     | UTC epoch seconds when window resets (free tier only)     |
 | `retry-after`            | Seconds until rate limit resets (only on 429 responses)   |
 
+``` bash
+$ curl -I -H "x-api-key: YOUR_API_KEY" https://[unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
+
+x-pricing-tier: pro
+x-timestamp: 1744209600
+x-unavatar-cost: 1
+x-proxy-tier: origin
+x-rate-limit-limit: 50
+x-rate-limit-remaining: 49
+x-rate-limit-reset: 1744243200
+```
+
 Expected errors are known operational cases returned with stable codes.
 
 - **Client-side issues** return `status: "fail"` (HTTP `4xx`).
@@ -583,7 +680,7 @@ Expected errors are known operational cases returned with stable codes.
 | 409  | `EAPIKEYEXISTS`      | Custom API key already exists               |
 | 409  | `EAPIKEYLABELEXISTS` | API key label already exists                |
 | 409  | `EAPIKEYMIN`         | Attempt to remove last remaining key        |
-| 429  | `ERATE`              | Free-tier daily rate limit exceeded         |
+| 429  | `ERATE`              | Anonymous daily rate limit exceeded         |
 | 500  | `ECHECKOUT`          | Stripe checkout session creation failed     |
 | 500  | `EAPIKEYFAILED`      | API key retrieval after checkout failed     |
 | 500  | `EINTERNAL`          | Unexpected internal server failure          |
