@@ -84,6 +84,7 @@ module.exports = ({ baseUrl }) => {
   let durationInfo = null
   let apiHeaders = null
   let apiStatusCode = null
+  let apiHttpVersion = null
 
   const logMeta = () => {
     if (apiHeaders) {
@@ -95,7 +96,9 @@ module.exports = ({ baseUrl }) => {
 
         console.error()
         console.error(
-          `HTTP/1.1 ${apiStatusCode} ${STATUS_CODES[apiStatusCode]}`
+          `HTTP/${apiHttpVersion || '1.1'} ${apiStatusCode} ${
+            STATUS_CODES[apiStatusCode]
+          }`
         )
         headerEntries
           .sort(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()))
@@ -116,9 +119,10 @@ module.exports = ({ baseUrl }) => {
   if (flags.apiKey) requestHeaders['x-api-key'] = flags.apiKey
 
   got(apiUrl.toString(), { headers: requestHeaders, responseType: 'json' })
-    .then(({ body, headers, statusCode, timings }) => {
+    .then(({ body, headers, statusCode, timings, httpVersion }) => {
       apiHeaders = headers
       apiStatusCode = statusCode
+      apiHttpVersion = httpVersion
 
       const duration = Date.now() - startTime
       const timeToFirstByte =
@@ -164,6 +168,7 @@ output: ${imageUrl}
       if (response) {
         apiHeaders = response.headers
         apiStatusCode = response.statusCode
+        apiHttpVersion = response.httpVersion
       }
 
       if (!durationInfo) {
