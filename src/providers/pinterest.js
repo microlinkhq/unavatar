@@ -14,4 +14,3 @@ module.exports = ({ createHtmlProvider }) =>
   })
 
 module.exports.getAvatarUrl = getAvatarUrl
-module.exports.getProfileUrl = getProfileUrl
