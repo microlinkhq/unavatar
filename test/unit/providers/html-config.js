@@ -1,13 +1,12 @@
 'use strict'
 
-const test = require('ava')
-const cheerio = require('cheerio')
 const proxyquire = require('proxyquire').noPreserveCache()
+const cheerio = require('cheerio')
+const test = require('ava')
+
+const getOgImage = require('../../../src/util/get-og-image')
 
 const createHtmlProvider = opts => opts
-const getOgImage = $ =>
-  $('meta[property="og:image"]').attr('content') ||
-  $('meta[name="og:image"]').attr('content')
 
 test('html provider modules expose expected URL builders', t => {
   const bluesky = proxyquire('../../../src/providers/bluesky', {

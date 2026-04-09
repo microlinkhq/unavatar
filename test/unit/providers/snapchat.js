@@ -3,6 +3,8 @@
 const cheerio = require('cheerio')
 const test = require('ava')
 
+const getOgImage = require('../../../src/util/get-og-image')
+
 const { getAvatarUrl } = require('../../../src/providers/snapchat')
 
 test('.getAvatarUrl prepends @ when missing', t => {
@@ -30,9 +32,6 @@ test('.getter extracts og:image from snapchat html markup', t => {
   const $ = cheerio.load(html)
 
   const createHtmlProvider = opts => opts
-  const getOgImage = $ =>
-    $('meta[property="og:image"]').attr('content') ||
-    $('meta[name="og:image"]').attr('content')
 
   const snapchat = require('../../../src/providers/snapchat')({
     createHtmlProvider,

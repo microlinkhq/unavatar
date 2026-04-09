@@ -1,15 +1,16 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const test = require('ava')
 const sinon = require('sinon')
+const test = require('ava')
+
+const getOgImage = require('../../../src/util/get-og-image')
 
 const {
   getAvatarUrl,
   getGuildIdFromOgImage,
   getInviteCode,
-  getInviteUrl,
-  getOgImage
+  getInviteUrl
 } = require('../../../src/providers/discord')
 
 test('.getInviteCode from raw invite code', t => {

@@ -5,9 +5,7 @@ const DISCORD_INVITE_HOST_RE =
 const DISCORD_GUILD_ID_RE =
   /^https:\/\/cdn\.discordapp\.com\/splashes\/(\d+)\/[^/?#]+\.[^/?#]+(?:\?[^#]+)?(?:#.*)?$/
 
-const getOgImage = $ =>
-  $('meta[property="og:image"]').attr('content') ||
-  $('meta[name="og:image"]').attr('content')
+const DISCORD_INVITE_URL_BASE = 'https://discord.com/invite/'
 
 const getInviteCode = input => {
   if (typeof input !== 'string') return null
@@ -22,26 +20,32 @@ const getInviteCode = input => {
 
   const normalizedInput = hasProtocol ? value : `https://${value}`
 
+  let url
   try {
-    const url = new URL(normalizedInput)
-    if (!DISCORD_INVITE_HOST_RE.test(url.hostname)) return null
+    url = new URL(normalizedInput)
+  } catch {
+    return null
+  }
 
-    const segments = url.pathname.split('/').filter(Boolean)
-    if (segments.length === 0) return null
+  if (!DISCORD_INVITE_HOST_RE.test(url.hostname)) return null
 
-    if (url.hostname.includes('discord.gg')) return segments[0]
+  const [firstSegment, secondSegment] = url.pathname.split('/').filter(Boolean)
+  if (!firstSegment) return null
 
-    if (segments[0] === 'invite' || segments[0] === 'invites') {
-      return segments[1] ?? null
-    }
-  } catch {}
+  if (url.hostname.includes('discord.gg')) return firstSegment
+
+  if (firstSegment === 'invite' || firstSegment === 'invites') {
+    return secondSegment ?? null
+  }
 
   return null
 }
 
+const buildInviteUrl = inviteCode => `${DISCORD_INVITE_URL_BASE}${inviteCode}`
+
 const getInviteUrl = input => {
   const inviteCode = getInviteCode(input)
-  return inviteCode ? `https://discord.com/invite/${inviteCode}` : undefined
+  return inviteCode ? buildInviteUrl(inviteCode) : undefined
 }
 
 const getInviteApiUrl = inviteCode =>
@@ -58,15 +62,11 @@ const getAvatarUrl = ({ ogImage, iconHash }) => {
   return `https://cdn.discordapp.com/icons/${guildId}/${iconHash}.webp`
 }
 
-module.exports = ({
-  createHtmlProvider,
-  getOgImage: getOgImageFromCtx,
-  got
-}) => {
+module.exports = ({ createHtmlProvider, getOgImage, got }) => {
   const fromInvite = createHtmlProvider({
     name: 'discord',
-    url: getInviteUrl,
-    getter: getOgImageFromCtx ?? getOgImage
+    url: buildInviteUrl,
+    getter: getOgImage
   })
 
   return async function discord (input, context) {
@@ -93,4 +93,3 @@ module.exports.getAvatarUrl = getAvatarUrl
 module.exports.getGuildIdFromOgImage = getGuildIdFromOgImage
 module.exports.getInviteCode = getInviteCode
 module.exports.getInviteUrl = getInviteUrl
-module.exports.getOgImage = getOgImage

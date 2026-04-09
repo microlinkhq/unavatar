@@ -5,6 +5,7 @@ const debug = require('debug-logfmt')('html-provider')
 const isAntibot = require('is-antibot')
 
 const randomCrawlerAgent = require('./crawler-agent')
+const getOgImage = require('./get-og-image')
 const httpStatus = require('./http-status')
 const ExtendableError = require('./error')
 
@@ -26,10 +27,6 @@ const createProviderError = ({ provider, statusCode, cause, code }) =>
     code,
     message: 'Empty value returned by the provider.'
   })
-
-const getOgImage = $ =>
-  $('meta[property="og:image"]').attr('content') ||
-  $('meta[name="og:image"]').attr('content')
 
 module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
   /**

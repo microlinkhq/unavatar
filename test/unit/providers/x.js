@@ -6,19 +6,26 @@ const test = require('ava')
 const fs = require('fs')
 
 const { getProfileImage } = require('../../../src/providers/x')
+const getOgImage = require('../../../src/util/get-og-image')
 
 test('.getProfileImage from JSON-LD when og:image is fallback', t => {
   const html = fs.readFileSync(path.join(__dirname, 'x-jsonld.html'), 'utf8')
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($)
-  t.is(avatarUrl, 'https://pbs.twimg.com/profile_images/1846292082501054464/oKUC44PF_400x400.jpg')
+  const avatarUrl = getProfileImage($, getOgImage)
+  t.is(
+    avatarUrl,
+    'https://pbs.twimg.com/profile_images/1846292082501054464/oKUC44PF_400x400.jpg'
+  )
 })
 
 test('.getProfileImage from og:image and transforms to high resolution', t => {
   const html = fs.readFileSync(path.join(__dirname, 'x-og.html'), 'utf8')
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($)
-  t.is(avatarUrl, 'https://pbs.twimg.com/profile_images/1846292082501054464/oKUC44PF_400x400.jpg')
+  const avatarUrl = getProfileImage($, getOgImage)
+  t.is(
+    avatarUrl,
+    'https://pbs.twimg.com/profile_images/1846292082501054464/oKUC44PF_400x400.jpg'
+  )
 })
 
 test('.getProfileImage transforms `_normal` image URLs to high resolution', t => {
@@ -30,7 +37,7 @@ test('.getProfileImage transforms `_normal` image URLs to high resolution', t =>
     </html>
   `
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($)
+  const avatarUrl = getProfileImage($, getOgImage)
   t.is(avatarUrl, 'https://pbs.twimg.com/profile_images/123/avatar_400x400.jpg')
 })
 
@@ -43,7 +50,7 @@ test('.getProfileImage keeps non-twitter image URLs unchanged', t => {
     </html>
   `
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($)
+  const avatarUrl = getProfileImage($, getOgImage)
   t.is(avatarUrl, 'https://example.com/avatar.jpg')
 })
 
@@ -57,7 +64,10 @@ test('.provider returns undefined on 404 without proxying', async t => {
   }
 
   const htmlProviderFactory = require('../../../src/util/html-provider')
-  const { createHtmlProvider } = htmlProviderFactory({ PROXY_TIMEOUT: 8000, getHTML })
+  const { createHtmlProvider } = htmlProviderFactory({
+    PROXY_TIMEOUT: 8000,
+    getHTML
+  })
 
   const provider = createHtmlProvider({
     name: 'x',
@@ -91,6 +101,6 @@ test('.getProfileImage returns undefined when profile is missing', t => {
     </html>
   `
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($)
+  const avatarUrl = getProfileImage($, getOgImage)
   t.is(avatarUrl, undefined)
 })
