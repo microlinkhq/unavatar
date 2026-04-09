@@ -1,3 +1,8 @@
+## 3.13.0 (2026-04-09)
+
+### Features
+
+* discord ([#544](https://github.com/Kikobeats/unavatar/issues/544)) ([61d3f20](https://github.com/Kikobeats/unavatar/commit/61d3f200e513cc2ad56a2e1f6fea376199dcf3ec))
 ## 3.12.0 (2026-04-09)
 
 ### Features
