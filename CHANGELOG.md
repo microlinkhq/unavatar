@@ -1,3 +1,8 @@
+## 3.10.0 (2026-04-09)
+
+### Features
+
+* pinterest ([#541](https://github.com/Kikobeats/unavatar/issues/541)) ([8e3b520](https://github.com/Kikobeats/unavatar/commit/8e3b5209aafbb548379a81282772b7dc8d42cd4d))
 ## 3.9.35 (2026-04-09)
 ## 3.9.34 (2026-04-09)
 ## 3.9.33 (2026-04-07)
