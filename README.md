@@ -173,13 +173,13 @@ You can verify for your rate limit state checking the following headers in the r
 
 For higher usage, the **[PRO](https://unavatar.io/checkout)** plan is a usage-based plan billed monthly that removes rate limits and unlocks custom TTL.
 
-Every request has a cost in tokens (**\$0.001 per token**) based on the proxy tier needed to resolve the avatar:
+Every request has a cost in tokens (**\$0.005 per token**) based on the proxy tier needed to resolve the avatar:
 
 | Proxy tier  | Tokens | Cost    |
-| ----------- | ------ | ------- |
-| Origin      | 1      | \$0.001 |
-| Datacenter  | +2     | \$0.003 |
-| Residential | +4     | \$0.007 |
+| ----------- | :----: | :-----: |
+| Origin      | 1      | \$0.005 |
+| Datacenter  | +2     | \$0.015 |
+| Residential | +4     | \$0.025 |
 
 The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
 
