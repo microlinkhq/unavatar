@@ -1,3 +1,8 @@
+## 3.11.0 (2026-04-09)
+
+### Features
+
+* add threads.com ([#542](https://github.com/Kikobeats/unavatar/issues/542)) ([720fbc6](https://github.com/Kikobeats/unavatar/commit/720fbc6d8ac9ddef0cb2a5516bfd8c35e902608e))
 ## 3.10.0 (2026-04-09)
 
 ### Features
