@@ -28,6 +28,7 @@
   - [Patreon](#patreon)
   - [Printables](#printables)
   - [Reddit](#reddit)
+  - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
   - [Substack](#substack)
@@ -72,6 +73,7 @@
   - [Patreon](#patreon)
   - [Printables](#printables)
   - [Reddit](#reddit)
+  - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
   - [Substack](#substack)
@@ -379,6 +381,14 @@ Get any Reddit user's avatar by their username.
 Available inputs:
 
 - slug, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
+
+### Snapchat
+
+Get any Snapchat user's profile picture by their username.
+
+Available inputs:
+
+- slug, e.g., [unavatar.io/snapchat/teddysdaytoday](https://unavatar.io/snapchat/teddysdaytoday) or [unavatar.io/snapchat/@teddysdaytoday](https://unavatar.io/snapchat/@teddysdaytoday)
 
 ### SoundCloud
 
