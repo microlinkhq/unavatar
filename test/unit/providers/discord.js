@@ -73,6 +73,18 @@ test('.getAvatarUrl transforms invite og:image + icon hash to Discord icon URL',
   )
 })
 
+test('.getAvatarUrl prefers API guild id when og:image is not a splash URL', t => {
+  t.is(
+    getAvatarUrl({
+      guildId: '639065840754622475',
+      ogImage:
+        'https://cdn.discordapp.com/icons/639065840754622475/478c3c7a8bdb680844442050c4ead285.webp?size=512',
+      iconHash: '478c3c7a8bdb680844442050c4ead285'
+    }),
+    'https://cdn.discordapp.com/icons/639065840754622475/478c3c7a8bdb680844442050c4ead285.webp'
+  )
+})
+
 test('provider resolves guild icon URL from invite page + API metadata', async t => {
   let htmlProviderCalled = false
 
@@ -84,7 +96,7 @@ test('provider resolves guild icon URL from invite page + API metadata', async t
         t.is(url(input), 'https://discord.com/invite/eret')
 
         const $ = cheerio.load(
-          '<meta property="og:image" content="https://cdn.discordapp.com/splashes/639065840754622475/9a447505db14c30c89483fe4f32a5876.jpg?size=512" />'
+          '<meta property="og:image" content="https://cdn.discordapp.com/icons/639065840754622475/478c3c7a8bdb680844442050c4ead285.webp?size=512" />'
         )
         return getter($)
       }
@@ -93,6 +105,7 @@ test('provider resolves guild icon URL from invite page + API metadata', async t
     statusCode: 200,
     body: {
       guild: {
+        id: '639065840754622475',
         icon: '478c3c7a8bdb680844442050c4ead285'
       }
     }

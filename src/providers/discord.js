@@ -55,10 +55,10 @@ const getInviteApiUrl = inviteCode =>
 const getGuildIdFromOgImage = ogImage =>
   ogImage?.match(DISCORD_GUILD_ID_RE)?.[1]
 
-const getAvatarUrl = ({ ogImage, iconHash }) => {
-  const guildId = getGuildIdFromOgImage(ogImage)
-  if (!guildId || !iconHash) return
-  return `https://cdn.discordapp.com/icons/${guildId}/${iconHash}.webp`
+const getAvatarUrl = ({ guildId, ogImage, iconHash }) => {
+  const resolvedGuildId = guildId || getGuildIdFromOgImage(ogImage)
+  if (!resolvedGuildId || !iconHash) return
+  return `https://cdn.discordapp.com/icons/${resolvedGuildId}/${iconHash}.webp`
 }
 
 module.exports = ({ createHtmlProvider, getOgImage, got }) => {
@@ -82,9 +82,11 @@ module.exports = ({ createHtmlProvider, getOgImage, got }) => {
 
     if (metadataResponse.statusCode >= 400) return
 
-    const iconHash = metadataResponse.body?.guild?.icon
+    const guild = metadataResponse.body?.guild
+    const iconHash = guild?.icon
+    const guildId = guild?.id
 
-    return getAvatarUrl({ ogImage, iconHash })
+    return getAvatarUrl({ guildId, ogImage, iconHash })
   }
 }
 
