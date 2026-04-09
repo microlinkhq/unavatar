@@ -10,6 +10,7 @@
 - [Pricing](#pricing)
 - [Providers](#providers)
   - [Apple Music](#apple-music)
+  - [Behance](#behance)
   - [Bluesky](#bluesky)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
@@ -56,6 +57,7 @@
 - [Pricing](#pricing)
 - [Providers](#providers)
   - [Apple Music](#apple-music)
+  - [Behance](#behance)
   - [Bluesky](#bluesky)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
@@ -222,6 +224,14 @@ Available URI format inputs:
 - song
   - by song name: [unavatar.io/apple-music/song:harder%20better%20faster%20stronger](https://unavatar.io/apple-music/song:harder%20better%20faster%20stronger)
   - by song ID: [unavatar.io/apple-music/song:697195787](https://unavatar.io/apple-music/song:697195787)
+
+### Behance
+
+Get any Behance user's profile picture by their username.
+
+Available inputs:
+
+- slug, e.g., [unavatar.io/behance/kikobeats](https://unavatar.io/behance/kikobeats)
 
 ### Bluesky
 
