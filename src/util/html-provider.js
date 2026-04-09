@@ -148,7 +148,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
       }
 
       const result = await attempt()
-      if (result === NOT_FOUND) return undefined
+      if (result === NOT_FOUND) return
       return result
     }
 

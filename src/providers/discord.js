@@ -9,10 +9,10 @@ const DISCORD_GUILD_ID_RE =
 const DISCORD_INVITE_URL_BASE = 'https://discord.com/invite/'
 
 const getInviteCode = input => {
-  if (typeof input !== 'string') return null
+  if (typeof input !== 'string') return
 
   const value = input.trim()
-  if (value === '') return null
+  if (value === '') return
 
   const hasProtocol = value.includes('://')
   const hasPath = value.includes('/')
@@ -25,21 +25,19 @@ const getInviteCode = input => {
   try {
     url = new URL(normalizedInput)
   } catch {
-    return null
+    return
   }
 
-  if (!DISCORD_INVITE_HOST_RE.test(url.hostname)) return null
+  if (!DISCORD_INVITE_HOST_RE.test(url.hostname)) return
 
   const [firstSegment, secondSegment] = url.pathname.split('/').filter(Boolean)
-  if (!firstSegment) return null
+  if (!firstSegment) return
 
   if (url.hostname.includes('discord.gg')) return firstSegment
 
   if (firstSegment === 'invite' || firstSegment === 'invites') {
-    return secondSegment ?? null
+    return secondSegment
   }
-
-  return null
 }
 
 const buildInviteUrl = inviteCode => `${DISCORD_INVITE_URL_BASE}${inviteCode}`
@@ -59,7 +57,7 @@ const getGuildIdFromOgImage = ogImage =>
 
 const getAvatarUrl = ({ ogImage, iconHash }) => {
   const guildId = getGuildIdFromOgImage(ogImage)
-  if (!guildId || !iconHash) return undefined
+  if (!guildId || !iconHash) return
   return `https://cdn.discordapp.com/icons/${guildId}/${iconHash}.webp`
 }
 
@@ -72,17 +70,17 @@ module.exports = ({ createHtmlProvider, getOgImage, got }) => {
 
   return async function discord (input, context) {
     const inviteCode = getInviteCode(input)
-    if (!inviteCode) return undefined
+    if (!inviteCode) return
 
     const ogImage = await fromInvite(inviteCode, context)
-    if (!ogImage) return undefined
+    if (!ogImage) return
 
     const metadataResponse = await got(getInviteApiUrl(inviteCode), {
       responseType: 'json',
       throwHttpErrors: false
     })
 
-    if (metadataResponse.statusCode >= 400) return undefined
+    if (metadataResponse.statusCode >= 400) return
 
     const iconHash = metadataResponse.body?.guild?.icon
 

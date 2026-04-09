@@ -25,12 +25,12 @@ test('.getInviteCode from discord.gg invite URL', t => {
   t.is(getInviteCode('https://discord.gg/eret?event=123'), 'eret')
 })
 
-test('.getInviteCode returns null for non-Discord URL', t => {
-  t.is(getInviteCode('https://example.com/invite/eret'), null)
+test('.getInviteCode returns undefined for non-Discord URL', t => {
+  t.is(getInviteCode('https://example.com/invite/eret'), undefined)
 })
 
-test('.getInviteCode returns null for unsupported Discord path', t => {
-  t.is(getInviteCode('https://discord.com/channels/123'), null)
+test('.getInviteCode returns undefined for unsupported Discord path', t => {
+  t.is(getInviteCode('https://discord.com/channels/123'), undefined)
 })
 
 test('.getInviteUrl builds canonical Discord invite URL', t => {

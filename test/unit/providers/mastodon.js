@@ -19,14 +19,14 @@ test('parses user@server format without leading @', t => {
   })
 })
 
-test('returns null for bare username without server', t => {
-  t.is(parseMastodonInput('kikobeats'), null)
+test('returns undefined for bare username without server', t => {
+  t.is(parseMastodonInput('kikobeats'), undefined)
 })
 
-test('returns null for malformed handles', t => {
-  t.is(parseMastodonInput('@@localhost:8080'), null)
-  t.is(parseMastodonInput('@user@'), null)
-  t.is(parseMastodonInput('@user@a@127.0.0.1'), null)
+test('returns undefined for malformed handles', t => {
+  t.is(parseMastodonInput('@@localhost:8080'), undefined)
+  t.is(parseMastodonInput('@user@'), undefined)
+  t.is(parseMastodonInput('@user@a@127.0.0.1'), undefined)
 })
 
 const createMastodon = (got, isReservedIp) =>
