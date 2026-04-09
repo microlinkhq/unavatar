@@ -127,6 +127,19 @@ test('soundcloud and substack provider options are derived from helper modules',
     headers: { 'user-agent': 'mobile-agent' }
   })
 
+  const snapchat = require('../../../src/providers/snapchat')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(
+    snapchat.url('teddysdaytoday'),
+    'https://www.snapchat.com/@teddysdaytoday'
+  )
+  t.is(
+    snapchat.url('@teddysdaytoday'),
+    'https://www.snapchat.com/@teddysdaytoday'
+  )
+
   const substack = proxyquire('../../../src/providers/substack', {
     '@metascraper/helpers': {
       $jsonld: path => () => `jsonld:${path}`
