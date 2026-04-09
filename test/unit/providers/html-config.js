@@ -137,6 +137,11 @@ test('soundcloud and substack provider options are derived from helper modules',
 
   t.is(patreon.url('kikobeats'), 'https://www.patreon.com/kikobeats')
   t.is(patreon.getter({}), 'jsonld:mainEntity.image.contentUrl')
+
+  const pinterest = require('../../../src/providers/pinterest')({
+    createHtmlProvider
+  })
+  t.is(pinterest.url('ohjoy'), 'https://www.pinterest.com/ohjoy/')
 })
 
 test('linkedin getter returns undefined when og:image is missing', t => {
