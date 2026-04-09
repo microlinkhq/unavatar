@@ -9,6 +9,12 @@ const getOgImage = require('../../../src/util/get-og-image')
 const createHtmlProvider = opts => opts
 
 test('html provider modules expose expected URL builders', t => {
+  const behance = require('../../../src/providers/behance')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(behance.url('kikobeats'), 'https://www.behance.net/kikobeats')
+
   const bluesky = proxyquire('../../../src/providers/bluesky', {
     '@metascraper/helpers': {
       $jsonld: path => () => `jsonld:${path}`
