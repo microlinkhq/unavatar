@@ -57,6 +57,13 @@ test('html provider modules expose expected URL builders', t => {
   })
   t.is(twitch.url('midudev'), 'https://www.twitch.tv/midudev')
 
+  const threads = require('../../../src/providers/threads')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(threads.url('zuck'), 'https://www.threads.com/@zuck')
+  t.is(threads.url('@zuck'), 'https://www.threads.com/@zuck')
+
   const vimeo = require('../../../src/providers/vimeo')({
     createHtmlProvider,
     getOgImage
@@ -193,4 +200,30 @@ test('instagram getter returns og:image URL for valid profile page', t => {
       '</html>'
   )
   t.is(instagram.getter($), avatarUrl)
+})
+
+test('threads getter returns undefined when og:image is missing', t => {
+  const threads = require('../../../src/providers/threads')({
+    createHtmlProvider,
+    getOgImage
+  })
+
+  const $ = cheerio.load('<html><title>Threads</title></html>')
+  t.is(threads.getter($), undefined)
+})
+
+test('threads getter returns og:image URL for valid profile page', t => {
+  const threads = require('../../../src/providers/threads')({
+    createHtmlProvider,
+    getOgImage
+  })
+
+  const avatarUrl =
+    'https://scontent-mad2-1.cdninstagram.com/v/t51.82787-19/550174606.jpg'
+  const $ = cheerio.load(
+    '<html><title>Mark Zuckerberg (@zuck) • Threads, Say more</title>' +
+      `<meta property="og:image" content="${avatarUrl}" />` +
+      '</html>'
+  )
+  t.is(threads.getter($), avatarUrl)
 })

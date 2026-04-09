@@ -32,6 +32,7 @@
   - [Spotify](#spotify)
   - [Substack](#substack)
   - [Telegram](#telegram)
+  - [Threads](#threads)
   - [TikTok](#tiktok)
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
@@ -75,6 +76,7 @@
   - [Spotify](#spotify)
   - [Substack](#substack)
   - [Telegram](#telegram)
+  - [Threads](#threads)
   - [TikTok](#tiktok)
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
@@ -421,6 +423,14 @@ Get any Telegram user's profile picture by their username.
 Available inputs:
 
 - slug, e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
+
+### Threads
+
+Get any Threads user's profile picture by their username.
+
+Available inputs:
+
+- slug, e.g., [unavatar.io/threads/zuck](https://unavatar.io/threads/zuck) or [unavatar.io/threads/@zuck](https://unavatar.io/threads/@zuck)
 
 ### TikTok
 
