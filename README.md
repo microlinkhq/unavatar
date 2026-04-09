@@ -12,6 +12,7 @@
   - [Apple Music](#apple-music)
   - [Bluesky](#bluesky)
   - [DeviantArt](#deviantart)
+  - [Discord](#discord)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
   - [GitHub](#github)
@@ -57,6 +58,7 @@
   - [Apple Music](#apple-music)
   - [Bluesky](#bluesky)
   - [DeviantArt](#deviantart)
+  - [Discord](#discord)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
   - [GitHub](#github)
@@ -237,6 +239,14 @@ Get any DeviantArt user's profile picture by their username.
 Available inputs:
 
 - slug, e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
+
+### Discord
+
+Get any Discord server icon by invite code.
+
+Available inputs:
+
+- Invite code, e.g., [unavatar.io/discord/eret](https://unavatar.io/discord/eret)
 
 ### Dribbble
 

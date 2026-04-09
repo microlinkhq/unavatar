@@ -3,6 +3,8 @@
 const cheerio = require('cheerio')
 const test = require('ava')
 
+const getOgImage = require('../../../src/util/get-og-image')
+
 const { getAvatarUrl } = require('../../../src/providers/printables')
 
 test('.getAvatarUrl prepends @ when missing', t => {
@@ -14,9 +16,6 @@ test('.getAvatarUrl keeps existing @ prefix', t => {
 })
 
 const createHtmlProvider = opts => opts
-const getOgImage = $ =>
-  $('meta[property="og:image"]').attr('content') ||
-  $('meta[name="og:image"]').attr('content')
 
 const printables = require('../../../src/providers/printables')({
   createHtmlProvider,

@@ -18,15 +18,15 @@ const isValidServer = server => {
 }
 
 const parseMastodonInput = input => {
-  if (typeof input !== 'string') return null
+  if (typeof input !== 'string') return
 
   const cleaned = input.startsWith('@') ? input.slice(1) : input
   const parts = cleaned.split('@')
-  if (parts.length !== 2) return null
+  if (parts.length !== 2) return
 
   const [username, server] = parts
-  if (!username || !server) return null
-  if (!isValidServer(server)) return null
+  if (!username || !server) return
+  if (!isValidServer(server)) return
 
   return {
     username,
@@ -37,11 +37,11 @@ const parseMastodonInput = input => {
 module.exports = ({ got, isReservedIp }) => {
   const mastodon = async function (input) {
     const parsed = parseMastodonInput(input)
-    if (!parsed) return undefined
+    if (!parsed) return
 
     const { username, server } = parsed
 
-    if (await isReservedIp(server)) return undefined
+    if (await isReservedIp(server)) return
 
     const { body } = await got(
       `https://${server}/api/v1/accounts/lookup?acct=${encodeURIComponent(

@@ -28,7 +28,9 @@ module.exports = ({ baseUrl }) => {
   const customHeaders = parseHeaders(flags.header)
 
   if (!input) {
-    console.error('Usage: unavatar <input> | unavatar <provider>/<key> | unavatar ping')
+    console.error(
+      'Usage: unavatar <input> | unavatar <provider>/<key> | unavatar ping'
+    )
     console.error(
       'Examples: unavatar reddit.com | unavatar hello@microlink.io | unavatar x/kikobeats | unavatar ping'
     )
@@ -39,7 +41,9 @@ module.exports = ({ baseUrl }) => {
   const normalizeInput = value => {
     try {
       const url = new URL(value)
-      if (url.protocol === 'http:' || url.protocol === 'https:') return url.hostname
+      if (url.protocol === 'http:' || url.protocol === 'https:') {
+        return url.hostname
+      }
     } catch (_) {}
     return value
   }
@@ -57,7 +61,9 @@ module.exports = ({ baseUrl }) => {
           const key = keyParts.join('/')
 
           if (!provider || !key) {
-            console.error('Invalid input format. Expected: <input>, <provider>/<key>, or "ping"')
+            console.error(
+              'Invalid input format. Expected: <input>, <provider>/<key>, or "ping"'
+            )
             console.error(
               'Examples: unavatar reddit.com | unavatar hello@microlink.io | unavatar x/kikobeats | unavatar ping'
             )
@@ -78,15 +84,22 @@ module.exports = ({ baseUrl }) => {
   let durationInfo = null
   let apiHeaders = null
   let apiStatusCode = null
+  let apiHttpVersion = null
 
   const logMeta = () => {
     if (apiHeaders) {
       const headerEntries = Object.entries(apiHeaders)
       if (headerEntries.length > 0) {
-        const maxHeaderLength = Math.max(...headerEntries.map(([key]) => key.toLowerCase().length))
+        const maxHeaderLength = Math.max(
+          ...headerEntries.map(([key]) => key.toLowerCase().length)
+        )
 
         console.error()
-        console.error(`HTTP/1.1 ${apiStatusCode} ${STATUS_CODES[apiStatusCode]}`)
+        console.error(
+          `HTTP/${apiHttpVersion || '1.1'} ${apiStatusCode} ${
+            STATUS_CODES[apiStatusCode]
+          }`
+        )
         headerEntries
           .sort(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()))
           .forEach(([key, value]) => {
@@ -106,13 +119,16 @@ module.exports = ({ baseUrl }) => {
   if (flags.apiKey) requestHeaders['x-api-key'] = flags.apiKey
 
   got(apiUrl.toString(), { headers: requestHeaders, responseType: 'json' })
-    .then(({ body, headers, statusCode, timings }) => {
+    .then(({ body, headers, statusCode, timings, httpVersion }) => {
       apiHeaders = headers
       apiStatusCode = statusCode
+      apiHttpVersion = httpVersion
 
       const duration = Date.now() - startTime
       const timeToFirstByte =
-        timings?.response && timings?.start ? Math.round(timings.response - timings.start) : null
+        timings?.response && timings?.start
+          ? Math.round(timings.response - timings.start)
+          : null
 
       durationInfo = timeToFirstByte
         ? `Duration: ${duration}ms (TTFB: ${timeToFirstByte}ms)`
@@ -123,7 +139,7 @@ module.exports = ({ baseUrl }) => {
         console.error(`${apiUrl.toString()}\n`)
         console.error(body)
         logMeta()
-        return null
+        return
       }
 
       if (!body || !body.url) {
@@ -152,6 +168,7 @@ output: ${imageUrl}
       if (response) {
         apiHeaders = response.headers
         apiStatusCode = response.statusCode
+        apiHttpVersion = response.httpVersion
       }
 
       if (!durationInfo) {
@@ -166,7 +183,9 @@ output: ${imageUrl}
         if (typeof body === 'object') {
           console.error(JSON.stringify(body, null, 2))
         } else {
-          const rawBody = Buffer.isBuffer(body) ? body.toString('utf8') : String(body)
+          const rawBody = Buffer.isBuffer(body)
+            ? body.toString('utf8')
+            : String(body)
           try {
             console.error(JSON.stringify(JSON.parse(rawBody), null, 2))
           } catch (_) {

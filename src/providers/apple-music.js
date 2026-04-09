@@ -39,7 +39,7 @@ module.exports = ({ createHtmlProvider, itunesSearchCache, got }) => {
   const searchEntityId = memoize(
     async ({ query, type }) => {
       const entityConfig = APPLE_MUSIC_ENTITY_TYPES[type]
-      if (!entityConfig) return null
+      if (!entityConfig) return
       const { entity, idKey } = entityConfig
 
       const url = `https://itunes.apple.com/search?term=${encodeURIComponent(
@@ -63,7 +63,7 @@ module.exports = ({ createHtmlProvider, itunesSearchCache, got }) => {
     if (!hasExplicitType) {
       for (const searchType of APPLE_MUSIC_SEARCH_TYPES) {
         const entityId = await searchEntityId({ query: id, type: searchType })
-        if (entityId) return `${APPLE_MUSIC_STOREFRONT}/${searchType}/${entityId}`
+        if (entityId) { return `${APPLE_MUSIC_STOREFRONT}/${searchType}/${entityId}` }
       }
 
       return `${APPLE_MUSIC_STOREFRONT}/search?term=${encodeURIComponent(id)}`
@@ -76,7 +76,9 @@ module.exports = ({ createHtmlProvider, itunesSearchCache, got }) => {
     if (isNumericId(id)) return `${APPLE_MUSIC_STOREFRONT}/${type}/${id}`
 
     const entityId = await searchEntityId({ query: id, type })
-    return `${APPLE_MUSIC_STOREFRONT}/${type}/${entityId || encodeURIComponent(id)}`
+    return `${APPLE_MUSIC_STOREFRONT}/${type}/${
+      entityId || encodeURIComponent(id)
+    }`
   }
 
   return createHtmlProvider({
