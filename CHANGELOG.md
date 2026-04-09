@@ -1,3 +1,8 @@
+## 3.14.0 (2026-04-09)
+
+### Features
+
+* behance ([#545](https://github.com/Kikobeats/unavatar/issues/545)) ([c7da4cd](https://github.com/Kikobeats/unavatar/commit/c7da4cd51e48b1501e2004c0c8278e93102a7510))
 ## 3.13.0 (2026-04-09)
 
 ### Features
