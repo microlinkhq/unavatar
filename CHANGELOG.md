@@ -1,3 +1,8 @@
+## 3.12.0 (2026-04-09)
+
+### Features
+
+* snapchat ([#543](https://github.com/Kikobeats/unavatar/issues/543)) ([e9eda1b](https://github.com/Kikobeats/unavatar/commit/e9eda1be305d9bf62d1e93cce866f150fbce8a93))
 ## 3.11.0 (2026-04-09)
 
 ### Features
