@@ -1,3 +1,8 @@
+## 3.15.0 (2026-04-10)
+
+### Features
+
+* add Steam support ([#546](https://github.com/Kikobeats/unavatar/issues/546)) ([dba04d2](https://github.com/Kikobeats/unavatar/commit/dba04d217b3888e03a3b4dc626fb0af36cd275e7))
 ## 3.14.2 (2026-04-09)
 ## 3.14.1 (2026-04-09)
 ## 3.14.0 (2026-04-09)
