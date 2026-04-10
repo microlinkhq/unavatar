@@ -33,6 +33,7 @@
   - [Reddit](#reddit)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
+  - [Steam](#steam)
   - [Substack](#substack)
   - [Telegram](#telegram)
   - [TikTok](#tiktok)
@@ -486,6 +487,22 @@ Available URI format inputs:
 - `show`: [unavatar.io/spotify/show:0iykbhPkRz53QF8LR2UyNO](https://unavatar.io/spotify/show:0iykbhPkRz53QF8LR2UyNO)
 - `track`: [unavatar.io/spotify/track:4OROzZUy6gOWN4UGQVaZMF](https://unavatar.io/spotify/track:4OROzZUy6gOWN4UGQVaZMF)
 - `user` (default): [unavatar.io/spotify/user:kikobeats](https://unavatar.io/spotify/user:kikobeats)
+
+### Steam
+
+Get any Steam Community avatar by vanity ID, numeric profile ID, or group slug.
+
+e.g., [unavatar.io/steam/Kikobeats](https://unavatar.io/steam/Kikobeats)
+
+The input supports a URI format `type:id`.
+
+When no type is provided, it defaults to `id` (vanity profile URL).
+
+Available URI format inputs:
+
+- `id` (default): [unavatar.io/steam/Kikobeats](https://unavatar.io/steam/Kikobeats)
+- `profiles`: [unavatar.io/steam/profiles:76561197976050016](https://unavatar.io/steam/profiles:76561197976050016)
+- `groups`: [unavatar.io/steam/groups:microlink](https://unavatar.io/steam/groups:microlink)
 
 ### Substack
 
