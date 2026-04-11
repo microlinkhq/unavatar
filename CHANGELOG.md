@@ -1,3 +1,8 @@
+## 3.15.1 (2026-04-11)
+
+### Bug Fixes
+
+* **steam:** private profiles ([#547](https://github.com/Kikobeats/unavatar/issues/547)) ([672b991](https://github.com/Kikobeats/unavatar/commit/672b99175f8998108078870213e713126bbb802d))
 ## 3.15.0 (2026-04-10)
 
 ### Features
