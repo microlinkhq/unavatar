@@ -1,5 +1,7 @@
 'use strict'
 
+const STEAM_DEFAULT_OG_IMAGE = 'steam_share_image.jpg'
+
 const getAvatarUrl = input => {
   const [first, second] = input.split(':')
   const type = second ? first : 'id'
@@ -23,7 +25,12 @@ module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'steam',
     url: getAvatarUrl,
-    getter: getOgImage
+    getter: $ => {
+      const ogImage = getOgImage($)
+      const hasDefaultOgImage = ogImage?.includes(STEAM_DEFAULT_OG_IMAGE)
+      if (ogImage && !hasDefaultOgImage) return ogImage
+      return $('source[srcset]').attr('srcset')
+    }
   })
 
 module.exports.getAvatarUrl = getAvatarUrl
