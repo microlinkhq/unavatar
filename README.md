@@ -13,8 +13,10 @@
   - [JSON](#json)
 - [Providers](#providers)
   - [Apple Music](#apple-music)
+  - [Behance](#behance)
   - [Bluesky](#bluesky)
   - [DeviantArt](#deviantart)
+  - [Discord](#discord)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
   - [GitHub](#github)
@@ -29,13 +31,15 @@
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
   - [Patreon](#patreon)
+  - [Pinterest](#pinterest)
   - [Printables](#printables)
   - [Reddit](#reddit)
+  - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
-  - [Steam](#steam)
   - [Substack](#substack)
   - [Telegram](#telegram)
+  - [Threads](#threads)
   - [TikTok](#tiktok)
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
@@ -76,11 +80,11 @@ The anonymous requests works without authentication. They are limited to 25 requ
 
 For [PRO](https://unavatar.io/checkout) users, the requests must include the API key as the `x-api-key` request header:
 
-``` bash
+```bash
 curl -H "x-api-key: YOUR_API_KEY" "https://[unavatar.io/github/kikobeats"](https://unavatar.io/github/kikobeats")
 ```
 
-``` javascript
+```javascript
 await fetch('https://[unavatar.io/github/kikobeats',](https://unavatar.io/github/kikobeats',) {
   headers: {
     'x-api-key': process.env.UNAVATAR_API_KEY
@@ -88,7 +92,7 @@ await fetch('https://[unavatar.io/github/kikobeats',](https://unavatar.io/github
 })
 ```
 
-``` python
+```python
 import os
 import requests
 
@@ -98,7 +102,7 @@ response = requests.get(
 )
 ```
 
-``` golang
+```golang
 package main
 
 import (
@@ -115,7 +119,7 @@ func main() {
 }
 ```
 
-``` ruby
+```ruby
 require 'net/http'
 require 'uri'
 
@@ -128,7 +132,7 @@ response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
 end
 ```
 
-``` php
+```php
 $ch = curl_init('https://[unavatar.io/github/kikobeats');](https://unavatar.io/github/kikobeats');)
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -150,7 +154,7 @@ Rate limit status can be verified using these response headers:
 | `x-rate-limit-remaining` | Requests remaining in the current window                       |
 | `x-rate-limit-reset`     | UTC epoch seconds when the current window resets               |
 
-``` bash
+```bash
 $ curl -I https://[unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
 
 x-rate-limit-limit: 25
@@ -180,7 +184,7 @@ Every request has a cost in tokens (**\$0.005 per token**) based on the proxy ti
 
 The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
 
-``` bash
+```bash
 $ curl -I -H "x-api-key: YOUR_API_KEY" https://[unavatar.io/instagram/kikobeats](https://unavatar.io/instagram/kikobeats)
 
 x-pricing-tier: pro
@@ -214,7 +218,7 @@ To check the cache status in real requests, inspect these response headers:
 | `x-cache-status` | `HIT` means served from cache. `MISS` means fetched/refreshed from upstream.            |
 | `cache-control`  | Shows cache policy and effective TTL (for example `public, max-age=3600` for `ttl=1h`). |
 
-``` bash
+```bash
 $ curl -I -H "x-api-key: YOUR_API_KEY" "https://[unavatar.io/github/kikobeats?ttl=1h"](https://unavatar.io/github/kikobeats?ttl=1h")
 
 cache-control: public, max-age=3600
@@ -299,6 +303,14 @@ Available URI format inputs:
   - by song name: [unavatar.io/apple-music/song:harder%20better%20faster%20stronger](https://unavatar.io/apple-music/song:harder%20better%20faster%20stronger)
   - by song ID: [unavatar.io/apple-music/song:697195787](https://unavatar.io/apple-music/song:697195787)
 
+### Behance
+
+Get any Behance user's profile picture by their username.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/behance/vitormatosinhos](https://unavatar.io/behance/vitormatosinhos)
+
 ### Bluesky
 
 Get any Bluesky user's profile picture by their handle. Domain-style handles are supported.
@@ -314,7 +326,16 @@ Get any DeviantArt user's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
+- Username, e.g., [unavatar.io/deviantart/spyed](https://unavatar.io/deviantart/spyed)
+
+### Discord
+
+Get a Discord server's icon by server name or server ID.
+
+Available inputs:
+
+- Server name, e.g., [unavatar.io/discord/lilnasx](https://unavatar.io/discord/lilnasx)
+- Server ID, e.g., [unavatar.io/discord/uW6Hyf3E9r](https://unavatar.io/discord/uW6Hyf3E9r)
 
 ### Dribbble
 
@@ -322,7 +343,7 @@ Get any Dribbble designer's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
+- Username, e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
 
 ### DuckDuckGo
 
@@ -352,7 +373,7 @@ Available inputs:
 
 ### LinkedIn
 
-Get any LinkedIn user or company profile picture by their public profile slug.
+Get any LinkedIn user or company profile picture by username or company slug.
 
 e.g., [unavatar.io/linkedin/user:wesbos](https://unavatar.io/linkedin/user:wesbos)
 
@@ -385,15 +406,15 @@ Get any Instagram user's profile picture by their username. No authentication or
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
+- Username, e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 
 ### Ko-fi
 
-Get any Ko-fi page's profile picture by their public creator page slug.
+Get any Ko-fi page's profile picture by the creator username.
 
 Available inputs:
 
-- Page slug, e.g., [unavatar.io/ko-fi/geekshock](https://unavatar.io/ko-fi/geekshock)
+- Creator username, e.g., [unavatar.io/ko-fi/geekshock](https://unavatar.io/ko-fi/geekshock)
 
 ### Medium
 
@@ -401,7 +422,7 @@ Get any Medium author's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/medium/juancalmaraz](https://unavatar.io/medium/juancalmaraz)
+- Username, e.g., [unavatar.io/medium/juancalmaraz](https://unavatar.io/medium/juancalmaraz)
 
 ### Microlink
 
@@ -425,7 +446,7 @@ Get any OnlyFans creator's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
+- Username, e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
 
 ### OpenStreetMap
 
@@ -434,7 +455,7 @@ Get any OpenStreetMap contributor's profile picture. Accepts either a numeric us
 Available inputs:
 
 - Numeric user ID, e.g., [unavatar.io/openstreetmap/98672](https://unavatar.io/openstreetmap/98672)
-- slug, e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
+- Username, e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
 
 ### Patreon
 
@@ -442,7 +463,15 @@ Get any Patreon creator's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/patreon/gametestro](https://unavatar.io/patreon/gametestro)
+- Username, e.g., [unavatar.io/patreon/gametestro](https://unavatar.io/patreon/gametestro)
+
+### Pinterest
+
+Get any Pinterest user's profile picture by their username.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/pinterest/ohjoy](https://unavatar.io/pinterest/ohjoy)
 
 ### Printables
 
@@ -450,7 +479,7 @@ Get any Printables user's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/printables/DukeDoks](https://unavatar.io/printables/DukeDoks)
+- Username, e.g., [unavatar.io/printables/DukeDoks](https://unavatar.io/printables/DukeDoks)
 
 ### Reddit
 
@@ -458,7 +487,15 @@ Get any Reddit user's avatar by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
+- Username, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
+
+### Snapchat
+
+Get any Snapchat user's profile picture by their username.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/snapchat/teddysdaytoday](https://unavatar.io/snapchat/teddysdaytoday)
 
 ### SoundCloud
 
@@ -466,7 +503,7 @@ Get any SoundCloud artist's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
+- Username, e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
 
 ### Spotify
 
@@ -488,22 +525,6 @@ Available URI format inputs:
 - `track`: [unavatar.io/spotify/track:4OROzZUy6gOWN4UGQVaZMF](https://unavatar.io/spotify/track:4OROzZUy6gOWN4UGQVaZMF)
 - `user` (default): [unavatar.io/spotify/user:kikobeats](https://unavatar.io/spotify/user:kikobeats)
 
-### Steam
-
-Get any Steam Community avatar by vanity ID, numeric profile ID, or group slug.
-
-e.g., [unavatar.io/steam/Kikobeats](https://unavatar.io/steam/Kikobeats)
-
-The input supports a URI format `type:id`.
-
-When no type is provided, it defaults to `id` (vanity profile URL).
-
-Available URI format inputs:
-
-- `id` (default): [unavatar.io/steam/Kikobeats](https://unavatar.io/steam/Kikobeats)
-- `profiles`: [unavatar.io/steam/profiles:76561197976050016](https://unavatar.io/steam/profiles:76561197976050016)
-- `groups`: [unavatar.io/steam/groups:microlink](https://unavatar.io/steam/groups:microlink)
-
 ### Substack
 
 Get any Substack author's profile picture by their publication username.
@@ -518,7 +539,15 @@ Get any Telegram user's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
+- Username, e.g., [unavatar.io/telegram/drsdavidsoft](https://unavatar.io/telegram/drsdavidsoft)
+
+### Threads
+
+Get any Threads user's profile picture by their username.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/threads/zuck](https://unavatar.io/threads/zuck)
 
 ### TikTok
 
@@ -526,7 +555,7 @@ Get any TikTok user's profile picture by their username. No authentication or AP
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
+- Username, e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
 
 ### Twitch
 
@@ -534,7 +563,7 @@ Get any Twitch streamer's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
+- Username, e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
 
 ### Vimeo
 
@@ -542,21 +571,18 @@ Get any Vimeo user's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/vimeo/ladieswithlenses](https://unavatar.io/vimeo/ladieswithlenses)
+- Username, e.g., [unavatar.io/vimeo/ladieswithlenses](https://unavatar.io/vimeo/ladieswithlenses)
 
 ### WhatsApp
 
-Get the profile picture for a WhatsApp phone number, channel, chat, or group.
+Get the profile picture for a WhatsApp channel or chat by ID.
 
-e.g., [unavatar.io/whatsapp/phone:34660021551](https://unavatar.io/whatsapp/phone:34660021551)
+e.g., [unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m](https://unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m)
 
 The input supports a URI format `type:id`.
 
-When no type is provided, it defaults to `phone`.
-
 Available URI format inputs:
 
-- `phone` (default): [unavatar.io/whatsapp/phone:34660021551](https://unavatar.io/whatsapp/phone:34660021551)
 - `channel`: [unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m](https://unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m)
 - `chat`: [unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz](https://unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz)
 
@@ -564,7 +590,7 @@ Get any X (formerly Twitter) user's profile picture by their username.
 
 Available inputs:
 
-- slug, e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
+- Username, e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
 
 ### YouTube
 
@@ -578,7 +604,7 @@ If the input starts with `UC` and has 24 characters, it is treated as a channel 
 
 Available inputs:
 
-- `username`: [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey) or [unavatar.io/youtube/@casey](https://unavatar.io/youtube/@casey)
+- `username`: [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 - `channel`: [unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw](https://unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw)
 
 ## Response Format
@@ -613,7 +639,7 @@ These headers help you understand pricing, limits, and request diagnostics.
 | `x-rate-limit-reset`     | UTC epoch seconds when window resets (free tier only)     |
 | `retry-after`            | Seconds until rate limit resets (only on 429 responses)   |
 
-``` bash
+```bash
 $ curl -I -H "x-api-key: YOUR_API_KEY" https://[unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
 
 x-pricing-tier: pro
