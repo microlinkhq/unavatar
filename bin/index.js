@@ -7,7 +7,7 @@ const mri = require('mri')
 
 module.exports = ({ baseUrl }) => {
   const { _, ...flags } = mri(process.argv.slice(2), {
-    default: {},
+    default: { apiKey: process.env.UNAVATAR_API_KEY },
     alias: { H: 'header' }
   })
 
