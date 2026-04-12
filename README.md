@@ -37,6 +37,7 @@
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
+  - [Steam](#steam)
   - [Substack](#substack)
   - [Telegram](#telegram)
   - [Threads](#threads)
@@ -487,7 +488,8 @@ Get any Reddit user's avatar by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/reddit/kikobeats](https://unavatar.io/reddit/kikobeats)
+- Username, e.g., [unavatar.io/reddit/thisisbillgates](https://unavatar.io/reddit/thisisbillgates)
+- Organization, e.g., [unavatar.io/reddit/nasa](https://unavatar.io/reddit/nasa)
 
 ### Snapchat
 
@@ -524,6 +526,22 @@ Available URI format inputs:
 - `show`: [unavatar.io/spotify/show:0iykbhPkRz53QF8LR2UyNO](https://unavatar.io/spotify/show:0iykbhPkRz53QF8LR2UyNO)
 - `track`: [unavatar.io/spotify/track:4OROzZUy6gOWN4UGQVaZMF](https://unavatar.io/spotify/track:4OROzZUy6gOWN4UGQVaZMF)
 - `user` (default): [unavatar.io/spotify/user:kikobeats](https://unavatar.io/spotify/user:kikobeats)
+
+### Steam
+
+Get any Steam player or community group profile picture by public profile name, numeric account ID, or group name.
+
+e.g., [unavatar.io/steam/id:gabelogannewell](https://unavatar.io/steam/id:gabelogannewell)
+
+The input supports a URI format `type:value`.
+
+When no type is provided, it defaults to `id` (player profile name).
+
+Available URI format inputs:
+
+- `id` (default): [unavatar.io/steam/id:gabelogannewell](https://unavatar.io/steam/id:gabelogannewell)
+- `profile`: [unavatar.io/steam/profile:76561198044605749](https://unavatar.io/steam/profile:76561198044605749)
+- `group`: [unavatar.io/steam/group:murcia-gaming](https://unavatar.io/steam/group:murcia-gaming)
 
 ### Substack
 
@@ -590,7 +608,7 @@ Get any X (formerly Twitter) user's profile picture by their username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/x/kikobeats](https://unavatar.io/x/kikobeats)
+- Username, e.g., [unavatar.io/x/elonmusk](https://unavatar.io/x/elonmusk)
 
 ### YouTube
 
