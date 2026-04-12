@@ -4,6 +4,7 @@ on:
   repository_dispatch:
     types:
       - llms-txt-updated
+  workflow_dispatch:
 
 jobs:
   sync:
