@@ -20,10 +20,11 @@ jobs:
         with:
           node-version: lts/*
       - name: Setup PNPM
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
         with:
           version: latest
-          run_install: true
+      - name: Install
+        run: pnpm install --dangerously-allow-all-builds
       - name: Contributors
         run: |
           git config --global user.email ${{ secrets.GIT_EMAIL }}
@@ -50,10 +51,11 @@ jobs:
         with:
           node-version: lts/*
       - name: Setup PNPM
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
         with:
           version: latest
-          run_install: true
+      - name: Install
+        run: pnpm install --dangerously-allow-all-builds
       - name: Test
         run: pnpm test
       - name: Report
