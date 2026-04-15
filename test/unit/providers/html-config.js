@@ -179,6 +179,12 @@ test('soundcloud and substack provider options are derived from helper modules',
     createHtmlProvider
   })
   t.is(pinterest.url('ohjoy'), 'https://www.pinterest.com/ohjoy/')
+
+  const psnprofiles = require('../../../src/providers/psnprofiles')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(psnprofiles.url('xGarbett'), 'https://psnprofiles.com/xGarbett')
 })
 
 test('linkedin getter returns undefined when og:image is missing', t => {
@@ -246,6 +252,21 @@ test('facebook getter returns og:image URL from facebook profile markup', t => {
       '</html>'
   )
   t.is(facebook.getter($), avatarUrl)
+})
+
+test('psnprofiles getter returns og:image URL for valid profile page', t => {
+  const psnprofiles = require('../../../src/providers/psnprofiles')({
+    createHtmlProvider,
+    getOgImage
+  })
+
+  const avatarUrl = 'https://i.psnprofiles.com/avatars/l/G12345abcdef.png'
+  const $ = cheerio.load(
+    '<html><title>xGarbett\'s PSN Profile</title>' +
+      `<meta property="og:image" content="${avatarUrl}" />` +
+      '</html>'
+  )
+  t.is(psnprofiles.getter($), avatarUrl)
 })
 
 test('tumblr getter returns og:image URL for valid profile page', t => {
