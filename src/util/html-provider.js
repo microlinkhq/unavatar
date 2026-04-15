@@ -123,37 +123,28 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           }
         }
 
-        const isEmptyGetterResult = typeof result !== 'string' || result === ''
+        if (typeof result === 'string' && result !== '') {
+          const normalizedResult = normalizeUrl(providerUrl, result)
+          log({
+            statusCode,
+            status: 'success',
+            result: normalizedResult
+          })
+          return normalizedResult
+        }
 
         // Some providers encode not-found via getter output. Check antibot
         // first so challenge pages are retried as blocked, not treated as 404.
-        if (result === NOT_FOUND || isEmptyGetterResult) {
-          const { isBlocked: shouldMarkBlocked, antibotProvider } =
-            getBlockedStatus()
+        const { isBlocked: shouldMarkBlocked, antibotProvider } =
+          getBlockedStatus()
 
-          if (shouldMarkBlocked) {
-            const error = createEmptyGetterResultError()
-            error.blocked = true
-
-            log.error({
-              statusCode,
-              status: 'blocked',
-              antibot: antibotProvider ?? undefined,
-              userAgent: fetchOpts.headers['user-agent']
-            })
-
-            throw error
-          }
-
-          if (result === NOT_FOUND) {
-            log.error({ statusCode, status: 'not_found' })
-            return NOT_FOUND
-          }
-
+        if (shouldMarkBlocked) {
           const error = createEmptyGetterResultError()
+          error.blocked = true
 
           log.error({
             statusCode,
+            status: 'blocked',
             antibot: antibotProvider ?? undefined,
             userAgent: fetchOpts.headers['user-agent']
           })
@@ -161,13 +152,20 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           throw error
         }
 
-        const normalizedResult = normalizeUrl(providerUrl, result)
-        log({
+        if (result === NOT_FOUND) {
+          log.error({ statusCode, status: 'not_found' })
+          return NOT_FOUND
+        }
+
+        const error = createEmptyGetterResultError()
+
+        log.error({
           statusCode,
-          status: 'success',
-          result: normalizedResult
+          antibot: antibotProvider ?? undefined,
+          userAgent: fetchOpts.headers['user-agent']
         })
-        return normalizedResult
+
+        throw error
       }
 
       if (typeof onFetchHTML === 'function') {
