@@ -69,6 +69,12 @@ test('html provider modules expose expected URL builders', t => {
   t.is(threads.url('zuck'), 'https://www.threads.com/@zuck')
   t.is(threads.url('@zuck'), 'https://www.threads.com/@zuck')
 
+  const tumblr = require('../../../src/providers/tumblr')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(tumblr.url('neil-gaiman'), 'https://www.tumblr.com/neil-gaiman')
+
   const vimeo = require('../../../src/providers/vimeo')({
     createHtmlProvider,
     getOgImage
@@ -218,6 +224,22 @@ test('instagram getter returns og:image URL for valid profile page', t => {
       '</html>'
   )
   t.is(instagram.getter($), avatarUrl)
+})
+
+test('tumblr getter returns og:image URL for valid profile page', t => {
+  const tumblr = require('../../../src/providers/tumblr')({
+    createHtmlProvider,
+    getOgImage
+  })
+
+  const avatarUrl =
+    'https://64.media.tumblr.com/52f9b593dce4486073bd2527b7461593/62f173cf413c6439-ae/s512x512u_c1/689601fb31221fc5be4156f593008f54a346478c.pnj'
+  const $ = cheerio.load(
+    '<html><title>@neil-gaiman on Tumblr</title>' +
+      `<meta property="og:image" content="${avatarUrl}" />` +
+      '</html>'
+  )
+  t.is(tumblr.getter($), avatarUrl)
 })
 
 test('threads getter returns undefined when og:image is missing', t => {
