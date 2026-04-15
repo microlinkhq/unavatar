@@ -38,12 +38,9 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
    *   - `string`     — avatar URL found (success).
    *   - `NOT_FOUND`  — provider-level miss.
    *   - `undefined`  — avatar not found (normal failure, no retry).
-   * @param {(context: { $: cheerio.CheerioAPI, statusCode: number }) => boolean} [opts.isBlocked]
-   *   Optional provider-specific blocked-page detector, checked after the
-   *   default `is-antibot` check when getter returns empty/undefined.
    * @param {() => object} [opts.htmlOpts] - Returns extra options merged into the fetch call.
    */
-  const createHtmlProvider = ({ name, url, getter, isBlocked, htmlOpts }) => {
+  const createHtmlProvider = ({ name, url, getter, htmlOpts }) => {
     const provider = async function (input, context) {
       const providerUrl = await url(input)
 
@@ -90,13 +87,13 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
         }
 
         const result = getter($)
-        if (statusCode === httpStatus.NOT_FOUND || result === NOT_FOUND) {
+        if (statusCode === httpStatus.NOT_FOUND) {
           log.error({ statusCode, status: 'not_found' })
           return NOT_FOUND
         }
 
-        if (typeof result !== 'string' || result === '') {
-          const error = createProviderError({
+        const createEmptyGetterResultError = () =>
+          createProviderError({
             provider: name,
             statusCode,
             code: EMPTY_PROVIDER_VALUE_CODE.EMPTY_GETTER_RESULT,
@@ -107,11 +104,11 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
             }
           })
 
+        const getBlockedStatus = () => {
           const isRateLimited = statusCode === httpStatus.TOO_MANY_REQUESTS
-          const providerBlocked = isBlocked?.({ $, statusCode })
 
           const { detected: antibotDetected, provider: antibotProvider } =
-            isRateLimited || providerBlocked
+            isRateLimited
               ? { detected: false, provider: null }
               : isAntibot({
                 url: providerUrl,
@@ -120,13 +117,43 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
                 body: attempt.lastHtml
               })
 
-          if (isRateLimited || providerBlocked || antibotDetected) {
-            error.blocked = true
+          return {
+            isBlocked: isRateLimited || antibotDetected,
+            antibotProvider
           }
+        }
+
+        const isEmptyGetterResult = typeof result !== 'string' || result === ''
+
+        // Some providers encode not-found via getter output. Check antibot
+        // first so challenge pages are retried as blocked, not treated as 404.
+        if (result === NOT_FOUND || isEmptyGetterResult) {
+          const { isBlocked: shouldMarkBlocked, antibotProvider } =
+            getBlockedStatus()
+
+          if (shouldMarkBlocked) {
+            const error = createEmptyGetterResultError()
+            error.blocked = true
+
+            log.error({
+              statusCode,
+              status: 'blocked',
+              antibot: antibotProvider ?? undefined,
+              userAgent: fetchOpts.headers['user-agent']
+            })
+
+            throw error
+          }
+
+          if (result === NOT_FOUND) {
+            log.error({ statusCode, status: 'not_found' })
+            return NOT_FOUND
+          }
+
+          const error = createEmptyGetterResultError()
 
           log.error({
             statusCode,
-            status: error.blocked ? 'blocked' : undefined,
             antibot: antibotProvider ?? undefined,
             userAgent: fetchOpts.headers['user-agent']
           })
