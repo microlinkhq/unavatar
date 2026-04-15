@@ -19,10 +19,12 @@
   - [Discord](#discord)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
+  - [Facebook](#facebook)
   - [GitHub](#github)
   - [GitLab](#gitlab)
   - [LinkedIn](#linkedin)
   - [Google](#google)
+  - [Gravatar](#gravatar)
   - [Instagram](#instagram)
   - [Ko-fi](#ko-fi)
   - [Medium](#medium)
@@ -33,6 +35,7 @@
   - [Patreon](#patreon)
   - [Pinterest](#pinterest)
   - [Printables](#printables)
+  - [PSN Profiles](#psn-profiles)
   - [Reddit](#reddit)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
@@ -42,26 +45,22 @@
   - [Telegram](#telegram)
   - [Threads](#threads)
   - [TikTok](#tiktok)
+  - [Tumblr](#tumblr)
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
   - [WhatsApp](#whatsapp)
+  - [X/Twitter](#xtwitter)
+  - [Xbox Gamertag](#xbox-gamertag)
   - [YouTube](#youtube)
 - [Response Format](#response-format)
 - [Response Headers](#response-headers)
+- [Response Errors](#response-errors)
 
 ---
 
 ## Introduction
 
 Welcome to **unavatar.io**, the ultimate avatar service that offers everything you need to easily retrieve user avatars:
-
-- **Versatile**: A wide range of platforms and services including [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), etc., meaning you can rule all of them just querying against unavatar.
-
-- **Speed**: Designed to be fast and efficient with a 93% cache hit rate, serving 21.7 TB of data across 728M requests.
-
-- **Optimize**: All the images are not only compressed on-the-fly to reduce their size and save bandwith, but also optimized to maintain a high-quality ratio. They are ready for immediate use, enhancing the overall optimization of your website or application.
-
-- **Integration**: The service seamlessly incorporates into your current applications or websites with ease. We offer straightforward documentation and comprehensive support to ensure a quick and effortless onboarding experience.
 
 It's proudly powered by [microlink.io](https://microlink.io/), the headless browser API that handles all the heavy lifting behind the scenes to ensure your avatars are always ready.
 
@@ -350,6 +349,16 @@ Available inputs:
 
 - Domain, e.g., [unavatar.io/duckduckgo/microsoft.com](https://unavatar.io/duckduckgo/microsoft.com)
 
+### Facebook
+
+Get any Facebook user, page, or group profile picture by their username or ID.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/facebook/zuck](https://unavatar.io/facebook/zuck)
+- Page, e.g., [unavatar.io/facebook/windtodayco](https://unavatar.io/facebook/windtodayco)
+- Group ID, e.g., [unavatar.io/facebook/1426378481098002](https://unavatar.io/facebook/1426378481098002)
+
 ### GitHub
 
 Get any GitHub user or organization's profile picture by their username.
@@ -390,6 +399,8 @@ Get the favicon or logo for any domain using Google's favicon service.
 Available inputs:
 
 - Domain, e.g., [unavatar.io/google/stremio.com](https://unavatar.io/google/stremio.com)
+
+### Gravatar
 
 Get any user's avatar by their email address via Gravatar. The most widely used global avatar service — if your users have a Gravatar set up, this is the fastest way to retrieve it.
 
@@ -477,6 +488,14 @@ Get any Printables user's profile picture by their username.
 Available inputs:
 
 - Username, e.g., [unavatar.io/printables/DukeDoks](https://unavatar.io/printables/DukeDoks)
+
+### PSN Profiles
+
+Get any PlayStation Network user's profile picture by their PSN username.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/psnprofiles/P3](https://unavatar.io/psnprofiles/P3)
 
 ### Reddit
 
@@ -571,6 +590,14 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/tiktok/carlosazaustre](https://unavatar.io/tiktok/carlosazaustre)
 
+### Tumblr
+
+Get any Tumblr blog's profile picture by their username.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/tumblr/nasa](https://unavatar.io/tumblr/nasa)
+
 ### Twitch
 
 Get any Twitch streamer's profile picture by their username.
@@ -603,11 +630,21 @@ Available URI format inputs:
 - `channel`: [unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m](https://unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m)
 - `chat`: [unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz](https://unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz)
 
+### X/Twitter
+
 Get any X (formerly Twitter) user's profile picture by their username.
 
 Available inputs:
 
 - Username, e.g., [unavatar.io/x/elonmusk](https://unavatar.io/x/elonmusk)
+
+### Xbox Gamertag
+
+Get any Xbox player's profile picture by their gamertag.
+
+Available inputs:
+
+- Gamertag, e.g., [unavatar.io/xboxgamertag/P3](https://unavatar.io/xboxgamertag/P3)
 
 ### YouTube
 
@@ -667,6 +704,8 @@ x-rate-limit-limit: 50
 x-rate-limit-remaining: 49
 x-rate-limit-reset: 1744243200
 ```
+
+## Response Errors
 
 Expected errors are known operational cases returned with stable codes.
 
