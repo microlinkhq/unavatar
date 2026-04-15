@@ -19,7 +19,6 @@ const createProvider = (opts = {}) => {
     name: 'test-provider',
     url: () => opts.providerUrl ?? 'https://www.openstreetmap.org/user/Terence',
     getter: opts.getter ?? (() => opts.getterResult),
-    isNotFound: opts.isNotFound,
     isBlocked: opts.isBlocked,
     htmlOpts: opts.htmlOpts
   })
@@ -93,22 +92,6 @@ test('createHtmlProvider returns undefined when status is 404 and no onFetchHTML
     providerUrl: 'https://www.reddit.com/user/kikobeats/',
     getterResult: '/assets/avatar.svg',
     responseStatusCode: 404
-  })
-
-  const result = await runProvider(provider)
-
-  t.is(result, undefined)
-})
-
-test('createHtmlProvider returns undefined when isNotFound matches final response URL', async t => {
-  const provider = createProvider({
-    getHTML: async () => ({
-      $: {},
-      statusCode: 200,
-      url: 'https://example.com/?user=missing'
-    }),
-    getterResult: 'https://cdn.example.com/avatar.png',
-    isNotFound: ({ url }) => url === 'https://example.com/?user=missing'
   })
 
   const result = await runProvider(provider)

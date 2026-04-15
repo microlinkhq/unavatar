@@ -9,7 +9,7 @@ module.exports = ({ createHtmlProvider, getOgImage, NOT_FOUND }) =>
   createHtmlProvider({
     name: 'psnprofiles',
     url: input => `https://psnprofiles.com/${input}`,
-    getter: ({ $ }) => getAvatarUrl({ $, getOgImage, NOT_FOUND })
+    getter: $ => getAvatarUrl({ $, getOgImage, NOT_FOUND })
   })
 
 module.exports.getAvatarUrl = getAvatarUrl

@@ -267,10 +267,7 @@ test('psnprofiles getter returns og:image URL for valid profile page', t => {
       `<meta property="og:image" content="${avatarUrl}" />` +
       '</html>'
   )
-  t.is(
-    psnprofiles.getter({ $, statusCode: 200, url: undefined, redirects: [] }),
-    avatarUrl
-  )
+  t.is(psnprofiles.getter($), avatarUrl)
 })
 
 test('tumblr getter returns og:image URL for valid profile page', t => {
