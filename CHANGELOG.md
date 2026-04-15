@@ -1,3 +1,8 @@
+## 3.19.3 (2026-04-15)
+
+### Bug Fixes
+
+* **psnprofiles:** handle 404 ([#555](https://github.com/Kikobeats/unavatar/issues/555)) ([f7d57a4](https://github.com/Kikobeats/unavatar/commit/f7d57a43aca8b4bdb88f66596b89c2667e4052b5))
 ## 3.19.2 (2026-04-15)
 ## 3.19.1 (2026-04-15)
 ## 3.19.0 (2026-04-15)
