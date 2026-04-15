@@ -32,6 +32,12 @@ test('html provider modules expose expected URL builders', t => {
   })
   t.is(deviantart.url('spyed'), 'https://www.deviantart.com/spyed')
 
+  const facebook = require('../../../src/providers/facebook')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(facebook.url('kikobeats'), 'https://www.facebook.com/kikobeats')
+
   const gitlab = require('../../../src/providers/gitlab')({
     createHtmlProvider,
     getOgImage
@@ -224,6 +230,22 @@ test('instagram getter returns og:image URL for valid profile page', t => {
       '</html>'
   )
   t.is(instagram.getter($), avatarUrl)
+})
+
+test('facebook getter returns og:image URL from facebook profile markup', t => {
+  const facebook = require('../../../src/providers/facebook')({
+    createHtmlProvider,
+    getOgImage
+  })
+
+  const avatarUrl =
+    'https://scontent.fvlc9-1.fna.fbcdn.net/v/t1.6435-1/35236976_1682092531844734_8844499721700507648_n.jpg?stp=dst-jpg_s480x480_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=gwFSU-e9uzEQ7kNvwEQbVi-&_nc_oc=AdpqfcGfGq0R8RPfF5Fp57TkIo4YmoowdRQLAz7Tmz5Vd9T95n7V4NbD4NbCAZVgJUA&_nc_zt=24&_nc_ht=scontent.fvlc9-1.fna&_nc_gid=BeZ-mO0z3zh8-QDKxqKaWQ&_nc_ss=7a3a8&oh=00_Af3OkYbHiGtGeSKtM5sTaAYrNN4rhQeGooD0XvkXkceomg&oe=6A06BF45'
+  const $ = cheerio.load(
+    '<html><title>Kiko Beats | Facebook</title>' +
+      `<meta property="og:image" content="${avatarUrl}" />` +
+      '</html>'
+  )
+  t.is(facebook.getter($), avatarUrl)
 })
 
 test('tumblr getter returns og:image URL for valid profile page', t => {
