@@ -1,3 +1,8 @@
+## 3.16.0 (2026-04-15)
+
+### Features
+
+* add tumblr support ([#551](https://github.com/Kikobeats/unavatar/issues/551)) ([897b73a](https://github.com/Kikobeats/unavatar/commit/897b73af965b3d133a8729789adeed6621d947d7))
 ## 3.15.6 (2026-04-14)
 ## 3.15.5 (2026-04-13)
 ## 3.15.4 (2026-04-12)
