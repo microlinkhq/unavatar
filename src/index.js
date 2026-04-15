@@ -29,11 +29,12 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
   })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
-  const { createHtmlProvider, getOgImage, NOT_FOUND } = require('./util/html-provider')({
-    ...constants,
-    getHTML,
-    onFetchHTML
-  })
+  const { createHtmlProvider, getOgImage, NOT_FOUND } =
+    require('./util/html-provider')({
+      ...constants,
+      getHTML,
+      onFetchHTML
+    })
 
   const providerCtx = {
     constants,

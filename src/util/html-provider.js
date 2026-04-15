@@ -28,6 +28,12 @@ const createProviderError = ({ provider, statusCode, cause, code }) =>
     message: 'Empty value returned by the provider.'
   })
 
+const createErrorCause = ({ html, headers, statusCode }) => ({
+  html,
+  headers,
+  statusCode
+})
+
 module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
   /**
    * @param {object} opts
@@ -41,7 +47,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
    * @param {() => object} [opts.htmlOpts] - Returns extra options merged into the fetch call.
    */
   const createHtmlProvider = ({ name, url, getter, htmlOpts }) => {
-    const provider = async function (input, context) {
+    async function provider (input, context) {
       const providerUrl = await url(input)
 
       const attempt = async gotOpts => {
@@ -54,15 +60,17 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           },
           timeout: PROXY_TIMEOUT
         }
-        const fetchOpts = gotOpts ? { ...defaultOpts, ...gotOpts } : defaultOpts
+        const fetchOpts = { ...defaultOpts, ...gotOpts }
+        const userAgent = fetchOpts.headers['user-agent']
         const tier = fetchOpts.tier ?? 'origin'
 
         const log = debug.duration({ provider: name, input, providerUrl, tier })
 
-        const { $, statusCode, headers: responseHeaders = {} } = await getHTML(
-          providerUrl,
-          fetchOpts
-        )
+        const {
+          $,
+          statusCode,
+          headers: responseHeaders = {}
+        } = await getHTML(providerUrl, fetchOpts)
 
         attempt.lastHtml =
           typeof $ === 'function' && typeof $.html === 'function'
@@ -70,6 +78,11 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
             : undefined
         attempt.lastHeaders = responseHeaders
         attempt.lastStatusCode = statusCode
+        const errorCause = createErrorCause({
+          html: attempt.lastHtml,
+          headers: responseHeaders,
+          statusCode
+        })
 
         if (isStatusCodeMissing(statusCode)) {
           const code = EMPTY_PROVIDER_VALUE_CODE.MISSING_STATUS_CODE
@@ -77,11 +90,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           throw createProviderError({
             provider: name,
             statusCode,
-            cause: {
-              html: attempt.lastHtml,
-              headers: responseHeaders,
-              statusCode
-            },
+            cause: errorCause,
             code
           })
         }
@@ -92,33 +101,29 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
           return NOT_FOUND
         }
 
-        const createEmptyGetterResultError = () =>
-          createProviderError({
+        function createEmptyGetterResultError () {
+          return createProviderError({
             provider: name,
             statusCode,
             code: EMPTY_PROVIDER_VALUE_CODE.EMPTY_GETTER_RESULT,
-            cause: {
-              html: attempt.lastHtml,
-              headers: responseHeaders,
-              statusCode
-            }
+            cause: errorCause
           })
+        }
 
-        const getBlockedStatus = () => {
+        function getBlockedStatus () {
           const isRateLimited = statusCode === httpStatus.TOO_MANY_REQUESTS
+          if (isRateLimited) return { isBlocked: true, antibotProvider: null }
 
           const { detected: antibotDetected, provider: antibotProvider } =
-            isRateLimited
-              ? { detected: false, provider: null }
-              : isAntibot({
-                url: providerUrl,
-                statusCode,
-                headers: responseHeaders,
-                body: attempt.lastHtml
-              })
+            isAntibot({
+              url: providerUrl,
+              statusCode,
+              headers: responseHeaders,
+              body: attempt.lastHtml
+            })
 
           return {
-            isBlocked: isRateLimited || antibotDetected,
+            isBlocked: antibotDetected,
             antibotProvider
           }
         }
@@ -146,7 +151,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
             statusCode,
             status: 'blocked',
             antibot: antibotProvider ?? undefined,
-            userAgent: fetchOpts.headers['user-agent']
+            userAgent
           })
 
           throw error
@@ -162,7 +167,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
         log.error({
           statusCode,
           antibot: antibotProvider ?? undefined,
-          userAgent: fetchOpts.headers['user-agent']
+          userAgent
         })
 
         throw error
@@ -173,8 +178,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
       }
 
       const result = await attempt()
-      if (result === NOT_FOUND) return
-      return result
+      return result === NOT_FOUND ? undefined : result
     }
 
     provider.getUrl = url
