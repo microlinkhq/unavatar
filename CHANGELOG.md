@@ -1,3 +1,8 @@
+## 3.18.0 (2026-04-15)
+
+### Features
+
+* add psnprofiles ([#553](https://github.com/Kikobeats/unavatar/issues/553)) ([6b57e0b](https://github.com/Kikobeats/unavatar/commit/6b57e0bae2b182e9833d6936391f031ee66e4f80))
 ## 3.17.1 (2026-04-15)
 ## 3.17.0 (2026-04-15)
 
