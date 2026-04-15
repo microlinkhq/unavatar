@@ -1,3 +1,8 @@
+## 3.19.0 (2026-04-15)
+
+### Features
+
+* add xboxgamertag support ([#554](https://github.com/Kikobeats/unavatar/issues/554)) ([9c32a0c](https://github.com/Kikobeats/unavatar/commit/9c32a0c9eaec753924c04c72195c431dda5c2587))
 ## 3.18.0 (2026-04-15)
 
 ### Features
