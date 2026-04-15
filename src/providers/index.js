@@ -36,6 +36,7 @@ const providersBy = {
     'twitch',
     'vimeo',
     'x',
+    'xboxgamertag',
     'youtube'
   ],
   domain: ['microlink']
@@ -81,6 +82,7 @@ module.exports = ctx => {
     vimeo: require('./vimeo')(ctx),
     whatsapp: require('./whatsapp')(ctx),
     x: require('./x')(ctx),
+    xboxgamertag: require('./xboxgamertag')(ctx),
     youtube: require('./youtube')(ctx)
   }
 
