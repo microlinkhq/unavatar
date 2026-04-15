@@ -82,38 +82,34 @@ The anonymous requests works without authentication. They are limited to 25 requ
 For [PRO](https://unavatar.io/checkout) users, the requests must include the API key as the `x-api-key` request header:
 
 ```bash
-curl -H "x-api-key: YOUR_API_KEY" "https://[unavatar.io/github/kikobeats"](https://unavatar.io/github/kikobeats")
+curl "https://unavatar.io/github/kikobeats" -H "x-api-key: YOUR_API_KEY"
 ```
 
 ```javascript
-await fetch('https://[unavatar.io/github/kikobeats',](https://unavatar.io/github/kikobeats',) {
+await fetch('https://unavatar.io/github/kikobeats', {
   headers: {
-    'x-api-key': process.env.UNAVATAR_API_KEY
+    'x-api-key': 'YOUR_API_KEY'
   }
 })
 ```
 
 ```python
-import os
 import requests
 
 response = requests.get(
-  'https://[unavatar.io/github/kikobeats',](https://unavatar.io/github/kikobeats',)
-  headers={'x-api-key': os.environ['UNAVATAR_API_KEY']}
+  'https://unavatar.io/github/kikobeats',
+  headers={'x-api-key': 'YOUR_API_KEY'}
 )
 ```
 
 ```golang
 package main
 
-import (
-  "net/http"
-  "os"
-)
+import "net/http"
 
 func main() {
-  req, _ := http.NewRequest("GET", "https://[unavatar.io/github/kikobeats",](https://unavatar.io/github/kikobeats",) nil)
-  req.Header.Set("x-api-key", os.Getenv("UNAVATAR_API_KEY"))
+  req, _ := http.NewRequest("GET", "https://unavatar.io/github/kikobeats", nil)
+  req.Header.Set("x-api-key", "YOUR_API_KEY")
 
   resp, _ := http.DefaultClient.Do(req)
   defer resp.Body.Close()
@@ -124,9 +120,9 @@ func main() {
 require 'net/http'
 require 'uri'
 
-uri = URI('https://[unavatar.io/github/kikobeats')](https://unavatar.io/github/kikobeats'))
+uri = URI('https://unavatar.io/github/kikobeats')
 request = Net::HTTP::Get.new(uri)
-request['x-api-key'] = ENV['UNAVATAR_API_KEY']
+request['x-api-key'] = 'YOUR_API_KEY'
 
 response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
   http.request(request)
@@ -134,10 +130,10 @@ end
 ```
 
 ```php
-$ch = curl_init('https://[unavatar.io/github/kikobeats');](https://unavatar.io/github/kikobeats');)
+$ch = curl_init('https://unavatar.io/github/kikobeats');
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-  'x-api-key: ' . getenv('UNAVATAR_API_KEY'),
+  'x-api-key: YOUR_API_KEY',
 ]);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -156,7 +152,7 @@ Rate limit status can be verified using these response headers:
 | `x-rate-limit-reset`     | UTC epoch seconds when the current window resets               |
 
 ```bash
-$ curl -I https://[unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
+$ curl -I https://unavatar.io/github/kikobeats
 
 x-rate-limit-limit: 25
 x-rate-limit-remaining: 24
@@ -186,7 +182,7 @@ Every request has a cost in tokens (**\$0.005 per token**) based on the proxy ti
 The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
 
 ```bash
-$ curl -I -H "x-api-key: YOUR_API_KEY" https://[unavatar.io/instagram/kikobeats](https://unavatar.io/instagram/kikobeats)
+$ curl -I -H "x-api-key: YOUR_API_KEY" https://unavatar.io/instagram/kikobeats
 
 x-pricing-tier: pro
 x-proxy-tier: origin
@@ -220,7 +216,7 @@ To check the cache status in real requests, inspect these response headers:
 | `cache-control`  | Shows cache policy and effective TTL (for example `public, max-age=3600` for `ttl=1h`). |
 
 ```bash
-$ curl -I -H "x-api-key: YOUR_API_KEY" "https://[unavatar.io/github/kikobeats?ttl=1h"](https://unavatar.io/github/kikobeats?ttl=1h")
+$ curl -I -H "x-api-key: YOUR_API_KEY" "https://unavatar.io/github/kikobeats?ttl=1h"
 
 cache-control: public, max-age=3600
 x-cache-status: HIT
@@ -658,7 +654,7 @@ These headers help you understand pricing, limits, and request diagnostics.
 | `retry-after`            | Seconds until rate limit resets (only on 429 responses)   |
 
 ```bash
-$ curl -I -H "x-api-key: YOUR_API_KEY" https://[unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
+$ curl -I -H "x-api-key: YOUR_API_KEY" https://unavatar.io/github/kikobeats
 
 x-pricing-tier: pro
 x-timestamp: 1744209600
