@@ -18,8 +18,7 @@ const createProvider = (opts = {}) => {
   return createHtmlProvider({
     name: 'test-provider',
     url: () => opts.providerUrl ?? 'https://www.openstreetmap.org/user/Terence',
-    getter: () => opts.getterResult,
-    isBlocked: opts.isBlocked,
+    getter: opts.getter ?? (() => opts.getterResult),
     htmlOpts: opts.htmlOpts
   })
 }
@@ -97,6 +96,43 @@ test('createHtmlProvider returns undefined when status is 404 and no onFetchHTML
   const result = await runProvider(provider)
 
   t.is(result, undefined)
+})
+
+test('createHtmlProvider returns avatar URL when getter succeeds', async t => {
+  const provider = createProvider({
+    getter: () => 'https://cdn.example.com/avatar.png'
+  })
+
+  const result = await runProvider(provider)
+
+  t.is(result, 'https://cdn.example.com/avatar.png')
+})
+
+test('createHtmlProvider returns undefined when getter returns NOT_FOUND', async t => {
+  const provider = createProvider({
+    getter: () => NOT_FOUND
+  })
+
+  const result = await runProvider(provider)
+
+  t.is(result, undefined)
+})
+
+test('createHtmlProvider prioritizes antibot detection over NOT_FOUND getter output', async t => {
+  const $ = cheerio.load(
+    '<html><head><title>Just a moment...</title></head><body><div class="cf-turnstile"></div></body></html>'
+  )
+
+  const provider = createProvider({
+    getHTML: async () => ({ $, statusCode: 200 }),
+    getter: () => NOT_FOUND
+  })
+
+  const error = await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.true(error.blocked)
 })
 
 test('attempt returns NOT_FOUND symbol when status is 404 via onFetchHTML', async t => {
@@ -324,31 +360,6 @@ test('createHtmlProvider attaches html to error when getter returns empty', asyn
   t.is(typeof error.cause?.html, 'string')
   t.true(error.cause?.html.includes('<h1>Blocked</h1>'))
   t.deepEqual(error.cause?.headers, responseHeaders)
-  t.is(error.cause?.statusCode, 200)
-})
-
-test('createHtmlProvider sets blocked and attaches html on error when isBlocked returns true', async t => {
-  const $ = cheerio.load('<html><title>Login • Instagram</title></html>')
-
-  const { createHtmlProvider } = require('../../../src/util/html-provider')({
-    PROXY_TIMEOUT: 8000,
-    getHTML: async () => ({ $, statusCode: 200 })
-  })
-
-  const provider = createHtmlProvider({
-    name: 'test-provider',
-    url: () => 'https://www.instagram.com/willsmith',
-    getter: () => undefined,
-    isBlocked: ({ $ }) => $('title').text().includes('Login')
-  })
-
-  const error = await t.throwsAsync(runProvider(provider), {
-    message: 'Empty value returned by the provider.'
-  })
-
-  t.true(error.blocked)
-  t.is(typeof error.cause?.html, 'string')
-  t.true(error.cause?.html.includes('Login'))
   t.is(error.cause?.statusCode, 200)
 })
 

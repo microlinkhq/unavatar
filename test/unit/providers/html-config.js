@@ -257,7 +257,8 @@ test('facebook getter returns og:image URL from facebook profile markup', t => {
 test('psnprofiles getter returns og:image URL for valid profile page', t => {
   const psnprofiles = require('../../../src/providers/psnprofiles')({
     createHtmlProvider,
-    getOgImage
+    getOgImage,
+    NOT_FOUND: Symbol('NOT_FOUND')
   })
 
   const avatarUrl = 'https://i.psnprofiles.com/avatars/l/G12345abcdef.png'
