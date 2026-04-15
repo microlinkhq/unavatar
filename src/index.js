@@ -29,7 +29,7 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
   })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
-  const { createHtmlProvider, getOgImage } = require('./util/html-provider')({
+  const { createHtmlProvider, getOgImage, NOT_FOUND } = require('./util/html-provider')({
     ...constants,
     getHTML,
     onFetchHTML
@@ -39,6 +39,7 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
     constants,
     createHtmlProvider,
     getOgImage,
+    NOT_FOUND,
     got,
     isReservedIp,
     itunesSearchCache: cache.itunesSearchCache
