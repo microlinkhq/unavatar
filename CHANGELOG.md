@@ -1,3 +1,8 @@
+## 3.17.0 (2026-04-15)
+
+### Features
+
+* add Facebook support ([#552](https://github.com/Kikobeats/unavatar/issues/552)) ([f21f733](https://github.com/Kikobeats/unavatar/commit/f21f73346e9bc1be1388af7055bb1e859597a66f))
 ## 3.16.0 (2026-04-15)
 
 ### Features
