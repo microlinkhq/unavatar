@@ -43,6 +43,7 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
     NOT_FOUND,
     got,
     isReservedIp,
+    githubSearchCache: cache.githubSearchCache,
     itunesSearchCache: cache.itunesSearchCache
   }
   const { providers, providersBy } = require('./providers')(providerCtx)
