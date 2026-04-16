@@ -1,7 +1,7 @@
 'use strict'
 
 const providersBy = {
-  email: ['gravatar'],
+  email: ['gravatar', 'github'],
   username: [
     'apple-music',
     'behance',

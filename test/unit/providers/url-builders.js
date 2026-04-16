@@ -25,6 +25,11 @@ test('github appends configured avatar size', async t => {
   t.is(url, `https://github.com/kikobeats.png?size=${AVATAR_SIZE}`)
 })
 
+test('github uses username logic for non-email input', async t => {
+  const url = await github('octocat')
+  t.is(url, `https://github.com/octocat.png?size=${AVATAR_SIZE}`)
+})
+
 test('google builds favicon URL with fixed size', t => {
   t.is(
     google('unavatar.io'),
