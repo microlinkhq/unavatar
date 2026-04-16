@@ -1,12 +1,17 @@
 'use strict'
 
 const test = require('ava')
+const Keyv = require('@keyvhq/core')
 
 const { AVATAR_SIZE } = require('../../../src/constant')
 
 const createGithub = got =>
   require('../../../src/providers/github')({
     constants: { AVATAR_SIZE },
+    githubSearchCache: new Keyv({
+      namespace: 'github-search-test',
+      store: new Map()
+    }),
     got
   })
 
@@ -103,4 +108,39 @@ test('github returns undefined when email cannot be resolved', async t => {
   const result = await github('josefrancisco.verdu@gmail.com')
 
   t.is(result, undefined)
+})
+
+test('github memoizes email lookups across repeated calls', async t => {
+  let gotCalls = 0
+  const github = createGithub(async url => {
+    gotCalls++
+
+    if (url.includes('/search/users?')) {
+      return { body: { items: [] } }
+    }
+
+    if (url.includes('/search/commits?')) {
+      return {
+        body: {
+          items: [
+            {
+              author: {
+                login: 'Kikobeats',
+                avatar_url: 'https://avatars.githubusercontent.com/u/2096101?v=4'
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    throw new Error(`Unexpected URL: ${url}`)
+  })
+
+  const first = await github('josefrancisco.verdu@gmail.com')
+  const second = await github('josefrancisco.verdu@gmail.com')
+
+  t.is(first, 'https://avatars.githubusercontent.com/u/2096101?v=4')
+  t.is(second, 'https://avatars.githubusercontent.com/u/2096101?v=4')
+  t.is(gotCalls, 2)
 })

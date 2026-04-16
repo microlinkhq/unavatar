@@ -1,5 +1,6 @@
 'use strict'
 
+const memoize = require('@keyvhq/memoize')
 const isEmail = require('is-email-like')
 const { stringify } = require('querystring')
 
@@ -11,32 +12,50 @@ const getUsernameAvatarUrl = ({ constants, input }) =>
     size: constants.AVATAR_SIZE
   })}`
 
-const searchUsersByEmail = ({ got, email }) =>
-  got(`${GITHUB_API_URL}/search/users?q=${encodeURIComponent(email)}&per_page=10`, {
-    responseType: 'json'
-  }).then(({ body }) => body?.items ?? [])
+const createSearchUsersByEmail = ({ githubSearchCache, got }) =>
+  memoize(
+    async email =>
+      got(
+        `${GITHUB_API_URL}/search/users?q=${encodeURIComponent(email)}&per_page=10`,
+        {
+          responseType: 'json'
+        }
+      ).then(({ body }) => body?.items ?? []),
+    githubSearchCache,
+    { key: email => `search-users:${email.trim().toLowerCase()}` }
+  )
 
-const getUser = ({ got, login }) =>
-  got(`${GITHUB_API_URL}/users/${encodeURIComponent(login)}`, {
-    responseType: 'json'
-  }).then(({ body }) => body)
+const createGetUser = ({ githubSearchCache, got }) =>
+  memoize(
+    async login =>
+      got(`${GITHUB_API_URL}/users/${encodeURIComponent(login)}`, {
+        responseType: 'json'
+      }).then(({ body }) => body),
+    githubSearchCache,
+    { key: login => `user:${login.trim().toLowerCase()}` }
+  )
 
-const searchCommitsByEmail = ({ got, email }) =>
-  got(
-    `${GITHUB_API_URL}/search/commits?q=${encodeURIComponent(
-      `author-email:${email}`
-    )}&per_page=${SEARCH_COMMITS_PER_PAGE}`,
-    {
-      headers: { accept: 'application/vnd.github+json' },
-      responseType: 'json'
-    }
-  ).then(({ body }) => body?.items ?? [])
+const createSearchCommitsByEmail = ({ githubSearchCache, got }) =>
+  memoize(
+    async email =>
+      got(
+        `${GITHUB_API_URL}/search/commits?q=${encodeURIComponent(
+          `author-email:${email}`
+        )}&per_page=${SEARCH_COMMITS_PER_PAGE}`,
+        {
+          headers: { accept: 'application/vnd.github+json' },
+          responseType: 'json'
+        }
+      ).then(({ body }) => body?.items ?? []),
+    githubSearchCache,
+    { key: email => `search-commits:${email.trim().toLowerCase()}` }
+  )
 
-const findExactPublicProfileMatch = async ({ got, email }) => {
-  const candidates = await searchUsersByEmail({ got, email })
+const findExactPublicProfileMatch = async ({ email, getUser, searchUsersByEmail }) => {
+  const candidates = await searchUsersByEmail(email)
 
   for (const candidate of candidates) {
-    const user = await getUser({ got, login: candidate.login })
+    const user = await getUser(candidate.login)
 
     if (user?.email?.toLowerCase() === email.toLowerCase()) {
       return user.avatar_url
@@ -44,8 +63,8 @@ const findExactPublicProfileMatch = async ({ got, email }) => {
   }
 }
 
-const findCommitConsensusMatch = async ({ got, email }) => {
-  const commits = await searchCommitsByEmail({ got, email })
+const findCommitConsensusMatch = async ({ email, searchCommitsByEmail }) => {
+  const commits = await searchCommitsByEmail(email)
   const counts = new Map()
 
   for (const item of commits) {
@@ -70,17 +89,29 @@ const findCommitConsensusMatch = async ({ got, email }) => {
   return winner.avatarUrl
 }
 
-module.exports = ({ constants, got }) =>
-  async function github (input) {
+module.exports = ({ constants, githubSearchCache, got }) => {
+  const searchUsersByEmail = createSearchUsersByEmail({ githubSearchCache, got })
+  const getUser = createGetUser({ githubSearchCache, got })
+  const searchCommitsByEmail = createSearchCommitsByEmail({
+    githubSearchCache,
+    got
+  })
+
+  return async function github (input) {
     if (!isEmail(input)) {
       return getUsernameAvatarUrl({ constants, input })
     }
 
     return (
-      (await findExactPublicProfileMatch({ got, email: input })) ||
-      findCommitConsensusMatch({ got, email: input })
+      (await findExactPublicProfileMatch({
+        email: input,
+        getUser,
+        searchUsersByEmail
+      })) ||
+      findCommitConsensusMatch({ email: input, searchCommitsByEmail })
     )
   }
+}
 
 module.exports.getUsernameAvatarUrl = getUsernameAvatarUrl
 module.exports.findExactPublicProfileMatch = findExactPublicProfileMatch

@@ -12,6 +12,7 @@ const mockCtx = {
   createHtmlProvider: () => async function () {},
   getOgImage: () => undefined,
   got: Object.assign(() => {}, { gotOpts: {} }),
+  githubSearchCache: new Keyv({ store: new Map() }),
   itunesSearchCache: new Keyv({ store: new Map() })
 }
 
