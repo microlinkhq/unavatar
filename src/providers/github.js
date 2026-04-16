@@ -5,7 +5,22 @@ const isEmail = require('is-email-like')
 const { stringify } = require('querystring')
 
 const GITHUB_API_URL = 'https://api.github.com'
+const SEARCH_USERS_PER_PAGE = 10
 const SEARCH_COMMITS_PER_PAGE = 20
+const COMMIT_SEARCH_ACCEPT_HEADER = 'application/vnd.github+json'
+
+const normalizeCacheKey = value => value.trim().toLowerCase()
+const createLookupCacheKey = prefix => value =>
+  `${prefix}:${normalizeCacheKey(value)}`
+
+const fetchJsonBody = async ({ got, url, options }) => {
+  const { body } = await got(url, {
+    responseType: 'json',
+    ...options
+  })
+
+  return body
+}
 
 const getUsernameAvatarUrl = ({ constants, input }) =>
   `https://github.com/${input}.png?${stringify({
@@ -14,50 +29,58 @@ const getUsernameAvatarUrl = ({ constants, input }) =>
 
 const createSearchUsersByEmail = ({ githubSearchCache, got }) =>
   memoize(
-    async email =>
-      got(
-        `${GITHUB_API_URL}/search/users?q=${encodeURIComponent(email)}&per_page=10`,
-        {
-          responseType: 'json'
-        }
-      ).then(({ body }) => body?.items ?? []),
+    async email => {
+      const body = await fetchJsonBody({
+        got,
+        url: `${GITHUB_API_URL}/search/users?q=${encodeURIComponent(
+          email
+        )}&per_page=${SEARCH_USERS_PER_PAGE}`
+      })
+
+      return body?.items ?? []
+    },
     githubSearchCache,
-    { key: email => `search-users:${email.trim().toLowerCase()}` }
+    { key: createLookupCacheKey('search-users') }
   )
 
 const createGetUser = ({ githubSearchCache, got }) =>
   memoize(
-    async login =>
-      got(`${GITHUB_API_URL}/users/${encodeURIComponent(login)}`, {
-        responseType: 'json'
-      }).then(({ body }) => body),
+    login =>
+      fetchJsonBody({
+        got,
+        url: `${GITHUB_API_URL}/users/${encodeURIComponent(login)}`
+      }),
     githubSearchCache,
-    { key: login => `user:${login.trim().toLowerCase()}` }
+    { key: createLookupCacheKey('user') }
   )
 
 const createSearchCommitsByEmail = ({ githubSearchCache, got }) =>
   memoize(
-    async email =>
-      got(
-        `${GITHUB_API_URL}/search/commits?q=${encodeURIComponent(
+    async email => {
+      const body = await fetchJsonBody({
+        got,
+        url: `${GITHUB_API_URL}/search/commits?q=${encodeURIComponent(
           `author-email:${email}`
         )}&per_page=${SEARCH_COMMITS_PER_PAGE}`,
-        {
-          headers: { accept: 'application/vnd.github+json' },
-          responseType: 'json'
+        options: {
+          headers: { accept: COMMIT_SEARCH_ACCEPT_HEADER }
         }
-      ).then(({ body }) => body?.items ?? []),
+      })
+
+      return body?.items ?? []
+    },
     githubSearchCache,
-    { key: email => `search-commits:${email.trim().toLowerCase()}` }
+    { key: createLookupCacheKey('search-commits') }
   )
 
 const findExactPublicProfileMatch = async ({ email, getUser, searchUsersByEmail }) => {
   const candidates = await searchUsersByEmail(email)
+  const normalizedEmail = email.toLowerCase()
 
   for (const candidate of candidates) {
     const user = await getUser(candidate.login)
 
-    if (user?.email?.toLowerCase() === email.toLowerCase()) {
+    if (user?.email?.toLowerCase() === normalizedEmail) {
       return user.avatar_url
     }
   }
@@ -68,7 +91,7 @@ const findCommitConsensusMatch = async ({ email, searchCommitsByEmail }) => {
   const counts = new Map()
 
   for (const item of commits) {
-    const linkedUser = item.author || item.committer
+    const linkedUser = item.author ?? item.committer
     if (!linkedUser?.login || !linkedUser?.avatar_url) continue
 
     const entry = counts.get(linkedUser.login) ?? {
@@ -80,13 +103,12 @@ const findCommitConsensusMatch = async ({ email, searchCommitsByEmail }) => {
     counts.set(linkedUser.login, entry)
   }
 
-  if (counts.size === 0) return
+  let winner
+  for (const entry of counts.values()) {
+    if (!winner || entry.count > winner.count) winner = entry
+  }
 
-  const [winner] = [...counts.values()].sort((left, right) => {
-    return right.count - left.count
-  })
-
-  return winner.avatarUrl
+  return winner?.avatarUrl
 }
 
 module.exports = ({ constants, githubSearchCache, got }) => {
@@ -102,14 +124,15 @@ module.exports = ({ constants, githubSearchCache, got }) => {
       return getUsernameAvatarUrl({ constants, input })
     }
 
-    return (
-      (await findExactPublicProfileMatch({
-        email: input,
-        getUser,
-        searchUsersByEmail
-      })) ||
-      findCommitConsensusMatch({ email: input, searchCommitsByEmail })
-    )
+    const exactMatch = await findExactPublicProfileMatch({
+      email: input,
+      getUser,
+      searchUsersByEmail
+    })
+
+    if (exactMatch) return exactMatch
+
+    return findCommitConsensusMatch({ email: input, searchCommitsByEmail })
   }
 }
 
