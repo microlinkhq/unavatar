@@ -1,3 +1,8 @@
+## 3.19.5 (2026-04-16)
+
+### Bug Fixes
+
+* **github:** use type user ([#558](https://github.com/Kikobeats/unavatar/issues/558)) ([7c6aa81](https://github.com/Kikobeats/unavatar/commit/7c6aa81cf84e75af8a967a74e7f4e5caceec4680))
 ## 3.19.4 (2026-04-16)
 ## 3.19.3 (2026-04-15)
 
