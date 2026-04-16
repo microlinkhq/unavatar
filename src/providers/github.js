@@ -22,6 +22,16 @@ const fetchJsonBody = async ({ got, url, options }) => {
   return body
 }
 
+const isResolvablePerson = user =>
+  user?.type === 'User' &&
+  typeof user.login === 'string' &&
+  typeof user.avatar_url === 'string'
+
+const pickLinkedUser = item => {
+  if (isResolvablePerson(item.author)) return item.author
+  if (isResolvablePerson(item.committer)) return item.committer
+}
+
 const getUsernameAvatarUrl = ({ constants, input }) =>
   `https://github.com/${input}.png?${stringify({
     size: constants.AVATAR_SIZE
@@ -84,7 +94,10 @@ const findExactPublicProfileMatch = async ({
   for (const candidate of candidates) {
     const user = await getUser(candidate.login)
 
-    if (user?.email?.toLowerCase() === normalizedEmail) {
+    if (
+      isResolvablePerson(user) &&
+      user.email?.toLowerCase() === normalizedEmail
+    ) {
       return user.avatar_url
     }
   }
@@ -95,8 +108,8 @@ const findCommitConsensusMatch = async ({ email, searchCommitsByEmail }) => {
   const counts = new Map()
 
   for (const item of commits) {
-    const linkedUser = item.author ?? item.committer
-    if (!linkedUser?.login || !linkedUser?.avatar_url) continue
+    const linkedUser = pickLinkedUser(item)
+    if (!linkedUser) continue
 
     const entry = counts.get(linkedUser.login) ?? {
       avatarUrl: linkedUser.avatar_url,

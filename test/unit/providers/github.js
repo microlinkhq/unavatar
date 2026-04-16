@@ -31,6 +31,7 @@ test('github resolves exact public profile email match', async t => {
       return {
         body: {
           login: 'Kikobeats',
+          type: 'User',
           email: 'josefrancisco.verdu@gmail.com',
           avatar_url: 'https://avatars.githubusercontent.com/u/2096101?v=4'
         }
@@ -62,18 +63,21 @@ test('github falls back to commit search for email input', async t => {
             {
               author: {
                 login: 'Kikobeats',
+                type: 'User',
                 avatar_url: 'https://avatars.githubusercontent.com/u/2096101?v=4'
               }
             },
             {
               author: {
                 login: 'Kikobeats',
+                type: 'User',
                 avatar_url: 'https://avatars.githubusercontent.com/u/2096101?v=4'
               }
             },
             {
               author: {
                 login: 'someone-else',
+                type: 'User',
                 avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4'
               }
             }
@@ -126,6 +130,7 @@ test('github memoizes email lookups across repeated calls', async t => {
             {
               author: {
                 login: 'Kikobeats',
+                type: 'User',
                 avatar_url: 'https://avatars.githubusercontent.com/u/2096101?v=4'
               }
             }
@@ -143,4 +148,93 @@ test('github memoizes email lookups across repeated calls', async t => {
   t.is(first, 'https://avatars.githubusercontent.com/u/2096101?v=4')
   t.is(second, 'https://avatars.githubusercontent.com/u/2096101?v=4')
   t.is(gotCalls, 2)
+})
+
+test('github commit fallback ignores organizations and keeps user avatar', async t => {
+  const github = createGithub(async (url, opts) => {
+    t.is(opts.responseType, 'json')
+
+    if (url.includes('/search/users?')) {
+      return { body: { items: [] } }
+    }
+
+    if (url.includes('/search/commits?')) {
+      return {
+        body: {
+          items: [
+            {
+              author: {
+                login: 'sindresorhus',
+                type: 'Organization',
+                avatar_url: 'https://avatars.githubusercontent.com/u/13122722?v=4'
+              },
+              committer: {
+                login: 'sindresorhus',
+                type: 'User',
+                avatar_url: 'https://avatars.githubusercontent.com/u/170270?s=400&v=4'
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    throw new Error(`Unexpected URL: ${url}`)
+  })
+
+  const result = await github('sindresorhus@gmail.com')
+
+  t.is(result, 'https://avatars.githubusercontent.com/u/170270?s=400&v=4')
+})
+
+test('github exact email match ignores organizations and falls back to user commit', async t => {
+  const github = createGithub(async (url, opts) => {
+    t.is(opts.responseType, 'json')
+
+    if (url.includes('/search/users?')) {
+      return {
+        body: {
+          items: [{ login: 'sindresorhus' }]
+        }
+      }
+    }
+
+    if (url.endsWith('/users/sindresorhus')) {
+      return {
+        body: {
+          login: 'sindresorhus',
+          type: 'Organization',
+          email: 'sindresorhus@gmail.com',
+          avatar_url: 'https://avatars.githubusercontent.com/u/13122722?v=4'
+        }
+      }
+    }
+
+    if (url.includes('/search/commits?')) {
+      return {
+        body: {
+          items: [
+            {
+              author: {
+                login: 'sindresorhus',
+                type: 'Organization',
+                avatar_url: 'https://avatars.githubusercontent.com/u/13122722?v=4'
+              },
+              committer: {
+                login: 'sindresorhus',
+                type: 'User',
+                avatar_url: 'https://avatars.githubusercontent.com/u/170270?s=400&v=4'
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    throw new Error(`Unexpected URL: ${url}`)
+  })
+
+  const result = await github('sindresorhus@gmail.com')
+
+  t.is(result, 'https://avatars.githubusercontent.com/u/170270?s=400&v=4')
 })
