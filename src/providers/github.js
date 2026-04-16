@@ -1,8 +1,8 @@
 'use strict'
 
 const memoize = require('@keyvhq/memoize')
-const isEmail = require('is-email-like')
 const { stringify } = require('querystring')
+const isEmail = require('is-email-like')
 
 const GITHUB_API_URL = 'https://api.github.com'
 const SEARCH_USERS_PER_PAGE = 10
@@ -73,7 +73,11 @@ const createSearchCommitsByEmail = ({ githubSearchCache, got }) =>
     { key: createLookupCacheKey('search-commits') }
   )
 
-const findExactPublicProfileMatch = async ({ email, getUser, searchUsersByEmail }) => {
+const findExactPublicProfileMatch = async ({
+  email,
+  getUser,
+  searchUsersByEmail
+}) => {
   const candidates = await searchUsersByEmail(email)
   const normalizedEmail = email.toLowerCase()
 
@@ -112,7 +116,10 @@ const findCommitConsensusMatch = async ({ email, searchCommitsByEmail }) => {
 }
 
 module.exports = ({ constants, githubSearchCache, got }) => {
-  const searchUsersByEmail = createSearchUsersByEmail({ githubSearchCache, got })
+  const searchUsersByEmail = createSearchUsersByEmail({
+    githubSearchCache,
+    got
+  })
   const getUser = createGetUser({ githubSearchCache, got })
   const searchCommitsByEmail = createSearchCommitsByEmail({
     githubSearchCache,
@@ -120,9 +127,7 @@ module.exports = ({ constants, githubSearchCache, got }) => {
   })
 
   return async function github (input) {
-    if (!isEmail(input)) {
-      return getUsernameAvatarUrl({ constants, input })
-    }
+    if (!isEmail(input)) return getUsernameAvatarUrl({ constants, input })
 
     const exactMatch = await findExactPublicProfileMatch({
       email: input,
