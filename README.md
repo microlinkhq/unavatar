@@ -68,11 +68,13 @@ It's proudly powered by [microlink.io](https://microlink.io/), the headless brow
 
 The service is exposed in **unavatar.io** via provider endpoints:
 
-- an **email**: [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
+- an **email (auto-detect)**: [unavatar.io/hello@microlink.io](https://unavatar.io/hello@microlink.io) — tries Gravatar, then GitHub
+- an **email** via Gravatar: [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
+- an **email** via GitHub: [unavatar.io/github/sindresorhus@gmail.com](https://unavatar.io/github/sindresorhus@gmail.com)
 - an **username**: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
 - a **domain**: [unavatar.io/google/reddit.com](https://unavatar.io/google/reddit.com)
 
-Use the `/:provider/:key` format for all lookups. You can read more about available providers in [providers](https://unavatar.io/docs#providers).
+Use `/:provider/:key` for provider-specific lookups, or pass an email as the only path segment for automatic resolution. You can read more in [Email avatars](https://unavatar.io/email) and [providers](https://unavatar.io/docs#providers).
 
 ## Authentication
 
@@ -361,12 +363,13 @@ Available inputs:
 
 ### GitHub
 
-Get any GitHub user or organization's profile picture by their username.
+Get any GitHub user or organization's profile picture by username, or resolve an avatar from a public email via GitHub search when the address matches a profile or commit history.
 
 Available inputs:
 
 - User, e.g., [unavatar.io/github/mdo](https://unavatar.io/github/mdo)
 - Organization, e.g., [unavatar.io/github/vercel](https://unavatar.io/github/vercel)
+- Email address, e.g., [unavatar.io/github/sindresorhus@gmail.com](https://unavatar.io/github/sindresorhus@gmail.com)
 
 ### GitLab
 
@@ -495,7 +498,7 @@ Get any PlayStation Network user's profile picture by their PSN username.
 
 Available inputs:
 
-- Username, e.g., [unavatar.io/psnprofiles/P3](https://unavatar.io/psnprofiles/P3)
+- Username, e.g., [unavatar.io/psnprofiles/Duff85](https://unavatar.io/psnprofiles/Duff85)
 
 ### Reddit
 
@@ -644,7 +647,7 @@ Get any Xbox player's profile picture by their gamertag.
 
 Available inputs:
 
-- Gamertag, e.g., [unavatar.io/xboxgamertag/P3](https://unavatar.io/xboxgamertag/P3)
+- Gamertag, e.g., [unavatar.io/xboxgamertag/GD-BerserkerTTD](https://unavatar.io/xboxgamertag/GD-BerserkerTTD)
 
 ### YouTube
 
