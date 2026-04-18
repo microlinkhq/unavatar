@@ -78,7 +78,7 @@ Use `/:provider/:key` for provider-specific lookups, or pass an email as the onl
 
 ## Authentication
 
-The anonymous requests works without authentication. They are limited to 25 requests/day per IP address.
+Anonymous requests work without authentication. They are limited to 25 requests/day per IP address.
 
 For [PRO](https://unavatar.io/checkout) users, the requests must include the API key as the `x-api-key` request header:
 
@@ -271,7 +271,7 @@ You can pass `fallback=false` to explicitly disable this behavior. In this case,
 
 The service returns media content by default.
 
-This is in this way to make easier consume the service from HTML markup.
+This makes the service easier to consume directly from HTML markup.
 
 In case you want to get a JSON payload as response, just pass `json=true`:
 
