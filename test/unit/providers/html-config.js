@@ -38,6 +38,15 @@ test('html provider modules expose expected URL builders', t => {
   })
   t.is(facebook.url('kikobeats'), 'https://www.facebook.com/kikobeats')
 
+  const flickr = require('../../../src/providers/flickr')({
+    createHtmlProvider
+  })
+  t.is(flickr.url('stevebooth'), 'https://www.flickr.com/photos/stevebooth/')
+  t.is(
+    flickr.url('groups:best100only'),
+    'https://www.flickr.com/groups/best100only/'
+  )
+
   const gitlab = require('../../../src/providers/gitlab')({
     createHtmlProvider,
     getOgImage
