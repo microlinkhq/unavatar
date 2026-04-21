@@ -1,3 +1,8 @@
+## 3.22.0 (2026-04-21)
+
+### Features
+
+* add stackoverflow ([#561](https://github.com/Kikobeats/unavatar/issues/561)) ([8c08935](https://github.com/Kikobeats/unavatar/commit/8c08935da9ae60d3acb290ad231c4d9c8ff8d1c2))
 ## 3.21.0 (2026-04-21)
 
 ### Features
