@@ -15,8 +15,11 @@ const ExtendableError = require('../util/error')
 const DATA_URI_REGEX = dataUriRegex()
 const DOMAIN_REGEX = urlRegex({ strict: false })
 
+const IS_HASH = require('../util/is-hash')
+
 const getInputType = input => {
   if (isEmail(input)) return 'email'
+  if (IS_HASH.test(input)) return 'hash'
   if (stableRegex(DOMAIN_REGEX, input)) return 'domain'
   return 'username'
 }

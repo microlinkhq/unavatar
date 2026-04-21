@@ -42,5 +42,5 @@ test('gravatar normalizes email and hashes it', t => {
   t.true(url.startsWith('https://gravatar.com/avatar/'))
   t.true(url.includes(`size=${AVATAR_SIZE}`))
   t.true(url.includes('d=404'))
-  t.true(url.includes('d36a92237c75c5337c17b60d90686bf9'))
+  t.true(url.includes('295dee0d3dbb93aac67e72ae4af40f728f050e5fd18417ad60d1ed19186ae03b'))
 })
