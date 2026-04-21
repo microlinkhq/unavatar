@@ -1,3 +1,8 @@
+## 3.23.0 (2026-04-21)
+
+### Features
+
+* add google play support ([#563](https://github.com/Kikobeats/unavatar/issues/563)) ([ae0802a](https://github.com/Kikobeats/unavatar/commit/ae0802a83e13ec658925e4b532a8859a0a8cbf0b))
 ## 3.22.0 (2026-04-21)
 
 ### Features
