@@ -1,6 +1,7 @@
 'use strict'
 
 const test = require('ava')
+const Keyv = require('@keyvhq/core')
 
 const {
   getAppAvatar,
@@ -127,6 +128,35 @@ test('apple-store provider supports app-name search', async t => {
 
   const avatarUrl = await provider('app-name:whatsapp')
   t.is(avatarUrl, 'https://cdn.apple.com/app-name.jpg')
+})
+
+test('apple-store provider memoizes app-name iTunes search lookups', async t => {
+  let gotCalls = 0
+  const provider = require('../../../src/providers/apple-store')({
+    got: async (url, opts) => {
+      gotCalls++
+      t.is(
+        url,
+        'https://itunes.apple.com/search?term=whatsapp&entity=software&limit=1'
+      )
+      t.is(opts.responseType, 'json')
+      t.true(opts.resolveBodyOnly)
+      return {
+        results: [{ kind: 'software', artworkUrl512: 'https://cdn.apple.com/app-name.jpg' }]
+      }
+    },
+    itunesSearchCache: new Keyv({
+      namespace: 'itunes-search-test',
+      store: new Map()
+    })
+  })
+
+  const first = await provider('app-name:whatsapp')
+  const second = await provider('app-name:whatsapp')
+
+  t.is(first, 'https://cdn.apple.com/app-name.jpg')
+  t.is(second, 'https://cdn.apple.com/app-name.jpg')
+  t.is(gotCalls, 1)
 })
 
 test('apple-store provider supports dev-name search with country', async t => {

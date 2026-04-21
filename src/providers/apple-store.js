@@ -1,7 +1,8 @@
 'use strict'
 
+const { createGetSearchResults } = require('../util/itunes-search')
+
 const ITUNES_LOOKUP_URL = 'https://itunes.apple.com/lookup'
-const ITUNES_SEARCH_URL = 'https://itunes.apple.com/search'
 const COUNTRY_CODE_REGEX = /^[a-z]{2}$/i
 const APP_ID_IN_URL_REGEX = /\/id(\d+)(?:\/|$)/
 
@@ -50,14 +51,6 @@ const getLookupResults = async ({ got, query }) => {
   return body?.results ?? []
 }
 
-const getSearchResults = async ({ got, query }) => {
-  const body = await got(`${ITUNES_SEARCH_URL}?${query}`, {
-    responseType: 'json',
-    resolveBodyOnly: true
-  })
-  return body?.results ?? []
-}
-
 const getAppAvatar = async ({ got, id, country }) => {
   const query = withCountry({
     query: `id=${encodeURIComponent(id)}&entity=software&limit=1`,
@@ -86,28 +79,32 @@ const getBundleAvatar = async ({ got, bundleId, country }) => {
   return getArtworkUrl(result)
 }
 
-const getAppNameAvatar = async ({ got, name, country }) => {
+const getAppNameAvatar = async ({ got, name, country, searchResults }) => {
+  const getSearchResults = searchResults || createGetSearchResults({ got })
   const query = withCountry({
     query: `term=${encodeURIComponent(name)}&entity=software&limit=1`,
     country
   })
-  const [result] = await getSearchResults({ got, query })
+  const [result] = await getSearchResults(query)
   return getArtworkUrl(result)
 }
 
-const getDeveloperNameAvatar = async ({ got, name, country }) => {
+const getDeveloperNameAvatar = async ({ got, name, country, searchResults }) => {
+  const getSearchResults = searchResults || createGetSearchResults({ got })
   const query = withCountry({
     query: `term=${encodeURIComponent(
       name
     )}&entity=software&attribute=softwareDeveloper&limit=1`,
     country
   })
-  const [result] = await getSearchResults({ got, query })
+  const [result] = await getSearchResults(query)
   return getArtworkUrl(result)
 }
 
-module.exports = ({ got }) =>
-  async function appleStore (input) {
+module.exports = ({ got, itunesSearchCache }) => {
+  const searchResults = createGetSearchResults({ got, itunesSearchCache })
+
+  return async function appleStore (input) {
     const { type, value: rawValue } = parseInput(input)
     const { value, country } = parseCountry(rawValue)
 
@@ -124,13 +121,14 @@ module.exports = ({ got }) =>
         return getAppAvatar({ got, id: appId, country })
       }
       case 'app-name':
-        return getAppNameAvatar({ got, name: value, country })
+        return getAppNameAvatar({ got, name: value, country, searchResults })
       case 'dev-name':
-        return getDeveloperNameAvatar({ got, name: value, country })
+        return getDeveloperNameAvatar({ got, name: value, country, searchResults })
       default:
         throw new Error(`Unsupported Apple Store type: ${type}`)
     }
   }
+}
 
 module.exports.getAppAvatar = getAppAvatar
 module.exports.getDeveloperAvatar = getDeveloperAvatar

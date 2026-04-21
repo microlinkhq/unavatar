@@ -1,7 +1,7 @@
 'use strict'
 
 const { $jsonld } = require('@metascraper/helpers')
-const memoize = require('@keyvhq/memoize')
+const { createGetSearchResults } = require('../util/itunes-search')
 
 const APPLE_MUSIC_ID_REGEX = /^\d+$/
 const APPLE_MUSIC_STOREFRONT = 'us'
@@ -36,26 +36,19 @@ const parseInput = input => {
 }
 
 module.exports = ({ createHtmlProvider, itunesSearchCache, got }) => {
-  const searchEntityId = memoize(
-    async ({ query, type }) => {
-      const entityConfig = APPLE_MUSIC_ENTITY_TYPES[type]
-      if (!entityConfig) return
-      const { entity, idKey } = entityConfig
+  const getSearchResults = createGetSearchResults({ got, itunesSearchCache })
 
-      const url = `https://itunes.apple.com/search?term=${encodeURIComponent(
-        query
-      )}&entity=${entity}&limit=1`
-      const body = await got(url, {
-        responseType: 'json',
-        resolveBodyOnly: true
-      })
+  const searchEntityId = async ({ query, type }) => {
+    const entityConfig = APPLE_MUSIC_ENTITY_TYPES[type]
+    if (!entityConfig) return
+    const { entity, idKey } = entityConfig
 
-      const entityId = body?.results?.[0]?.[idKey]
-      return isNumericId(entityId) ? String(entityId) : null
-    },
-    itunesSearchCache,
-    { key: ({ query, type }) => `${type}:${query.trim().toLowerCase()}` }
-  )
+    const [result] = await getSearchResults(
+      `term=${encodeURIComponent(query)}&entity=${entity}&limit=1`
+    )
+    const entityId = result?.[idKey]
+    return isNumericId(entityId) ? String(entityId) : null
+  }
 
   const appleMusicURI = async input => {
     const { hasExplicitType, type, id } = parseInput(input)
