@@ -1,3 +1,8 @@
+## 3.21.0 (2026-04-21)
+
+### Features
+
+* add buymeacoffee support ([#562](https://github.com/Kikobeats/unavatar/issues/562)) ([52c1b26](https://github.com/Kikobeats/unavatar/commit/52c1b260beb951cec7e6c7d08acdecae44f13a76))
 ## 3.20.0 (2026-04-21)
 
 ### Features
