@@ -26,6 +26,14 @@ test('html provider modules expose expected URL builders', t => {
   )
   t.is(bluesky.getter({}), 'jsonld:mainEntity.image')
 
+  const buymeacoffee = require('../../../src/providers/buymeacoffee')({
+    createHtmlProvider
+  })
+  t.is(
+    buymeacoffee.url('mikebarnesdrums'),
+    'https://buymeacoffee.com/mikebarnesdrums'
+  )
+
   const deviantart = require('../../../src/providers/deviantart')({
     createHtmlProvider,
     getOgImage
