@@ -61,6 +61,19 @@ test('html provider modules expose expected URL builders', t => {
   })
   t.is(gitlab.url('kikobeats'), 'https://gitlab.com/kikobeats')
 
+  const googlePlay = require('../../../src/providers/google-play')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(
+    googlePlay.url('app:com.devolver.grispaid'),
+    'https://play.google.com/store/apps/details?id=com.devolver.grispaid'
+  )
+  t.is(
+    googlePlay.url('dev:6592603558263828430'),
+    'https://play.google.com/store/apps/dev?id=6592603558263828430'
+  )
+
   const instagram = require('../../../src/providers/instagram')({
     createHtmlProvider,
     getOgImage
