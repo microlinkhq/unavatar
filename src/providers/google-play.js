@@ -31,7 +31,7 @@ const getAvatarUrl = input => {
 
   if (kind === 'dev') return `${DEV_PAGE_URL}${encodeURIComponent(value)}`
 
-  if (kind !== 'app') return `${DETAILS_PAGE_URL}${encodeURIComponent(input)}`
+  if (kind !== 'app') return `${DETAILS_PAGE_URL}${encodeURIComponent(value)}`
 
   return `${DETAILS_PAGE_URL}${encodeURIComponent(value)}`
 }

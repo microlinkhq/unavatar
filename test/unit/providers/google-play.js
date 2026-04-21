@@ -27,6 +27,13 @@ ava('.getAvatarUrl supports explicit dev type', t => {
   )
 })
 
+ava('.getAvatarUrl falls back to parsed value for unknown type prefixes', t => {
+  t.is(
+    getAvatarUrl('genre:action'),
+    'https://play.google.com/store/apps/details?id=action'
+  )
+})
+
 ava('.getAvatarUrl keeps full details URL input', t => {
   t.is(
     getAvatarUrl('https://play.google.com/store/apps/details?id=com.devolver.grispaid'),
