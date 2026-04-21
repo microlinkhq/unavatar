@@ -1,3 +1,8 @@
+## 3.20.0 (2026-04-21)
+
+### Features
+
+* add flickr support ([#560](https://github.com/Kikobeats/unavatar/issues/560)) ([1832d3a](https://github.com/Kikobeats/unavatar/commit/1832d3aa0a407ae4d38ca733e36eda9314371f2e))
 ## 3.19.8 (2026-04-21)
 ## 3.19.7 (2026-04-18)
 ## 3.19.6 (2026-04-17)
