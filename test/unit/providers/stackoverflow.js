@@ -1,8 +1,6 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const fs = require('fs')
-const path = require('path')
 const test = require('ava')
 
 const { getProfileUrl, getAvatarUrl } = require('../../../src/providers/stackoverflow')
@@ -28,8 +26,19 @@ test('.getProfileUrl removes leading slash', t => {
   )
 })
 
-test('.getAvatarUrl resolves expected avatar from stackoverflow fixture', t => {
-  const html = fs.readFileSync(path.join(__dirname, '../../../stackoverflow.html'), 'utf8')
+test('.getAvatarUrl resolves expected avatar from inline stackoverflow markup', t => {
+  const html = `
+    <html>
+      <body>
+        <div class="js-usermini-avatar-container">
+          <img src="https://www.gravatar.com/avatar/27c58ba8661585b00b571efab36af60f?s=256&amp;d=identicon&amp;r=PG" width="128" />
+        </div>
+        <div class="js-usermini-avatar-container">
+          <img src="https://www.gravatar.com/avatar/27c58ba8661585b00b571efab36af60f?s=192&amp;d=identicon&amp;r=PG" width="96" />
+        </div>
+      </body>
+    </html>
+  `
   const $ = cheerio.load(html)
 
   t.is(
