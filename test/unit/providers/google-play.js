@@ -27,24 +27,29 @@ ava('.getAvatarUrl supports explicit dev type', t => {
   )
 })
 
-ava('.getAvatarUrl falls back to parsed value for unknown type prefixes', t => {
-  t.is(
-    getAvatarUrl('genre:action'),
-    'https://play.google.com/store/apps/details?id=action'
-  )
+ava('.getAvatarUrl throws for unsupported type prefixes', t => {
+  const error = t.throws(() => getAvatarUrl('genre:action'))
+  t.is(error.message, 'Unsupported Google Play type: genre')
 })
 
-ava('.getAvatarUrl keeps full details URL input', t => {
-  t.is(
-    getAvatarUrl('https://play.google.com/store/apps/details?id=com.devolver.grispaid'),
-    'https://play.google.com/store/apps/details?id=com.devolver.grispaid'
+ava('.getAvatarUrl throws for full details URL input', t => {
+  const error = t.throws(() =>
+    getAvatarUrl('https://play.google.com/store/apps/details?id=com.devolver.grispaid')
   )
+  t.is(error.message, 'Unsupported Google Play type: https')
 })
 
-ava('.getAvatarUrl keeps full dev URL input', t => {
+ava('.getAvatarUrl throws for full dev URL input', t => {
+  const error = t.throws(() =>
+    getAvatarUrl('https://play.google.com/store/apps/dev?id=6592603558263828430')
+  )
+  t.is(error.message, 'Unsupported Google Play type: https')
+})
+
+ava('.getAvatarUrl treats relative store path as default app id input', t => {
   t.is(
-    getAvatarUrl('https://play.google.com/store/apps/dev?id=6592603558263828430'),
-    'https://play.google.com/store/apps/dev?id=6592603558263828430'
+    getAvatarUrl('/store/apps/dev?id=6592603558263828430'),
+    'https://play.google.com/store/apps/details?id=%2Fstore%2Fapps%2Fdev%3Fid%3D6592603558263828430'
   )
 })
 
