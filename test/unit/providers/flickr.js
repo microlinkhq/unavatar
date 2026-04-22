@@ -3,16 +3,29 @@
 const cheerio = require('cheerio')
 const test = require('ava')
 
-const { getAvatarUrl, getAvatarFromMarkup } = require('../../../src/providers/flickr')
+const {
+  getAvatarUrl,
+  getAvatarFromMarkup
+} = require('../../../src/providers/flickr')
 
-test('.getAvatarUrl defaults to user photostream path', t => {
-  t.is(getAvatarUrl('stevebooth'), 'https://www.flickr.com/photos/stevebooth/')
+test('.getAvatarUrl supports default username input', t => {
+  t.is(
+    getAvatarUrl('nasahqphoto'),
+    'https://www.flickr.com/photos/nasahqphoto/'
+  )
 })
 
-test('.getAvatarUrl supports user NSID', t => {
+test('.getAvatarUrl supports explicit user username input', t => {
   t.is(
-    getAvatarUrl('user:94867603@N03'),
-    'https://www.flickr.com/photos/94867603@N03/'
+    getAvatarUrl('user:nasahqphoto'),
+    'https://www.flickr.com/photos/nasahqphoto/'
+  )
+})
+
+test('.getAvatarUrl supports explicit user numeric input', t => {
+  t.is(
+    getAvatarUrl('user:94867603'),
+    'https://www.flickr.com/photos/94867603/'
   )
 })
 
@@ -23,10 +36,10 @@ test('.getAvatarUrl supports group path', t => {
   )
 })
 
-test('.getAvatarUrl supports groups NSID', t => {
+test('.getAvatarUrl supports groups numeric input', t => {
   t.is(
-    getAvatarUrl('groups:80641914@N00'),
-    'https://www.flickr.com/groups/80641914@N00/'
+    getAvatarUrl('groups:80641914'),
+    'https://www.flickr.com/groups/80641914/'
   )
 })
 

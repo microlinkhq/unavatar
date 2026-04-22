@@ -4,6 +4,7 @@ const providersBy = {
   email: ['gravatar', 'github'],
   username: [
     'apple-music',
+    'apple-store',
     'behance',
     'bluesky',
     'buymeacoffee',
@@ -49,6 +50,7 @@ const providersBy = {
 module.exports = ctx => {
   const providers = {
     'apple-music': require('./apple-music')(ctx),
+    'apple-store': require('./apple-store')(ctx),
     behance: require('./behance')(ctx),
     bluesky: require('./bluesky')(ctx),
     buymeacoffee: require('./buymeacoffee')(ctx),
