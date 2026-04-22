@@ -8,12 +8,32 @@ const COUNTRY_CODE_REGEX = /^[a-z]{2}$/i
 const getArtworkUrl = result =>
   result?.artworkUrl512 || result?.artworkUrl100 || result?.artworkUrl60
 
+const normalizeName = value =>
+  typeof value === 'string'
+    ? value
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
+    : ''
+
+const isAppNameMatch = ({ result, name }) => {
+  const query = normalizeName(name)
+  if (!query) return false
+
+  const trackName = normalizeName(result?.trackName)
+  const trackCensoredName = normalizeName(result?.trackCensoredName)
+
+  return trackName === query || trackCensoredName === query
+}
+
 const withCountry = ({ query, country }) =>
   country ? `${query}&country=${encodeURIComponent(country)}` : query
 
 const parseInput = input => {
   const separatorIndex = input.indexOf(':')
-  if (separatorIndex === -1) return { type: 'app', value: input }
+  if (separatorIndex === -1) return { type: 'id', value: input }
 
   return {
     type: input.slice(0, separatorIndex),
@@ -54,44 +74,14 @@ const getAppAvatar = async ({ got, id, country }) => {
   return getArtworkUrl(result)
 }
 
-const getDeveloperAvatar = async ({ got, id, country }) => {
-  const query = withCountry({
-    query: `id=${encodeURIComponent(id)}&entity=software&limit=200`,
-    country
-  })
-  const results = await getLookupResults({ got, query })
-  const softwareResult = results.find(result => result?.kind === 'software')
-  return getArtworkUrl(softwareResult)
-}
-
-const getBundleAvatar = async ({ got, bundleId, country }) => {
-  const query = withCountry({
-    query: `bundleId=${encodeURIComponent(bundleId)}&entity=software&limit=1`,
-    country
-  })
-  const [result] = await getLookupResults({ got, query })
-  return getArtworkUrl(result)
-}
-
 const getAppNameAvatar = async ({ got, name, country, searchResults }) => {
   const getSearchResults = searchResults || createGetSearchResults({ got })
   const query = withCountry({
-    query: `term=${encodeURIComponent(name)}&entity=software&limit=1`,
+    query: `term=${encodeURIComponent(name)}&entity=software&limit=5`,
     country
   })
-  const [result] = await getSearchResults(query)
-  return getArtworkUrl(result)
-}
-
-const getDeveloperNameAvatar = async ({ got, name, country, searchResults }) => {
-  const getSearchResults = searchResults || createGetSearchResults({ got })
-  const query = withCountry({
-    query: `term=${encodeURIComponent(
-      name
-    )}&entity=software&attribute=softwareDeveloper&limit=1`,
-    country
-  })
-  const [result] = await getSearchResults(query)
+  const results = await getSearchResults(query)
+  const result = results.find(item => isAppNameMatch({ result: item, name }))
   return getArtworkUrl(result)
 }
 
@@ -103,16 +93,10 @@ module.exports = ({ got, itunesSearchCache }) => {
     const { value, country } = parseCountry(rawValue)
 
     switch (type) {
-      case 'app':
+      case 'id':
         return getAppAvatar({ got, id: value, country })
-      case 'dev':
-        return getDeveloperAvatar({ got, id: value, country })
-      case 'bundle':
-        return getBundleAvatar({ got, bundleId: value, country })
-      case 'app-name':
+      case 'name':
         return getAppNameAvatar({ got, name: value, country, searchResults })
-      case 'dev-name':
-        return getDeveloperNameAvatar({ got, name: value, country, searchResults })
       default:
         throw new Error(`Unsupported Apple Store type: ${type}`)
     }
@@ -120,7 +104,4 @@ module.exports = ({ got, itunesSearchCache }) => {
 }
 
 module.exports.getAppAvatar = getAppAvatar
-module.exports.getDeveloperAvatar = getDeveloperAvatar
-module.exports.getBundleAvatar = getBundleAvatar
 module.exports.getAppNameAvatar = getAppNameAvatar
-module.exports.getDeveloperNameAvatar = getDeveloperNameAvatar
