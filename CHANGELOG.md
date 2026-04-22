@@ -1,3 +1,8 @@
+## 3.25.0 (2026-04-22)
+
+### Features
+
+* **gravatar:** accept pre-computed MD5/SHA256 hash as input ([#564](https://github.com/Kikobeats/unavatar/issues/564)) ([7bc1f6b](https://github.com/Kikobeats/unavatar/commit/7bc1f6b40524556fdcf1bbd37fe349003cdb98b1)), closes [#430](https://github.com/Kikobeats/unavatar/issues/430) [#19](https://github.com/Kikobeats/unavatar/issues/19)
 ## 3.24.1 (2026-04-22)
 ## 3.24.0 (2026-04-22)
 
