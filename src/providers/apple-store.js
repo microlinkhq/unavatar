@@ -54,16 +54,6 @@ const getAppAvatar = async ({ got, id, country }) => {
   return getArtworkUrl(result)
 }
 
-const getDeveloperAvatar = async ({ got, id, country }) => {
-  const query = withCountry({
-    query: `id=${encodeURIComponent(id)}&entity=software&limit=200`,
-    country
-  })
-  const results = await getLookupResults({ got, query })
-  const softwareResult = results.find(result => result?.kind === 'software')
-  return getArtworkUrl(softwareResult)
-}
-
 const getBundleAvatar = async ({ got, bundleId, country }) => {
   const query = withCountry({
     query: `bundleId=${encodeURIComponent(bundleId)}&entity=software&limit=1`,
@@ -83,7 +73,12 @@ const getAppNameAvatar = async ({ got, name, country, searchResults }) => {
   return getArtworkUrl(result)
 }
 
-const getDeveloperNameAvatar = async ({ got, name, country, searchResults }) => {
+const getDeveloperNameAvatar = async ({
+  got,
+  name,
+  country,
+  searchResults
+}) => {
   const getSearchResults = searchResults || createGetSearchResults({ got })
   const query = withCountry({
     query: `term=${encodeURIComponent(
@@ -105,14 +100,17 @@ module.exports = ({ got, itunesSearchCache }) => {
     switch (type) {
       case 'app':
         return getAppAvatar({ got, id: value, country })
-      case 'dev':
-        return getDeveloperAvatar({ got, id: value, country })
       case 'bundle':
         return getBundleAvatar({ got, bundleId: value, country })
       case 'app-name':
         return getAppNameAvatar({ got, name: value, country, searchResults })
       case 'dev-name':
-        return getDeveloperNameAvatar({ got, name: value, country, searchResults })
+        return getDeveloperNameAvatar({
+          got,
+          name: value,
+          country,
+          searchResults
+        })
       default:
         throw new Error(`Unsupported Apple Store type: ${type}`)
     }
@@ -120,7 +118,6 @@ module.exports = ({ got, itunesSearchCache }) => {
 }
 
 module.exports.getAppAvatar = getAppAvatar
-module.exports.getDeveloperAvatar = getDeveloperAvatar
 module.exports.getBundleAvatar = getBundleAvatar
 module.exports.getAppNameAvatar = getAppNameAvatar
 module.exports.getDeveloperNameAvatar = getDeveloperNameAvatar

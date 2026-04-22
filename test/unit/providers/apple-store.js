@@ -5,7 +5,6 @@ const Keyv = require('@keyvhq/core')
 
 const {
   getAppAvatar,
-  getDeveloperAvatar,
   getBundleAvatar,
   getAppNameAvatar,
   getDeveloperNameAvatar
@@ -47,28 +46,6 @@ test('apple-store provider supports explicit app type with country', async t => 
 
   const avatarUrl = await provider('app:310633997@es')
   t.is(avatarUrl, 'https://cdn.apple.com/app-es.jpg')
-})
-
-test('apple-store provider supports explicit dev type with country', async t => {
-  const provider = require('../../../src/providers/apple-store')({
-    got: async (url, opts) => {
-      t.is(
-        url,
-        'https://itunes.apple.com/lookup?id=284882218&entity=software&limit=200&country=us'
-      )
-      t.is(opts.responseType, 'json')
-      t.true(opts.resolveBodyOnly)
-      return {
-        results: [
-          { wrapperType: 'artist', artistId: 284882218 },
-          { kind: 'software', artworkUrl512: 'https://cdn.apple.com/dev-app.jpg' }
-        ]
-      }
-    }
-  })
-
-  const avatarUrl = await provider('dev:284882218@US')
-  t.is(avatarUrl, 'https://cdn.apple.com/dev-app.jpg')
 })
 
 test('apple-store provider supports bundle id lookups', async t => {
@@ -188,17 +165,6 @@ test('getAppAvatar falls back to artworkUrl100 when artworkUrl512 is missing', a
   t.is(avatarUrl, 'https://cdn.apple.com/app-100.jpg')
 })
 
-test('getDeveloperAvatar falls back to artworkUrl60 when artworkUrl512 is missing', async t => {
-  const avatarUrl = await getDeveloperAvatar({
-    got: async () => ({
-      results: [{ kind: 'software', artworkUrl60: 'https://cdn.apple.com/dev-60.jpg' }]
-    }),
-    id: '310634000'
-  })
-
-  t.is(avatarUrl, 'https://cdn.apple.com/dev-60.jpg')
-})
-
 test('getBundleAvatar returns undefined when lookup is empty', async t => {
   const avatarUrl = await getBundleAvatar({
     got: async () => ({ results: [] }),
@@ -232,8 +198,6 @@ test('apple-store provider returns undefined when lookup has no software results
   })
 
   const appAvatar = await provider('app:999')
-  const devAvatar = await provider('dev:999')
 
   t.is(appAvatar, undefined)
-  t.is(devAvatar, undefined)
 })
