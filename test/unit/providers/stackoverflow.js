@@ -5,24 +5,21 @@ const test = require('ava')
 
 const { getProfileUrl, getAvatarUrl } = require('../../../src/providers/stackoverflow')
 
-test('.getProfileUrl builds users URL', t => {
-  t.is(
-    getProfileUrl('19082/mike-hordecki'),
-    'https://stackoverflow.com/users/19082/mike-hordecki'
-  )
+test('.getProfileUrl builds users URL from ID', t => {
+  t.is(getProfileUrl('576911'), 'https://stackoverflow.com/users/576911')
 })
 
 test('.getProfileUrl supports input prefixed with users/', t => {
   t.is(
-    getProfileUrl('users/19082/mike-hordecki'),
-    'https://stackoverflow.com/users/19082/mike-hordecki'
+    getProfileUrl('users/576911'),
+    'https://stackoverflow.com/users/576911'
   )
 })
 
-test('.getProfileUrl removes leading slash', t => {
+test('.getProfileUrl keeps only user ID when a slug is present', t => {
   t.is(
-    getProfileUrl('/users/19082/mike-hordecki'),
-    'https://stackoverflow.com/users/19082/mike-hordecki'
+    getProfileUrl('/users/576911/example-slug'),
+    'https://stackoverflow.com/users/576911'
   )
 })
 
