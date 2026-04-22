@@ -4,7 +4,6 @@ const { createGetSearchResults } = require('../util/itunes-search')
 
 const ITUNES_LOOKUP_URL = 'https://itunes.apple.com/lookup'
 const COUNTRY_CODE_REGEX = /^[a-z]{2}$/i
-const APP_ID_IN_URL_REGEX = /\/id(\d+)(?:\/|$)/
 
 const getArtworkUrl = result =>
   result?.artworkUrl512 || result?.artworkUrl100 || result?.artworkUrl60
@@ -36,11 +35,6 @@ const parseCountry = value => {
     value: nextValue,
     country: country.toLowerCase()
   }
-}
-
-const getAppIdFromUrl = value => {
-  const parsedUrl = new URL(value)
-  return parsedUrl.pathname.match(APP_ID_IN_URL_REGEX)?.[1]
 }
 
 const getLookupResults = async ({ got, query }) => {
@@ -115,11 +109,6 @@ module.exports = ({ got, itunesSearchCache }) => {
         return getDeveloperAvatar({ got, id: value, country })
       case 'bundle':
         return getBundleAvatar({ got, bundleId: value, country })
-      case 'app-url': {
-        const appId = getAppIdFromUrl(value)
-        if (!appId) throw new Error(`Invalid Apple Store app URL: ${value}`)
-        return getAppAvatar({ got, id: appId, country })
-      }
       case 'app-name':
         return getAppNameAvatar({ got, name: value, country, searchResults })
       case 'dev-name':
@@ -135,4 +124,3 @@ module.exports.getDeveloperAvatar = getDeveloperAvatar
 module.exports.getBundleAvatar = getBundleAvatar
 module.exports.getAppNameAvatar = getAppNameAvatar
 module.exports.getDeveloperNameAvatar = getDeveloperNameAvatar
-module.exports.getAppIdFromUrl = getAppIdFromUrl

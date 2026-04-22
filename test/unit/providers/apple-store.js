@@ -90,27 +90,6 @@ test('apple-store provider supports bundle id lookups', async t => {
   t.is(avatarUrl, 'https://cdn.apple.com/bundle.jpg')
 })
 
-test('apple-store provider supports app-url input', async t => {
-  const provider = require('../../../src/providers/apple-store')({
-    got: async (url, opts) => {
-      t.is(
-        url,
-        'https://itunes.apple.com/lookup?id=284882215&entity=software&limit=1'
-      )
-      t.is(opts.responseType, 'json')
-      t.true(opts.resolveBodyOnly)
-      return {
-        results: [{ kind: 'software', artworkUrl512: 'https://cdn.apple.com/from-url.jpg' }]
-      }
-    }
-  })
-
-  const avatarUrl = await provider(
-    'app-url:https://apps.apple.com/us/app/facebook/id284882215'
-  )
-  t.is(avatarUrl, 'https://cdn.apple.com/from-url.jpg')
-})
-
 test('apple-store provider supports app-name search', async t => {
   const provider = require('../../../src/providers/apple-store')({
     got: async (url, opts) => {
@@ -178,7 +157,7 @@ test('apple-store provider supports dev-name search with country', async t => {
   t.is(avatarUrl, 'https://cdn.apple.com/dev-name.jpg')
 })
 
-test('apple-store provider throws for invalid app-url values', async t => {
+test('apple-store provider throws for unsupported app-url type', async t => {
   const provider = require('../../../src/providers/apple-store')({
     got: async () => ({ results: [] })
   })
@@ -186,10 +165,7 @@ test('apple-store provider throws for invalid app-url values', async t => {
   const error = await t.throwsAsync(async () =>
     provider('app-url:https://apps.apple.com/us/developer/meta-platforms-inc')
   )
-  t.is(
-    error.message,
-    'Invalid Apple Store app URL: https://apps.apple.com/us/developer/meta-platforms-inc'
-  )
+  t.is(error.message, 'Unsupported Apple Store type: app-url')
 })
 
 test('apple-store provider throws for unsupported type', async t => {
