@@ -319,8 +319,7 @@ If explicit type is not provided, it defaults to `id`.
 
 Available inputs:
 
-- `id` (default): [unavatar.io/apple-store/id:529479190](https://unavatar.io/apple-store/id:529479190)
-- `id`: [unavatar.io/apple-store/id:6474323148@es](https://unavatar.io/apple-store/id:6474323148@es)
+- `id` (default): [unavatar.io/apple-store/id:529479190](https://unavatar.io/apple-store/id:529479190) or [unavatar.io/apple-store/id:6474323148@es](https://unavatar.io/apple-store/id:6474323148@es)
 - `name`: [unavatar.io/apple-store/name:pokemon%20go](https://unavatar.io/apple-store/name:pokemon%20go)
 
 ### Behance
