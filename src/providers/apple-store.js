@@ -73,23 +73,6 @@ const getAppNameAvatar = async ({ got, name, country, searchResults }) => {
   return getArtworkUrl(result)
 }
 
-const getDeveloperNameAvatar = async ({
-  got,
-  name,
-  country,
-  searchResults
-}) => {
-  const getSearchResults = searchResults || createGetSearchResults({ got })
-  const query = withCountry({
-    query: `term=${encodeURIComponent(
-      name
-    )}&entity=software&attribute=softwareDeveloper&limit=1`,
-    country
-  })
-  const [result] = await getSearchResults(query)
-  return getArtworkUrl(result)
-}
-
 module.exports = ({ got, itunesSearchCache }) => {
   const searchResults = createGetSearchResults({ got, itunesSearchCache })
 
@@ -104,13 +87,6 @@ module.exports = ({ got, itunesSearchCache }) => {
         return getBundleAvatar({ got, bundleId: value, country })
       case 'app-name':
         return getAppNameAvatar({ got, name: value, country, searchResults })
-      case 'dev-name':
-        return getDeveloperNameAvatar({
-          got,
-          name: value,
-          country,
-          searchResults
-        })
       default:
         throw new Error(`Unsupported Apple Store type: ${type}`)
     }
@@ -120,4 +96,3 @@ module.exports = ({ got, itunesSearchCache }) => {
 module.exports.getAppAvatar = getAppAvatar
 module.exports.getBundleAvatar = getBundleAvatar
 module.exports.getAppNameAvatar = getAppNameAvatar
-module.exports.getDeveloperNameAvatar = getDeveloperNameAvatar

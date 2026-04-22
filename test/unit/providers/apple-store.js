@@ -6,8 +6,7 @@ const Keyv = require('@keyvhq/core')
 const {
   getAppAvatar,
   getBundleAvatar,
-  getAppNameAvatar,
-  getDeveloperNameAvatar
+  getAppNameAvatar
 } = require('../../../src/providers/apple-store')
 
 test('apple-store provider defaults to app type', async t => {
@@ -115,25 +114,6 @@ test('apple-store provider memoizes app-name iTunes search lookups', async t => 
   t.is(gotCalls, 1)
 })
 
-test('apple-store provider supports dev-name search with country', async t => {
-  const provider = require('../../../src/providers/apple-store')({
-    got: async (url, opts) => {
-      t.is(
-        url,
-        'https://itunes.apple.com/search?term=meta%20platforms&entity=software&attribute=softwareDeveloper&limit=1&country=gb'
-      )
-      t.is(opts.responseType, 'json')
-      t.true(opts.resolveBodyOnly)
-      return {
-        results: [{ kind: 'software', artworkUrl512: 'https://cdn.apple.com/dev-name.jpg' }]
-      }
-    }
-  })
-
-  const avatarUrl = await provider('dev-name:meta platforms@gb')
-  t.is(avatarUrl, 'https://cdn.apple.com/dev-name.jpg')
-})
-
 test('apple-store provider throws for unsupported app-url type', async t => {
   const provider = require('../../../src/providers/apple-store')({
     got: async () => ({ results: [] })
@@ -152,6 +132,24 @@ test('apple-store provider throws for unsupported type', async t => {
 
   const error = await t.throwsAsync(async () => provider('genre:action'))
   t.is(error.message, 'Unsupported Apple Store type: genre')
+})
+
+test('apple-store provider throws for dev type', async t => {
+  const provider = require('../../../src/providers/apple-store')({
+    got: async () => ({ results: [] })
+  })
+
+  const error = await t.throwsAsync(async () => provider('dev:488106216'))
+  t.is(error.message, 'Unsupported Apple Store type: dev')
+})
+
+test('apple-store provider throws for dev-name type', async t => {
+  const provider = require('../../../src/providers/apple-store')({
+    got: async () => ({ results: [] })
+  })
+
+  const error = await t.throwsAsync(async () => provider('dev-name:supercell'))
+  t.is(error.message, 'Unsupported Apple Store type: dev-name')
 })
 
 test('getAppAvatar falls back to artworkUrl100 when artworkUrl512 is missing', async t => {
@@ -178,15 +176,6 @@ test('getAppNameAvatar returns undefined when search is empty', async t => {
   const avatarUrl = await getAppNameAvatar({
     got: async () => ({ results: [] }),
     name: 'missing-app'
-  })
-
-  t.is(avatarUrl, undefined)
-})
-
-test('getDeveloperNameAvatar returns undefined when search is empty', async t => {
-  const avatarUrl = await getDeveloperNameAvatar({
-    got: async () => ({ results: [] }),
-    name: 'missing-dev'
   })
 
   t.is(avatarUrl, undefined)
