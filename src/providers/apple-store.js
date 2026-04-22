@@ -8,6 +8,21 @@ const COUNTRY_CODE_REGEX = /^[a-z]{2}$/i
 const getArtworkUrl = result =>
   result?.artworkUrl512 || result?.artworkUrl100 || result?.artworkUrl60
 
+const normalizeName = value =>
+  typeof value === 'string'
+    ? value.trim().toLowerCase().replace(/\s+/g, ' ')
+    : ''
+
+const isAppNameMatch = ({ result, name }) => {
+  const query = normalizeName(name)
+  if (!query) return false
+
+  const trackName = normalizeName(result?.trackName)
+  const trackCensoredName = normalizeName(result?.trackCensoredName)
+
+  return trackName === query || trackCensoredName === query
+}
+
 const withCountry = ({ query, country }) =>
   country ? `${query}&country=${encodeURIComponent(country)}` : query
 
@@ -54,22 +69,14 @@ const getAppAvatar = async ({ got, id, country }) => {
   return getArtworkUrl(result)
 }
 
-const getBundleAvatar = async ({ got, bundleId, country }) => {
-  const query = withCountry({
-    query: `bundleId=${encodeURIComponent(bundleId)}&entity=software&limit=1`,
-    country
-  })
-  const [result] = await getLookupResults({ got, query })
-  return getArtworkUrl(result)
-}
-
 const getAppNameAvatar = async ({ got, name, country, searchResults }) => {
   const getSearchResults = searchResults || createGetSearchResults({ got })
   const query = withCountry({
     query: `term=${encodeURIComponent(name)}&entity=software&limit=1`,
     country
   })
-  const [result] = await getSearchResults(query)
+  const results = await getSearchResults(query)
+  const result = results.find(result => isAppNameMatch({ result, name }))
   return getArtworkUrl(result)
 }
 
@@ -83,8 +90,6 @@ module.exports = ({ got, itunesSearchCache }) => {
     switch (type) {
       case 'id':
         return getAppAvatar({ got, id: value, country })
-      case 'bundle':
-        return getBundleAvatar({ got, bundleId: value, country })
       case 'name':
         return getAppNameAvatar({ got, name: value, country, searchResults })
       default:
@@ -94,5 +99,4 @@ module.exports = ({ got, itunesSearchCache }) => {
 }
 
 module.exports.getAppAvatar = getAppAvatar
-module.exports.getBundleAvatar = getBundleAvatar
 module.exports.getAppNameAvatar = getAppNameAvatar
