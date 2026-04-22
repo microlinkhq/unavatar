@@ -4,24 +4,33 @@ const BUDDY_ICON_URL_PATTERN = /(?:https?:)?\/\/[^"'()\s]*\/buddyicons\/[^"'()\s
 const CSS_URL_PATTERN = /url\((['"]?)([^)'"]+)\1\)/i
 const unescapePathSlashes = value => value?.replace(/\\\//g, '/')
 
+const parseInput = input => {
+  const [first, second] = input.split(':')
+  return {
+    type: second ? first : 'user',
+    id: second ?? first
+  }
+}
+
 const getBuddyIconFromText = value => {
   const normalizedValue = unescapePathSlashes(value)
   if (typeof normalizedValue !== 'string') return
   return normalizedValue.match(BUDDY_ICON_URL_PATTERN)?.[0]
 }
 
+const getUserProfileUrl = userId => `https://www.flickr.com/photos/${userId}/`
+const getGroupProfileUrl = groupId => `https://www.flickr.com/groups/${groupId}/`
+
 const getAvatarUrl = input => {
-  const [first, second] = input.split(':')
-  const type = second ? first : 'user'
-  const id = second ?? first
+  const { type, id } = parseInput(input)
 
   switch (type) {
     case 'user':
     case 'photos':
-      return `https://www.flickr.com/photos/${id}/`
+      return getUserProfileUrl(id)
     case 'group':
     case 'groups':
-      return `https://www.flickr.com/groups/${id}/`
+      return getGroupProfileUrl(id)
     default:
       throw new Error(`Unsupported Flickr type: ${type}`)
   }
