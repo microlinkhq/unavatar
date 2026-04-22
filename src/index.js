@@ -61,6 +61,11 @@ module.exports = ({ constants: userConstants, redis, onFetchHTML } = {}) => {
     unavatar[name] = input => getAvatar(providers[name], name, input, {})
   })
 
+  const createTypedAutoResolver = inputType => input => auto(inputType)(input, {})
+
+  unavatar.email = createTypedAutoResolver('email')
+  unavatar.domain = createTypedAutoResolver('domain')
+
   unavatar.auto = auto
   unavatar.getInputType = getInputType
   unavatar.getAvatar = getAvatar

@@ -8,8 +8,8 @@ From [`./server.js`](./server.js).
 
 | Route                 | Description                                          |
 | --------------------- | ---------------------------------------------------- |
-| `GET /:provider/:key` | Resolve avatar from a specific provider              |
-| `GET /:key`           | Auto-resolve by input type (email, domain, username) |
+| `GET /email/:key`     | Resolve with email providers                         |
+| `GET /domain/:key`    | Resolve with domain providers                        |
 
 Append `?json` to any route to get the avatar URL as JSON instead of a `302` redirect.
 
@@ -23,11 +23,9 @@ node docs/server/server.js
 
 ```bash
 # Redirect to the avatar image
-curl -L http://localhost:3000/github/kikobeats
+curl -L http://localhost:3000/email/hello@microlink.io
 
-# Get the avatar URL as JSON
-curl http://localhost:3000/github/kikobeats?json
-
-# Auto-resolve from email
-curl http://localhost:3000/hello@microlink.io?json
+# Get the avatar URL as JSON from explicit input type
+curl http://localhost:3000/email/hello@microlink.io?json
+curl http://localhost:3000/domain/reddit.com?json
 ```

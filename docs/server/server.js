@@ -20,8 +20,8 @@ const server = createServer(async (req, res) => {
     return sendJSON(res, 200, {
       providers: Object.keys(unavatar.providers),
       routes: [
-        'GET /:provider/:key — resolve avatar for a specific provider',
-        'GET /:key           — auto-resolve by input type (email, domain, username)'
+        'GET /email/:key     — resolve using email providers',
+        'GET /domain/:key    — resolve using domain providers'
       ]
     })
   }
@@ -30,14 +30,12 @@ const server = createServer(async (req, res) => {
     let result
 
     if (segments.length === 2) {
-      // GET /:provider/:key
       const [providerName, key] = segments
       if (!unavatar[providerName]) {
         return sendJSON(res, 404, { error: `Unknown provider: ${providerName}` })
       }
       result = await unavatar[providerName](key)
     } else {
-      // GET /:key — auto-resolve
       const [key] = segments
       result = await unavatar(key)
     }
@@ -66,7 +64,6 @@ server.listen(PORT, () => {
   console.log(`unavatar server listening on http://localhost:${PORT}`)
   console.log()
   console.log('Try:')
-  console.log(`  curl -L http://localhost:${PORT}/github/kikobeats`)
-  console.log(`  curl    http://localhost:${PORT}/github/kikobeats?json`)
-  console.log(`  curl    http://localhost:${PORT}/hello@microlink.io?json`)
+  console.log(`  curl    http://localhost:${PORT}/email/hello@microlink.io?json`)
+  console.log(`  curl    http://localhost:${PORT}/domain/reddit.com?json`)
 })

@@ -68,13 +68,14 @@ It's proudly powered by [microlink.io](https://microlink.io/), the headless brow
 
 The service is exposed in **unavatar.io** via provider endpoints:
 
-- an **email (auto-detect)**: [unavatar.io/hello@microlink.io](https://unavatar.io/hello@microlink.io) — tries Gravatar, then GitHub
+- an **email**: [unavatar.io/email/hello@microlink.io](https://unavatar.io/email/hello@microlink.io)
+- a **domain**: [unavatar.io/domain/reddit.com](https://unavatar.io/domain/reddit.com)
 - an **email** via Gravatar: [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
 - an **email** via GitHub: [unavatar.io/github/sindresorhus@gmail.com](https://unavatar.io/github/sindresorhus@gmail.com)
 - an **username**: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
 - a **domain**: [unavatar.io/google/reddit.com](https://unavatar.io/google/reddit.com)
 
-Use `/:provider/:key` for provider-specific lookups, or pass an email as the only path segment for automatic resolution. You can read more in [Email avatars](https://unavatar.io/email) and [providers](https://unavatar.io/docs#providers).
+Use `/email/:key` and `/domain/:key` for type-based resolution. You can read more in [Email avatars](https://unavatar.io/email) and [providers](https://unavatar.io/docs#providers).
 
 ## Authentication
 
@@ -651,7 +652,7 @@ Available inputs:
 
 ### YouTube
 
-Get any YouTube channel's thumbnail by their handle, legacy username, or channel ID.
+Get any YouTube channel's thumbnail by their handle, username, or channel ID.
 
 e.g., [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 
