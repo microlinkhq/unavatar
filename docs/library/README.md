@@ -9,11 +9,14 @@ From [`./basic.js`](./basic.js):
 ```js
 const unavatar = require('@unavatar/core')()
 
-// Auto-resolve (detects email, domain, or username)
-const result = await unavatar('hello@microlink.io')
+// Resolve with explicit input type
+const result = await unavatar.email('hello@microlink.io')
+
+// Domain resolution
+const domainResult = await unavatar.domain('reddit.com')
 
 // Specific provider
-const result = await unavatar.github('kikobeats')
+const githubResult = await unavatar.github('kikobeats')
 ```
 
 Run it:

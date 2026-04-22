@@ -12,9 +12,9 @@ The package ships binaries that connect to a running unavatar server and display
 ## Examples
 
 ```bash
-# Auto-resolve
-unavatar hello@microlink.io
-unavatar reddit.com
+# Typed input routes
+unavatar email/hello@microlink.io
+unavatar domain/reddit.com
 
 # Specific provider
 unavatar github/kikobeats

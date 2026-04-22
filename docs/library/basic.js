@@ -3,12 +3,11 @@
 const unavatar = require('@unavatar/core')()
 
 async function main () {
-  // Auto-resolve: detects input type (email, domain, or username)
-  // and tries matching providers automatically
-  const fromEmail = await unavatar('hello@microlink.io')
+  // Explicit input type resolution
+  const fromEmail = await unavatar.email('hello@microlink.io')
   console.log('email →', fromEmail.data)
 
-  const fromDomain = await unavatar('reddit.com')
+  const fromDomain = await unavatar.domain('reddit.com')
   console.log('domain →', fromDomain.data)
 
   // Resolve from a specific provider
