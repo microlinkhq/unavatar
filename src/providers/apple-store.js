@@ -10,7 +10,12 @@ const getArtworkUrl = result =>
 
 const normalizeName = value =>
   typeof value === 'string'
-    ? value.trim().toLowerCase().replace(/\s+/g, ' ')
+    ? value
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
     : ''
 
 const isAppNameMatch = ({ result, name }) => {

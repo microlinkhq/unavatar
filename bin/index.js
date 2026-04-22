@@ -11,7 +11,7 @@ module.exports = ({ baseUrl }) => {
     alias: { H: 'header' }
   })
 
-  const [input] = _
+  const input = _.join(' ')
 
   const parseHeaders = raw => {
     const entries = raw == null ? [] : Array.isArray(raw) ? raw : [raw]
