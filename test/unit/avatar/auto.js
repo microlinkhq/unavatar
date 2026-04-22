@@ -15,12 +15,12 @@ test('getInputType classifies sha256 hash input', t => {
     autoFactory.getInputType(
       '84059b07d4be67b806386c0aad8070a23f18836bbaae342275dc0a83414c32ee'
     ),
-    'hash'
+    'email'
   )
 })
 
 test('getInputType classifies md5 hash input', t => {
-  t.is(autoFactory.getInputType('0bc83cb571cd1c50ba6f3e8a78ef1346'), 'hash')
+  t.is(autoFactory.getInputType('0bc83cb571cd1c50ba6f3e8a78ef1346'), 'email')
 })
 
 test('getInputType classifies domain input', t => {
@@ -72,7 +72,7 @@ test('auto(type) uses the provided input type resolver', async t => {
   })
 })
 
-test('hash input routes only to gravatar, not to other email providers', async t => {
+test('email hash input routes only to gravatar, not to other email providers', async t => {
   const gravatar = sinon.stub().resolves('https://gravatar.com/avatar/abc')
   const github = sinon.stub().resolves('https://github.com/user.png')
   const reachableUrl = sinon.stub().resolves({
@@ -84,12 +84,12 @@ test('hash input routes only to gravatar, not to other email providers', async t
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { gravatar, github },
-    providersBy: { hash: ['gravatar'], email: ['gravatar', 'github'], username: [], domain: [] },
+    providersBy: { email: ['gravatar', 'github'], username: [], domain: [] },
     reachableUrl
   })
 
   const md5hash = '0bc83cb571cd1c50ba6f3e8a78ef1346'
-  await auto('hash')(md5hash)
+  await auto('email')(md5hash)
 
   t.true(gravatar.calledOnce)
   t.true(github.notCalled)

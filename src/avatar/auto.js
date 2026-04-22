@@ -15,11 +15,10 @@ const ExtendableError = require('../util/error')
 const DATA_URI_REGEX = dataUriRegex()
 const DOMAIN_REGEX = urlRegex({ strict: false })
 
-const IS_HASH = require('../util/is-hash')
+const isHash = require('../util/is-hash')
 
 const getInputType = input => {
-  if (isEmail(input)) return 'email'
-  if (IS_HASH.test(input)) return 'hash'
+  if (isEmail(input) || isHash(input)) return 'email'
   if (stableRegex(DOMAIN_REGEX, input)) return 'domain'
   return 'username'
 }
@@ -87,7 +86,12 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   }
 
   const resolveAutoByType = async (inputType, input, context) => {
-    const collection = providerEntriesByType[inputType]
+    let collection = providerEntriesByType[inputType]
+
+    if (inputType === 'email' && isHash(input)) {
+      collection = collection.filter(([provider]) => provider === 'gravatar')
+    }
+
     const promises = new Array(collection.length)
 
     for (let index = 0; index < collection.length; index++) {
