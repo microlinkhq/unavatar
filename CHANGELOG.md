@@ -1,3 +1,8 @@
+## 3.24.0 (2026-04-22)
+
+### Features
+
+* add apple store support ([#565](https://github.com/Kikobeats/unavatar/issues/565)) ([8352f80](https://github.com/Kikobeats/unavatar/commit/8352f80315699d9aa8cd077947380f06968b1cb0))
 ## 3.23.0 (2026-04-21)
 
 ### Features
