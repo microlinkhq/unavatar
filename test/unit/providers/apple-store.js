@@ -61,7 +61,7 @@ test('apple-store provider supports exact name search', async t => {
     got: async (url, opts) => {
       t.is(
         url,
-        'https://itunes.apple.com/search?term=whatsapp%20messenger&entity=software&limit=1'
+        'https://itunes.apple.com/search?term=whatsapp%20messenger&entity=software&limit=5'
       )
       t.is(opts.responseType, 'json')
       t.true(opts.resolveBodyOnly)
@@ -89,7 +89,7 @@ test('apple-store provider memoizes name iTunes search lookups', async t => {
       gotCalls++
       t.is(
         url,
-        'https://itunes.apple.com/search?term=whatsapp%20messenger&entity=software&limit=1'
+        'https://itunes.apple.com/search?term=whatsapp%20messenger&entity=software&limit=5'
       )
       t.is(opts.responseType, 'json')
       t.true(opts.resolveBodyOnly)

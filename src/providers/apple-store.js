@@ -72,7 +72,7 @@ const getAppAvatar = async ({ got, id, country }) => {
 const getAppNameAvatar = async ({ got, name, country, searchResults }) => {
   const getSearchResults = searchResults || createGetSearchResults({ got })
   const query = withCountry({
-    query: `term=${encodeURIComponent(name)}&entity=software&limit=1`,
+    query: `term=${encodeURIComponent(name)}&entity=software&limit=5`,
     country
   })
   const results = await getSearchResults(query)
