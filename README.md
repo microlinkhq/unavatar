@@ -52,6 +52,7 @@
   - [X/Twitter](#xtwitter)
   - [Xbox Gamertag](#xbox-gamertag)
   - [YouTube](#youtube)
+- [Privacy](#privacy)
 - [Response Format](#response-format)
 - [Response Headers](#response-headers)
 - [Response Errors](#response-errors)
@@ -69,6 +70,7 @@ It's proudly powered by [microlink.io](https://microlink.io/), the headless brow
 The service is exposed in **unavatar.io** via provider endpoints:
 
 - an **email**: [unavatar.io/email/hello@microlink.io](https://unavatar.io/email/hello@microlink.io)
+- an **email hash** (auto-detected as hashed email): [unavatar.io/email/295dee0d3dbb93aac67e72ae4af40f728f050e5fd18417ad60d1ed19186ae03b](https://unavatar.io/email/295dee0d3dbb93aac67e72ae4af40f728f050e5fd18417ad60d1ed19186ae03b)
 - a **domain**: [unavatar.io/domain/reddit.com](https://unavatar.io/domain/reddit.com)
 - an **email** via Gravatar: [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
 - an **email** via GitHub: [unavatar.io/github/sindresorhus@gmail.com](https://unavatar.io/github/sindresorhus@gmail.com)
@@ -411,6 +413,10 @@ Get any user's avatar by their email address via Gravatar. The most widely used 
 Available inputs:
 
 - Email address, e.g., [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
+- SHA256 hash, e.g., [unavatar.io/gravatar/295dee0d3dbb93aac67e72ae4af40f728f050e5fd18417ad60d1ed19186ae03b](https://unavatar.io/gravatar/295dee0d3dbb93aac67e72ae4af40f728f050e5fd18417ad60d1ed19186ae03b)
+- MD5 hash (legacy), e.g., [unavatar.io/gravatar/0bc83cb571cd1c50ba6f3e8a78ef1346](https://unavatar.io/gravatar/0bc83cb571cd1c50ba6f3e8a78ef1346)
+
+Passing a pre-computed hash instead of the raw email avoids exposing the email address in the URL. See [Privacy](#privacy) for details.
 
 ### Instagram
 
@@ -664,6 +670,27 @@ Available inputs:
 
 - `username`: [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 - `channel`: [unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw](https://unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw)
+
+## Privacy
+
+When you pass an email address directly in the URL, it is visible in plain text — both in server logs and to any intermediary that inspects the request.
+
+To avoid this, pass a pre-computed **MD5** or **SHA256** hash of the email instead. Unavatar detects the hash automatically and routes it to Gravatar, which natively supports both hash formats.
+
+```bash
+# Instead of exposing the raw email:
+https://unavatar.io/hello@example.com
+
+# Pass the SHA256 hash:
+https://unavatar.io/295dee0d3dbb93aac67e72ae4af40f728f050e5fd18417ad60d1ed19186ae03b
+
+# Or the MD5 hash (legacy, still supported by Gravatar):
+https://unavatar.io/0bc83cb571cd1c50ba6f3e8a78ef1346
+```
+
+The hash must be exactly 32 hex characters (MD5) or 64 hex characters (SHA256), lowercase or uppercase — unavatar normalises it automatically.
+
+Note: hash-based lookup is only supported for Gravatar. Other providers such as GitHub require the raw email address and cannot reverse a hash.
 
 ## Response Format
 
