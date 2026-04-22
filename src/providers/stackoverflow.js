@@ -2,16 +2,14 @@
 
 const AVATAR_SELECTOR = '.js-usermini-avatar-container img'
 
-const normalizeInput = input => {
-  let normalizedInput = input.replace(/^\/+/, '')
-  if (normalizedInput.startsWith('users/')) {
-    normalizedInput = normalizedInput.slice('users/'.length)
-  }
-  return normalizedInput
-}
+const normalizeUserId = input =>
+  input
+    .replace(/^\/+/, '')
+    .replace(/^users\//, '')
+    .split('/')[0]
 
 const getProfileUrl = input =>
-  `https://stackoverflow.com/users/${normalizeInput(input)}`
+  `https://stackoverflow.com/users/${normalizeUserId(input)}`
 
 const getAvatarUrl = $ =>
   $(`${AVATAR_SELECTOR}[width="128"]`).attr('src') ||
