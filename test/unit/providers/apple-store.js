@@ -19,7 +19,12 @@ test('apple-store provider defaults to app type', async t => {
       t.is(opts.responseType, 'json')
       t.true(opts.resolveBodyOnly)
       return {
-        results: [{ kind: 'software', artworkUrl512: 'https://cdn.apple.com/app-512.jpg' }]
+        results: [
+          {
+            kind: 'software',
+            artworkUrl512: 'https://cdn.apple.com/app-512.jpg'
+          }
+        ]
       }
     }
   })
@@ -38,7 +43,12 @@ test('apple-store provider supports explicit app type with country', async t => 
       t.is(opts.responseType, 'json')
       t.true(opts.resolveBodyOnly)
       return {
-        results: [{ kind: 'software', artworkUrl512: 'https://cdn.apple.com/app-es.jpg' }]
+        results: [
+          {
+            kind: 'software',
+            artworkUrl512: 'https://cdn.apple.com/app-es.jpg'
+          }
+        ]
       }
     }
   })
@@ -57,7 +67,12 @@ test('apple-store provider supports bundle id lookups', async t => {
       t.is(opts.responseType, 'json')
       t.true(opts.resolveBodyOnly)
       return {
-        results: [{ kind: 'software', artworkUrl512: 'https://cdn.apple.com/bundle.jpg' }]
+        results: [
+          {
+            kind: 'software',
+            artworkUrl512: 'https://cdn.apple.com/bundle.jpg'
+          }
+        ]
       }
     }
   })
@@ -76,7 +91,12 @@ test('apple-store provider supports app-name search', async t => {
       t.is(opts.responseType, 'json')
       t.true(opts.resolveBodyOnly)
       return {
-        results: [{ kind: 'software', artworkUrl512: 'https://cdn.apple.com/app-name.jpg' }]
+        results: [
+          {
+            kind: 'software',
+            artworkUrl512: 'https://cdn.apple.com/app-name.jpg'
+          }
+        ]
       }
     }
   })
@@ -97,7 +117,12 @@ test('apple-store provider memoizes app-name iTunes search lookups', async t => 
       t.is(opts.responseType, 'json')
       t.true(opts.resolveBodyOnly)
       return {
-        results: [{ kind: 'software', artworkUrl512: 'https://cdn.apple.com/app-name.jpg' }]
+        results: [
+          {
+            kind: 'software',
+            artworkUrl512: 'https://cdn.apple.com/app-name.jpg'
+          }
+        ]
       }
     },
     itunesSearchCache: new Keyv({
@@ -155,7 +180,9 @@ test('apple-store provider throws for dev-name type', async t => {
 test('getAppAvatar falls back to artworkUrl100 when artworkUrl512 is missing', async t => {
   const avatarUrl = await getAppAvatar({
     got: async () => ({
-      results: [{ kind: 'software', artworkUrl100: 'https://cdn.apple.com/app-100.jpg' }]
+      results: [
+        { kind: 'software', artworkUrl100: 'https://cdn.apple.com/app-100.jpg' }
+      ]
     }),
     id: '389801252'
   })

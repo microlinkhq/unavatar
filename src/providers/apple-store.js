@@ -13,7 +13,7 @@ const withCountry = ({ query, country }) =>
 
 const parseInput = input => {
   const separatorIndex = input.indexOf(':')
-  if (separatorIndex === -1) return { type: 'app', value: input }
+  if (separatorIndex === -1) return { type: 'id', value: input }
 
   return {
     type: input.slice(0, separatorIndex),
@@ -81,11 +81,11 @@ module.exports = ({ got, itunesSearchCache }) => {
     const { value, country } = parseCountry(rawValue)
 
     switch (type) {
-      case 'app':
+      case 'id':
         return getAppAvatar({ got, id: value, country })
       case 'bundle':
         return getBundleAvatar({ got, bundleId: value, country })
-      case 'app-name':
+      case 'name':
         return getAppNameAvatar({ got, name: value, country, searchResults })
       default:
         throw new Error(`Unsupported Apple Store type: ${type}`)
