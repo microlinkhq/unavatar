@@ -81,7 +81,7 @@ const getAppNameAvatar = async ({ got, name, country, searchResults }) => {
     country
   })
   const results = await getSearchResults(query)
-  const result = results.find(result => isAppNameMatch({ result, name }))
+  const result = results.find(item => isAppNameMatch({ result: item, name }))
   return getArtworkUrl(result)
 }
 
