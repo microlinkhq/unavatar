@@ -4,7 +4,6 @@ const { normalizeUrl } = require('@metascraper/helpers')
 const debug = require('debug-logfmt')('html-provider')
 const isAntibot = require('is-antibot')
 
-const randomCrawlerAgent = require('./crawler-agent')
 const getOgImage = require('./get-og-image')
 const httpStatus = require('./http-status')
 const ExtendableError = require('./error')
@@ -34,7 +33,12 @@ const createErrorCause = ({ html, headers, statusCode }) => ({
   statusCode
 })
 
-module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
+module.exports = ({
+  PROXY_TIMEOUT,
+  getHTML,
+  onFetchHTML,
+  userAgent = require('./crawler-agent')
+}) => {
   /**
    * @param {object} opts
    * @param {string} opts.name - Provider identifier used in logs and metrics.
@@ -55,13 +59,13 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
         const defaultOpts = {
           ...providerOpts,
           headers: {
-            'user-agent': randomCrawlerAgent(),
+            'user-agent': userAgent({ provider: name }),
             ...providerOpts.headers
           },
           timeout: PROXY_TIMEOUT
         }
         const fetchOpts = { ...defaultOpts, ...gotOpts }
-        const userAgent = fetchOpts.headers['user-agent']
+        const resolvedUserAgent = fetchOpts.headers['user-agent']
         const tier = fetchOpts.tier ?? 'origin'
 
         const log = debug.duration({ provider: name, input, providerUrl, tier })
@@ -151,7 +155,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
             statusCode,
             status: 'blocked',
             antibot: antibotProvider ?? undefined,
-            userAgent
+            userAgent: resolvedUserAgent
           })
 
           throw error
@@ -167,7 +171,7 @@ module.exports = ({ PROXY_TIMEOUT, getHTML, onFetchHTML }) => {
         log.error({
           statusCode,
           antibot: antibotProvider ?? undefined,
-          userAgent
+          userAgent: resolvedUserAgent
         })
 
         throw error
