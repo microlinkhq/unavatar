@@ -4,6 +4,9 @@
 
 - [Introduction](#introduction)
 - [Quick start](#quick-start)
+- [Attribution](#attribution)
+  - [How to add attribution](#how-to-add-attribution)
+  - [Remove attribution](#remove-attribution)
 - [Authentication](#authentication)
 - [Pricing](#pricing)
 - [Cache](#cache)
@@ -73,18 +76,70 @@ It's proudly powered by [microlink.io](https://microlink.io/), the headless brow
 
 ## Quick start
 
-The service is exposed in **unavatar.io** via provider endpoints:
+The service is exposed in **unavatar.io** via endpoints.
 
-- an **email (auto-detect)**: [unavatar.io/hello@microlink.io](https://unavatar.io/hello@microlink.io) — tries Gravatar, then GitHub
-- an **email** via Gravatar: [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
-- a **Gravatar SHA-256** (same email, pre-hashed): [unavatar.io/gravatar/b1f507c7a29adfa84eaa521036774b0577c58f23f2f3f42e068d6ac256cffae2](https://unavatar.io/gravatar/b1f507c7a29adfa84eaa521036774b0577c58f23f2f3f42e068d6ac256cffae2)
-- an **email** via GitHub: [unavatar.io/github/sindresorhus@gmail.com](https://unavatar.io/github/sindresorhus@gmail.com)
+An endpoint determines how the avatar is looked up and what parameters are required.
+
+For example, you can get an avatar for:
+
+- an **email**: [unavatar.io/email/hello@microlink.io](https://unavatar.io/email/hello@microlink.io)
 - an **username**: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats)
-- a **domain**: [unavatar.io/google/reddit.com](https://unavatar.io/google/reddit.com)
+- a **domain**: [unavatar.io/domain/reddit.com](https://unavatar.io/domain/reddit.com)
 
-Use `/:provider/:key` for provider-specific lookups, or pass an email as the only path segment for automatic resolution. You can read more in [Email avatars](https://unavatar.io/email) and [providers](https://unavatar.io/docs#providers).
+Read [providers](https://unavatar.io/docs#providers) to know more. Each provider can accept different parameters.
 
-For **Gravatar**, `key` can be a plain email or a precomputed identifier: emails are trimmed, lowercased, and hashed with **SHA-256** before calling Gravatar. Values that already look like a **64-character hex SHA-256** or **32-character hex MD5** are sent as-is (hex is normalized to lowercase).
+## Attribution
+
+Free plans require attribution. Upgrade to any paid plan to remove this requirement.
+
+Attribution ensures proper domain verification and helps us keep unavatar.io free for the community.
+
+Your attribution link:
+
+- Must be on your production site (not staging or localhost).
+- Must be publicly accessible and viewable in browsers.
+- Must not use rel="nofollow", redirects, or obfuscation.
+
+### How to add attribution
+
+Add this link on any page or surface displaying unavatar.io avatars:
+
+```html
+[Avatars provided by Unavatar](https://unavatar.io)
+```
+
+**Example**
+
+```html
+
+  <img src="https://unavatar.io/github/kikobeats" alt="Kiko" />
+  <img src="https://unavatar.io/x/josebaseba" alt="Joseba" />
+
+<p class="attribution">
+  [Avatars provided by Unavatar](https://unavatar.io)
+</p>
+```
+
+**Valid placements**
+
+Site footer, about page, credits page, or any page that renders avatars.
+
+**Mobile apps and non-web products**
+
+If avatars are displayed in a mobile app, desktop app, browser extension, email, or any non-web surface, add the attribution link on your app's marketing site, app store listing description, or credits screen.
+
+**Requirements for attribution to be valid**
+
+We reserve the right to revoke free-tier access for any website or product that does not comply with the attribution requirements described in this document:
+
+- Double-check the href. It must point to [https://unavatar.io](https://unavatar.io/) directly — no redirects, no URL shorteners, no tracking wrappers.
+- Make sure it's crawlable. The link must be present in the rendered HTML and not blocked by robots.txt, authentication, or region gating.
+- Avoid nofollow or noindex. We need a standard, followable link.
+- target="\_blank" is allowed.
+
+### Remove attribution
+
+Attribution is only required on the free plan. [Upgrade to the PRO plan](https://unavatar.io/checkout) to remove the requirement.
 
 ## Authentication
 
