@@ -112,8 +112,8 @@ Add this link on any page or surface displaying unavatar.io avatars:
 
 ```html
 
-  <img src="https://unavatar.io/github/kikobeats" alt="Kiko" />
-  <img src="https://unavatar.io/x/josebaseba" alt="Joseba" />
+  ![Kiko](https://unavatar.io/github/kikobeats)
+  ![Joseba](https://unavatar.io/x/josebaseba)
 
 <p class="attribution">
   [Avatars provided by Unavatar](https://unavatar.io)
