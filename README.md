@@ -113,10 +113,13 @@ Add this link on any page or surface displaying unavatar.io avatars:
 ```html
 
   ![Kiko](https://unavatar.io/github/kikobeats)
+
   ![Joseba](https://unavatar.io/x/josebaseba)
 
 <p class="attribution">
+
   [Avatars provided by Unavatar](https://unavatar.io)
+
 </p>
 ```
 
@@ -153,9 +156,13 @@ curl "https://unavatar.io/github/kikobeats" -H "x-api-key: YOUR_API_KEY"
 
 ```javascript
 await fetch('https://unavatar.io/github/kikobeats', {
+
   headers: {
+
     'x-api-key': 'YOUR_API_KEY'
+
   }
+
 })
 ```
 
@@ -163,8 +170,11 @@ await fetch('https://unavatar.io/github/kikobeats', {
 import requests
 
 response = requests.get(
+
   'https://unavatar.io/github/kikobeats',
+
   headers={'x-api-key': 'YOUR_API_KEY'}
+
 )
 ```
 
@@ -174,24 +184,33 @@ package main
 import "net/http"
 
 func main() {
+
   req, _ := http.NewRequest("GET", "https://unavatar.io/github/kikobeats", nil)
+
   req.Header.Set("x-api-key", "YOUR_API_KEY")
 
   resp, _ := http.DefaultClient.Do(req)
+
   defer resp.Body.Close()
+
 }
 ```
 
 ```ruby
 require 'net/http'
+
 require 'uri'
 
 uri = URI('https://unavatar.io/github/kikobeats')
+
 request = Net::HTTP::Get.new(uri)
+
 request['x-api-key'] = 'YOUR_API_KEY'
 
 response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+
   http.request(request)
+
 end
 ```
 
@@ -199,11 +218,15 @@ end
 $ch = curl_init('https://unavatar.io/github/kikobeats');
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
+
   'x-api-key: YOUR_API_KEY',
+
 ]);
+
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 $response = curl_exec($ch);
+
 curl_close($ch);
 ```
 
@@ -221,7 +244,9 @@ Rate limit status can be verified using these response headers:
 $ curl -I https://unavatar.io/github/kikobeats
 
 x-rate-limit-limit: 25
+
 x-rate-limit-remaining: 24
+
 x-rate-limit-reset: 1744243200
 ```
 
@@ -251,7 +276,9 @@ The proxy tier used is returned in the `x-proxy-tier` response header, and the t
 $ curl -I -H "x-api-key: YOUR_API_KEY" https://unavatar.io/instagram/kikobeats
 
 x-pricing-tier: pro
+
 x-proxy-tier: origin
+
 x-unavatar-cost: 1
 ```
 
@@ -285,6 +312,7 @@ To check the cache status in real requests, inspect these response headers:
 $ curl -I -H "x-api-key: YOUR_API_KEY" "https://unavatar.io/github/kikobeats?ttl=1h"
 
 cache-control: public, max-age=3600
+
 x-cache-status: HIT
 ```
 
@@ -780,11 +808,17 @@ These headers help you understand pricing, limits, and request diagnostics.
 $ curl -I -H "x-api-key: YOUR_API_KEY" https://unavatar.io/github/kikobeats
 
 x-pricing-tier: pro
+
 x-timestamp: 1744209600
+
 x-unavatar-cost: 1
+
 x-proxy-tier: origin
+
 x-rate-limit-limit: 50
+
 x-rate-limit-remaining: 49
+
 x-rate-limit-reset: 1744243200
 ```
 
