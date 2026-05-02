@@ -1,3 +1,8 @@
+## 3.26.0 (2026-05-02)
+
+### Features
+
+* add thingiverse support ([#570](https://github.com/Kikobeats/unavatar/issues/570)) ([68c0d50](https://github.com/Kikobeats/unavatar/commit/68c0d5034ec0ddaabec568388dde8d9993a6f22b))
 ## 3.25.7 (2026-04-25)
 ## 3.25.6 (2026-04-23)
 ## 3.25.5 (2026-04-22)
