@@ -65,12 +65,23 @@
 - [Response Format](#response-format)
 - [Response Headers](#response-headers)
 - [Response Errors](#response-errors)
+- [Contact](#contact)
 
 ---
+
+Last updated on April 30, 2026
 
 ## Introduction
 
 Welcome to **unavatar.io**, the ultimate avatar service that offers everything you need to easily retrieve user avatars:
+
+- **Versatile**: A wide range of platforms and services including [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), etc., meaning you can rule all of them just querying against unavatar.
+
+- **Speed**: Designed to be fast and efficient with a 91% cache hit rate, serving 12.5 TB of data across 382M requests.
+
+- **Optimize**: All the images are not only compressed on-the-fly to reduce their size and save bandwidth, but also optimized to maintain a high-quality ratio. They are ready for immediate use, enhancing the overall optimization of your website or application.
+
+- **Integration**: The service seamlessly incorporates into your current applications or websites with ease. We offer straightforward documentation and comprehensive support to ensure a quick and effortless onboarding experience.
 
 It's proudly powered by [microlink.io](https://microlink.io/), the headless browser API that handles all the heavy lifting behind the scenes to ensure your avatars are always ready.
 
@@ -552,6 +563,10 @@ Available inputs:
 - SHA-256 hash, e.g., [unavatar.io/gravatar/b1f507c7a29adfa84eaa521036774b0577c58f23f2f3f42e068d6ac256cffae2](https://unavatar.io/gravatar/b1f507c7a29adfa84eaa521036774b0577c58f23f2f3f42e068d6ac256cffae2)
 - MD5 hash, e.g., [unavatar.io/gravatar/3f293df98a473eae038deabe430a1e30](https://unavatar.io/gravatar/3f293df98a473eae038deabe430a1e30)
 
+When you pass an email address directly in the URL, it is visible in plain text — both in server logs and to any intermediary that inspects the request.
+
+To avoid this, pass a pre-computed `MD5` or `SHA256` hash of the email instead. Unavatar detects the hash automatically and routes it to Gravatar, which natively supports both hash formats.
+
 ### Instagram
 
 Get any Instagram user's profile picture by their username. No authentication or API tokens needed — just pass the username.
@@ -859,4 +874,4 @@ Expected errors are known operational cases returned with stable codes.
 
 ## Contact
 
-If you have any suggestion or bug to report, please contact to ust mailing to [hello@unavatar.io](mailto:hello@unavatar.io).
+If you have a suggestion or need to report a bug, contact us at <hello@unavatar.io>.
