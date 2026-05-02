@@ -105,6 +105,12 @@ test('html provider modules expose expected URL builders', t => {
   t.is(threads.url('zuck'), 'https://www.threads.com/@zuck')
   t.is(threads.url('@zuck'), 'https://www.threads.com/@zuck')
 
+  const thingiverse = require('../../../src/providers/thingiverse')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(thingiverse.url('vitaminrad'), 'https://www.thingiverse.com/vitaminrad')
+
   const tumblr = require('../../../src/providers/tumblr')({
     createHtmlProvider,
     getOgImage
@@ -293,7 +299,7 @@ test('psnprofiles getter returns og:image URL for valid profile page', t => {
 
   const avatarUrl = 'https://i.psnprofiles.com/avatars/l/G12345abcdef.png'
   const $ = cheerio.load(
-    '<html><title>xGarbett\'s PSN Profile</title>' +
+    "<html><title>xGarbett's PSN Profile</title>" +
       `<meta property="og:image" content="${avatarUrl}" />` +
       '</html>'
   )
