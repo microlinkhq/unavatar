@@ -1,3 +1,8 @@
+## 3.27.0 (2026-05-02)
+
+### Features
+
+* add cults3d ([#571](https://github.com/Kikobeats/unavatar/issues/571)) ([ad778f4](https://github.com/Kikobeats/unavatar/commit/ad778f41cb40d7fd677a10d95342d9816e937404))
 ## 3.26.0 (2026-05-02)
 
 ### Features
