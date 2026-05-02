@@ -34,6 +34,12 @@ test('html provider modules expose expected URL builders', t => {
     'https://buymeacoffee.com/mikebarnesdrums'
   )
 
+  const cults3d = require('../../../src/providers/cults3d')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(cults3d.url('kikobeats'), 'https://cults3d.com/en/users/kikobeats')
+
   const deviantart = require('../../../src/providers/deviantart')({
     createHtmlProvider,
     getOgImage
