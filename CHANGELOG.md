@@ -1,3 +1,8 @@
+## 3.31.0 (2026-05-03)
+
+### Features
+
+* add ProductHunt ([#575](https://github.com/Kikobeats/unavatar/issues/575)) ([be825cf](https://github.com/Kikobeats/unavatar/commit/be825cf113edf1c9419466df9fef04ce992b992f))
 ## 3.30.0 (2026-05-03)
 
 ### Features
