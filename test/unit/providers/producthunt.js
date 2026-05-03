@@ -41,6 +41,8 @@ test('.isProductInput detects Product Hunt product inputs', t => {
   t.true(isProductInput('products:yc'))
   t.true(isProductInput('products/optimo'))
   t.false(isProductInput('kikobeats'))
+  t.false(isProductInput('product'))
+  t.false(isProductInput('products'))
 })
 
 test('.getAvatarUrl returns Product Hunt profile URL', t => {

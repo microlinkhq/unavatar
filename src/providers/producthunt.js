@@ -25,9 +25,12 @@ const parseInput = input => {
 }
 
 const isProductInput = input => {
-  const [type, id] = input.split(':')
+  const [type, ...rest] = input.split(':')
+  const hasType = rest.length > 0
+
+  if (!hasType) return input.startsWith('products/')
   if (type === 'product' || type === 'products') return true
-  return !id && input.startsWith('products/')
+  return false
 }
 
 const getAvatarUrl = input => `https://www.producthunt.com/${parseInput(input)}`
