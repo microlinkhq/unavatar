@@ -34,6 +34,12 @@ test('html provider modules expose expected URL builders', t => {
     'https://buymeacoffee.com/mikebarnesdrums'
   )
 
+  const codepen = require('../../../src/providers/codepen')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(codepen.url('chriscoyier'), 'https://codepen.io/chriscoyier')
+
   const cults3d = require('../../../src/providers/cults3d')({
     createHtmlProvider,
     getOgImage
