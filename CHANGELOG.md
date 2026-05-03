@@ -1,3 +1,8 @@
+## 3.32.0 (2026-05-03)
+
+### Features
+
+* add npm support ([#577](https://github.com/Kikobeats/unavatar/issues/577)) ([9936692](https://github.com/Kikobeats/unavatar/commit/993669262fc7160fa46513d7da5012b7e193d930))
 ## 3.31.1 (2026-05-03)
 ## 3.31.0 (2026-05-03)
 
