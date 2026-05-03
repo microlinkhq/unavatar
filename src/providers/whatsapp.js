@@ -1,6 +1,6 @@
 'use strict'
 
-const whatsappURI = input => {
+const parseInput = input => {
   const [first, second] = input.split(':')
   return {
     type: second ? first : 'phone',
@@ -9,7 +9,7 @@ const whatsappURI = input => {
 }
 
 const getAvatarUrl = input => {
-  const { type, id } = whatsappURI(input)
+  const { type, id } = parseInput(input)
   switch (type) {
     case 'phone':
       return `https://api.whatsapp.com/send/?phone=${id}`
