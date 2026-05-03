@@ -1,3 +1,8 @@
+## 3.28.0 (2026-05-03)
+
+### Features
+
+* add huggingface support ([#572](https://github.com/Kikobeats/unavatar/issues/572)) ([1a30f65](https://github.com/Kikobeats/unavatar/commit/1a30f65ea4d9f414a824858d259f239ac2d8d2c6))
 ## 3.27.0 (2026-05-02)
 
 ### Features
