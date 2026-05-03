@@ -3,30 +3,30 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const { parseMastodonInput } = require('../../../src/providers/mastodon')
+const { parseInput } = require('../../../src/providers/mastodon')
 
 test('parses @user@server format', t => {
-  t.deepEqual(parseMastodonInput('@kiko@indieweb.social'), {
+  t.deepEqual(parseInput('@kiko@indieweb.social'), {
     username: 'kiko',
     server: 'indieweb.social'
   })
 })
 
 test('parses user@server format without leading @', t => {
-  t.deepEqual(parseMastodonInput('kiko@indieweb.social'), {
+  t.deepEqual(parseInput('kiko@indieweb.social'), {
     username: 'kiko',
     server: 'indieweb.social'
   })
 })
 
 test('returns undefined for bare username without server', t => {
-  t.is(parseMastodonInput('kikobeats'), undefined)
+  t.is(parseInput('kikobeats'), undefined)
 })
 
 test('returns undefined for malformed handles', t => {
-  t.is(parseMastodonInput('@@localhost:8080'), undefined)
-  t.is(parseMastodonInput('@user@'), undefined)
-  t.is(parseMastodonInput('@user@a@127.0.0.1'), undefined)
+  t.is(parseInput('@@localhost:8080'), undefined)
+  t.is(parseInput('@user@'), undefined)
+  t.is(parseInput('@user@a@127.0.0.1'), undefined)
 })
 
 const createMastodon = (got, isReservedIp) =>

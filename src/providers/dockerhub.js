@@ -2,11 +2,11 @@
 
 const API_URL = 'https://hub.docker.com/v2/users'
 
-const getUserUrl = input => `${API_URL}/${encodeURIComponent(input)}/`
+const getAvatarUrl = input => `${API_URL}/${encodeURIComponent(input)}/`
 
 module.exports = ({ got }) =>
   async function dockerhub (input) {
-    const { body, statusCode } = await got(getUserUrl(input), {
+    const { body, statusCode } = await got(getAvatarUrl(input), {
       responseType: 'json',
       throwHttpErrors: false
     })
@@ -16,4 +16,4 @@ module.exports = ({ got }) =>
     return body?.gravatar_url || undefined
   }
 
-module.exports.getUserUrl = getUserUrl
+module.exports.getAvatarUrl = getAvatarUrl

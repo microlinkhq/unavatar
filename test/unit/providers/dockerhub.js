@@ -2,14 +2,14 @@
 
 const test = require('ava')
 
-const { getUserUrl } = require('../../../src/providers/dockerhub')
+const { getAvatarUrl } = require('../../../src/providers/dockerhub')
 
 const createDockerHub = got =>
   require('../../../src/providers/dockerhub')({ got })
 
-test('dockerhub builds encoded user API URL', t => {
+test('.getAvatarUrl builds encoded user API URL', t => {
   t.is(
-    getUserUrl('linux/server'),
+    getAvatarUrl('linux/server'),
     'https://hub.docker.com/v2/users/linux%2Fserver/'
   )
 })

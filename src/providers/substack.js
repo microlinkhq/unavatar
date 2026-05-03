@@ -23,14 +23,13 @@ const getPictureAvatar = $ => {
   return getBestSrcsetUrl(srcset) || pictureImg.attr('src')
 }
 
-const getAvatarUrl = $ =>
-  $jsonld('publisher.logo.url')($) || getPictureAvatar($)
+const getAvatar = $ => $jsonld('publisher.logo.url')($) || getPictureAvatar($)
 
 module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'substack',
     url: input => `https://${input}.substack.com`,
-    getter: getAvatarUrl
+    getter: getAvatar
   })
 
-module.exports.getAvatarUrl = getAvatarUrl
+module.exports.getAvatar = getAvatar

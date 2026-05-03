@@ -2,15 +2,16 @@
 
 const { $jsonld } = require('@metascraper/helpers')
 
-const getProfileUrl = input => `https://www.pinterest.com/${input}/`
+const getAvatarUrl = input => `https://www.pinterest.com/${input}/`
 
-const getAvatarUrl = $jsonld('mainEntity.image.contentUrl')
+const getAvatar = $jsonld('mainEntity.image.contentUrl')
 
 module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'pinterest',
-    url: getProfileUrl,
-    getter: getAvatarUrl
+    url: getAvatarUrl,
+    getter: getAvatar
   })
 
 module.exports.getAvatarUrl = getAvatarUrl
+module.exports.getAvatar = getAvatar

@@ -1,14 +1,14 @@
 'use strict'
 
-const getAvatarUrl = $ => $('img#profilePicture').attr('src')
+const getAvatar = $ => $('img#profilePicture').attr('src')
 
 const factory = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'ko-fi',
     url: input => `https://ko-fi.com/${input}`,
-    getter: getAvatarUrl
+    getter: getAvatar
   })
 
-factory.getAvatarUrl = getAvatarUrl
+factory.getAvatar = getAvatar
 
 module.exports = factory

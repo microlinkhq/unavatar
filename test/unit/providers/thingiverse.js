@@ -6,7 +6,7 @@ const test = require('ava')
 const getOgImage = require('../../../src/util/get-og-image')
 const {
   getAvatarUrl,
-  getAvatarUrlFromMarkup
+  getAvatar
 } = require('../../../src/providers/thingiverse')
 
 test('.getAvatarUrl returns Thingiverse profile URL', t => {
@@ -39,12 +39,12 @@ test('getter throws when og:image is missing', t => {
   t.is(error?.name, 'TypeError')
 })
 
-test('.getAvatarUrlFromMarkup returns null when url query parameter is missing', t => {
+test('.getAvatar returns null when url query parameter is missing', t => {
   const $ = cheerio.load(
     '<html><head>' +
       '<meta property="og:image" content="https://cdn.thingiverse.com/avatar.jpg"/>' +
       '</head></html>'
   )
 
-  t.is(getAvatarUrlFromMarkup({ getOgImage, $ }), null)
+  t.is(getAvatar({ getOgImage, $ }), null)
 })

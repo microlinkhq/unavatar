@@ -3,10 +3,7 @@
 const cheerio = require('cheerio')
 const test = require('ava')
 
-const {
-  getAvatarUrl,
-  getAvatarFromMarkup
-} = require('../../../src/providers/flickr')
+const { getAvatarUrl, getAvatar } = require('../../../src/providers/flickr')
 
 test('.getAvatarUrl supports default username input', t => {
   t.is(
@@ -23,10 +20,7 @@ test('.getAvatarUrl supports explicit user username input', t => {
 })
 
 test('.getAvatarUrl supports explicit user numeric input', t => {
-  t.is(
-    getAvatarUrl('user:94867603'),
-    'https://www.flickr.com/photos/94867603/'
-  )
+  t.is(getAvatarUrl('user:94867603'), 'https://www.flickr.com/photos/94867603/')
 })
 
 test('.getAvatarUrl supports group path', t => {
@@ -57,7 +51,7 @@ test('.getter extracts buddy icon URL from profile style markup', t => {
   `)
 
   t.is(
-    getAvatarFromMarkup($),
+    getAvatar($),
     '//live.staticflickr.com/544/buddyicons/94867603@N03_r.jpg?1483529005#94867603@N03'
   )
 })
@@ -71,7 +65,7 @@ test('.getter extracts buddy icon URL from group img markup', t => {
   `)
 
   t.is(
-    getAvatarFromMarkup($),
+    getAvatar($),
     'https://farm8.staticflickr.com/7304/buddyicons/80641914@N00_r.jpg?1422640699'
   )
 })
@@ -84,7 +78,7 @@ test('.getter extracts escaped buddy icon URL from script markup', t => {
   `)
 
   t.is(
-    getAvatarFromMarkup($),
+    getAvatar($),
     'https://live.staticflickr.com/544/buddyicons/94867603@N03_r.jpg?1483529005#94867603@N03'
   )
 })

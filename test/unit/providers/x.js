@@ -5,30 +5,30 @@ const path = require('path')
 const test = require('ava')
 const fs = require('fs')
 
-const { getProfileImage } = require('../../../src/providers/x')
+const { getAvatar } = require('../../../src/providers/x')
 const getOgImage = require('../../../src/util/get-og-image')
 
-test('.getProfileImage from JSON-LD when og:image is fallback', t => {
+test('.getAvatar from JSON-LD when og:image is fallback', t => {
   const html = fs.readFileSync(path.join(__dirname, 'x-jsonld.html'), 'utf8')
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($, getOgImage)
+  const avatarUrl = getAvatar($, getOgImage)
   t.is(
     avatarUrl,
     'https://pbs.twimg.com/profile_images/1846292082501054464/oKUC44PF_400x400.jpg'
   )
 })
 
-test('.getProfileImage from og:image and transforms to high resolution', t => {
+test('.getAvatar from og:image and transforms to high resolution', t => {
   const html = fs.readFileSync(path.join(__dirname, 'x-og.html'), 'utf8')
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($, getOgImage)
+  const avatarUrl = getAvatar($, getOgImage)
   t.is(
     avatarUrl,
     'https://pbs.twimg.com/profile_images/1846292082501054464/oKUC44PF_400x400.jpg'
   )
 })
 
-test('.getProfileImage transforms `_normal` image URLs to high resolution', t => {
+test('.getAvatar transforms `_normal` image URLs to high resolution', t => {
   const html = `
     <html>
       <head>
@@ -37,11 +37,11 @@ test('.getProfileImage transforms `_normal` image URLs to high resolution', t =>
     </html>
   `
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($, getOgImage)
+  const avatarUrl = getAvatar($, getOgImage)
   t.is(avatarUrl, 'https://pbs.twimg.com/profile_images/123/avatar_400x400.jpg')
 })
 
-test('.getProfileImage keeps non-twitter image URLs unchanged', t => {
+test('.getAvatar keeps non-twitter image URLs unchanged', t => {
   const html = `
     <html>
       <head>
@@ -50,7 +50,7 @@ test('.getProfileImage keeps non-twitter image URLs unchanged', t => {
     </html>
   `
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($, getOgImage)
+  const avatarUrl = getAvatar($, getOgImage)
   t.is(avatarUrl, 'https://example.com/avatar.jpg')
 })
 
@@ -91,7 +91,7 @@ test('.provider returns undefined on 404 without proxying', async t => {
   t.false(headerCalled)
 })
 
-test('.getProfileImage returns undefined when profile is missing', t => {
+test('.getAvatar returns undefined when profile is missing', t => {
   const html = `
     <html>
       <head>
@@ -101,6 +101,6 @@ test('.getProfileImage returns undefined when profile is missing', t => {
     </html>
   `
   const $ = cheerio.load(html)
-  const avatarUrl = getProfileImage($, getOgImage)
+  const avatarUrl = getAvatar($, getOgImage)
   t.is(avatarUrl, undefined)
 })

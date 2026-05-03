@@ -1,6 +1,7 @@
 'use strict'
 
-const BUDDY_ICON_URL_PATTERN = /(?:https?:)?\/\/[^"'()\s]*\/buddyicons\/[^"'()\s]+/i
+const BUDDY_ICON_URL_PATTERN =
+  /(?:https?:)?\/\/[^"'()\s]*\/buddyicons\/[^"'()\s]+/i
 const CSS_URL_PATTERN = /url\((['"]?)([^)'"]+)\1\)/i
 const unescapePathSlashes = value => value?.replace(/\\\//g, '/')
 
@@ -19,7 +20,8 @@ const getBuddyIconFromText = value => {
 }
 
 const getUserProfileUrl = userId => `https://www.flickr.com/photos/${userId}/`
-const getGroupProfileUrl = groupId => `https://www.flickr.com/groups/${groupId}/`
+const getGroupProfileUrl = groupId =>
+  `https://www.flickr.com/groups/${groupId}/`
 
 const getAvatarUrl = input => {
   const { type, id } = parseInput(input)
@@ -41,7 +43,7 @@ const getBuddyIconFromCss = value => {
   return getBuddyIconFromText(cssUrl)
 }
 
-const getAvatarFromMarkup = $ => {
+const getAvatar = $ => {
   const imgBuddyIcon = $('img[src*="/buddyicons/"]').first().attr('src')
   if (imgBuddyIcon) return imgBuddyIcon
 
@@ -57,8 +59,8 @@ module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'flickr',
     url: getAvatarUrl,
-    getter: getAvatarFromMarkup
+    getter: getAvatar
   })
 
 module.exports.getAvatarUrl = getAvatarUrl
-module.exports.getAvatarFromMarkup = getAvatarFromMarkup
+module.exports.getAvatar = getAvatar

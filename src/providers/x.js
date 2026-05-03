@@ -12,14 +12,14 @@ const toHighResolution = url => {
   return url
 }
 
-const getProfileImage = ($, getOgImage) =>
+const getAvatar = ($, getOgImage) =>
   toHighResolution($jsonld('mainEntity.image.contentUrl')($) || getOgImage($))
 
 module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'x',
     url: input => `https://x.com/${input}`,
-    getter: $ => getProfileImage($, getOgImage)
+    getter: $ => getAvatar($, getOgImage)
   })
 
-module.exports.getProfileImage = getProfileImage
+module.exports.getAvatar = getAvatar
