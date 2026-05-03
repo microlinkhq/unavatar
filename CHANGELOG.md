@@ -1,3 +1,8 @@
+## 3.29.0 (2026-05-03)
+
+### Features
+
+* add CodePen ([#574](https://github.com/Kikobeats/unavatar/issues/574)) ([dfcc505](https://github.com/Kikobeats/unavatar/commit/dfcc505e5de30aa74d6210f10afec824ae60023a))
 ## 3.28.0 (2026-05-03)
 
 ### Features
