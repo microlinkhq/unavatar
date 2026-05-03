@@ -13,7 +13,7 @@ module.exports = ({ got }) =>
 
     if (statusCode >= 400) return
 
-    return body?.gravatar_url
+    return body?.gravatar_url || undefined
   }
 
 module.exports.getUserUrl = getUserUrl
