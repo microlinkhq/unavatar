@@ -1,3 +1,8 @@
+## 3.30.0 (2026-05-03)
+
+### Features
+
+* add dockerhub ([#573](https://github.com/Kikobeats/unavatar/issues/573)) ([4da4d9b](https://github.com/Kikobeats/unavatar/commit/4da4d9bfb26e7a9e5b9e1ddcdd682496b308df85))
 ## 3.29.0 (2026-05-03)
 
 ### Features
