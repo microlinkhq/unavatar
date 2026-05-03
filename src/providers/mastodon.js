@@ -17,7 +17,7 @@ const isValidServer = server => {
   }
 }
 
-const parseMastodonInput = input => {
+const parseInput = input => {
   if (typeof input !== 'string') return
 
   const cleaned = input.startsWith('@') ? input.slice(1) : input
@@ -36,7 +36,7 @@ const parseMastodonInput = input => {
 
 module.exports = ({ got, isReservedIp }) => {
   const mastodon = async function (input) {
-    const parsed = parseMastodonInput(input)
+    const parsed = parseInput(input)
     if (!parsed) return
 
     const { username, server } = parsed
@@ -56,4 +56,4 @@ module.exports = ({ got, isReservedIp }) => {
   return mastodon
 }
 
-module.exports.parseMastodonInput = parseMastodonInput
+module.exports.parseInput = parseInput

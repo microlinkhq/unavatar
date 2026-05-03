@@ -5,9 +5,9 @@ const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 
-const { getAvatarUrl } = require('../../../src/providers/substack')
+const { getAvatar } = require('../../../src/providers/substack')
 
-test('.getAvatarUrl returns publisher logo from jsonld', t => {
+test('.getAvatar returns publisher logo from jsonld', t => {
   const html = `
     <html>
       <head>
@@ -20,10 +20,10 @@ test('.getAvatarUrl returns publisher logo from jsonld', t => {
   `
 
   const $ = cheerio.load(html)
-  t.is(getAvatarUrl($), 'https://cdn.example.com/logo.jpg')
+  t.is(getAvatar($), 'https://cdn.example.com/logo.jpg')
 })
 
-test('.getAvatarUrl falls back to highest resolution picture srcset when jsonld logo is missing', t => {
+test('.getAvatar falls back to highest resolution picture srcset when jsonld logo is missing', t => {
   const html = `
     <html>
       <body>
@@ -42,10 +42,10 @@ test('.getAvatarUrl falls back to highest resolution picture srcset when jsonld 
   `
 
   const $ = cheerio.load(html)
-  t.is(getAvatarUrl($), 'https://substackcdn.com/image/fetch/w_264/avatar.png')
+  t.is(getAvatar($), 'https://substackcdn.com/image/fetch/w_264/avatar.png')
 })
 
-test('.getAvatarUrl falls back to picture img src when srcset is missing', t => {
+test('.getAvatar falls back to picture img src when srcset is missing', t => {
   const html = `
     <html>
       <body>
@@ -57,10 +57,10 @@ test('.getAvatarUrl falls back to picture img src when srcset is missing', t => 
   `
 
   const $ = cheerio.load(html)
-  t.is(getAvatarUrl($), 'https://substackcdn.com/image/fetch/w_88/avatar.png')
+  t.is(getAvatar($), 'https://substackcdn.com/image/fetch/w_88/avatar.png')
 })
 
-test('.getAvatarUrl parses srcset URLs containing commas', t => {
+test('.getAvatar parses srcset URLs containing commas', t => {
   const html = `
     <html>
       <body>
@@ -76,17 +76,20 @@ test('.getAvatarUrl parses srcset URLs containing commas', t => {
 
   const $ = cheerio.load(html)
   t.is(
-    getAvatarUrl($),
+    getAvatar($),
     'https://substackcdn.com/image/fetch/$s_!b-El!,w_264,h_264,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fimg.png'
   )
 })
 
-test('.getAvatarUrl resolves expected avatar from real substack datacenter fixture', t => {
-  const html = fs.readFileSync(path.join(__dirname, 'substack-datacenter.html'), 'utf8')
+test('.getAvatar resolves expected avatar from real substack datacenter fixture', t => {
+  const html = fs.readFileSync(
+    path.join(__dirname, 'substack-datacenter.html'),
+    'utf8'
+  )
   const $ = cheerio.load(html)
 
   t.is(
-    getAvatarUrl($),
+    getAvatar($),
     'https://substackcdn.com/image/fetch/$s_!b-El!,w_264,h_264,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F65139ad0-319a-42ca-9a37-c024fae1c727_1024x1024.png'
   )
 })

@@ -3,7 +3,7 @@
 const test = require('ava')
 const cheerio = require('cheerio')
 
-const { getAvatarUrl } = require('../../../src/providers/buymeacoffee')
+const { getAvatar } = require('../../../src/providers/buymeacoffee')
 
 const avatarUrl =
   'https://cdn.buymeacoffee.com/uploads/profile_pictures/2019/04/abf02d8c433f9b9b36272b48e66ceba8.jpg'
@@ -17,7 +17,7 @@ test('buymeacoffee provider exposes expected URL', t => {
   t.is(provider.url('kikobeats'), 'https://buymeacoffee.com/kikobeats')
 })
 
-test('.getAvatarUrl extracts creator avatar from data-page payload', t => {
+test('.getAvatar extracts creator avatar from data-page payload', t => {
   const html = `
     <html>
       <body>
@@ -27,10 +27,10 @@ test('.getAvatarUrl extracts creator avatar from data-page payload', t => {
   `
 
   const $ = cheerio.load(html)
-  t.is(getAvatarUrl($), avatarUrl)
+  t.is(getAvatar($), avatarUrl)
 })
 
-test('.getAvatarUrl falls back to regex extraction when data-page is not valid JSON', t => {
+test('.getAvatar falls back to regex extraction when data-page is not valid JSON', t => {
   const escapedAvatarUrl = avatarUrl.replace(/\//g, '\\/')
   const html = `
     <html>
@@ -41,10 +41,10 @@ test('.getAvatarUrl falls back to regex extraction when data-page is not valid J
   `
 
   const $ = cheerio.load(html)
-  t.is(getAvatarUrl($), avatarUrl)
+  t.is(getAvatar($), avatarUrl)
 })
 
-test('.getAvatarUrl returns undefined when data-page payload is missing', t => {
+test('.getAvatar returns undefined when data-page payload is missing', t => {
   const $ = cheerio.load('<html><body></body></html>')
-  t.is(getAvatarUrl($), undefined)
+  t.is(getAvatar($), undefined)
 })

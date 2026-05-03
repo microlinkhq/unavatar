@@ -8,19 +8,19 @@ const normalizeUserId = input =>
     .replace(/^users\//, '')
     .split('/')[0]
 
-const getProfileUrl = input =>
+const getAvatarUrl = input =>
   `https://stackoverflow.com/users/${normalizeUserId(input)}`
 
-const getAvatarUrl = $ =>
+const getAvatar = $ =>
   $(`${AVATAR_SELECTOR}[width="128"]`).attr('src') ||
   $(AVATAR_SELECTOR).first().attr('src')
 
 module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'stackoverflow',
-    url: getProfileUrl,
-    getter: getAvatarUrl
+    url: getAvatarUrl,
+    getter: getAvatar
   })
 
-module.exports.getProfileUrl = getProfileUrl
 module.exports.getAvatarUrl = getAvatarUrl
+module.exports.getAvatar = getAvatar

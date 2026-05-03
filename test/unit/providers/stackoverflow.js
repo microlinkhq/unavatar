@@ -3,27 +3,27 @@
 const cheerio = require('cheerio')
 const test = require('ava')
 
-const { getProfileUrl, getAvatarUrl } = require('../../../src/providers/stackoverflow')
+const {
+  getAvatarUrl,
+  getAvatar
+} = require('../../../src/providers/stackoverflow')
 
-test('.getProfileUrl builds users URL from ID', t => {
-  t.is(getProfileUrl('576911'), 'https://stackoverflow.com/users/576911')
+test('.getAvatarUrl builds users URL from ID', t => {
+  t.is(getAvatarUrl('576911'), 'https://stackoverflow.com/users/576911')
 })
 
-test('.getProfileUrl supports input prefixed with users/', t => {
+test('.getAvatarUrl supports input prefixed with users/', t => {
+  t.is(getAvatarUrl('users/576911'), 'https://stackoverflow.com/users/576911')
+})
+
+test('.getAvatarUrl keeps only user ID when a slug is present', t => {
   t.is(
-    getProfileUrl('users/576911'),
+    getAvatarUrl('/users/576911/example-slug'),
     'https://stackoverflow.com/users/576911'
   )
 })
 
-test('.getProfileUrl keeps only user ID when a slug is present', t => {
-  t.is(
-    getProfileUrl('/users/576911/example-slug'),
-    'https://stackoverflow.com/users/576911'
-  )
-})
-
-test('.getAvatarUrl resolves expected avatar from inline stackoverflow markup', t => {
+test('.getAvatar resolves expected avatar from inline stackoverflow markup', t => {
   const html = `
     <html>
       <body>
@@ -39,7 +39,7 @@ test('.getAvatarUrl resolves expected avatar from inline stackoverflow markup', 
   const $ = cheerio.load(html)
 
   t.is(
-    getAvatarUrl($),
+    getAvatar($),
     'https://www.gravatar.com/avatar/27c58ba8661585b00b571efab36af60f?s=256&d=identicon&r=PG'
   )
 })

@@ -2,7 +2,7 @@
 
 const { get } = require('lodash')
 
-const getAvatarUrl = $ => {
+const getAvatar = $ => {
   const text = $('#__UNIVERSAL_DATA_FOR_REHYDRATION__').contents().text()
   if (!text) return
   return get(JSON.parse(text), [
@@ -18,7 +18,7 @@ module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'tiktok',
     url: input => `https://www.tiktok.com/@${input}`,
-    getter: getAvatarUrl
+    getter: getAvatar
   })
 
-module.exports.getAvatarUrl = getAvatarUrl
+module.exports.getAvatar = getAvatar

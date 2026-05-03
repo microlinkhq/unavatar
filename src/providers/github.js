@@ -12,8 +12,9 @@ const COMMIT_SEARCH_ACCEPT_HEADER = 'application/vnd.github+json'
 const normalizeValue = value =>
   typeof value === 'string' ? value.trim().toLowerCase() : ''
 const getSearchItems = body => body?.items ?? []
-const getUniqueLogins = candidates =>
-  [...new Set(candidates.map(({ login }) => login).filter(Boolean))]
+const getUniqueLogins = candidates => [
+  ...new Set(candidates.map(({ login }) => login).filter(Boolean))
+]
 
 const fetchJsonBody = async ({ got, url, options }) => {
   const { body } = await got(url, {
@@ -38,21 +39,22 @@ const pickLinkedUser = item => {
   if (isResolvablePerson(item.committer)) return item.committer
 }
 
-const getUsernameAvatarUrl = ({ constants, input }) =>
+const getAvatarUrl = ({ constants, input }) =>
   `https://github.com/${input}.png?${stringify({
     size: constants.AVATAR_SIZE
   })}`
 
-const createSearchUsersByEmail = ({ got }) =>
-  async email => {
-    const body = await fetchJsonBody({
-      got,
-      url: `${GITHUB_API_URL}/search/users?q=${encodeURIComponent(
+const createSearchUsersByEmail =
+  ({ got }) =>
+    async email => {
+      const body = await fetchJsonBody({
+        got,
+        url: `${GITHUB_API_URL}/search/users?q=${encodeURIComponent(
         email
       )}&per_page=${SEARCH_USERS_PER_PAGE}`
-    })
-    return getSearchItems(body)
-  }
+      })
+      return getSearchItems(body)
+    }
 
 const createGetUser = ({ githubSearchCache, got }) =>
   memoize(
@@ -65,20 +67,21 @@ const createGetUser = ({ githubSearchCache, got }) =>
     { key: login => `user:${normalizeValue(login)}` }
   )
 
-const createSearchCommitsByEmail = ({ got }) =>
-  async email => {
-    const body = await fetchJsonBody({
-      got,
-      url: `${GITHUB_API_URL}/search/commits?q=${encodeURIComponent(
+const createSearchCommitsByEmail =
+  ({ got }) =>
+    async email => {
+      const body = await fetchJsonBody({
+        got,
+        url: `${GITHUB_API_URL}/search/commits?q=${encodeURIComponent(
         `author-email:${email}`
       )}&per_page=${SEARCH_COMMITS_PER_PAGE}`,
-      options: {
-        headers: { accept: COMMIT_SEARCH_ACCEPT_HEADER }
-      }
-    })
+        options: {
+          headers: { accept: COMMIT_SEARCH_ACCEPT_HEADER }
+        }
+      })
 
-    return getSearchItems(body)
-  }
+      return getSearchItems(body)
+    }
 
 const findExactPublicProfileMatches = async ({
   email,
@@ -156,7 +159,7 @@ module.exports = ({ constants, githubSearchCache, got }) => {
   const searchCommitsByEmail = createSearchCommitsByEmail({ got })
 
   return async function github (input) {
-    if (!isEmail(input)) return getUsernameAvatarUrl({ constants, input })
+    if (!isEmail(input)) return getAvatarUrl({ constants, input })
     const email = normalizeValue(input)
 
     // Strategy: exact public user email -> user commit consensus ->
@@ -180,6 +183,6 @@ module.exports = ({ constants, githubSearchCache, got }) => {
   }
 }
 
-module.exports.getUsernameAvatarUrl = getUsernameAvatarUrl
+module.exports.getAvatarUrl = getAvatarUrl
 module.exports.findExactPublicProfileMatches = findExactPublicProfileMatches
 module.exports.findCommitConsensusMatch = findCommitConsensusMatch

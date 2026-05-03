@@ -1,6 +1,6 @@
 'use strict'
 
-const getAvatarUrl = $ => {
+const getAvatar = $ => {
   const dataPage = $('#app').attr('data-page')
   if (!dataPage) return
 
@@ -16,9 +16,9 @@ const factory = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'buymeacoffee',
     url: input => `https://buymeacoffee.com/${input}`,
-    getter: getAvatarUrl
+    getter: getAvatar
   })
 
-factory.getAvatarUrl = getAvatarUrl
+factory.getAvatar = getAvatar
 
 module.exports = factory

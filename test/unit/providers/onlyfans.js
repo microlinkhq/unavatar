@@ -19,9 +19,9 @@ test('onlyfans provider exposes expected URL and html opts', t => {
   })
 })
 
-const { getAvatarUrl } = require('../../../src/providers/onlyfans')
+const { getAvatar } = require('../../../src/providers/onlyfans')
 
-test('.getAvatarUrl parses JSON-LD avatar URL', t => {
+test('.getAvatar parses JSON-LD avatar URL', t => {
   const html = `
     <html>
       <head>
@@ -32,10 +32,10 @@ test('.getAvatarUrl parses JSON-LD avatar URL', t => {
     </html>
   `
   const $ = cheerio.load(html)
-  t.is(getAvatarUrl($), 'https://cdn.example.com/of-avatar.jpg')
+  t.is(getAvatar($), 'https://cdn.example.com/of-avatar.jpg')
 })
 
-test('.getAvatarUrl returns undefined when JSON-LD script is missing', t => {
+test('.getAvatar returns undefined when JSON-LD script is missing', t => {
   const $ = cheerio.load('<html><head></head></html>')
-  t.is(getAvatarUrl($), undefined)
+  t.is(getAvatar($), undefined)
 })

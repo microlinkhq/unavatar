@@ -2,7 +2,7 @@
 
 const { get } = require('lodash')
 
-const getAvatarUrl = $ => {
+const getAvatar = $ => {
   const text = $('script[type="application/ld+json"]').contents().text()
   return text ? get(JSON.parse(text), 'mainEntity.image') : undefined
 }
@@ -11,7 +11,7 @@ module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({
     name: 'onlyfans',
     url: input => `https://onlyfans.com/${input}`,
-    getter: getAvatarUrl,
+    getter: getAvatar,
     htmlOpts: () => ({
       prerender: true,
       puppeteerOpts: {
@@ -21,4 +21,4 @@ module.exports = ({ createHtmlProvider }) =>
     })
   })
 
-module.exports.getAvatarUrl = getAvatarUrl
+module.exports.getAvatar = getAvatar
