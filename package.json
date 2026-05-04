@@ -157,7 +157,7 @@
   "devDependencies": {
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
-    "ava": "7",
+    "ava": "8",
     "c8": "latest",
     "cheerio": "latest",
     "ci-publish": "latest",
