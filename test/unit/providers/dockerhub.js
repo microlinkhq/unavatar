@@ -3,9 +3,10 @@
 const test = require('ava')
 
 const { getAvatarUrl } = require('../../../src/providers/dockerhub')
+const constants = require('../../../src/constant')
 
 const createDockerHub = got =>
-  require('../../../src/providers/dockerhub')({ got })
+  require('../../../src/providers/dockerhub')({ constants, got })
 
 test('.getAvatarUrl builds encoded user API URL', t => {
   t.is(
@@ -33,7 +34,7 @@ test('dockerhub resolves gravatar_url from user profile', async t => {
 
   t.is(
     result,
-    'https://www.gravatar.com/avatar/56b6e15d486f6407690a6cb56e3fa68e?s=80&r=g&d=mm'
+    'https://www.gravatar.com/avatar/56b6e15d486f6407690a6cb56e3fa68e?s=400&r=g&d=404'
   )
 })
 
