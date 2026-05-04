@@ -135,7 +135,7 @@
     "got": "~11.8.6",
     "html-get": "~2.22.2",
     "https-tls": "~1.0.24",
-    "ipaddr.js": "~2.3.0",
+    "ipaddr.js": "~2.4.0",
     "is-absolute-url": "~3.0.3",
     "is-antibot": "~2.0.0",
     "is-email-like": "~1.0.0",
