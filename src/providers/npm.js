@@ -1,24 +1,38 @@
 'use strict'
 
-const NPM_URL = 'https://www.npmjs.com'
+const { getAvatarUrl: getGitHubAvatarUrl } = require('./github')
+const stringify = require('../util/stringify')
+
+const NPM_REGISTRY_URL = 'https://registry.npmjs.org'
 
 const stripAtPrefix = input => input.replace(/^@/, '')
 
-const getAvatarUrl = input => `${NPM_URL}/~${stripAtPrefix(input)}`
+const GITHUB_RE = /github\.com[/:]([^/]+)/
 
-const getAvatar = $ => {
-  const src = $('a[aria-label="Your profile picture"] img').attr('src')
-  if (!src) return
-
-  return src.startsWith('/') ? `${NPM_URL}${src}` : src
+const getGitHubUsername = objects => {
+  for (const { package: pkg } of objects) {
+    const repo = pkg?.links?.repository
+    if (!repo) continue
+    const match = GITHUB_RE.exec(repo)
+    if (match) return match[1]
+  }
 }
 
-module.exports = ({ createHtmlProvider }) =>
-  createHtmlProvider({
-    name: 'npm',
-    url: getAvatarUrl,
-    getter: getAvatar
-  })
+module.exports = ({ constants, got }) =>
+  async function npm (input) {
+    const username = stripAtPrefix(input)
+    const url = `${NPM_REGISTRY_URL}/-/v1/search?${stringify({
+      text: `maintainer:${username}`,
+      size: 5
+    })}`
 
-module.exports.getAvatarUrl = getAvatarUrl
-module.exports.getAvatar = getAvatar
+    const { body } = await got(url, { responseType: 'json' })
+    const objects = (body?.objects ?? []).filter(
+      o => o.package?.publisher?.username === username
+    )
+
+    const githubUsername = getGitHubUsername(objects)
+    if (!githubUsername) return
+
+    return getGitHubAvatarUrl({ constants, input: githubUsername })
+  }

@@ -1,44 +1,94 @@
 'use strict'
 
 const test = require('ava')
-const cheerio = require('cheerio')
 
-const { getAvatarUrl, getAvatar } = require('../../../src/providers/npm')
+const createNpmProvider = require('../../../src/providers/npm')
 
-test('.getAvatarUrl returns npm profile URL', t => {
-  t.is(getAvatarUrl('kikobeats'), 'https://www.npmjs.com/~kikobeats')
+const createMockGot = response => async () => ({ body: response })
+
+test('returns github avatar URL from npm registry', async t => {
+  const got = createMockGot({
+    objects: [
+      {
+        package: {
+          publisher: { username: 'mafintosh' },
+          links: { repository: 'git://github.com/mafintosh/pump.git' }
+        }
+      }
+    ]
+  })
+
+  const npm = createNpmProvider({ constants: { AVATAR_SIZE: 400 }, got })
+  const result = await npm('mafintosh')
+
+  t.is(result, 'https://github.com/mafintosh.png?size=400')
 })
 
-test('.getAvatarUrl strips @ prefix from input', t => {
-  t.is(getAvatarUrl('@kikobeats'), 'https://www.npmjs.com/~kikobeats')
+test('strips @ prefix from input', async t => {
+  const got = createMockGot({
+    objects: [
+      {
+        package: {
+          publisher: { username: 'kikobeats' },
+          links: { repository: 'https://github.com/kikobeats/emojis-list' }
+        }
+      }
+    ]
+  })
+
+  const npm = createNpmProvider({ constants: { AVATAR_SIZE: 400 }, got })
+  const result = await npm('@kikobeats')
+
+  t.is(result, 'https://github.com/kikobeats.png?size=400')
 })
 
-test('.getAvatar extracts npm profile avatar', t => {
-  const html = `
-    <main id="main">
-      <a href="http://en.gravatar.com/emails/" aria-label="Your profile picture">
-        <img src="/npm-avatar/avatar-token" alt="" />
-      </a>
-      <img src="https://static-production.npmjs.com/package.svg" />
-    </main>
-  `
-  const $ = cheerio.load(html)
+test('filters packages by publisher username', async t => {
+  const got = createMockGot({
+    objects: [
+      {
+        package: {
+          publisher: { username: 'other-user' },
+          links: { repository: 'https://github.com/other-user/pkg.git' }
+        }
+      },
+      {
+        package: {
+          publisher: { username: 'mafintosh' },
+          links: { repository: 'https://github.com/mafintosh/pump.git' }
+        }
+      }
+    ]
+  })
 
-  t.is(getAvatar($), 'https://www.npmjs.com/npm-avatar/avatar-token')
+  const npm = createNpmProvider({ constants: { AVATAR_SIZE: 400 }, got })
+  const result = await npm('mafintosh')
+
+  t.is(result, 'https://github.com/mafintosh.png?size=400')
 })
 
-test('.getAvatar returns absolute profile avatar unchanged', t => {
-  const $ = cheerio.load(`
-    <a aria-label="Your profile picture">
-      <img src="https://static-production.npmjs.com/avatar.png" />
-    </a>
-  `)
+test('returns undefined when no github repository found', async t => {
+  const got = createMockGot({
+    objects: [
+      {
+        package: {
+          publisher: { username: 'noghuser' },
+          links: { npm: 'https://www.npmjs.com/package/foo' }
+        }
+      }
+    ]
+  })
 
-  t.is(getAvatar($), 'https://static-production.npmjs.com/avatar.png')
+  const npm = createNpmProvider({ constants: { AVATAR_SIZE: 400 }, got })
+  const result = await npm('noghuser')
+
+  t.is(result, undefined)
 })
 
-test('.getAvatar returns undefined when avatar is missing', t => {
-  const $ = cheerio.load('<main><img src="/package-icon.svg" /></main>')
+test('returns undefined when no packages found', async t => {
+  const got = createMockGot({ objects: [] })
 
-  t.is(getAvatar($), undefined)
+  const npm = createNpmProvider({ constants: { AVATAR_SIZE: 400 }, got })
+  const result = await npm('nonexistent')
+
+  t.is(result, undefined)
 })
