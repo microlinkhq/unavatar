@@ -4,18 +4,38 @@ const { getAvatarUrl: getGitHubAvatarUrl } = require('./github')
 const stringify = require('../util/stringify')
 
 const NPM_REGISTRY_URL = 'https://registry.npmjs.org'
+const GITLAB_API_URL = 'https://gitlab.com/api/v4'
 
 const stripAtPrefix = input => input.replace(/^@/, '')
 
 const GITHUB_RE = /github\.com[/:]([^/]+)/
+const GITLAB_RE = /gitlab\.com[/:]([^/]+)/
 
-const getGitHubUsername = objects => {
+const getRepoUsername = objects => {
+  let gitlabFallback
+
   for (const { package: pkg } of objects) {
     const repo = pkg?.links?.repository
     if (!repo) continue
-    const match = GITHUB_RE.exec(repo)
-    if (match) return match[1]
+
+    const githubMatch = GITHUB_RE.exec(repo)
+    if (githubMatch) return { platform: 'github', username: githubMatch[1] }
+
+    if (!gitlabFallback) {
+      const gitlabMatch = GITLAB_RE.exec(repo)
+      if (gitlabMatch) { gitlabFallback = { platform: 'gitlab', username: gitlabMatch[1] } }
+    }
   }
+
+  return gitlabFallback
+}
+
+const getGitLabAvatarUrl = async ({ got, username }) => {
+  const { body } = await got(
+    `${GITLAB_API_URL}/users?username=${encodeURIComponent(username)}`,
+    { responseType: 'json' }
+  )
+  return body?.[0]?.avatar_url
 }
 
 module.exports = ({ constants, got }) =>
@@ -31,8 +51,12 @@ module.exports = ({ constants, got }) =>
       o => o.package?.publisher?.username === username
     )
 
-    const githubUsername = getGitHubUsername(objects)
-    if (!githubUsername) return
+    const match = getRepoUsername(objects)
+    if (!match) return
 
-    return getGitHubAvatarUrl({ constants, input: githubUsername })
+    if (match.platform === 'github') {
+      return getGitHubAvatarUrl({ constants, input: match.username })
+    }
+
+    return getGitLabAvatarUrl({ got, username: match.username })
   }
