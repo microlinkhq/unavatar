@@ -121,7 +121,7 @@
   "dependencies": {
     "@keyvhq/compress": "~2.2.0",
     "@keyvhq/core": "~2.1.15",
-    "@keyvhq/memoize": "~2.1.16",
+    "@keyvhq/memoize": "~2.2.1",
     "@keyvhq/multi": "~2.1.15",
     "@keyvhq/offline": "~2.2.0",
     "@keyvhq/redis": "~2.1.17",
