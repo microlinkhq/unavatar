@@ -172,6 +172,10 @@ Anonymous requests work without authentication. They are limited to 25 requests/
 
 For [PRO](https://unavatar.io/checkout) users, the requests must include the API key as the `x-api-key` request header:
 
+```html
+![](https://unavatar.io/github/kikobeats)
+```
+
 ```bash
 curl "https://unavatar.io/github/kikobeats" -H "x-api-key: YOUR_API_KEY"
 ```
@@ -277,6 +281,10 @@ x-rate-limit-reset: 1744243200
 Secret keys (`sk_`) are meant for server-side use only — never expose them publicly. They provide full access to all API operations: avatar lookups, key management, usage data, and billing.
 
 Pass them via the `x-api-key` header:
+
+```html
+![](https://unavatar.io/github/kikobeats)
+```
 
 ```bash
 curl "https://unavatar.io/github/kikobeats" -H "x-api-key: sk_YOUR_SECRET_KEY"
