@@ -4,7 +4,7 @@
 #
 
 app = 'enrich-unavatar'
-primary_region = 'bom'
+primary_region = 'dfw'
 kill_signal = 'SIGTERM'
 kill_timeout = '5s'
 
