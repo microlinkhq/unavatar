@@ -10,6 +10,13 @@ kill_timeout = '5s'
 
 [build]
 
+# Override unavatar's built-in per-IP rate limiter (src/constant.js defaults:
+# RATE_LIMIT=50 / RATE_LIMIT_WINDOW=86400s). Lifted high so a first-load of a big
+# client list from a single Vercel egress IP doesn't hit the 429 cliff.
+[env]
+  RATE_LIMIT = "100000000"
+  RATE_LIMIT_WINDOW = "86400"
+
 [http_service]
   internal_port = 3000
   force_https = true
