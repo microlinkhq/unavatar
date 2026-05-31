@@ -1,10 +1,10 @@
-app = "unavatar"
+app = "enrich-unavatar"
 kill_signal = "SIGTERM"
 kill_timeout = 5
 
 [http_service]
   internal_port = 3000
-  force_https = false
+  force_https = true
   auto_stop_machines = "stop"
   auto_start_machines = true
   min_machines_running = 0
@@ -18,6 +18,11 @@ kill_timeout = 5
   policy = "on-failure"
   max_retries = 5
 
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1
+
 ## some useful fly commands
 # fly status # to see how many machines are running
-# fly scale vm shared-cpu-2x --vm-memory=1024 # upgrade machines
+# fly scale vm shared-cpu-2x --vm-memory=1024 # upgrade machines
