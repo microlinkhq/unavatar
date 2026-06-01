@@ -64,6 +64,7 @@ router
       immutable: true,
       maxAge: '1y'
     }),
+    require('./private-gate'),
     require('./authentication'),
     isProduction && require('./ua'),
     (req, res, next) => {
