@@ -398,13 +398,13 @@ Unavatar pricing is simple: you can start on the anonymous free tier, then authe
 
 For higher usage, the **[PRO](https://unavatar.io/checkout)** plan is usage-based billing that includes the 50 free daily origin requests, metered overage, and custom TTL.
 
-Every request has a cost in tokens (**\$0.005 per token**) based on the proxy tier needed to resolve the avatar:
+Every request has a cost in tokens (**\$0.010 per token**) based on the proxy tier needed to resolve the avatar:
 
 | Proxy tier  | Tokens | Cost    |
 | ----------- | :----: | :-----: |
-| Origin      | 1      | \$0.005 |
-| Datacenter  | +2     | \$0.015 |
-| Residential | +4     | \$0.025 |
+| Origin      | 1      | \$0.010 |
+| Datacenter  | +2     | \$0.030 |
+| Residential | +4     | \$0.050 |
 
 The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
 
