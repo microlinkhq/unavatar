@@ -1,3 +1,8 @@
+## 3.32.22 (2026-06-02)
+
+### Bug Fixes
+
+* **x:** use intent URL for profile lookup ([#595](https://github.com/Kikobeats/unavatar/issues/595)) ([ad4e59c](https://github.com/Kikobeats/unavatar/commit/ad4e59c6c495484d52bcad9e530c66ede070cbe7)), closes [#594](https://github.com/Kikobeats/unavatar/issues/594)
 ## 3.32.21 (2026-06-01)
 ## 3.32.20 (2026-05-27)
 ## 3.32.19 (2026-05-26)
