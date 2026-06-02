@@ -18,7 +18,7 @@ const getAvatar = ($, getOgImage) =>
 module.exports = ({ createHtmlProvider, getOgImage }) =>
   createHtmlProvider({
     name: 'x',
-    url: input => `https://x.com/${input}`,
+    url: input => `https://x.com/intent/user?screen_name=${input}`,
     getter: $ => getAvatar($, getOgImage)
   })
 
