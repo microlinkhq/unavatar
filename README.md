@@ -61,6 +61,7 @@
   - [Spotify](#spotify)
   - [Stack Overflow](#stack-overflow)
   - [Steam](#steam)
+  - [Strava](#strava)
   - [Substack](#substack)
   - [Telegram](#telegram)
   - [Thingiverse](#thingiverse)
@@ -900,6 +901,12 @@ Available inputs:
 - `id` (default): [unavatar.io/steam/id:gabelogannewell](https://unavatar.io/steam/id:gabelogannewell)
 - `profile`: [unavatar.io/steam/profile:76561198044605749](https://unavatar.io/steam/profile:76561198044605749)
 - `group`: [unavatar.io/steam/group:murcia-gaming](https://unavatar.io/steam/group:murcia-gaming)
+
+### Strava
+
+Get any Strava athlete's profile picture by their username or athlete ID.
+
+e.g., [unavatar.io/strava/kikobeats](https://unavatar.io/strava/kikobeats)
 
 ### Substack
 
