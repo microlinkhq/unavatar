@@ -51,6 +51,7 @@
   - [Patreon](#patreon)
   - [Pinterest](#pinterest)
   - [Printables](#printables)
+  - [Primal](#primal)
   - [Product Hunt](#product-hunt)
   - [PSN Profiles](#psn-profiles)
   - [Reddit](#reddit)
@@ -808,6 +809,12 @@ e.g., [unavatar.io/pinterest/ohjoy](https://unavatar.io/pinterest/ohjoy)
 Get any Printables user's profile picture by their username.
 
 e.g., [unavatar.io/printables/DukeDoks](https://unavatar.io/printables/DukeDoks)
+
+### Primal
+
+Get any Primal user's profile picture by their username.
+
+e.g., [unavatar.io/primal/jack](https://unavatar.io/primal/jack)
 
 ### Product Hunt
 
