@@ -55,6 +55,7 @@
   - [Primal](#primal)
   - [Product Hunt](#product-hunt)
   - [PSN Profiles](#psn-profiles)
+  - [Raycast](#raycast)
   - [Reddit](#reddit)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
@@ -842,6 +843,12 @@ Available inputs:
 Get any PlayStation Network user's profile picture by their PSN username.
 
 e.g., [unavatar.io/psnprofiles/Duff85](https://unavatar.io/psnprofiles/Duff85)
+
+### Raycast
+
+Get any Raycast user's profile picture by their username.
+
+e.g., [unavatar.io/raycast/kikobeats](https://unavatar.io/raycast/kikobeats)
 
 ### Reddit
 
