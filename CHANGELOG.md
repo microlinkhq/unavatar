@@ -1,3 +1,8 @@
+## 3.35.0 (2026-06-07)
+
+### Features
+
+* add cursor support ([#598](https://github.com/Kikobeats/unavatar/issues/598)) ([c1096a2](https://github.com/Kikobeats/unavatar/commit/c1096a226d4d155369ec83b2a428208dbc76ef2a))
 ## 3.34.0 (2026-06-07)
 
 ### Features
