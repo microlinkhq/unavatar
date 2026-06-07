@@ -7,11 +7,14 @@ const getAvatar = $ => {
   const displayName = $('h1').first().text().trim()
   if (!displayName) return
 
-  const value =
-    $(`img[alt="${displayName}"]`).attr('src') ||
-    $(`img[alt="${displayName}"]`).attr('srcset')
-  const match = value?.match(/[?&]url=([^&\s]+)/)
-  return match ? decodeURIComponent(match[1]) : undefined
+  const src = $('img')
+    .filter((_, el) => $(el).attr('alt') === displayName)
+    .first()
+    .attr('src')
+  if (!src) return
+
+  const url = new URL(src, 'https://cursor.com')
+  return url.searchParams.get('url') ?? src
 }
 
 module.exports = ({ createHtmlProvider }) =>
