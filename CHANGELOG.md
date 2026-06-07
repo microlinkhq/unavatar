@@ -1,3 +1,8 @@
+## 3.33.0 (2026-06-07)
+
+### Features
+
+* add primal provider ([#596](https://github.com/Kikobeats/unavatar/issues/596)) ([856fd9c](https://github.com/Kikobeats/unavatar/commit/856fd9cc5e50ea5958d757d00b5f88e28ca9855a))
 ## 3.32.22 (2026-06-02)
 
 ### Bug Fixes
