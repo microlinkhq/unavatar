@@ -1,3 +1,8 @@
+## 3.37.0 (2026-06-07)
+
+### Features
+
+* add raycast support ([#600](https://github.com/Kikobeats/unavatar/issues/600)) ([7753ed1](https://github.com/Kikobeats/unavatar/commit/7753ed1fef90b48f9f4e493083e0980deae23e68))
 ## 3.36.0 (2026-06-07)
 
 ### Features
