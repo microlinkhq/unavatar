@@ -1,3 +1,8 @@
+## 3.34.0 (2026-06-07)
+
+### Features
+
+* add hevy support ([#597](https://github.com/Kikobeats/unavatar/issues/597)) ([73ab902](https://github.com/Kikobeats/unavatar/commit/73ab9021cb37c301dba6fa0f8cb66201f408a77e))
 ## 3.33.0 (2026-06-07)
 
 ### Features
