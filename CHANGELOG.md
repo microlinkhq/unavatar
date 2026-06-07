@@ -1,3 +1,8 @@
+## 3.36.0 (2026-06-07)
+
+### Features
+
+* add strava support ([#599](https://github.com/Kikobeats/unavatar/issues/599)) ([8587b5a](https://github.com/Kikobeats/unavatar/commit/8587b5a80782028528636296899ebf0d8ab9ae7d))
 ## 3.35.0 (2026-06-07)
 
 ### Features
