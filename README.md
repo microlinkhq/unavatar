@@ -24,6 +24,7 @@
   - [Buy Me a Coffee](#buy-me-a-coffee)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
+  - [Cursor](#cursor)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
@@ -584,6 +585,12 @@ e.g., [unavatar.io/codepen/chriscoyier](https://unavatar.io/codepen/chriscoyier)
 Get any Cults3D creator's profile picture by username.
 
 e.g., [unavatar.io/cults3d/RaBros](https://unavatar.io/cults3d/RaBros)
+
+### Cursor
+
+Get any Cursor user's profile picture by their username.
+
+e.g., [unavatar.io/cursor/eric](https://unavatar.io/cursor/eric)
 
 ### DeviantArt
 
