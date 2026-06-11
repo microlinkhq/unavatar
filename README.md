@@ -65,6 +65,7 @@
   - [Telegram](#telegram)
   - [Thingiverse](#thingiverse)
   - [Threads](#threads)
+  - [TIDAL](#tidal)
   - [TikTok](#tiktok)
   - [Tumblr](#tumblr)
   - [Twitch](#twitch)
@@ -924,6 +925,22 @@ e.g., [unavatar.io/thingiverse/vitaminrad](https://unavatar.io/thingiverse/vitam
 Get any Threads user's profile picture by their username.
 
 e.g., [unavatar.io/threads/zuck](https://unavatar.io/threads/zuck)
+
+### TIDAL
+
+Get artwork for any TIDAL entity — artists, albums, playlists, tracks, or videos. Look up by TIDAL ID.
+
+By default the input is treated as an artist:
+
+e.g., [unavatar.io/tidal/1566](https://unavatar.io/tidal/1566)
+
+The input also supports a URI format `type:id`:
+
+- `artist` (default): [unavatar.io/tidal/artist:1566](https://unavatar.io/tidal/artist:1566)
+- `album`: [unavatar.io/tidal/album:1765857](https://unavatar.io/tidal/album:1765857)
+- `playlist`: [unavatar.io/tidal/playlist:c3c18106-c4f5-4021-bb18-108255c1f450](https://unavatar.io/tidal/playlist:c3c18106-c4f5-4021-bb18-108255c1f450)
+- `track`: [unavatar.io/tidal/track:113655761](https://unavatar.io/tidal/track:113655761)
+- `video`: [unavatar.io/tidal/video:45323542](https://unavatar.io/tidal/video:45323542)
 
 ### TikTok
 
