@@ -1,3 +1,8 @@
+## 3.39.0 (2026-06-11)
+
+### Features
+
+* add paypal provider ([#606](https://github.com/Kikobeats/unavatar/issues/606)) ([b4ba02d](https://github.com/Kikobeats/unavatar/commit/b4ba02d345991de0dae3c8bd8adc1d7b7ce949f4))
 ## 3.38.0 (2026-06-11)
 
 ### Features
