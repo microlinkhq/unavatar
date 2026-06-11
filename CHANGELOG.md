@@ -1,3 +1,8 @@
+## 3.43.0 (2026-06-11)
+
+### Features
+
+* add tidal provider ([#610](https://github.com/Kikobeats/unavatar/issues/610)) ([9c7819c](https://github.com/Kikobeats/unavatar/commit/9c7819c51816ba472959e34835bff5083187d34e))
 ## 3.42.1 (2026-06-11)
 ## 3.42.0 (2026-06-11)
 
