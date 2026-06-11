@@ -1,3 +1,8 @@
+## 3.42.0 (2026-06-11)
+
+### Features
+
+* add cashapp provider ([#608](https://github.com/Kikobeats/unavatar/issues/608)) ([bc07059](https://github.com/Kikobeats/unavatar/commit/bc07059c92261f6fb24a8122cf5846b795b37723))
 ## 3.41.0 (2026-06-11)
 
 ### Features
