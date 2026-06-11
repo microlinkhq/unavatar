@@ -24,7 +24,6 @@
   - [Buy Me a Coffee](#buy-me-a-coffee)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
-  - [Cursor](#cursor)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
@@ -52,17 +51,14 @@
   - [Patreon](#patreon)
   - [Pinterest](#pinterest)
   - [Printables](#printables)
-  - [Primal](#primal)
   - [Product Hunt](#product-hunt)
   - [PSN Profiles](#psn-profiles)
-  - [Raycast](#raycast)
   - [Reddit](#reddit)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
   - [Stack Overflow](#stack-overflow)
   - [Steam](#steam)
-  - [Strava](#strava)
   - [Substack](#substack)
   - [Telegram](#telegram)
   - [Thingiverse](#thingiverse)
@@ -92,7 +88,7 @@ Welcome to **unavatar.io**, the ultimate avatar service that offers everything y
 
 - **Versatile**: A wide range of platforms and services including [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), etc., meaning you can rule all of them just querying against unavatar.
 
-- **Speed**: Designed to be fast and efficient with a 91% cache hit rate, serving 12.5 TB of data across 382M requests.
+- **Speed**: Designed to be fast and efficient with a 92% cache hit rate, serving 9.59 TB of data across 258.5M requests.
 
 - **Optimize**: All the images are not only compressed on-the-fly to reduce their size and save bandwidth, but also optimized to maintain a high-quality ratio. They are ready for immediate use, enhancing the overall optimization of your website or application.
 
@@ -588,12 +584,6 @@ Get any Cults3D creator's profile picture by username.
 
 e.g., [unavatar.io/cults3d/RaBros](https://unavatar.io/cults3d/RaBros)
 
-### Cursor
-
-Get any Cursor user's profile picture by their username.
-
-e.g., [unavatar.io/cursor/eric](https://unavatar.io/cursor/eric)
-
 ### DeviantArt
 
 Get any DeviantArt user's profile picture by their username.
@@ -663,7 +653,6 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/facebook/zuck](https://unavatar.io/facebook/zuck)
 - Page, e.g., [unavatar.io/facebook/windtodayco](https://unavatar.io/facebook/windtodayco)
-- Group ID, e.g., [unavatar.io/facebook/1426378481098002](https://unavatar.io/facebook/1426378481098002)
 
 ### Flickr
 
@@ -819,12 +808,6 @@ Get any Printables user's profile picture by their username.
 
 e.g., [unavatar.io/printables/DukeDoks](https://unavatar.io/printables/DukeDoks)
 
-### Primal
-
-Get any Primal user's profile picture by their username.
-
-e.g., [unavatar.io/primal/jack](https://unavatar.io/primal/jack)
-
 ### Product Hunt
 
 Get profile pictures for Product Hunt users or logos for Product Hunt products.
@@ -843,12 +826,6 @@ Available inputs:
 Get any PlayStation Network user's profile picture by their PSN username.
 
 e.g., [unavatar.io/psnprofiles/Duff85](https://unavatar.io/psnprofiles/Duff85)
-
-### Raycast
-
-Get any Raycast user's profile picture by their username.
-
-e.g., [unavatar.io/raycast/kikobeats](https://unavatar.io/raycast/kikobeats)
 
 ### Reddit
 
@@ -908,12 +885,6 @@ Available inputs:
 - `id` (default): [unavatar.io/steam/id:gabelogannewell](https://unavatar.io/steam/id:gabelogannewell)
 - `profile`: [unavatar.io/steam/profile:76561198044605749](https://unavatar.io/steam/profile:76561198044605749)
 - `group`: [unavatar.io/steam/group:murcia-gaming](https://unavatar.io/steam/group:murcia-gaming)
-
-### Strava
-
-Get any Strava athlete's profile picture by their username or athlete ID.
-
-e.g., [unavatar.io/strava/kikobeats](https://unavatar.io/strava/kikobeats)
 
 ### Substack
 
