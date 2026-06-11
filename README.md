@@ -54,6 +54,7 @@
   - [Product Hunt](#product-hunt)
   - [PSN Profiles](#psn-profiles)
   - [Reddit](#reddit)
+  - [Revolut](#revolut)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -835,6 +836,12 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/reddit/thisisbillgates](https://unavatar.io/reddit/thisisbillgates)
 - Organization, e.g., [unavatar.io/reddit/nasa](https://unavatar.io/reddit/nasa)
+
+### Revolut
+
+Get any Revolut user's profile picture by their Revolut.Me username.
+
+e.g., [unavatar.io/revolut/midudev](https://unavatar.io/revolut/midudev)
 
 ### Snapchat
 

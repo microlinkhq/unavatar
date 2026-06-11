@@ -12,6 +12,7 @@ const google = require('../../../src/providers/google')({})
 const gravatar = require('../../../src/providers/gravatar')({
   constants: { AVATAR_SIZE }
 })
+const revolut = require('../../../src/providers/revolut')({})
 
 test('duckduckgo builds favicon URL', t => {
   t.is(
@@ -37,10 +38,18 @@ test('google builds favicon URL with fixed size', t => {
   )
 })
 
+test('revolut builds web-profile picture URL', t => {
+  t.is(revolut('midudev'), 'https://revolut.me/api/web-profile/midudev/picture')
+})
+
 test('gravatar normalizes email and hashes it', t => {
   const url = gravatar('  SindreSorhus@gmail.com ')
   t.true(url.startsWith('https://gravatar.com/avatar/'))
   t.true(url.includes(`size=${AVATAR_SIZE}`))
   t.true(url.includes('d=404'))
-  t.true(url.includes('295dee0d3dbb93aac67e72ae4af40f728f050e5fd18417ad60d1ed19186ae03b'))
+  t.true(
+    url.includes(
+      '295dee0d3dbb93aac67e72ae4af40f728f050e5fd18417ad60d1ed19186ae03b'
+    )
+  )
 })
