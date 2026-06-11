@@ -22,9 +22,9 @@
   - [Behance](#behance)
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
-  - [Cash App](#cash-app)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
+  - [Cursor](#cursor)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
@@ -39,6 +39,7 @@
   - [Google](#google)
   - [Google Play](#google-play)
   - [Gravatar](#gravatar)
+  - [Hevy](#hevy)
   - [Hugging Face](#hugging-face)
   - [Instagram](#instagram)
   - [Ko-fi](#ko-fi)
@@ -50,18 +51,19 @@
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
   - [Patreon](#patreon)
-  - [PayPal](#paypal)
   - [Pinterest](#pinterest)
+  - [Primal](#primal)
   - [Printables](#printables)
   - [Product Hunt](#product-hunt)
   - [PSN Profiles](#psn-profiles)
+  - [Raycast](#raycast)
   - [Reddit](#reddit)
-  - [Revolut](#revolut)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
   - [Stack Overflow](#stack-overflow)
   - [Steam](#steam)
+  - [Strava](#strava)
   - [Substack](#substack)
   - [Telegram](#telegram)
   - [Thingiverse](#thingiverse)
@@ -69,10 +71,8 @@
   - [TikTok](#tiktok)
   - [Tumblr](#tumblr)
   - [Twitch](#twitch)
-  - [Venmo](#venmo)
   - [Vimeo](#vimeo)
   - [WhatsApp](#whatsapp)
-  - [Wise](#wise)
   - [X/Twitter](#xtwitter)
   - [Xbox Gamertag](#xbox-gamertag)
   - [YouTube](#youtube)
@@ -577,12 +577,6 @@ Get any Buy Me a Coffee creator's profile picture by their username.
 
 e.g., [unavatar.io/buymeacoffee/mikebarnesdrums](https://unavatar.io/buymeacoffee/mikebarnesdrums)
 
-### Cash App
-
-Get any Cash App user's profile picture by their $cashtag.
-
-e.g., [unavatar.io/cashapp/ninja](https://unavatar.io/cashapp/ninja)
-
 ### CodePen
 
 Get any CodePen user's profile picture by their username.
@@ -594,6 +588,12 @@ e.g., [unavatar.io/codepen/chriscoyier](https://unavatar.io/codepen/chriscoyier)
 Get any Cults3D creator's profile picture by username.
 
 e.g., [unavatar.io/cults3d/RaBros](https://unavatar.io/cults3d/RaBros)
+
+### Cursor
+
+Get any Cursor user's profile picture by their username.
+
+e.g., [unavatar.io/cursor/leerob](https://unavatar.io/cursor/leerob)
 
 ### DeviantArt
 
@@ -730,6 +730,12 @@ When you pass an email address directly in the URL, it is visible in plain text 
 
 To avoid this, pass a pre-computed `MD5` or `SHA256` hash of the email instead. Unavatar detects the hash automatically and routes it to Gravatar, which natively supports both hash formats.
 
+### Hevy
+
+Get any Hevy user's profile picture by their username.
+
+e.g., [unavatar.io/hevy/om_giigo](https://unavatar.io/hevy/om_giigo)
+
 ### Hugging Face
 
 Get profile pictures for Hugging Face users or organizations by their handle.
@@ -807,17 +813,17 @@ Get any Patreon creator's profile picture by their username.
 
 e.g., [unavatar.io/patreon/gametestro](https://unavatar.io/patreon/gametestro)
 
-### PayPal
-
-Get any PayPal user's profile picture by their PayPal.Me username.
-
-e.g., [unavatar.io/paypal/kikobeats](https://unavatar.io/paypal/kikobeats)
-
 ### Pinterest
 
 Get any Pinterest user's profile picture by their username.
 
 e.g., [unavatar.io/pinterest/ohjoy](https://unavatar.io/pinterest/ohjoy)
+
+### Primal
+
+Get any Primal user's profile picture by their username.
+
+e.g., [unavatar.io/primal/jack](https://unavatar.io/primal/jack)
 
 ### Printables
 
@@ -844,6 +850,12 @@ Get any PlayStation Network user's profile picture by their PSN username.
 
 e.g., [unavatar.io/psnprofiles/Duff85](https://unavatar.io/psnprofiles/Duff85)
 
+### Raycast
+
+Get any Raycast user's profile picture by their username.
+
+e.g., [unavatar.io/raycast/peduarte](https://unavatar.io/raycast/peduarte)
+
 ### Reddit
 
 Get any Reddit user's avatar by their username.
@@ -852,12 +864,6 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/reddit/thisisbillgates](https://unavatar.io/reddit/thisisbillgates)
 - Organization, e.g., [unavatar.io/reddit/nasa](https://unavatar.io/reddit/nasa)
-
-### Revolut
-
-Get any Revolut user's profile picture by their Revolut.Me username.
-
-e.g., [unavatar.io/revolut/midudev](https://unavatar.io/revolut/midudev)
 
 ### Snapchat
 
@@ -909,6 +915,12 @@ Available inputs:
 - `profile`: [unavatar.io/steam/profile:76561198044605749](https://unavatar.io/steam/profile:76561198044605749)
 - `group`: [unavatar.io/steam/group:murcia-gaming](https://unavatar.io/steam/group:murcia-gaming)
 
+### Strava
+
+Get any Strava athlete's profile picture by their username or athlete ID.
+
+e.g., [unavatar.io/strava/kikobeats](https://unavatar.io/strava/kikobeats)
+
 ### Substack
 
 Get any Substack author's profile picture by their publication username.
@@ -951,12 +963,6 @@ Get any Twitch streamer's profile picture by their username.
 
 e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
 
-### Venmo
-
-Get any Venmo user's profile picture by their username.
-
-e.g., [unavatar.io/venmo/Jessica-Lee-77](https://unavatar.io/venmo/Jessica-Lee-77)
-
 ### Vimeo
 
 Get any Vimeo user's profile picture by their username.
@@ -976,12 +982,6 @@ Available inputs:
 - `phone`: [unavatar.io/whatsapp/phone:34660021551](https://unavatar.io/whatsapp/phone:34660021551)
 - `channel`: [unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m](https://unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m)
 - `chat`: [unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz](https://unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz)
-
-### Wise
-
-Get any Wise user's profile picture by their Wisetag.
-
-e.g., [unavatar.io/wise/josev2264](https://unavatar.io/wise/josev2264)
 
 ### X/Twitter
 
