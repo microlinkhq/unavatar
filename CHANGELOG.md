@@ -1,3 +1,8 @@
+## 3.38.0 (2026-06-11)
+
+### Features
+
+* add revolut provider ([#605](https://github.com/Kikobeats/unavatar/issues/605)) ([b059039](https://github.com/Kikobeats/unavatar/commit/b059039913f056ad21dd030ef0cdaa7f53ddf8a9))
 ## 3.37.1 (2026-06-11)
 ## 3.37.0 (2026-06-07)
 
