@@ -70,6 +70,7 @@
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
   - [WhatsApp](#whatsapp)
+  - [Wise](#wise)
   - [X/Twitter](#xtwitter)
   - [Xbox Gamertag](#xbox-gamertag)
   - [YouTube](#youtube)
@@ -961,6 +962,12 @@ Available inputs:
 - `phone`: [unavatar.io/whatsapp/phone:34660021551](https://unavatar.io/whatsapp/phone:34660021551)
 - `channel`: [unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m](https://unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m)
 - `chat`: [unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz](https://unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz)
+
+### Wise
+
+Get any Wise user's profile picture by their Wisetag.
+
+e.g., [unavatar.io/wise/josev2264](https://unavatar.io/wise/josev2264)
 
 ### X/Twitter
 

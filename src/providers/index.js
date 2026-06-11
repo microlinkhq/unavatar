@@ -54,6 +54,7 @@ const providersBy = {
     'tumblr',
     'twitch',
     'vimeo',
+    'wise',
     'x',
     'xboxgamertag',
     'youtube'
@@ -119,6 +120,7 @@ module.exports = ctx => {
     twitch: require('./twitch')(ctx),
     vimeo: require('./vimeo')(ctx),
     whatsapp: require('./whatsapp')(ctx),
+    wise: require('./wise')(ctx),
     x: require('./x')(ctx),
     xboxgamertag: require('./xboxgamertag')(ctx),
     youtube: require('./youtube')(ctx)
