@@ -49,6 +49,7 @@
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
   - [Patreon](#patreon)
+  - [PayPal](#paypal)
   - [Pinterest](#pinterest)
   - [Printables](#printables)
   - [Product Hunt](#product-hunt)
@@ -796,6 +797,12 @@ Available inputs:
 Get any Patreon creator's profile picture by their username.
 
 e.g., [unavatar.io/patreon/gametestro](https://unavatar.io/patreon/gametestro)
+
+### PayPal
+
+Get any PayPal user's profile picture by their PayPal.Me username.
+
+e.g., [unavatar.io/paypal/kikobeats](https://unavatar.io/paypal/kikobeats)
 
 ### Pinterest
 
