@@ -68,6 +68,7 @@
   - [TikTok](#tiktok)
   - [Tumblr](#tumblr)
   - [Twitch](#twitch)
+  - [Venmo](#venmo)
   - [Vimeo](#vimeo)
   - [WhatsApp](#whatsapp)
   - [Wise](#wise)
@@ -942,6 +943,12 @@ e.g., [unavatar.io/tumblr/nasa](https://unavatar.io/tumblr/nasa)
 Get any Twitch streamer's profile picture by their username.
 
 e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
+
+### Venmo
+
+Get any Venmo user's profile picture by their username.
+
+e.g., [unavatar.io/venmo/Jessica-Lee-77](https://unavatar.io/venmo/Jessica-Lee-77)
 
 ### Vimeo
 
