@@ -1,3 +1,8 @@
+## 3.41.0 (2026-06-11)
+
+### Features
+
+* add venmo provider ([#609](https://github.com/Kikobeats/unavatar/issues/609)) ([ff15170](https://github.com/Kikobeats/unavatar/commit/ff151708ecb6f2b651320e3ec0b40bfbcb4a9bd5))
 ## 3.40.0 (2026-06-11)
 
 ### Features
