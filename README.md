@@ -22,6 +22,7 @@
   - [Behance](#behance)
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
+  - [Cash App](#cash-app)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
   - [DeviantArt](#deviantart)
@@ -574,6 +575,12 @@ Available inputs:
 Get any Buy Me a Coffee creator's profile picture by their username.
 
 e.g., [unavatar.io/buymeacoffee/mikebarnesdrums](https://unavatar.io/buymeacoffee/mikebarnesdrums)
+
+### Cash App
+
+Get any Cash App user's profile picture by their $cashtag.
+
+e.g., [unavatar.io/cashapp/ninja](https://unavatar.io/cashapp/ninja)
 
 ### CodePen
 
