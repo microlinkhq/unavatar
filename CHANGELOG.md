@@ -1,3 +1,8 @@
+## 3.40.0 (2026-06-11)
+
+### Features
+
+* add wise provider ([#607](https://github.com/Kikobeats/unavatar/issues/607)) ([3fd5f41](https://github.com/Kikobeats/unavatar/commit/3fd5f413d59712fa6ddf5ff2ef8e81a7a2a96516))
 ## 3.39.0 (2026-06-11)
 
 ### Features
