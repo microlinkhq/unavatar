@@ -1,3 +1,8 @@
+## 3.44.0 (2026-06-12)
+
+### Features
+
+* add deezer provider ([#611](https://github.com/Kikobeats/unavatar/issues/611)) ([b358a4e](https://github.com/Kikobeats/unavatar/commit/b358a4e08b303932de08fe110a11777b475ecfce))
 ## 3.43.0 (2026-06-11)
 
 ### Features
