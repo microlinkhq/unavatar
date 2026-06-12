@@ -1,3 +1,8 @@
+## 3.45.0 (2026-06-12)
+
+### Features
+
+* add chinese providers ([#612](https://github.com/Kikobeats/unavatar/issues/612)) ([6f0169b](https://github.com/Kikobeats/unavatar/commit/6f0169b14d845251e52247dd71a7a64561a2f722)), closes [#587](https://github.com/Kikobeats/unavatar/issues/587)
 ## 3.44.0 (2026-06-12)
 
 ### Features
