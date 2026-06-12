@@ -154,7 +154,16 @@ module.exports = ({ baseUrl }) => {
     })
     .then(({ buffer, imageUrl }) => {
       console.error()
-      console.error(termImg(buffer, { width: '15%' }))
+      try {
+        console.error(
+          termImg(buffer, {
+            width: '15%',
+            fallback: () => imageUrl
+          })
+        )
+      } catch (_) {
+        console.error(`Avatar preview unavailable. URL: ${imageUrl}`)
+      }
 
       console.error(`
  input: ${apiUrl.toString()}

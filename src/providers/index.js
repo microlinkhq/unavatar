@@ -44,6 +44,7 @@ const providersBy = {
     'primal',
     'producthunt',
     'psnprofiles',
+    'qq',
     'raycast',
     'reddit',
     'revolut',
@@ -65,13 +66,14 @@ const providersBy = {
     'venmo',
     'vimeo',
     'weibo',
+    'whatsapp',
     'wise',
     'x',
     'xboxgamertag',
     'youtube',
     'zhihu'
   ],
-  domain: ['microlink']
+  domain: ['duckduckgo', 'google', 'microlink']
 }
 
 module.exports = ctx => {
