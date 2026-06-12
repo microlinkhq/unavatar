@@ -1,3 +1,8 @@
+## 3.45.2 (2026-06-12)
+
+### Bug Fixes
+
+* **cli:** render url as fallaback ([#613](https://github.com/Kikobeats/unavatar/issues/613)) ([58afa8e](https://github.com/Kikobeats/unavatar/commit/58afa8e65aa447d9505c98ad146db0111ed4e9e1))
 ## 3.45.1 (2026-06-12)
 ## 3.45.0 (2026-06-12)
 
