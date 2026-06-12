@@ -1,3 +1,8 @@
+## 3.45.4 (2026-06-12)
+
+### Bug Fixes
+
+* **dribbble:** use desktop browser user agent ([#615](https://github.com/Kikobeats/unavatar/issues/615)) ([df37683](https://github.com/Kikobeats/unavatar/commit/df3768317f078520e6260abd7f9d49fda15225bb))
 ## 3.45.3 (2026-06-12)
 ## 3.45.2 (2026-06-12)
 
