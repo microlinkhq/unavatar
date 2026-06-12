@@ -19,7 +19,9 @@
 - [Providers](#providers)
   - [Apple Music](#apple-music)
   - [Apple Store](#apple-store)
+  - [Baidu Tieba](#baidu-tieba)
   - [Behance](#behance)
+  - [Bilibili](#bilibili)
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
   - [CodePen](#codepen)
@@ -30,11 +32,13 @@
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
   - [Domain](#domain)
+  - [Douban](#douban)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
   - [Email](#email)
   - [Facebook](#facebook)
   - [Flickr](#flickr)
+  - [Gitee](#gitee)
   - [GitHub](#github)
   - [GitLab](#gitlab)
   - [Google](#google)
@@ -43,11 +47,13 @@
   - [Hevy](#hevy)
   - [Hugging Face](#hugging-face)
   - [Instagram](#instagram)
+  - [Juejin](#juejin)
   - [Ko-fi](#ko-fi)
   - [LinkedIn](#linkedin)
   - [Mastodon](#mastodon)
   - [Medium](#medium)
   - [Microlink](#microlink)
+  - [NetEase Music](#netease-music)
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
@@ -57,6 +63,7 @@
   - [Printables](#printables)
   - [Product Hunt](#product-hunt)
   - [PSN Profiles](#psn-profiles)
+  - [QQ](#qq)
   - [Raycast](#raycast)
   - [Reddit](#reddit)
   - [Snapchat](#snapchat)
@@ -74,10 +81,12 @@
   - [Tumblr](#tumblr)
   - [Twitch](#twitch)
   - [Vimeo](#vimeo)
+  - [Weibo](#weibo)
   - [WhatsApp](#whatsapp)
   - [X/Twitter](#xtwitter)
   - [Xbox Gamertag](#xbox-gamertag)
   - [YouTube](#youtube)
+  - [Zhihu](#zhihu)
 - [Response Format](#response-format)
 - [Response Headers](#response-headers)
 - [Response Errors](#response-errors)
@@ -558,11 +567,23 @@ Available inputs:
 - `id` (default): [unavatar.io/apple-store/id:529479190](https://unavatar.io/apple-store/id:529479190) or [unavatar.io/apple-store/id:6474323148@es](https://unavatar.io/apple-store/id:6474323148@es)
 - `name`: [unavatar.io/apple-store/name:pokemon%20go](https://unavatar.io/apple-store/name:pokemon%20go)
 
+### Baidu Tieba
+
+Get any Baidu Tieba user's profile picture by their username.
+
+e.g., [unavatar.io/tieba/Mojang](https://unavatar.io/tieba/Mojang)
+
 ### Behance
 
 Get any Behance user's profile picture by their username.
 
 e.g., [unavatar.io/behance/vitormatosinhos](https://unavatar.io/behance/vitormatosinhos)
+
+### Bilibili
+
+Get any Bilibili user's profile picture by their numeric uid.
+
+e.g., [unavatar.io/bilibili/2](https://unavatar.io/bilibili/2)
 
 ### Bluesky
 
@@ -639,6 +660,12 @@ Retrieve logos and favicons from any hostname with a single URL. Domain-shaped p
 
 e.g., [unavatar.io/domain/microlink.io](https://unavatar.io/domain/microlink.io)
 
+### Douban
+
+Get any Douban user's profile picture by their username or numeric ID.
+
+e.g., [unavatar.io/douban/ahbei](https://unavatar.io/douban/ahbei)
+
 ### Dribbble
 
 Get any Dribbble designer's profile picture by their username.
@@ -694,6 +721,12 @@ Available inputs:
 
 - `user` (default): [unavatar.io/flickr/user:elizabethgadd](https://unavatar.io/flickr/user:elizabethgadd)
 - `group`: [unavatar.io/flickr/group:allthingsearthy](https://unavatar.io/flickr/group:allthingsearthy)
+
+### Gitee
+
+Get any Gitee user or organization's profile picture by their username.
+
+e.g., [unavatar.io/gitee/y_project](https://unavatar.io/gitee/y_project)
 
 ### GitHub
 
@@ -768,6 +801,12 @@ Get any Instagram user's profile picture by their username. No authentication or
 
 e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 
+### Juejin
+
+Get any Juejin user's profile picture by their numeric user ID.
+
+e.g., [unavatar.io/juejin/1556564194374926](https://unavatar.io/juejin/1556564194374926)
+
 ### Ko-fi
 
 Get any Ko-fi page's profile picture by the creator username.
@@ -802,6 +841,12 @@ e.g., [unavatar.io/medium/juancalmaraz](https://unavatar.io/medium/juancalmaraz)
 Extract the logo or representative image from any URL. The page is rendered and the best available image is selected — useful for getting brand logos from any website.
 
 e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
+
+### NetEase Music
+
+Get any NetEase Cloud Music user's profile picture by their numeric user ID.
+
+e.g., [unavatar.io/netease-music/32953014](https://unavatar.io/netease-music/32953014)
 
 ### npm
 
@@ -866,6 +911,14 @@ Available inputs:
 Get any PlayStation Network user's profile picture by their PSN username.
 
 e.g., [unavatar.io/psnprofiles/Duff85](https://unavatar.io/psnprofiles/Duff85)
+
+### QQ
+
+Get any QQ user's profile picture by their QQ number.
+
+e.g., [unavatar.io/qq/10001](https://unavatar.io/qq/10001)
+
+Note: unknown numbers resolve to QQ's default avatar, similar to Gravatar.
 
 ### Raycast
 
@@ -1002,6 +1055,12 @@ Get any Vimeo user's profile picture by their username.
 
 e.g., [unavatar.io/vimeo/ladieswithlenses](https://unavatar.io/vimeo/ladieswithlenses)
 
+### Weibo
+
+Get any Weibo user's profile picture by their numeric uid or nickname.
+
+e.g., [unavatar.io/weibo/2803301701](https://unavatar.io/weibo/2803301701)
+
 ### WhatsApp
 
 Get the profile picture for a WhatsApp channel or chat by ID.
@@ -1040,6 +1099,12 @@ Available inputs:
 
 - `username`: [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 - `channel`: [unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw](https://unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw)
+
+### Zhihu
+
+Get any Zhihu user's profile picture by their URL token (the handle in the profile URL).
+
+e.g., [unavatar.io/zhihu/kaifulee](https://unavatar.io/zhihu/kaifulee)
 
 ## Response Format
 
