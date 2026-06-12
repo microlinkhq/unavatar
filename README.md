@@ -25,6 +25,7 @@
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
   - [Cursor](#cursor)
+  - [Deezer](#deezer)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
@@ -595,6 +596,21 @@ e.g., [unavatar.io/cults3d/RaBros](https://unavatar.io/cults3d/RaBros)
 Get any Cursor user's profile picture by their username.
 
 e.g., [unavatar.io/cursor/leerob](https://unavatar.io/cursor/leerob)
+
+### Deezer
+
+Get artwork for any Deezer entity — artists, albums, playlists, or tracks. Look up by Deezer ID.
+
+By default the input is treated as an artist:
+
+e.g., [unavatar.io/deezer/27](https://unavatar.io/deezer/27)
+
+The input also supports a URI format `type:id`:
+
+- `artist` (default): [unavatar.io/deezer/artist:27](https://unavatar.io/deezer/artist:27)
+- `album`: [unavatar.io/deezer/album:302127](https://unavatar.io/deezer/album:302127)
+- `playlist`: [unavatar.io/deezer/playlist:908622995](https://unavatar.io/deezer/playlist:908622995)
+- `track`: [unavatar.io/deezer/track:3135556](https://unavatar.io/deezer/track:3135556)
 
 ### DeviantArt
 
