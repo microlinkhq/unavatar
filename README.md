@@ -20,20 +20,25 @@
   - [Apple Music](#apple-music)
   - [Apple Store](#apple-store)
   - [Behance](#behance)
+  - [Bilibili](#bilibili)
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
+  - [Cash App](#cash-app)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
   - [Cursor](#cursor)
+  - [Deezer](#deezer)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
   - [Domain](#domain)
+  - [Douban](#douban)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
   - [Email](#email)
   - [Facebook](#facebook)
   - [Flickr](#flickr)
+  - [Gitee](#gitee)
   - [GitHub](#github)
   - [GitLab](#gitlab)
   - [Google](#google)
@@ -42,22 +47,27 @@
   - [Hevy](#hevy)
   - [Hugging Face](#hugging-face)
   - [Instagram](#instagram)
+  - [Juejin](#juejin)
   - [Ko-fi](#ko-fi)
   - [LinkedIn](#linkedin)
   - [Mastodon](#mastodon)
   - [Medium](#medium)
   - [Microlink](#microlink)
+  - [NetEase Music](#netease-music)
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
   - [Patreon](#patreon)
+  - [PayPal](#paypal)
   - [Pinterest](#pinterest)
   - [Primal](#primal)
   - [Printables](#printables)
   - [Product Hunt](#product-hunt)
   - [PSN Profiles](#psn-profiles)
+  - [QQ](#qq)
   - [Raycast](#raycast)
   - [Reddit](#reddit)
+  - [Revolut](#revolut)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -68,14 +78,20 @@
   - [Telegram](#telegram)
   - [Thingiverse](#thingiverse)
   - [Threads](#threads)
+  - [Tidal](#tidal)
+  - [Tieba](#tieba)
   - [TikTok](#tiktok)
   - [Tumblr](#tumblr)
   - [Twitch](#twitch)
+  - [Venmo](#venmo)
   - [Vimeo](#vimeo)
+  - [Weibo](#weibo)
   - [WhatsApp](#whatsapp)
+  - [Wise](#wise)
   - [X/Twitter](#xtwitter)
   - [Xbox Gamertag](#xbox-gamertag)
   - [YouTube](#youtube)
+  - [Zhihu](#zhihu)
 - [Response Format](#response-format)
 - [Response Headers](#response-headers)
 - [Response Errors](#response-errors)
@@ -83,23 +99,27 @@
 
 ---
 
-Last updated on May 13, 2026
+Last updated on June 14, 2026
 
 ![logo](https://unavatar.io/api/og ":id=banner")
 
 ## Introduction
 
-Welcome to **unavatar.io**, the ultimate avatar service that offers everything you need to easily retrieve user avatars:
+**unavatar.io** retrieves anyone's avatar from a single URL — by username, email, or domain — across 73 platforms including [Instagram](https://unavatar.io/docs#instagram), [GitHub](https://unavatar.io/docs#github), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), and [Gravatar](https://unavatar.io/docs#gravatar). No API keys, no SDKs, free to start.
 
-- **Versatile**: A wide range of platforms and services including [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), etc., meaning you can rule all of them just querying against unavatar.
+Try it: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats) · [unavatar.io/x/josebaseba](https://unavatar.io/x/josebaseba) · [unavatar.io/domain/reddit.com](https://unavatar.io/domain/reddit.com)
 
-- **Speed**: Designed to be fast and efficient with a 92% cache hit rate, serving 9.59 TB of data across 258.5M requests.
+Everything you need to serve avatars at scale:
 
-- **Optimize**: All the images are not only compressed on-the-fly to reduce their size and save bandwidth, but also optimized to maintain a high-quality ratio. They are ready for immediate use, enhancing the overall optimization of your website or application.
+- **Versatile**: One endpoint rules 73 platforms and services — [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), and more — all queried the same way.
 
-- **Integration**: The service seamlessly incorporates into your current applications or websites with ease. We offer straightforward documentation and comprehensive support to ensure a quick and effortless onboarding experience.
+- **Battle-tested**: Already serving 9.59 TB of avatars across 258.5M requests, with a 92% cache hit rate.
 
-It's proudly powered by [microlink.io](https://microlink.io/), the headless browser API that handles all the heavy lifting behind the scenes to ensure your avatars are always ready.
+- **Optimized**: Every image is compressed and optimized on-the-fly — smaller payloads at high quality, ready to drop straight into your site or app.
+
+- **Integration**: Drops into any site or app with zero setup. Clear docs and full support make onboarding quick and painless.
+
+It's proudly powered by [microlink.io](https://microlink.io/), the headless browser API that handles all the heavy lifting behind the scenes to keep your avatars always ready.
 
 ## Quick start
 
@@ -562,6 +582,12 @@ Get any Behance user's profile picture by their username.
 
 e.g., [unavatar.io/behance/vitormatosinhos](https://unavatar.io/behance/vitormatosinhos)
 
+### Bilibili
+
+Get any Bilibili user's profile picture by their numeric member ID.
+
+e.g., [unavatar.io/bilibili/2](https://unavatar.io/bilibili/2)
+
 ### Bluesky
 
 Get any Bluesky user's profile picture by their handle. Domain-style handles are supported.
@@ -576,6 +602,12 @@ Available inputs:
 Get any Buy Me a Coffee creator's profile picture by their username.
 
 e.g., [unavatar.io/buymeacoffee/mikebarnesdrums](https://unavatar.io/buymeacoffee/mikebarnesdrums)
+
+### Cash App
+
+Get any Cash App user's profile picture by their Cashtag.
+
+e.g., [unavatar.io/cashapp/ninja](https://unavatar.io/cashapp/ninja)
 
 ### CodePen
 
@@ -594,6 +626,21 @@ e.g., [unavatar.io/cults3d/RaBros](https://unavatar.io/cults3d/RaBros)
 Get any Cursor user's profile picture by their username.
 
 e.g., [unavatar.io/cursor/leerob](https://unavatar.io/cursor/leerob)
+
+### Deezer
+
+Get artwork for any Deezer artist, album, playlist, or track by ID.
+
+The endpoint supports explicit type as part of the input.
+
+If explicit type is not provided, it defaults to `artist`.
+
+Available inputs:
+
+- `artist` (default): [unavatar.io/deezer/27](https://unavatar.io/deezer/27) or [unavatar.io/deezer/artist:27](https://unavatar.io/deezer/artist:27)
+- `album`: [unavatar.io/deezer/album:302127](https://unavatar.io/deezer/album:302127)
+- `playlist`: [unavatar.io/deezer/playlist:908622995](https://unavatar.io/deezer/playlist:908622995)
+- `track`: [unavatar.io/deezer/track:3135556](https://unavatar.io/deezer/track:3135556)
 
 ### DeviantArt
 
@@ -621,6 +668,12 @@ e.g., [unavatar.io/dockerhub/tensorflow](https://unavatar.io/dockerhub/tensorflo
 Retrieve logos and favicons from any hostname with a single URL. Domain-shaped paths try DuckDuckGo, Google, Microlink in order until one returns an image, same as the explicit `/domain/:key` route.
 
 e.g., [unavatar.io/domain/microlink.io](https://unavatar.io/domain/microlink.io)
+
+### Douban
+
+Get any Douban user's profile picture by their username.
+
+e.g., [unavatar.io/douban/ahbei](https://unavatar.io/douban/ahbei)
 
 ### Dribbble
 
@@ -677,6 +730,12 @@ Available inputs:
 
 - `user` (default): [unavatar.io/flickr/user:elizabethgadd](https://unavatar.io/flickr/user:elizabethgadd)
 - `group`: [unavatar.io/flickr/group:allthingsearthy](https://unavatar.io/flickr/group:allthingsearthy)
+
+### Gitee
+
+Get any Gitee user's profile picture by their username.
+
+e.g., [unavatar.io/gitee/y_project](https://unavatar.io/gitee/y_project)
 
 ### GitHub
 
@@ -751,6 +810,12 @@ Get any Instagram user's profile picture by their username. No authentication or
 
 e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 
+### Juejin
+
+Get any Juejin user's profile picture by their numeric user ID.
+
+e.g., [unavatar.io/juejin/1556564194374926](https://unavatar.io/juejin/1556564194374926)
+
 ### Ko-fi
 
 Get any Ko-fi page's profile picture by the creator username.
@@ -786,6 +851,12 @@ Extract the logo or representative image from any URL. The page is rendered and 
 
 e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
 
+### NetEase Music
+
+Get any NetEase Music user's profile picture by their numeric user ID.
+
+e.g., [unavatar.io/netease-music/32953014](https://unavatar.io/netease-music/32953014)
+
 ### npm
 
 Get any npm user's profile picture by their username, including scoped handles.
@@ -812,6 +883,12 @@ Available inputs:
 Get any Patreon creator's profile picture by their username.
 
 e.g., [unavatar.io/patreon/gametestro](https://unavatar.io/patreon/gametestro)
+
+### PayPal
+
+Get any PayPal user's profile picture by their PayPal.Me username.
+
+e.g., [unavatar.io/paypal/kikobeats](https://unavatar.io/paypal/kikobeats)
 
 ### Pinterest
 
@@ -850,6 +927,12 @@ Get any PlayStation Network user's profile picture by their PSN username.
 
 e.g., [unavatar.io/psnprofiles/Duff85](https://unavatar.io/psnprofiles/Duff85)
 
+### QQ
+
+Get a QQ user's profile picture by their QQ number.
+
+e.g., [unavatar.io/qq/10001](https://unavatar.io/qq/10001)
+
 ### Raycast
 
 Get any Raycast user's profile picture by their username.
@@ -864,6 +947,12 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/reddit/thisisbillgates](https://unavatar.io/reddit/thisisbillgates)
 - Organization, e.g., [unavatar.io/reddit/nasa](https://unavatar.io/reddit/nasa)
+
+### Revolut
+
+Get any Revolut user's profile picture by their Revolut.Me username.
+
+e.g., [unavatar.io/revolut/midudev](https://unavatar.io/revolut/midudev)
 
 ### Snapchat
 
@@ -945,6 +1034,26 @@ Get any Threads user's profile picture by their username.
 
 e.g., [unavatar.io/threads/zuck](https://unavatar.io/threads/zuck)
 
+### Tidal
+
+Get artwork for any Tidal artist, album, or playlist by ID.
+
+The endpoint supports explicit type as part of the input.
+
+If explicit type is not provided, it defaults to `artist`.
+
+Available inputs:
+
+- `artist` (default): [unavatar.io/tidal/1566](https://unavatar.io/tidal/1566) or [unavatar.io/tidal/artist:1566](https://unavatar.io/tidal/artist:1566)
+- `album`: [unavatar.io/tidal/album:1765857](https://unavatar.io/tidal/album:1765857)
+- `playlist`: [unavatar.io/tidal/playlist:c3c18106-c4f5-4021-bb18-108255c1f450](https://unavatar.io/tidal/playlist:c3c18106-c4f5-4021-bb18-108255c1f450)
+
+### Tieba
+
+Get any Baidu Tieba user's profile picture by their username.
+
+e.g., [unavatar.io/tieba/Mojang](https://unavatar.io/tieba/Mojang)
+
 ### TikTok
 
 Get any TikTok user's profile picture by their username. No authentication or API tokens needed — just pass the username.
@@ -963,11 +1072,26 @@ Get any Twitch streamer's profile picture by their username.
 
 e.g., [unavatar.io/twitch/midudev](https://unavatar.io/twitch/midudev)
 
+### Venmo
+
+Get any Venmo user's profile picture by their username.
+
+e.g., [unavatar.io/venmo/Jessica-Lee-77](https://unavatar.io/venmo/Jessica-Lee-77)
+
 ### Vimeo
 
 Get any Vimeo user's profile picture by their username.
 
 e.g., [unavatar.io/vimeo/ladieswithlenses](https://unavatar.io/vimeo/ladieswithlenses)
+
+### Weibo
+
+Get any Weibo user's profile picture by numeric user ID or screen name.
+
+Available inputs:
+
+- User ID, e.g., [unavatar.io/weibo/2803301701](https://unavatar.io/weibo/2803301701)
+- Screen name, e.g., [unavatar.io/weibo/%E4%BA%BA%E6%B0%91%E6%97%A5%E6%8A%A5](https://unavatar.io/weibo/%E4%BA%BA%E6%B0%91%E6%97%A5%E6%8A%A5)
 
 ### WhatsApp
 
@@ -982,6 +1106,12 @@ Available inputs:
 - `phone`: [unavatar.io/whatsapp/phone:34660021551](https://unavatar.io/whatsapp/phone:34660021551)
 - `channel`: [unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m](https://unavatar.io/whatsapp/channel:0029VaARuQ7KwqSXh9fiMc0m)
 - `chat`: [unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz](https://unavatar.io/whatsapp/chat:D2FFycjQXrEIKG8qQjbwZz)
+
+### Wise
+
+Get any Wise user's profile picture by their Wisetag.
+
+e.g., [unavatar.io/wise/josev2264](https://unavatar.io/wise/josev2264)
 
 ### X/Twitter
 
@@ -1007,6 +1137,12 @@ Available inputs:
 
 - `username`: [unavatar.io/youtube/casey](https://unavatar.io/youtube/casey)
 - `channel`: [unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw](https://unavatar.io/youtube/UC_x5XG1OV2P6uZZ5FSM9Ttw)
+
+### Zhihu
+
+Get any Zhihu user's profile picture by their username.
+
+e.g., [unavatar.io/zhihu/kaifulee](https://unavatar.io/zhihu/kaifulee)
 
 ## Response Format
 
