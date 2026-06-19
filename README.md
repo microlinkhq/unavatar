@@ -32,7 +32,6 @@
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
   - [Domain](#domain)
-  - [Douban](#douban)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
   - [Email](#email)
@@ -105,13 +104,13 @@ Last updated on June 14, 2026
 
 ## Introduction
 
-**unavatar.io** retrieves anyone's avatar from a single URL — by username, email, or domain — across 73 platforms including [Instagram](https://unavatar.io/docs#instagram), [GitHub](https://unavatar.io/docs#github), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), and [Gravatar](https://unavatar.io/docs#gravatar). No API keys, no SDKs, free to start.
+**unavatar.io** retrieves anyone's avatar from a single URL — by username, email, or domain — across 72 platforms including [Instagram](https://unavatar.io/docs#instagram), [GitHub](https://unavatar.io/docs#github), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), and [Gravatar](https://unavatar.io/docs#gravatar). No API keys, no SDKs, free to start.
 
 Try it: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats) · [unavatar.io/x/josebaseba](https://unavatar.io/x/josebaseba) · [unavatar.io/domain/reddit.com](https://unavatar.io/domain/reddit.com)
 
 Everything you need to serve avatars at scale:
 
-- **Versatile**: One endpoint rules 73 platforms and services — [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), and more — all queried the same way.
+- **Versatile**: One endpoint rules 72 platforms and services — [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), and more — all queried the same way.
 
 - **Battle-tested**: Already serving 9.59 TB of avatars across 258.5M requests, with a 92% cache hit rate.
 
@@ -668,12 +667,6 @@ e.g., [unavatar.io/dockerhub/tensorflow](https://unavatar.io/dockerhub/tensorflo
 Retrieve logos and favicons from any hostname with a single URL. Domain-shaped paths try DuckDuckGo, Google, Microlink in order until one returns an image, same as the explicit `/domain/:key` route.
 
 e.g., [unavatar.io/domain/microlink.io](https://unavatar.io/domain/microlink.io)
-
-### Douban
-
-Get any Douban user's profile picture by their username.
-
-e.g., [unavatar.io/douban/ahbei](https://unavatar.io/douban/ahbei)
 
 ### Dribbble
 
