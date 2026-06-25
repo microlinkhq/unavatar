@@ -128,7 +128,7 @@
     "@metascraper/helpers": "~5.51.1",
     "@microlink/mql": "~0.16.0",
     "@microlink/ping-url": "~1.4.16",
-    "browserless": "~13.1.0",
+    "browserless": "~13.2.0",
     "cacheable-lookup": "~6.1.0",
     "data-uri-regex": "~0.1.4",
     "debug-logfmt": "~1.4.10",
