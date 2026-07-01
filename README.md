@@ -151,20 +151,20 @@ Your attribution link:
 Add this link on any page or surface displaying unavatar.io avatars:
 
 ```html
-[Avatars provided by Unavatar](https://unavatar.io)
+<ahref="https://unavatar.io">Avatars provided by Unavatar</a>
 ```
 
 **Example**
 
 ```html
 
-  ![Kiko](https://unavatar.io/github/kikobeats)
+<imgsrc="https://unavatar.io/github/kikobeats"alt="Kiko"/>
 
-  ![Joseba](https://unavatar.io/x/josebaseba)
+<imgsrc="https://unavatar.io/x/josebaseba"alt="Joseba"/>
 
-<p class="attribution">
+<pclass="attribution">
 
-  [Avatars provided by Unavatar](https://unavatar.io)
+<ahref="https://unavatar.io">Avatars provided by Unavatar</a>
 
 </p>
 ```
@@ -197,85 +197,85 @@ Anonymous requests work without authentication. They are limited to 25 requests/
 For [PRO](https://unavatar.io/checkout) users, the requests must include the API key as the `x-api-key` request header:
 
 ```html
-![](https://unavatar.io/github/kikobeats)
+<imgsrc="https://unavatar.io/github/kikobeats"/>
 ```
 
 ```bash
-curl "https://unavatar.io/github/kikobeats" -H "x-api-key: YOUR_API_KEY"
+curl"https://unavatar.io/github/kikobeats"-H"x-api-key: YOUR_API_KEY"
 ```
 
 ```javascript
-await fetch('https://unavatar.io/github/kikobeats', {
+awaitfetch('https://unavatar.io/github/kikobeats',{
 
-  headers: {
+headers:{
 
-    'x-api-key': 'YOUR_API_KEY'
+'x-api-key':'YOUR_API_KEY'
 
-  }
+}
 
 })
 ```
 
 ```python
-import requests
+importrequests
 
-response = requests.get(
+response=requests.get(
 
-  'https://unavatar.io/github/kikobeats',
+'https://unavatar.io/github/kikobeats',
 
-  headers={'x-api-key': 'YOUR_API_KEY'}
+headers={'x-api-key':'YOUR_API_KEY'}
 
 )
 ```
 
 ```golang
-package main
+packagemain
 
-import "net/http"
+import"net/http"
 
-func main() {
+funcmain(){
 
-  req, _ := http.NewRequest("GET", "https://unavatar.io/github/kikobeats", nil)
+req,_:=http.NewRequest("GET","https://unavatar.io/github/kikobeats",nil)
 
-  req.Header.Set("x-api-key", "YOUR_API_KEY")
+req.Header.Set("x-api-key","YOUR_API_KEY")
 
-  resp, _ := http.DefaultClient.Do(req)
+resp,_:=http.DefaultClient.Do(req)
 
-  defer resp.Body.Close()
+deferresp.Body.Close()
 
 }
 ```
 
 ```ruby
-require 'net/http'
+require'net/http'
 
-require 'uri'
+require'uri'
 
-uri = URI('https://unavatar.io/github/kikobeats')
+uri=URI('https://unavatar.io/github/kikobeats')
 
-request = Net::HTTP::Get.new(uri)
+request=Net::HTTP::Get.new(uri)
 
-request['x-api-key'] = 'YOUR_API_KEY'
+request['x-api-key']='YOUR_API_KEY'
 
-response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+response=Net::HTTP.start(uri.hostname,uri.port,use_ssl:true)do|http|
 
-  http.request(request)
+http.request(request)
 
 end
 ```
 
 ```php
-$ch = curl_init('https://unavatar.io/github/kikobeats');
+$ch=curl_init('https://unavatar.io/github/kikobeats');
 
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
+curl_setopt($ch,CURLOPT_HTTPHEADER,[
 
-  'x-api-key: YOUR_API_KEY',
+'x-api-key: YOUR_API_KEY',
 
 ]);
 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 
-$response = curl_exec($ch);
+$response=curl_exec($ch);
 
 curl_close($ch);
 ```
@@ -291,13 +291,13 @@ Rate limit status can be verified using these response headers:
 | `x-rate-limit-reset`     | UTC epoch seconds when the current window resets               |
 
 ```bash
-$ curl -I https://unavatar.io/github/kikobeats
+$curl-Ihttps://unavatar.io/github/kikobeats
 
-x-rate-limit-limit: 25
+x-rate-limit-limit:25
 
-x-rate-limit-remaining: 24
+x-rate-limit-remaining:24
 
-x-rate-limit-reset: 1744243200
+x-rate-limit-reset:1744243200
 ```
 
 ### Secret keys
@@ -307,85 +307,85 @@ Secret keys (`sk_`) are meant for server-side use only — never expose them pub
 Pass them via the `x-api-key` header:
 
 ```html
-![](https://unavatar.io/github/kikobeats)
+<imgsrc="https://unavatar.io/github/kikobeats"/>
 ```
 
 ```bash
-curl "https://unavatar.io/github/kikobeats" -H "x-api-key: sk_YOUR_SECRET_KEY"
+curl"https://unavatar.io/github/kikobeats"-H"x-api-key: sk_YOUR_SECRET_KEY"
 ```
 
 ```javascript
-await fetch('https://unavatar.io/github/kikobeats', {
+awaitfetch('https://unavatar.io/github/kikobeats',{
 
-  headers: {
+headers:{
 
-    'x-api-key': 'sk_YOUR_SECRET_KEY'
+'x-api-key':'sk_YOUR_SECRET_KEY'
 
-  }
+}
 
 })
 ```
 
 ```python
-import requests
+importrequests
 
-response = requests.get(
+response=requests.get(
 
-  'https://unavatar.io/github/kikobeats',
+'https://unavatar.io/github/kikobeats',
 
-  headers={'x-api-key': 'sk_YOUR_SECRET_KEY'}
+headers={'x-api-key':'sk_YOUR_SECRET_KEY'}
 
 )
 ```
 
 ```golang
-package main
+packagemain
 
-import "net/http"
+import"net/http"
 
-func main() {
+funcmain(){
 
-  req, _ := http.NewRequest("GET", "https://unavatar.io/github/kikobeats", nil)
+req,_:=http.NewRequest("GET","https://unavatar.io/github/kikobeats",nil)
 
-  req.Header.Set("x-api-key", "sk_YOUR_SECRET_KEY")
+req.Header.Set("x-api-key","sk_YOUR_SECRET_KEY")
 
-  resp, _ := http.DefaultClient.Do(req)
+resp,_:=http.DefaultClient.Do(req)
 
-  defer resp.Body.Close()
+deferresp.Body.Close()
 
 }
 ```
 
 ```ruby
-require 'net/http'
+require'net/http'
 
-require 'uri'
+require'uri'
 
-uri = URI('https://unavatar.io/github/kikobeats')
+uri=URI('https://unavatar.io/github/kikobeats')
 
-request = Net::HTTP::Get.new(uri)
+request=Net::HTTP::Get.new(uri)
 
-request['x-api-key'] = 'sk_YOUR_SECRET_KEY'
+request['x-api-key']='sk_YOUR_SECRET_KEY'
 
-response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+response=Net::HTTP.start(uri.hostname,uri.port,use_ssl:true)do|http|
 
-  http.request(request)
+http.request(request)
 
 end
 ```
 
 ```php
-$ch = curl_init('https://unavatar.io/github/kikobeats');
+$ch=curl_init('https://unavatar.io/github/kikobeats');
 
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
+curl_setopt($ch,CURLOPT_HTTPHEADER,[
 
-  'x-api-key: sk_YOUR_SECRET_KEY',
+'x-api-key: sk_YOUR_SECRET_KEY',
 
 ]);
 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 
-$response = curl_exec($ch);
+$response=curl_exec($ch);
 
 curl_close($ch);
 ```
@@ -397,7 +397,7 @@ Publishable keys (`pk_`) are safe to use in client-side code. They can **only** 
 Pass them as a `token` query parameter, which makes them easy to use directly in HTML markup:
 
 ```html
-![](https://unavatar.io/github/kikobeats?token=pk_YOUR_PUBLISHABLE_KEY)
+<imgsrc="https://unavatar.io/github/kikobeats?token=pk_YOUR_PUBLISHABLE_KEY"/>
 ```
 
 ### Domain restrictions
@@ -433,13 +433,13 @@ Every request has a cost in tokens (**\$0.010 per token**) based on the proxy ti
 The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
 
 ```bash
-$ curl -I -H "x-api-key: sk_YOUR_SECRET_KEY" https://unavatar.io/instagram/kikobeats
+$curl-I-H"x-api-key: sk_YOUR_SECRET_KEY"https://unavatar.io/instagram/kikobeats
 
-x-pricing-tier: pro
+x-pricing-tier:pro
 
-x-proxy-tier: origin
+x-proxy-tier:origin
 
-x-unavatar-cost: 1
+x-unavatar-cost:1
 ```
 
 To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After completing the payment, you'll receive an API key.
@@ -469,11 +469,11 @@ To check the cache status in real requests, inspect these response headers:
 | `cache-control`  | Shows cache policy and effective TTL (for example `public, max-age=3600` for `ttl=1h`). |
 
 ```bash
-$ curl -I -H "x-api-key: sk_YOUR_SECRET_KEY" "https://unavatar.io/github/kikobeats?ttl=1h"
+$curl-I-H"x-api-key: sk_YOUR_SECRET_KEY""https://unavatar.io/github/kikobeats?ttl=1h"
 
-cache-control: public, max-age=3600
+cache-control:public,max-age=3600
 
-x-cache-status: HIT
+x-cache-status:HIT
 ```
 
 The same rule applies to anonymous requests: cache hits are free and do not consume the `25 requests/day` limit.
@@ -1170,21 +1170,21 @@ These headers help you understand pricing, limits, and request diagnostics.
 | `retry-after`            | Seconds until rate limit resets (only on 429 responses)   |
 
 ```bash
-$ curl -I -H "x-api-key: sk_YOUR_SECRET_KEY" https://unavatar.io/github/kikobeats
+$curl-I-H"x-api-key: sk_YOUR_SECRET_KEY"https://unavatar.io/github/kikobeats
 
-x-pricing-tier: pro
+x-pricing-tier:pro
 
-x-timestamp: 1744209600
+x-timestamp:1744209600
 
-x-unavatar-cost: 1
+x-unavatar-cost:1
 
-x-proxy-tier: origin
+x-proxy-tier:origin
 
-x-rate-limit-limit: 50
+x-rate-limit-limit:50
 
-x-rate-limit-remaining: 49
+x-rate-limit-remaining:49
 
-x-rate-limit-reset: 1744243200
+x-rate-limit-reset:1744243200
 ```
 
 ## Response Errors
