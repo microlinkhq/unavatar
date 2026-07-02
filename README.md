@@ -112,7 +112,7 @@ Everything you need to serve avatars at scale:
 
 - **Versatile**: One endpoint rules 72 platforms and services — [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), and more — all queried the same way.
 
-- **Battle-tested**: Already serving 9.59 TB of avatars across 258.5M requests, with a 92% cache hit rate.
+- **Battle-tested**: Already serving 5.5 TB of avatars across 213.4M requests, with a 83% cache hit rate.
 
 - **Optimized**: Every image is compressed and optimized on-the-fly — smaller payloads at high quality, ready to drop straight into your site or app.
 
