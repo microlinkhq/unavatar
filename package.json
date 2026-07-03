@@ -133,7 +133,7 @@
     "data-uri-regex": "~0.1.4",
     "debug-logfmt": "~1.4.10",
     "got": "~11.8.6",
-    "html-get": "~2.24.3",
+    "html-get": "~2.25.0",
     "https-tls": "~1.0.24",
     "ipaddr.js": "~2.4.0",
     "is-absolute-url": "~3.0.3",
