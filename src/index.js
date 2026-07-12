@@ -48,6 +48,7 @@ module.exports = ({
     getOgImage,
     NOT_FOUND,
     got,
+    reachableUrl,
     isReservedIp,
     githubSearchCache: cache.githubSearchCache,
     itunesSearchCache: cache.itunesSearchCache
