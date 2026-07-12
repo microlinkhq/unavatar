@@ -4,7 +4,9 @@ const test = require('ava')
 
 const { AVATAR_SIZE } = require('../../../src/constant')
 
-const duckduckgo = require('../../../src/providers/duckduckgo')({})
+const {
+  getAvatarUrl: duckduckgoUrl
+} = require('../../../src/providers/duckduckgo')
 const github = require('../../../src/providers/github')({
   constants: { AVATAR_SIZE }
 })
@@ -16,7 +18,7 @@ const revolut = require('../../../src/providers/revolut')({})
 
 test('duckduckgo builds favicon URL', t => {
   t.is(
-    duckduckgo('microlink.io'),
+    duckduckgoUrl('microlink.io'),
     'https://icons.duckduckgo.com/ip3/microlink.io.ico'
   )
 })
