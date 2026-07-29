@@ -8,8 +8,7 @@ const byCode = Object.entries(STATUS_CODES).reduce((acc, [key, value]) => {
   return acc
 }, {})
 
-const fn = input =>
-  typeof input === 'number' ? STATUS_CODES[input] ?? input : byCode[input]
+const fn = input => (typeof input === 'number' ? STATUS_CODES[input] ?? input : byCode[input])
 
 Object.keys(byCode).forEach(key => {
   fn[key] = Number(byCode[key])

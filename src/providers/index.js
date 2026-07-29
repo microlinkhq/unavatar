@@ -2,6 +2,7 @@
 
 const providersBy = {
   email: [['gravatar', 'github'], ['bimi']],
+  emailHash: [['gravatar']],
   username: [
     [
       'apple-music',

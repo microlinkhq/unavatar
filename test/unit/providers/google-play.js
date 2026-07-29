@@ -34,18 +34,14 @@ ava('.getAvatarUrl throws for unsupported type prefixes', t => {
 
 ava('.getAvatarUrl throws for full details URL input', t => {
   const error = t.throws(() =>
-    getAvatarUrl(
-      'https://play.google.com/store/apps/details?id=com.devolver.grispaid'
-    )
+    getAvatarUrl('https://play.google.com/store/apps/details?id=com.devolver.grispaid')
   )
   t.is(error.message, 'Unsupported Google Play type: https')
 })
 
 ava('.getAvatarUrl throws for full dev URL input', t => {
   const error = t.throws(() =>
-    getAvatarUrl(
-      'https://play.google.com/store/apps/dev?id=6592603558263828430'
-    )
+    getAvatarUrl('https://play.google.com/store/apps/dev?id=6592603558263828430')
   )
   t.is(error.message, 'Unsupported Google Play type: https')
 })

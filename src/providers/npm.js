@@ -23,9 +23,7 @@ const getRepoUsername = objects => {
 
     if (!gitlabFallback) {
       const gitlabMatch = GITLAB_RE.exec(repo)
-      if (gitlabMatch) {
-        gitlabFallback = { platform: 'gitlab', username: gitlabMatch[1] }
-      }
+      if (gitlabMatch) { gitlabFallback = { platform: 'gitlab', username: gitlabMatch[1] } }
     }
   }
 

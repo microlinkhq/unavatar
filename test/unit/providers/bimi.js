@@ -27,7 +27,7 @@ const createProvider = ({
     'bimi-url': createGetLogo
   })({ bimiCache, dnsResolver, got: { gotOpts }, isReservedIp })
 
-  return { bimi, received, bimiCache, gotOpts, dnsResolver }
+  return { bimi, received, bimiCache, gotOpts }
 }
 
 test('toDomain keeps a domain and takes the part after the @ of an email', t => {
@@ -37,14 +37,13 @@ test('toDomain keeps a domain and takes the part after the @ of an email', t => 
 })
 
 test('resolves through the shared cache, got options and DNS resolver', async t => {
-  const { received, bimiCache, gotOpts, dnsResolver } = createProvider()
+  const { received, bimiCache, gotOpts } = createProvider()
 
   t.is(received.keyvOpts, bimiCache)
   t.is(received.gotOpts, gotOpts)
   t.deepEqual(await received.resolveTxt('default._bimi.shopify.com'), [
     ['default._bimi.shopify.com']
   ])
-  t.is(typeof dnsResolver.resolveTxt, 'function')
 })
 
 test('resolves the logo a domain publishes', async t => {

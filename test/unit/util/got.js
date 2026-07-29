@@ -5,9 +5,7 @@ const sinon = require('sinon')
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache()
 
 const buildGot = () => {
-  const uaHints = sinon
-    .stub()
-    .callsFake(userAgent => ({ 'sec-ch-ua': `"${userAgent}"` }))
+  const uaHints = sinon.stub().callsFake(userAgent => ({ 'sec-ch-ua': `"${userAgent}"` }))
   const randomUserAgent = sinon.stub().returns('custom-agent')
   const uniqueRandomArray = sinon.stub().returns(randomUserAgent)
   const tlsHook = sinon.stub()
@@ -23,14 +21,7 @@ const buildGot = () => {
 
   const got = gotFactory({ cacheableLookup: 'dns-cache' })
 
-  return {
-    got,
-    gotExtend,
-    uaHints,
-    randomUserAgent,
-    uniqueRandomArray,
-    tlsHook
-  }
+  return { got, gotExtend, uaHints, randomUserAgent, uniqueRandomArray, tlsHook }
 }
 
 test('got util creates instance with dns cache and hooks', t => {
@@ -80,9 +71,7 @@ test('got util computes ua hints for non-top user agents per request', t => {
 test('got util replaces default got user agent before computing hints', t => {
   const { got, uaHints, randomUserAgent } = buildGot()
   const userAgentHook = got.gotOpts.hooks.beforeRequest[0]
-  const options = {
-    headers: { 'user-agent': 'got (https://github.com/sindresorhus/got)' }
-  }
+  const options = { headers: { 'user-agent': 'got (https://github.com/sindresorhus/got)' } }
 
   uaHints.resetHistory()
   userAgentHook(options)

@@ -26,19 +26,12 @@ const getInputType = input => {
 const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   const { REQUEST_TIMEOUT } = constants
 
-  const toEntries = tiers =>
-    tiers.map(tier => tier.map(provider => [provider, providers[provider]]))
-
   const providerEntriesByType = Object.fromEntries(
     Object.entries(providersBy).map(([inputType, tiers]) => [
       inputType,
-      toEntries(tiers)
+      tiers.map(tier => tier.map(provider => [provider, providers[provider]]))
     ])
   )
-
-  const emailHashEntries = (providerEntriesByType.email ?? [])
-    .map(tier => tier.filter(([provider]) => provider === 'gravatar'))
-    .filter(tier => tier.length > 0)
 
   const getAvatarContent = provider => async output => {
     if (typeof output !== 'string' || output === '') {
@@ -99,7 +92,7 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   const resolveAutoByType = async (inputType, input, context) => {
     const tiers =
       inputType === 'email' && isHash(input)
-        ? emailHashEntries
+        ? providerEntriesByType.emailHash
         : providerEntriesByType[inputType]
 
     let firstError

@@ -42,12 +42,8 @@ test('apple-music provider treats untyped numeric values as queries', async t =>
   const provider = createProviderWith({
     gotStub: async url => {
       calls.push(url)
-      if (url.includes('entity=musicArtist')) {
-        return { results: [{ artistId: 'not-a-number' }] }
-      }
-      if (url.includes('entity=song')) {
-        return { results: [{ trackId: 697195787 }] }
-      }
+      if (url.includes('entity=musicArtist')) { return { results: [{ artistId: 'not-a-number' }] } }
+      if (url.includes('entity=song')) { return { results: [{ trackId: 697195787 }] } }
       return { results: [{ collectionId: 'not-a-number' }] }
     }
   })
@@ -105,12 +101,8 @@ test('apple-music provider default query falls back from artist to song', async 
   const provider = createProviderWith({
     gotStub: async url => {
       calls.push(url)
-      if (url.includes('entity=musicArtist')) {
-        return { results: [{ artistId: 'not-a-number' }] }
-      }
-      if (url.includes('entity=song')) {
-        return { results: [{ trackId: 697195787 }] }
-      }
+      if (url.includes('entity=musicArtist')) { return { results: [{ artistId: 'not-a-number' }] } }
+      if (url.includes('entity=song')) { return { results: [{ trackId: 697195787 }] } }
       return { results: [{ collectionId: 'not-a-number' }] }
     }
   })
@@ -128,9 +120,7 @@ test('apple-music provider default query falls back from artist and song to albu
   const provider = createProviderWith({
     gotStub: async url => {
       calls.push(url)
-      if (url.includes('entity=album')) {
-        return { results: [{ collectionId: 697194953 }] }
-      }
+      if (url.includes('entity=album')) { return { results: [{ collectionId: 697194953 }] } }
       return {
         results: [{ artistId: 'not-a-number', trackId: 'not-a-number' }]
       }

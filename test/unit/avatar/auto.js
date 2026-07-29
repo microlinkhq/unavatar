@@ -84,7 +84,12 @@ test('email hash input routes only to gravatar, not to other email providers', a
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { gravatar, github },
-    providersBy: { email: [['gravatar', 'github']], username: [], domain: [] },
+    providersBy: {
+      email: [['gravatar', 'github']],
+      emailHash: [['gravatar']],
+      username: [],
+      domain: []
+    },
     reachableUrl
   })
 

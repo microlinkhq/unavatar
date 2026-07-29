@@ -39,7 +39,7 @@ for (const file of providerFiles) {
 }
 
 test('providersBy references valid providers only', t => {
-  for (const inputType of ['email', 'username', 'domain']) {
+  for (const inputType of Object.keys(providersBy)) {
     t.true(
       Array.isArray(providersBy[inputType]),
       `${inputType} should be an array`
