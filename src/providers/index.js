@@ -1,7 +1,7 @@
 'use strict'
 
 const providersBy = {
-  email: ['gravatar', 'github'],
+  email: [['gravatar', 'github'], ['bimi']],
   username: [
     'apple-music',
     'apple-store',
@@ -72,7 +72,7 @@ const providersBy = {
     'youtube',
     'zhihu'
   ],
-  domain: ['duckduckgo', 'google', 'microlink']
+  domain: [['bimi'], ['duckduckgo', 'google', 'microlink']]
 }
 
 module.exports = ctx => {
@@ -81,6 +81,7 @@ module.exports = ctx => {
     'apple-store': require('./apple-store')(ctx),
     behance: require('./behance')(ctx),
     bilibili: require('./bilibili')(ctx),
+    bimi: require('./bimi')(ctx),
     bluesky: require('./bluesky')(ctx),
     buymeacoffee: require('./buymeacoffee')(ctx),
     cashapp: require('./cashapp')(ctx),
