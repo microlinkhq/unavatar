@@ -64,14 +64,16 @@ test('github falls back to commit search for email input', async t => {
               author: {
                 login: 'Kikobeats',
                 type: 'User',
-                avatar_url: 'https://avatars.githubusercontent.com/u/2096101?v=4'
+                avatar_url:
+                  'https://avatars.githubusercontent.com/u/2096101?v=4'
               }
             },
             {
               author: {
                 login: 'Kikobeats',
                 type: 'User',
-                avatar_url: 'https://avatars.githubusercontent.com/u/2096101?v=4'
+                avatar_url:
+                  'https://avatars.githubusercontent.com/u/2096101?v=4'
               }
             },
             {
@@ -164,12 +166,14 @@ test('github commit fallback ignores organizations and keeps user avatar', async
               author: {
                 login: 'sindresorhus',
                 type: 'Organization',
-                avatar_url: 'https://avatars.githubusercontent.com/u/13122722?v=4'
+                avatar_url:
+                  'https://avatars.githubusercontent.com/u/13122722?v=4'
               },
               committer: {
                 login: 'sindresorhus',
                 type: 'User',
-                avatar_url: 'https://avatars.githubusercontent.com/u/170270?s=400&v=4'
+                avatar_url:
+                  'https://avatars.githubusercontent.com/u/170270?s=400&v=4'
               }
             }
           ]
@@ -216,12 +220,14 @@ test('github exact email match ignores organizations and falls back to user comm
               author: {
                 login: 'sindresorhus',
                 type: 'Organization',
-                avatar_url: 'https://avatars.githubusercontent.com/u/13122722?v=4'
+                avatar_url:
+                  'https://avatars.githubusercontent.com/u/13122722?v=4'
               },
               committer: {
                 login: 'sindresorhus',
                 type: 'User',
-                avatar_url: 'https://avatars.githubusercontent.com/u/170270?s=400&v=4'
+                avatar_url:
+                  'https://avatars.githubusercontent.com/u/170270?s=400&v=4'
               }
             }
           ]

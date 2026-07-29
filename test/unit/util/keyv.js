@@ -5,11 +5,19 @@ const sinon = require('sinon')
 const proxyquire = require('proxyquire').noPreserveCache()
 
 const buildKeyv = ({ redis } = {}) => {
-  const KeyvOffline = sinon.stub().callsFake(input => ({ type: 'offline', input }))
-  const KeyvRedis = sinon.stub().callsFake(client => ({ type: 'redis', client }))
-  const KeyvMulti = sinon.stub().callsFake(({ remote }) => ({ type: 'multi', remote }))
+  const KeyvOffline = sinon
+    .stub()
+    .callsFake(input => ({ type: 'offline', input }))
+  const KeyvRedis = sinon
+    .stub()
+    .callsFake(client => ({ type: 'redis', client }))
+  const KeyvMulti = sinon
+    .stub()
+    .callsFake(({ remote }) => ({ type: 'multi', remote }))
   const Keyv = sinon.stub().callsFake(opts => ({ type: 'keyv', opts }))
-  const keyvCompress = sinon.stub().callsFake(input => ({ type: 'compressed', input }))
+  const keyvCompress = sinon
+    .stub()
+    .callsFake(input => ({ type: 'compressed', input }))
 
   const keyvFactory = proxyquire('../../../src/util/keyv', {
     '@keyvhq/compress': keyvCompress,
@@ -34,7 +42,11 @@ test('createMultiCache wraps remote cache through KeyvMulti store', t => {
     opts: { store: { type: 'multi', remote: 'remote-store' } }
   })
   t.true(KeyvMulti.calledOnceWithExactly({ remote: 'remote-store' }))
-  t.true(Keyv.calledOnceWithExactly({ store: { type: 'multi', remote: 'remote-store' } }))
+  t.true(
+    Keyv.calledOnceWithExactly({
+      store: { type: 'multi', remote: 'remote-store' }
+    })
+  )
 })
 
 test('createRedisCache uses Map store when redis is not provided', t => {
@@ -52,13 +64,18 @@ test('createRedisCache uses Map store when redis is not provided', t => {
 
 test('createRedisCache uses KeyvOffline + KeyvRedis when redis is provided', t => {
   const redisClient = { type: 'ioredis' }
-  const { keyv, KeyvRedis, KeyvOffline, keyvCompress, Keyv } = buildKeyv({ redis: redisClient })
+  const { keyv, KeyvRedis, KeyvOffline, keyvCompress, Keyv } = buildKeyv({
+    redis: redisClient
+  })
 
   const cache = keyv.createRedisCache({ namespace: 'ping' })
 
   t.true(KeyvRedis.calledOnceWithExactly(redisClient))
   t.true(KeyvOffline.calledOnce)
-  t.deepEqual(KeyvOffline.firstCall.args[0], { type: 'redis', client: redisClient })
+  t.deepEqual(KeyvOffline.firstCall.args[0], {
+    type: 'redis',
+    client: redisClient
+  })
   t.true(keyvCompress.calledOnce)
   t.true(Keyv.calledOnce)
   t.is(cache.type, 'compressed')

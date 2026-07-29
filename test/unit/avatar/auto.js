@@ -56,7 +56,7 @@ test('auto(type) uses the provided input type resolver', async t => {
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: ['google'], email: [], username: [] },
+    providersBy: { domain: [['google']], email: [], username: [] },
     reachableUrl
   })
 
@@ -84,7 +84,7 @@ test('email hash input routes only to gravatar, not to other email providers', a
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { gravatar, github },
-    providersBy: { email: ['gravatar', 'github'], username: [], domain: [] },
+    providersBy: { email: [['gravatar', 'github']], username: [], domain: [] },
     reachableUrl
   })
 
@@ -95,15 +95,12 @@ test('email hash input routes only to gravatar, not to other email providers', a
   t.true(github.notCalled)
 })
 
-const createTiered = providersBy => {
+const createTiered = (...failing) => {
   const calls = []
-  const answering = name => async () => {
+  const provider = name => async () => {
     calls.push(name)
+    if (failing.includes(name)) throw new Error(`${name} failed`)
     return `https://${name}`
-  }
-  const failing = name => async () => {
-    calls.push(name)
-    throw new Error(`${name} failed`)
   }
   const reachableUrl = sinon
     .stub()
@@ -112,12 +109,7 @@ const createTiered = providersBy => {
 
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
-    providers: {
-      primary: providersBy.primaryAnswers
-        ? answering('primary')
-        : failing('primary'),
-      fallback: answering('fallback')
-    },
+    providers: { primary: provider('primary'), fallback: provider('fallback') },
     providersBy: { domain: [['primary'], ['fallback']] },
     reachableUrl
   })
@@ -126,7 +118,7 @@ const createTiered = providersBy => {
 }
 
 test('a later tier only runs once the one before it is exhausted', async t => {
-  const { auto, calls } = createTiered({ primaryAnswers: false })
+  const { auto, calls } = createTiered('primary')
 
   const { data } = await auto('domain')('example.com', {})
 
@@ -135,7 +127,7 @@ test('a later tier only runs once the one before it is exhausted', async t => {
 })
 
 test('a later tier never runs when the one before it answers', async t => {
-  const { auto, calls } = createTiered({ primaryAnswers: true })
+  const { auto, calls } = createTiered()
 
   const { data } = await auto('domain')('example.com', {})
 
@@ -144,18 +136,7 @@ test('a later tier never runs when the one before it answers', async t => {
 })
 
 test('the error raised when every tier fails is the first one', async t => {
-  const reachableUrl = sinon.stub()
-  reachableUrl.isReachable = sinon.stub().returns(true)
-
-  const { auto } = autoFactory({
-    constants: { REQUEST_TIMEOUT: 25000 },
-    providers: {
-      primary: sinon.stub().rejects(new Error('primary failed')),
-      fallback: sinon.stub().rejects(new Error('fallback failed'))
-    },
-    providersBy: { domain: [['primary'], ['fallback']] },
-    reachableUrl
-  })
+  const { auto } = createTiered('primary', 'fallback')
 
   const error = await t.throwsAsync(auto('domain')('example.com', {}))
   t.true([...error].some(({ message }) => message === 'primary failed'))
@@ -178,7 +159,7 @@ test('getAvatar throws "not found" when provider returns undefined', async t => 
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: ['google'] },
+    providersBy: { domain: [['google']] },
     reachableUrl
   })
 
@@ -198,7 +179,7 @@ test('getAvatar throws "invalid" when provider returns a non-string value', asyn
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: ['google'] },
+    providersBy: { domain: [['google']] },
     reachableUrl
   })
 
@@ -218,7 +199,7 @@ test('getAvatar throws "invalid" when provider returns an empty string', async t
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: ['google'] },
+    providersBy: { domain: [['google']] },
     reachableUrl
   })
 
@@ -237,7 +218,7 @@ test('getAvatar throws when provider returns a non-absolute URL', async t => {
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: ['google'] },
+    providersBy: { domain: [['google']] },
     reachableUrl
   })
 
@@ -259,7 +240,7 @@ test('getAvatar throws when the resolved URL is not reachable', async t => {
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: ['google'] },
+    providersBy: { domain: [['google']] },
     reachableUrl
   })
 
@@ -281,7 +262,7 @@ test('getAvatar sets provider on error from response.statusCode when statusCode 
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: ['google'] },
+    providersBy: { domain: [['google']] },
     reachableUrl
   })
 
@@ -307,7 +288,7 @@ test('auto(type) is deterministic with stateful data URI regex', async t => {
   const { auto } = autoFactoryWithStatefulRegex({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: ['google'], email: [], username: [] },
+    providersBy: { domain: [['google']], email: [], username: [] },
     reachableUrl
   })
 

@@ -56,7 +56,9 @@ module.exports = ({ createHtmlProvider, itunesSearchCache, got }) => {
     if (!hasExplicitType) {
       for (const searchType of APPLE_MUSIC_SEARCH_TYPES) {
         const entityId = await searchEntityId({ query: id, type: searchType })
-        if (entityId) { return `${APPLE_MUSIC_STOREFRONT}/${searchType}/${entityId}` }
+        if (entityId) {
+          return `${APPLE_MUSIC_STOREFRONT}/${searchType}/${entityId}`
+        }
       }
 
       return `${APPLE_MUSIC_STOREFRONT}/search?term=${encodeURIComponent(id)}`

@@ -38,16 +38,13 @@ for (const file of providerFiles) {
   })
 }
 
-const toTiers = providerNames =>
-  Array.isArray(providerNames[0]) ? providerNames : [providerNames]
-
 test('providersBy references valid providers only', t => {
   for (const inputType of ['email', 'username', 'domain']) {
     t.true(
       Array.isArray(providersBy[inputType]),
       `${inputType} should be an array`
     )
-    for (const tier of toTiers(providersBy[inputType])) {
+    for (const tier of providersBy[inputType]) {
       t.true(Array.isArray(tier), `${inputType} tiers should be arrays`)
       t.true(tier.length > 0, `${inputType} tiers should not be empty`)
       for (const providerName of tier) {

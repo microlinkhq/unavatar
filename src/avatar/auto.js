@@ -23,19 +23,22 @@ const getInputType = input => {
   return 'username'
 }
 
-const toTiers = providerNames =>
-  Array.isArray(providerNames[0]) ? providerNames : [providerNames]
-
 const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   const { REQUEST_TIMEOUT } = constants
+
+  const toEntries = tiers =>
+    tiers.map(tier => tier.map(provider => [provider, providers[provider]]))
+
   const providerEntriesByType = Object.fromEntries(
-    Object.entries(providersBy).map(([inputType, providerNames]) => [
+    Object.entries(providersBy).map(([inputType, tiers]) => [
       inputType,
-      toTiers(providerNames).map(tier =>
-        tier.map(provider => [provider, providers[provider]])
-      )
+      toEntries(tiers)
     ])
   )
+
+  const emailHashEntries = (providerEntriesByType.email ?? [])
+    .map(tier => tier.filter(([provider]) => provider === 'gravatar'))
+    .filter(tier => tier.length > 0)
 
   const getAvatarContent = provider => async output => {
     if (typeof output !== 'string' || output === '') {
@@ -90,25 +93,14 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     })
   }
 
-  const raceTier = (tier, input, context) => {
-    const promises = new Array(tier.length)
-
-    for (let index = 0; index < tier.length; index++) {
-      const [provider, fn] = tier[index]
-      promises[index] = getAvatar(fn, provider, input, context)
-    }
-
-    return pAny(promises)
-  }
+  const raceTier = (tier, input, context) =>
+    pAny(tier.map(([provider, fn]) => getAvatar(fn, provider, input, context)))
 
   const resolveAutoByType = async (inputType, input, context) => {
-    let tiers = providerEntriesByType[inputType]
-
-    if (inputType === 'email' && isHash(input)) {
-      tiers = tiers
-        .map(tier => tier.filter(([provider]) => provider === 'gravatar'))
-        .filter(tier => tier.length > 0)
-    }
+    const tiers =
+      inputType === 'email' && isHash(input)
+        ? emailHashEntries
+        : providerEntriesByType[inputType]
 
     let firstError
 

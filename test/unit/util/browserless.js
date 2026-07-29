@@ -21,7 +21,9 @@ const buildBrowserless = ({ isTest = false } = {}) => {
 }
 
 test('uses fixed puppeteer directory outside tests', t => {
-  const { getBrowser, createBrowser, browser } = buildBrowserless({ isTest: false })
+  const { getBrowser, createBrowser, browser } = buildBrowserless({
+    isTest: false
+  })
 
   t.is(getBrowser(), browser)
   t.true(createBrowser.calledOnce)
@@ -37,6 +39,10 @@ test('uses unique puppeteer directory in tests', t => {
   getBrowser()
 
   const { args } = createBrowser.firstCall.args[0]
-  t.true(args.includes('--disk-cache-dir=/tmp/unavatar/puppeteer-uuid-test/cache'))
-  t.true(args.includes('--user-data-dir=/tmp/unavatar/puppeteer-uuid-test/profile'))
+  t.true(
+    args.includes('--disk-cache-dir=/tmp/unavatar/puppeteer-uuid-test/cache')
+  )
+  t.true(
+    args.includes('--user-data-dir=/tmp/unavatar/puppeteer-uuid-test/profile')
+  )
 })
