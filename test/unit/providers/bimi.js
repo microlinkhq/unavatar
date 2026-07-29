@@ -4,7 +4,7 @@ const proxyquire = require('proxyquire').noPreserveCache()
 const Keyv = require('@keyvhq/core')
 const test = require('ava')
 
-const { toDomain } = require('../../../src/providers/bimi')
+const { parseInput } = require('../../../src/providers/bimi')
 
 const LOGO_URL = 'https://cdn.microlink.io/logo/logo.svg'
 
@@ -30,10 +30,10 @@ const createProvider = ({
   return { bimi, received, bimiCache, gotOpts }
 }
 
-test('toDomain keeps a domain and takes the part after the @ of an email', t => {
-  t.is(toDomain('shopify.com'), 'shopify.com')
-  t.is(toDomain('kiko@shopify.com'), 'shopify.com')
-  t.is(toDomain('kiko+bimi@shopify.com'), 'shopify.com')
+test('parseInput keeps a domain and takes the part after the @ of an email', t => {
+  t.is(parseInput('shopify.com'), 'shopify.com')
+  t.is(parseInput('kiko@shopify.com'), 'shopify.com')
+  t.is(parseInput('kiko+bimi@shopify.com'), 'shopify.com')
 })
 
 test('resolves through the shared cache, got options and DNS resolver', async t => {
