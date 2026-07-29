@@ -69,7 +69,13 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     return { type: 'url', data: url, provider }
   }
 
-  const getAvatar = async (fn, provider, input, context) => {
+  const getAvatar = async (
+    fn,
+    provider,
+    input,
+    context,
+    deadline = Date.now() + REQUEST_TIMEOUT
+  ) => {
     const promise = Promise.resolve(fn(input, context))
       .then(getAvatarContent(provider))
       .catch(error => {
@@ -80,14 +86,20 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
         throw error
       })
 
-    return pTimeout(promise, REQUEST_TIMEOUT).catch(error => {
-      error.provider = provider
-      throw error
-    })
+    return pTimeout(promise, Math.max(0, deadline - Date.now())).catch(
+      error => {
+        error.provider = provider
+        throw error
+      }
+    )
   }
 
-  const raceTier = (tier, input, context) =>
-    pAny(tier.map(([provider, fn]) => getAvatar(fn, provider, input, context)))
+  const raceTier = (tier, input, context, deadline) =>
+    pAny(
+      tier.map(([provider, fn]) =>
+        getAvatar(fn, provider, input, context, deadline)
+      )
+    )
 
   const resolveAutoByType = async (inputType, input, context) => {
     const tiers =
@@ -95,11 +107,13 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
         ? providerEntriesByType.emailHash
         : providerEntriesByType[inputType]
 
+    const deadline = Date.now() + REQUEST_TIMEOUT
+
     let firstError
 
     for (const tier of tiers) {
       try {
-        return await raceTier(tier, input, context)
+        return await raceTier(tier, input, context, deadline)
       } catch (error) {
         firstError ??= error
       }
