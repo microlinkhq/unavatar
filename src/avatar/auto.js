@@ -23,12 +23,17 @@ const getInputType = input => {
   return 'username'
 }
 
+const toTiers = providerNames =>
+  Array.isArray(providerNames[0]) ? providerNames : [providerNames]
+
 const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   const { REQUEST_TIMEOUT } = constants
   const providerEntriesByType = Object.fromEntries(
     Object.entries(providersBy).map(([inputType, providerNames]) => [
       inputType,
-      providerNames.map(provider => [provider, providers[provider]])
+      toTiers(providerNames).map(tier =>
+        tier.map(provider => [provider, providers[provider]])
+      )
     ])
   )
 
@@ -85,21 +90,37 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     })
   }
 
-  const resolveAutoByType = async (inputType, input, context) => {
-    let collection = providerEntriesByType[inputType]
+  const raceTier = (tier, input, context) => {
+    const promises = new Array(tier.length)
 
-    if (inputType === 'email' && isHash(input)) {
-      collection = collection.filter(([provider]) => provider === 'gravatar')
-    }
-
-    const promises = new Array(collection.length)
-
-    for (let index = 0; index < collection.length; index++) {
-      const [provider, fn] = collection[index]
+    for (let index = 0; index < tier.length; index++) {
+      const [provider, fn] = tier[index]
       promises[index] = getAvatar(fn, provider, input, context)
     }
 
     return pAny(promises)
+  }
+
+  const resolveAutoByType = async (inputType, input, context) => {
+    let tiers = providerEntriesByType[inputType]
+
+    if (inputType === 'email' && isHash(input)) {
+      tiers = tiers
+        .map(tier => tier.filter(([provider]) => provider === 'gravatar'))
+        .filter(tier => tier.length > 0)
+    }
+
+    let firstError
+
+    for (const tier of tiers) {
+      try {
+        return await raceTier(tier, input, context)
+      } catch (error) {
+        firstError ??= error
+      }
+    }
+
+    throw firstError
   }
 
   const auto = inputType => (input, context) =>

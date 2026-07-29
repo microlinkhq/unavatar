@@ -95,6 +95,72 @@ test('email hash input routes only to gravatar, not to other email providers', a
   t.true(github.notCalled)
 })
 
+const createTiered = providersBy => {
+  const calls = []
+  const answering = name => async () => {
+    calls.push(name)
+    return `https://${name}`
+  }
+  const failing = name => async () => {
+    calls.push(name)
+    throw new Error(`${name} failed`)
+  }
+  const reachableUrl = sinon
+    .stub()
+    .callsFake(async url => ({ statusCode: 200, url }))
+  reachableUrl.isReachable = sinon.stub().returns(true)
+
+  const { auto } = autoFactory({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: {
+      primary: providersBy.primaryAnswers
+        ? answering('primary')
+        : failing('primary'),
+      fallback: answering('fallback')
+    },
+    providersBy: { domain: [['primary'], ['fallback']] },
+    reachableUrl
+  })
+
+  return { auto, calls }
+}
+
+test('a later tier only runs once the one before it is exhausted', async t => {
+  const { auto, calls } = createTiered({ primaryAnswers: false })
+
+  const { data } = await auto('domain')('example.com', {})
+
+  t.is(data, 'https://fallback')
+  t.deepEqual(calls, ['primary', 'fallback'])
+})
+
+test('a later tier never runs when the one before it answers', async t => {
+  const { auto, calls } = createTiered({ primaryAnswers: true })
+
+  const { data } = await auto('domain')('example.com', {})
+
+  t.is(data, 'https://primary')
+  t.deepEqual(calls, ['primary'])
+})
+
+test('the error raised when every tier fails is the first one', async t => {
+  const reachableUrl = sinon.stub()
+  reachableUrl.isReachable = sinon.stub().returns(true)
+
+  const { auto } = autoFactory({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: {
+      primary: sinon.stub().rejects(new Error('primary failed')),
+      fallback: sinon.stub().rejects(new Error('fallback failed'))
+    },
+    providersBy: { domain: [['primary'], ['fallback']] },
+    reachableUrl
+  })
+
+  const error = await t.throwsAsync(auto('domain')('example.com', {}))
+  t.true([...error].some(({ message }) => message === 'primary failed'))
+})
+
 test('getInputType is deterministic with stateful domain regex', t => {
   const autoFactoryWithStatefulRegex = proxyquire('../../../src/avatar/auto', {
     'url-regex-safe': () => /reddit\.com/g
@@ -116,7 +182,9 @@ test('getAvatar throws "not found" when provider returns undefined', async t => 
     reachableUrl
   })
 
-  const error = await t.throwsAsync(() => getAvatar(provider, 'google', 'input', {}))
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'google', 'input', {})
+  )
   t.is(error.message, 'not found')
   t.is(error.statusCode, 404)
   t.is(error.provider, 'google')
@@ -134,7 +202,9 @@ test('getAvatar throws "invalid" when provider returns a non-string value', asyn
     reachableUrl
   })
 
-  const error = await t.throwsAsync(() => getAvatar(provider, 'google', 'input', {}))
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'google', 'input', {})
+  )
   t.is(error.message, '`null` is invalid')
   t.is(error.statusCode, 422)
   t.is(error.provider, 'google')
@@ -152,7 +222,9 @@ test('getAvatar throws "invalid" when provider returns an empty string', async t
     reachableUrl
   })
 
-  const error = await t.throwsAsync(() => getAvatar(provider, 'google', 'input', {}))
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'google', 'input', {})
+  )
   t.is(error.message, '`` is invalid')
   t.is(error.statusCode, 422)
 })
@@ -169,7 +241,9 @@ test('getAvatar throws when provider returns a non-absolute URL', async t => {
     reachableUrl
   })
 
-  const error = await t.throwsAsync(() => getAvatar(provider, 'google', 'input', {}))
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'google', 'input', {})
+  )
   t.is(error.message, 'The URL must to be absolute.')
   t.is(error.statusCode, 400)
   t.is(error.provider, 'google')
@@ -177,7 +251,9 @@ test('getAvatar throws when provider returns a non-absolute URL', async t => {
 
 test('getAvatar throws when the resolved URL is not reachable', async t => {
   const provider = sinon.stub().resolves('https://example.com/avatar.png')
-  const reachableUrl = sinon.stub().resolves({ statusCode: 404, url: 'https://example.com/avatar.png' })
+  const reachableUrl = sinon
+    .stub()
+    .resolves({ statusCode: 404, url: 'https://example.com/avatar.png' })
   reachableUrl.isReachable = sinon.stub().returns(false)
 
   const { getAvatar } = autoFactory({
@@ -187,7 +263,9 @@ test('getAvatar throws when the resolved URL is not reachable', async t => {
     reachableUrl
   })
 
-  const error = await t.throwsAsync(() => getAvatar(provider, 'google', 'input', {}))
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'google', 'input', {})
+  )
   t.is(error.statusCode, 404)
   t.is(error.provider, 'google')
 })
@@ -207,7 +285,9 @@ test('getAvatar sets provider on error from response.statusCode when statusCode 
     reachableUrl
   })
 
-  const error = await t.throwsAsync(() => getAvatar(provider, 'google', 'input', {}))
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'google', 'input', {})
+  )
   t.is(error.statusCode, 503)
   t.is(error.provider, 'google')
 })

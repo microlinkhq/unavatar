@@ -22,9 +22,11 @@ module.exports = ({
     redis
   })
   const cache = require('./util/cache')({ createMultiCache, createRedisCache })
+  const dnsResolver = require('./util/dns-resolver')(constants)
   const cacheableLookup = require('./util/cacheable-lookup')({
     ...constants,
-    cache: cache.dnsCache
+    cache: cache.dnsCache,
+    resolver: dnsResolver
   })
   const isReservedIp = require('./util/is-reserved-ip')({ cacheableLookup })
   const got = require('./util/got')({ cacheableLookup })
@@ -50,6 +52,8 @@ module.exports = ({
     got,
     reachableUrl,
     isReservedIp,
+    dnsResolver,
+    bimiCache: cache.bimiCache,
     githubSearchCache: cache.githubSearchCache,
     itunesSearchCache: cache.itunesSearchCache
   }

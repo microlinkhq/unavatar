@@ -12,6 +12,8 @@ const mockCtx = {
   createHtmlProvider: () => async function () {},
   getOgImage: () => undefined,
   got: Object.assign(() => {}, { gotOpts: {} }),
+  dnsResolver: { resolveTxt: async () => [] },
+  bimiCache: new Keyv({ store: new Map() }),
   githubSearchCache: new Keyv({ store: new Map() }),
   itunesSearchCache: new Keyv({ store: new Map() })
 }
@@ -36,17 +38,24 @@ for (const file of providerFiles) {
   })
 }
 
+const toTiers = providerNames =>
+  Array.isArray(providerNames[0]) ? providerNames : [providerNames]
+
 test('providersBy references valid providers only', t => {
   for (const inputType of ['email', 'username', 'domain']) {
     t.true(
       Array.isArray(providersBy[inputType]),
       `${inputType} should be an array`
     )
-    for (const providerName of providersBy[inputType]) {
-      t.truthy(
-        providers[providerName],
-        `${providerName} should exist in providers`
-      )
+    for (const tier of toTiers(providersBy[inputType])) {
+      t.true(Array.isArray(tier), `${inputType} tiers should be arrays`)
+      t.true(tier.length > 0, `${inputType} tiers should not be empty`)
+      for (const providerName of tier) {
+        t.truthy(
+          providers[providerName],
+          `${providerName} should exist in providers`
+        )
+      }
     }
   }
 })
