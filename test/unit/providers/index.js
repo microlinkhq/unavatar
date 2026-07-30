@@ -12,11 +12,17 @@ const mockCtx = {
   createHtmlProvider: () => async function () {},
   getOgImage: () => undefined,
   got: Object.assign(() => {}, { gotOpts: {} }),
+  dnsResolver: { resolveTxt: async () => [] },
+  bimiCache: new Keyv({ store: new Map() }),
   githubSearchCache: new Keyv({ store: new Map() }),
   itunesSearchCache: new Keyv({ store: new Map() })
 }
 
-const { providers, providersBy } = require('../../../src/providers')(mockCtx)
+const {
+  providers,
+  providerTiers,
+  providersBy
+} = require('../../../src/providers')(mockCtx)
 
 const providersDir = path.join(__dirname, '../../../src/providers')
 const providerFiles = fs
@@ -36,25 +42,35 @@ for (const file of providerFiles) {
   })
 }
 
-test('providersBy references valid providers only', t => {
-  for (const inputType of ['email', 'username', 'domain']) {
+test('providerTiers references valid providers only', t => {
+  for (const inputType of Object.keys(providerTiers)) {
     t.true(
-      Array.isArray(providersBy[inputType]),
+      Array.isArray(providerTiers[inputType]),
       `${inputType} should be an array`
     )
-    for (const providerName of providersBy[inputType]) {
-      t.truthy(
-        providers[providerName],
-        `${providerName} should exist in providers`
-      )
+    for (const tier of providerTiers[inputType]) {
+      t.true(Array.isArray(tier), `${inputType} tiers should be arrays`)
+      t.true(tier.length > 0, `${inputType} tiers should not be empty`)
+      for (const providerName of tier) {
+        t.truthy(
+          providers[providerName],
+          `${providerName} should exist in providers`
+        )
+      }
     }
   }
 })
 
+test('providersBy stays a flat list per input type, tiers kept private', t => {
+  t.deepEqual(Object.keys(providersBy), ['email', 'username', 'domain'])
+  t.deepEqual(providersBy.email, ['gravatar', 'github', 'bimi'])
+  t.deepEqual(providersBy.domain, ['bimi', 'duckduckgo', 'google', 'microlink'])
+  t.is(providersBy.username.at(0), 'apple-music')
+})
+
 test('providers do not duplicate og:image extraction or import html-provider directly', t => {
   const directImportPattern = /require\((['"])..\/util\/html-provider\1\)/
-  const ogImageSelectorPattern =
-    /meta\[property="og:image"\][\s\S]*meta\[name="og:image"\]/
+  const ogImageSelectorPattern = /meta\[property="og:image"\][\s\S]*meta\[name="og:image"\]/
 
   for (const file of providerFiles) {
     const filePath = path.join(providersDir, file)

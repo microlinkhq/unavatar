@@ -22,9 +22,11 @@ module.exports = ({
     redis
   })
   const cache = require('./util/cache')({ createMultiCache, createRedisCache })
+  const dnsResolver = require('./util/dns-resolver')(constants)
   const cacheableLookup = require('./util/cacheable-lookup')({
     ...constants,
-    cache: cache.dnsCache
+    cache: cache.dnsCache,
+    resolver: dnsResolver
   })
   const isReservedIp = require('./util/is-reserved-ip')({ cacheableLookup })
   const got = require('./util/got')({ cacheableLookup })
@@ -34,13 +36,16 @@ module.exports = ({
   })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
-  const { createHtmlProvider, getOgImage, NOT_FOUND } =
-    require('./util/html-provider')({
-      ...constants,
-      getHTML,
-      onFetchHTML,
-      userAgent
-    })
+  const {
+    createHtmlProvider,
+    getOgImage,
+    NOT_FOUND
+  } = require('./util/html-provider')({
+    ...constants,
+    getHTML,
+    onFetchHTML,
+    userAgent
+  })
 
   const providerCtx = {
     constants,
@@ -50,15 +55,19 @@ module.exports = ({
     got,
     reachableUrl,
     isReservedIp,
+    dnsResolver,
+    bimiCache: cache.bimiCache,
     githubSearchCache: cache.githubSearchCache,
     itunesSearchCache: cache.itunesSearchCache
   }
-  const { providers, providersBy } = require('./providers')(providerCtx)
+  const { providers, providerTiers, providersBy } = require('./providers')(
+    providerCtx
+  )
 
   const { auto, getInputType, getAvatar } = require('./avatar/auto')({
     constants,
     providers,
-    providersBy,
+    providerTiers,
     reachableUrl
   })
 

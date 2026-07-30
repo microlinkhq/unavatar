@@ -23,14 +23,8 @@ const getInputType = input => {
   return 'username'
 }
 
-const factory = ({ constants, providers, providersBy, reachableUrl }) => {
+const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
   const { REQUEST_TIMEOUT } = constants
-  const providerEntriesByType = Object.fromEntries(
-    Object.entries(providersBy).map(([inputType, providerNames]) => [
-      inputType,
-      providerNames.map(provider => [provider, providers[provider]])
-    ])
-  )
 
   const getAvatarContent = provider => async output => {
     if (typeof output !== 'string' || output === '') {
@@ -68,7 +62,13 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     return { type: 'url', data: url, provider }
   }
 
-  const getAvatar = async (fn, provider, input, context) => {
+  const getAvatar = async (
+    fn,
+    provider,
+    input,
+    context,
+    deadline = Date.now() + REQUEST_TIMEOUT
+  ) => {
     const promise = Promise.resolve(fn(input, context))
       .then(getAvatarContent(provider))
       .catch(error => {
@@ -79,31 +79,48 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
         throw error
       })
 
-    return pTimeout(promise, REQUEST_TIMEOUT).catch(error => {
-      error.provider = provider
-      throw error
-    })
+    return pTimeout(promise, Math.max(0, deadline - Date.now())).catch(
+      error => {
+        error.provider = provider
+        throw error
+      }
+    )
   }
 
-  const resolveAutoByType = async (inputType, input, context) => {
-    let collection = providerEntriesByType[inputType]
+  const raceTier = (tier, input, context, deadline) =>
+    pAny(
+      tier.map(provider =>
+        getAvatar(providers[provider], provider, input, context, deadline)
+      )
+    )
 
-    if (inputType === 'email' && isHash(input)) {
-      collection = collection.filter(([provider]) => provider === 'gravatar')
+  const auto = inputType => async (input, context) => {
+    const tierKey =
+      inputType === 'email' && isHash(input) ? 'emailHash' : inputType
+    const tiers = providerTiers[tierKey]
+
+    if (!tiers?.length) {
+      throw new ExtendableError({
+        message: `No providers declared for \`${tierKey}\`.`,
+        statusCode: httpStatus.NOT_FOUND
+      })
     }
 
-    const promises = new Array(collection.length)
+    const deadline = Date.now() + REQUEST_TIMEOUT
 
-    for (let index = 0; index < collection.length; index++) {
-      const [provider, fn] = collection[index]
-      promises[index] = getAvatar(fn, provider, input, context)
+    let firstError
+
+    for (const tier of tiers) {
+      try {
+        return await raceTier(tier, input, context, deadline)
+      } catch (error) {
+        firstError ??= error
+        if (Date.now() >= deadline) break
+      }
     }
 
-    return pAny(promises)
+    throw firstError
   }
-
-  const auto = inputType => (input, context) =>
-    resolveAutoByType(inputType, input, context)
 
   return { auto, getInputType, getAvatar }
 }

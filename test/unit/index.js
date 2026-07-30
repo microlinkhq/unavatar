@@ -53,6 +53,11 @@ test('supports explicit resolvers for email and domain while keeping direct inpu
     }),
     './providers': () => ({
       providers: { github: githubProvider },
+      providerTiers: {
+        email: [['gravatar']],
+        domain: [['microlink']],
+        username: []
+      },
       providersBy: { email: ['gravatar'], domain: ['microlink'], username: [] }
     }),
     './avatar/auto': () => ({ auto, getInputType, getAvatar })
@@ -78,5 +83,7 @@ test('supports explicit resolvers for email and domain while keeping direct inpu
   t.deepEqual(resolversByType.email.getCall(1).args, ['hello@example.com', {}])
 
   t.true(getInputType.calledOnceWithExactly('hello@example.com'))
-  t.true(getAvatar.calledOnceWithExactly(githubProvider, 'github', 'kikobeats', {}))
+  t.true(
+    getAvatar.calledOnceWithExactly(githubProvider, 'github', 'kikobeats', {})
+  )
 })
