@@ -1,6 +1,7 @@
 'use strict'
 
 const Tangerine = require('tangerine')
+const got = require('got')
 
 module.exports = ({ DNS_TIMEOUT, DNS_SERVERS }) =>
   new Tangerine(
@@ -9,7 +10,7 @@ module.exports = ({ DNS_TIMEOUT, DNS_SERVERS }) =>
       timeout: DNS_TIMEOUT,
       servers: DNS_SERVERS
     },
-    require('got').extend({
+    got.extend({
       responseType: 'buffer',
       decompress: false,
       retry: 0

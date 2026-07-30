@@ -78,10 +78,13 @@ const providerTiers = {
   domain: [['bimi'], ['duckduckgo', 'google', 'microlink']]
 }
 
+const { emailHash, ...publicTiers } = providerTiers
+
 const providersBy = Object.fromEntries(
-  Object.entries(providerTiers)
-    .filter(([inputType]) => inputType !== 'emailHash')
-    .map(([inputType, tiers]) => [inputType, tiers.flat()])
+  Object.entries(publicTiers).map(([inputType, tiers]) => [
+    inputType,
+    tiers.flat()
+  ])
 )
 
 module.exports = ctx => {
