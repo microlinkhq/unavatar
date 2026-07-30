@@ -94,7 +94,7 @@ const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
       )
     )
 
-  const resolveAutoByType = async (inputType, input, context) => {
+  const auto = inputType => async (input, context) => {
     const tierKey =
       inputType === 'email' && isHash(input) ? 'emailHash' : inputType
     const tiers = providerTiers[tierKey]
@@ -121,9 +121,6 @@ const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
 
     throw firstError
   }
-
-  const auto = inputType => (input, context) =>
-    resolveAutoByType(inputType, input, context)
 
   return { auto, getInputType, getAvatar }
 }
