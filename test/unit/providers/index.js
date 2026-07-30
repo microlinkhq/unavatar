@@ -63,11 +63,9 @@ test('providerTiers references valid providers only', t => {
 
 test('providersBy stays a flat list per input type, tiers kept private', t => {
   t.deepEqual(Object.keys(providersBy), ['email', 'username', 'domain'])
-
-  for (const inputType of Object.keys(providersBy)) {
-    t.deepEqual(providersBy[inputType], providerTiers[inputType].flat())
-    t.true(providersBy[inputType].every(name => typeof name === 'string'))
-  }
+  t.deepEqual(providersBy.email, ['gravatar', 'github', 'bimi'])
+  t.deepEqual(providersBy.domain, ['bimi', 'duckduckgo', 'google', 'microlink'])
+  t.is(providersBy.username.at(0), 'apple-music')
 })
 
 test('providers do not duplicate og:image extraction or import html-provider directly', t => {

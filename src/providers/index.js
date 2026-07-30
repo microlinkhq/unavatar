@@ -1,7 +1,5 @@
 'use strict'
 
-const INPUT_TYPES = ['email', 'username', 'domain']
-
 const providerTiers = {
   email: [['gravatar', 'github'], ['bimi']],
   emailHash: [['gravatar']],
@@ -81,7 +79,9 @@ const providerTiers = {
 }
 
 const providersBy = Object.fromEntries(
-  INPUT_TYPES.map(inputType => [inputType, providerTiers[inputType].flat()])
+  Object.entries(providerTiers)
+    .filter(([inputType]) => inputType !== 'emailHash')
+    .map(([inputType, tiers]) => [inputType, tiers.flat()])
 )
 
 module.exports = ctx => {
