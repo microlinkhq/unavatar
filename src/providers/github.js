@@ -44,15 +44,17 @@ const getAvatarUrl = ({ constants, input }) =>
     size: constants.AVATAR_SIZE
   })}`
 
-const createSearchUsersByEmail = ({ got }) => async email => {
-  const body = await fetchJsonBody({
-    got,
-    url: `${GITHUB_API_URL}/search/users?q=${encodeURIComponent(
-      email
-    )}&per_page=${SEARCH_USERS_PER_PAGE}`
-  })
-  return getSearchItems(body)
-}
+const createSearchUsersByEmail =
+  ({ got }) =>
+    async email => {
+      const body = await fetchJsonBody({
+        got,
+        url: `${GITHUB_API_URL}/search/users?q=${encodeURIComponent(
+        email
+      )}&per_page=${SEARCH_USERS_PER_PAGE}`
+      })
+      return getSearchItems(body)
+    }
 
 const createGetUser = ({ githubSearchCache, got }) =>
   memoize(
@@ -65,19 +67,21 @@ const createGetUser = ({ githubSearchCache, got }) =>
     { key: login => `user:${normalizeValue(login)}` }
   )
 
-const createSearchCommitsByEmail = ({ got }) => async email => {
-  const body = await fetchJsonBody({
-    got,
-    url: `${GITHUB_API_URL}/search/commits?q=${encodeURIComponent(
-      `author-email:${email}`
-    )}&per_page=${SEARCH_COMMITS_PER_PAGE}`,
-    options: {
-      headers: { accept: COMMIT_SEARCH_ACCEPT_HEADER }
-    }
-  })
+const createSearchCommitsByEmail =
+  ({ got }) =>
+    async email => {
+      const body = await fetchJsonBody({
+        got,
+        url: `${GITHUB_API_URL}/search/commits?q=${encodeURIComponent(
+        `author-email:${email}`
+      )}&per_page=${SEARCH_COMMITS_PER_PAGE}`,
+        options: {
+          headers: { accept: COMMIT_SEARCH_ACCEPT_HEADER }
+        }
+      })
 
-  return getSearchItems(body)
-}
+      return getSearchItems(body)
+    }
 
 const findExactPublicProfileMatches = async ({
   email,
@@ -160,14 +164,12 @@ module.exports = ({ constants, githubSearchCache, got }) => {
 
     // Strategy: exact public user email -> user commit consensus ->
     // exact organization email.
-    const {
-      userAvatarUrl,
-      organizationAvatarUrl
-    } = await findExactPublicProfileMatches({
-      email,
-      getUser,
-      searchUsersByEmail
-    })
+    const { userAvatarUrl, organizationAvatarUrl } =
+      await findExactPublicProfileMatches({
+        email,
+        getUser,
+        searchUsersByEmail
+      })
 
     if (userAvatarUrl) return userAvatarUrl
 

@@ -26,13 +26,6 @@ const getInputType = input => {
 const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   const { REQUEST_TIMEOUT } = constants
 
-  const providerEntriesByType = Object.fromEntries(
-    Object.entries(providersBy).map(([inputType, tiers]) => [
-      inputType,
-      tiers.map(tier => tier.map(provider => [provider, providers[provider]]))
-    ])
-  )
-
   const getAvatarContent = provider => async output => {
     if (typeof output !== 'string' || output === '') {
       const message =
@@ -96,15 +89,15 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
 
   const raceTier = (tier, input, context, deadline) =>
     pAny(
-      tier.map(([provider, fn]) =>
-        getAvatar(fn, provider, input, context, deadline)
+      tier.map(provider =>
+        getAvatar(providers[provider], provider, input, context, deadline)
       )
     )
 
   const resolveAutoByType = async (inputType, input, context) => {
     const tierKey =
       inputType === 'email' && isHash(input) ? 'emailHash' : inputType
-    const tiers = providerEntriesByType[tierKey]
+    const tiers = providersBy[tierKey]
 
     if (!tiers?.length) {
       throw new ExtendableError({
@@ -118,11 +111,11 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     let firstError
 
     for (const tier of tiers) {
-      if (firstError && Date.now() >= deadline) break
       try {
         return await raceTier(tier, input, context, deadline)
       } catch (error) {
         firstError ??= error
+        if (Date.now() >= deadline) break
       }
     }
 

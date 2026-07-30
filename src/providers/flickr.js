@@ -1,6 +1,7 @@
 'use strict'
 
-const BUDDY_ICON_URL_PATTERN = /(?:https?:)?\/\/[^"'()\s]*\/buddyicons\/[^"'()\s]+/i
+const BUDDY_ICON_URL_PATTERN =
+  /(?:https?:)?\/\/[^"'()\s]*\/buddyicons\/[^"'()\s]+/i
 const CSS_URL_PATTERN = /url\((['"]?)([^)'"]+)\1\)/i
 const unescapePathSlashes = value => value?.replace(/\\\//g, '/')
 
@@ -43,15 +44,11 @@ const getBuddyIconFromCss = value => {
 }
 
 const getAvatar = $ => {
-  const imgBuddyIcon = $('img[src*="/buddyicons/"]')
-    .first()
-    .attr('src')
+  const imgBuddyIcon = $('img[src*="/buddyicons/"]').first().attr('src')
   if (imgBuddyIcon) return imgBuddyIcon
 
   const buddyIconFromStyle = getBuddyIconFromCss(
-    $('[style*="buddyicons/"]')
-      .first()
-      .attr('style')
+    $('[style*="buddyicons/"]').first().attr('style')
   )
   if (buddyIconFromStyle) return buddyIconFromStyle
 

@@ -1,8 +1,10 @@
 'use strict'
 
-const DISCORD_INVITE_HOST_RE = /^(?:www\.)?(?:discord\.gg|discord(?:app)?\.com)$/i
+const DISCORD_INVITE_HOST_RE =
+  /^(?:www\.)?(?:discord\.gg|discord(?:app)?\.com)$/i
 
-const DISCORD_GUILD_ID_RE = /^https:\/\/cdn\.discordapp\.com\/splashes\/(\d+)\/[^/?#]+\.[^/?#]+(?:\?[^#]+)?(?:#.*)?$/
+const DISCORD_GUILD_ID_RE =
+  /^https:\/\/cdn\.discordapp\.com\/splashes\/(\d+)\/[^/?#]+\.[^/?#]+(?:\?[^#]+)?(?:#.*)?$/
 
 const DISCORD_INVITE_URL_BASE = 'https://discord.com/invite/'
 

@@ -3,9 +3,7 @@
 const { get } = require('lodash')
 
 const getAvatar = $ => {
-  const text = $('#__UNIVERSAL_DATA_FOR_REHYDRATION__')
-    .contents()
-    .text()
+  const text = $('#__UNIVERSAL_DATA_FOR_REHYDRATION__').contents().text()
   if (!text) return
   return get(JSON.parse(text), [
     '__DEFAULT_SCOPE__',

@@ -13,9 +13,7 @@ const getAvatarUrl = input =>
 
 const getAvatar = $ =>
   $(`${AVATAR_SELECTOR}[width="128"]`).attr('src') ||
-  $(AVATAR_SELECTOR)
-    .first()
-    .attr('src')
+  $(AVATAR_SELECTOR).first().attr('src')
 
 module.exports = ({ createHtmlProvider }) =>
   createHtmlProvider({

@@ -59,8 +59,7 @@ test('providersBy references valid providers only', t => {
 
 test('providers do not duplicate og:image extraction or import html-provider directly', t => {
   const directImportPattern = /require\((['"])..\/util\/html-provider\1\)/
-  const ogImageSelectorPattern =
-    /meta\[property="og:image"\][\s\S]*meta\[name="og:image"\]/
+  const ogImageSelectorPattern = /meta\[property="og:image"\][\s\S]*meta\[name="og:image"\]/
 
   for (const file of providerFiles) {
     const filePath = path.join(providersDir, file)
