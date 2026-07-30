@@ -1,5 +1,6 @@
 'use strict'
 
+const { setTimeout } = require('node:timers/promises')
 const test = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
@@ -56,7 +57,7 @@ test('auto(type) uses the provided input type resolver', async t => {
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']], email: [], username: [] },
+    providersBy: { domain: [['google']] },
     reachableUrl
   })
 
@@ -86,9 +87,7 @@ test('email hash input routes only to gravatar, not to other email providers', a
     providers: { gravatar, github },
     providersBy: {
       email: [['gravatar', 'github']],
-      emailHash: [['gravatar']],
-      username: [],
-      domain: []
+      emailHash: [['gravatar']]
     },
     reachableUrl
   })
@@ -103,11 +102,13 @@ test('email hash input routes only to gravatar, not to other email providers', a
 const createTiers = ({
   failing = [],
   hanging = [],
+  slow = {},
   REQUEST_TIMEOUT = 25000
 } = {}) => {
   const calls = []
   const provider = name => async () => {
     calls.push(name)
+    if (slow[name]) await setTimeout(slow[name])
     if (hanging.includes(name)) return new Promise(() => {})
     if (failing.includes(name)) throw new Error(`${name} failed`)
     return `https://${name}`
@@ -150,7 +151,27 @@ test('the error raised when every tier fails is the first one', async t => {
   t.true([...error].some(({ message }) => message === 'primary failed'))
 })
 
-test('every tier shares one deadline instead of restarting the clock', async t => {
+test('a later tier inherits what is left of the budget, not a fresh one', async t => {
+  const REQUEST_TIMEOUT = 300
+  const { resolve, calls } = createTiers({
+    slow: { primary: 200 },
+    failing: ['primary'],
+    hanging: ['fallback'],
+    REQUEST_TIMEOUT
+  })
+
+  const startedAt = Date.now()
+  await t.throwsAsync(resolve('example.com', {}))
+  const elapsed = Date.now() - startedAt
+
+  t.deepEqual(calls, ['primary', 'fallback'])
+  t.true(
+    elapsed < REQUEST_TIMEOUT * 1.5,
+    `a fallback given a fresh budget took ${elapsed}ms, past the ${REQUEST_TIMEOUT}ms deadline`
+  )
+})
+
+test('a later tier is not started once the budget is gone', async t => {
   const REQUEST_TIMEOUT = 200
   const { resolve, calls } = createTiers({
     hanging: ['primary', 'fallback'],
@@ -161,11 +182,23 @@ test('every tier shares one deadline instead of restarting the clock', async t =
   await t.throwsAsync(resolve('example.com', {}))
   const elapsed = Date.now() - startedAt
 
-  t.deepEqual(calls, ['primary', 'fallback'])
+  t.deepEqual(calls, ['primary'])
   t.true(
     elapsed < REQUEST_TIMEOUT * 2,
     `two hanging tiers took ${elapsed}ms, past the ${REQUEST_TIMEOUT}ms budget`
   )
+})
+
+test('a zero budget still raises a real error, never undefined', async t => {
+  const { resolve, calls } = createTiers({
+    hanging: ['primary', 'fallback'],
+    REQUEST_TIMEOUT: 0
+  })
+
+  const error = await t.throwsAsync(resolve('example.com', {}))
+
+  t.true(error instanceof Error)
+  t.deepEqual(calls, ['primary'])
 })
 
 test('a provider reached with the budget already spent times out at once', async t => {
@@ -360,7 +393,7 @@ test('auto(type) is deterministic with stateful data URI regex', async t => {
   const { auto } = autoFactoryWithStatefulRegex({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']], email: [], username: [] },
+    providersBy: { domain: [['google']] },
     reachableUrl
   })
 

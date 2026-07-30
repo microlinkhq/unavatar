@@ -118,6 +118,7 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     let firstError
 
     for (const tier of tiers) {
+      if (firstError && Date.now() >= deadline) break
       try {
         return await raceTier(tier, input, context, deadline)
       } catch (error) {
