@@ -100,10 +100,15 @@ test('email hash input routes only to gravatar, not to other email providers', a
   t.true(github.notCalled)
 })
 
-const createTiered = (...failing) => {
+const createTiers = ({
+  failing = [],
+  hanging = [],
+  REQUEST_TIMEOUT = 25000
+} = {}) => {
   const calls = []
   const provider = name => async () => {
     calls.push(name)
+    if (hanging.includes(name)) return new Promise(() => {})
     if (failing.includes(name)) throw new Error(`${name} failed`)
     return `https://${name}`
   }
@@ -113,52 +118,8 @@ const createTiered = (...failing) => {
   reachableUrl.isReachable = sinon.stub().returns(true)
 
   const { auto } = autoFactory({
-    constants: { REQUEST_TIMEOUT: 25000 },
-    providers: { primary: provider('primary'), fallback: provider('fallback') },
-    providersBy: { domain: [['primary'], ['fallback']] },
-    reachableUrl
-  })
-
-  return { auto, calls }
-}
-
-test('a later tier only runs once the one before it is exhausted', async t => {
-  const { auto, calls } = createTiered('primary')
-
-  const { data } = await auto('domain')('example.com', {})
-
-  t.is(data, 'https://fallback')
-  t.deepEqual(calls, ['primary', 'fallback'])
-})
-
-test('a later tier never runs when the one before it answers', async t => {
-  const { auto, calls } = createTiered()
-
-  const { data } = await auto('domain')('example.com', {})
-
-  t.is(data, 'https://primary')
-  t.deepEqual(calls, ['primary'])
-})
-
-test('the error raised when every tier fails is the first one', async t => {
-  const { auto } = createTiered('primary', 'fallback')
-
-  const error = await t.throwsAsync(auto('domain')('example.com', {}))
-  t.true([...error].some(({ message }) => message === 'primary failed'))
-})
-
-const createHanging = REQUEST_TIMEOUT => {
-  const calls = []
-  const hang = name => () => {
-    calls.push(name)
-    return new Promise(() => {})
-  }
-  const reachableUrl = sinon.stub()
-  reachableUrl.isReachable = sinon.stub().returns(true)
-
-  const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT },
-    providers: { primary: hang('primary'), fallback: hang('fallback') },
+    providers: { primary: provider('primary'), fallback: provider('fallback') },
     providersBy: { domain: [['primary'], ['fallback']] },
     reachableUrl
   })
@@ -166,9 +127,37 @@ const createHanging = REQUEST_TIMEOUT => {
   return { resolve: auto('domain'), calls }
 }
 
+test('a later tier only runs once the one before it is exhausted', async t => {
+  const { resolve, calls } = createTiers({ failing: ['primary'] })
+
+  const { data } = await resolve('example.com', {})
+
+  t.is(data, 'https://fallback')
+  t.deepEqual(calls, ['primary', 'fallback'])
+})
+
+test('a later tier never runs when the one before it answers', async t => {
+  const { resolve, calls } = createTiers()
+
+  const { data } = await resolve('example.com', {})
+
+  t.is(data, 'https://primary')
+  t.deepEqual(calls, ['primary'])
+})
+
+test('the error raised when every tier fails is the first one', async t => {
+  const { resolve } = createTiers({ failing: ['primary', 'fallback'] })
+
+  const error = await t.throwsAsync(resolve('example.com', {}))
+  t.true([...error].some(({ message }) => message === 'primary failed'))
+})
+
 test('every tier shares one deadline instead of restarting the clock', async t => {
   const REQUEST_TIMEOUT = 200
-  const { resolve, calls } = createHanging(REQUEST_TIMEOUT)
+  const { resolve, calls } = createTiers({
+    hanging: ['primary', 'fallback'],
+    REQUEST_TIMEOUT
+  })
 
   const startedAt = Date.now()
   await t.throwsAsync(resolve('example.com', {}))
