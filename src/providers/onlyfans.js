@@ -3,7 +3,9 @@
 const { get } = require('lodash')
 
 const getAvatar = $ => {
-  const text = $('script[type="application/ld+json"]').contents().text()
+  const text = $('script[type="application/ld+json"]')
+    .contents()
+    .text()
   return text ? get(JSON.parse(text), 'mainEntity.image') : undefined
 }
 

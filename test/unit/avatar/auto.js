@@ -112,10 +112,8 @@ const createTiers = ({
     if (failing.includes(name)) throw new Error(`${name} failed`)
     return `https://${name}`
   }
-  const reachableUrl = sinon
-    .stub()
-    .callsFake(async url => ({ statusCode: 200, url }))
-  reachableUrl.isReachable = sinon.stub().returns(true)
+  const reachableUrl = async url => ({ statusCode: 200, url })
+  reachableUrl.isReachable = () => true
 
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT },
@@ -173,13 +171,13 @@ test('every tier shares one deadline instead of restarting the clock', async t =
 test('a provider reached with the budget already spent times out at once', async t => {
   const REQUEST_TIMEOUT = 25000
   const provider = () => new Promise(() => {})
-  const reachableUrl = sinon.stub()
-  reachableUrl.isReachable = sinon.stub().returns(true)
+  const reachableUrl = () => {}
+  reachableUrl.isReachable = () => true
 
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT },
-    providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providers: {},
+    providersBy: {},
     reachableUrl
   })
 
@@ -200,8 +198,8 @@ test('a provider reached with the budget already spent times out at once', async
 })
 
 test('an input type with no providers declared reports not found', async t => {
-  const reachableUrl = sinon.stub()
-  reachableUrl.isReachable = sinon.stub().returns(true)
+  const reachableUrl = () => {}
+  reachableUrl.isReachable = () => true
 
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },

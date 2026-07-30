@@ -5,7 +5,9 @@ const { get } = require('lodash')
 const getAvatarUrl = input => `https://www.paypal.com/paypalme/${input}`
 
 const getAvatar = $ => {
-  const text = $('#client-data').contents().text()
+  const text = $('#client-data')
+    .contents()
+    .text()
   if (!text) return
   return get(JSON.parse(text), [
     'recipientSlugDetails',

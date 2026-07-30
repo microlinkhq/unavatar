@@ -36,13 +36,16 @@ module.exports = ({
   })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
-  const { createHtmlProvider, getOgImage, NOT_FOUND } =
-    require('./util/html-provider')({
-      ...constants,
-      getHTML,
-      onFetchHTML,
-      userAgent
-    })
+  const {
+    createHtmlProvider,
+    getOgImage,
+    NOT_FOUND
+  } = require('./util/html-provider')({
+    ...constants,
+    getHTML,
+    onFetchHTML,
+    userAgent
+  })
 
   const providerCtx = {
     constants,

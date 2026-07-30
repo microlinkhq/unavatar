@@ -15,8 +15,8 @@ module.exports = ({ got, createHtmlProvider }) => {
   return function openstreetmap (input, context) {
     return OPENSTREETMAP_USER_ID_REGEX.test(input)
       ? got(`${OPENSTREETMAP_API_URL}/${input}.json`, {
-        responseType: 'json'
-      }).then(({ body }) => body?.user?.img?.href)
+          responseType: 'json'
+        }).then(({ body }) => body?.user?.img?.href)
       : fromUsername(input, context)
   }
 }

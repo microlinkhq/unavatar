@@ -21,5 +21,7 @@ module.exports = ({ createBrowser, got }) =>
       }
     })
 
-    return Promise.resolve(promise).finally(() => browserContext.destroyContext())
+    return Promise.resolve(promise).finally(() =>
+      browserContext.destroyContext()
+    )
   }

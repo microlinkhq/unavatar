@@ -28,7 +28,11 @@ const extractObject = (source, marker) => {
 
 const getAvatar = ({ $, NOT_FOUND }) => {
   const script = $('script')
-    .filter((_, el) => $(el).text().includes('var profile ='))
+    .filter((_, el) =>
+      $(el)
+        .text()
+        .includes('var profile =')
+    )
     .text()
   const json = extractObject(script, 'var profile =')
   if (!json) return NOT_FOUND

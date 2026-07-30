@@ -4,7 +4,10 @@ const getAvatarUrl = input =>
   `https://cursor.com/${input.startsWith('@') ? input : `@${input}`}`
 
 const getAvatar = $ => {
-  const displayName = $('h1').first().text().trim()
+  const displayName = $('h1')
+    .first()
+    .text()
+    .trim()
   if (!displayName) return
 
   const src = $('img')

@@ -14,7 +14,8 @@ module.exports = ({ bimiCache, dnsResolver, got, isReservedIp }) => {
   return async function bimi (input) {
     const logoUrl = await getLogo(parseInput(input))
     if (!logoUrl) return undefined
-    return (await isReservedIp(new URL(logoUrl).hostname)) ? undefined : logoUrl
+    if (await isReservedIp(new URL(logoUrl).hostname)) return undefined
+    return logoUrl
   }
 }
 

@@ -70,11 +70,10 @@ module.exports = ({
 
         const log = debug.duration({ provider: name, input, providerUrl, tier })
 
-        const {
-          $,
-          statusCode,
-          headers: responseHeaders = {}
-        } = await getHTML(providerUrl, fetchOpts)
+        const { $, statusCode, headers: responseHeaders = {} } = await getHTML(
+          providerUrl,
+          fetchOpts
+        )
 
         attempt.lastHtml =
           typeof $ === 'function' && typeof $.html === 'function'
@@ -118,13 +117,15 @@ module.exports = ({
           const isRateLimited = statusCode === httpStatus.TOO_MANY_REQUESTS
           if (isRateLimited) return { isBlocked: true, antibotProvider: null }
 
-          const { detected: antibotDetected, provider: antibotProvider } =
-            isAntibot({
-              url: providerUrl,
-              statusCode,
-              headers: responseHeaders,
-              body: attempt.lastHtml
-            })
+          const {
+            detected: antibotDetected,
+            provider: antibotProvider
+          } = isAntibot({
+            url: providerUrl,
+            statusCode,
+            headers: responseHeaders,
+            body: attempt.lastHtml
+          })
 
           return {
             isBlocked: antibotDetected,
@@ -144,8 +145,10 @@ module.exports = ({
 
         // Some providers encode not-found via getter output. Check antibot
         // first so challenge pages are retried as blocked, not treated as 404.
-        const { isBlocked: shouldMarkBlocked, antibotProvider } =
-          getBlockedStatus()
+        const {
+          isBlocked: shouldMarkBlocked,
+          antibotProvider
+        } = getBlockedStatus()
 
         if (shouldMarkBlocked) {
           const error = createEmptyGetterResultError()
