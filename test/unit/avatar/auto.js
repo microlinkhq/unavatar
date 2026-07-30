@@ -148,41 +148,47 @@ test('the error raised when every tier fails is the first one', async t => {
 })
 
 const createHanging = REQUEST_TIMEOUT => {
-  const hang = () => new Promise(() => {})
+  const calls = []
+  const hang = name => () => {
+    calls.push(name)
+    return new Promise(() => {})
+  }
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT },
-    providers: { primary: hang, fallback: hang },
+    providers: { primary: hang('primary'), fallback: hang('fallback') },
     providersBy: { domain: [['primary'], ['fallback']] },
     reachableUrl
   })
 
-  return auto('domain')
+  return { resolve: auto('domain'), calls }
 }
 
 test('every tier shares one deadline instead of restarting the clock', async t => {
   const REQUEST_TIMEOUT = 200
-  const resolve = createHanging(REQUEST_TIMEOUT)
+  const { resolve, calls } = createHanging(REQUEST_TIMEOUT)
 
   const startedAt = Date.now()
   await t.throwsAsync(resolve('example.com', {}))
   const elapsed = Date.now() - startedAt
 
+  t.deepEqual(calls, ['primary', 'fallback'])
   t.true(
     elapsed < REQUEST_TIMEOUT * 2,
     `two hanging tiers took ${elapsed}ms, past the ${REQUEST_TIMEOUT}ms budget`
   )
 })
 
-test('a provider reached with the budget already spent times out', async t => {
+test('a provider reached with the budget already spent times out at once', async t => {
+  const REQUEST_TIMEOUT = 25000
   const provider = () => new Promise(() => {})
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
   const { getAvatar } = autoFactory({
-    constants: { REQUEST_TIMEOUT: 25000 },
+    constants: { REQUEST_TIMEOUT },
     providers: { google: provider },
     providersBy: { domain: [['google']] },
     reachableUrl
@@ -190,11 +196,35 @@ test('a provider reached with the budget already spent times out', async t => {
 
   const spent = Date.now() - 1000
 
+  const startedAt = Date.now()
   const error = await t.throwsAsync(() =>
     getAvatar(provider, 'google', 'input', {}, spent)
   )
+  const elapsed = Date.now() - startedAt
+
   t.is(error.name, 'TimeoutError')
   t.is(error.provider, 'google')
+  t.true(
+    elapsed < REQUEST_TIMEOUT / 10,
+    `a spent budget waited ${elapsed}ms instead of rejecting at once`
+  )
+})
+
+test('an input type with no providers declared reports not found', async t => {
+  const reachableUrl = sinon.stub()
+  reachableUrl.isReachable = sinon.stub().returns(true)
+
+  const { auto } = autoFactory({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: {},
+    providersBy: { email: [['gravatar']] },
+    reachableUrl
+  })
+
+  const error = await t.throwsAsync(auto('email')('0'.repeat(32), {}))
+
+  t.is(error.message, 'No providers declared for `emailHash`.')
+  t.is(error.statusCode, 404)
 })
 
 test('getInputType is deterministic with stateful domain regex', t => {

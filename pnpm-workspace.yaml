@@ -1,1 +1,2 @@
-minimumReleaseAge: 0
+minimumReleaseAgeExclude:
+  - bimi-url@1.0.0

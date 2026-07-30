@@ -102,10 +102,9 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
     )
 
   const resolveAutoByType = async (inputType, input, context) => {
-    const tiers =
-      inputType === 'email' && isHash(input)
-        ? providerEntriesByType.emailHash
-        : providerEntriesByType[inputType]
+    const tierKey =
+      inputType === 'email' && isHash(input) ? 'emailHash' : inputType
+    const tiers = providerEntriesByType[tierKey] ?? []
 
     const deadline = Date.now() + REQUEST_TIMEOUT
 
@@ -119,7 +118,11 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
       }
     }
 
-    throw firstError
+    throw firstError ??
+      new ExtendableError({
+        message: `No providers declared for \`${tierKey}\`.`,
+        statusCode: httpStatus.NOT_FOUND
+      })
   }
 
   const auto = inputType => (input, context) =>
