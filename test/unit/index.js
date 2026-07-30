@@ -53,11 +53,12 @@ test('supports explicit resolvers for email and domain while keeping direct inpu
     }),
     './providers': () => ({
       providers: { github: githubProvider },
-      providersBy: {
+      providerTiers: {
         email: [['gravatar']],
         domain: [['microlink']],
         username: []
-      }
+      },
+      providersBy: { email: ['gravatar'], domain: ['microlink'], username: [] }
     }),
     './avatar/auto': () => ({ auto, getInputType, getAvatar })
   })

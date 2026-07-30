@@ -12,10 +12,10 @@ const createProvider = ({
   logos = {},
   isReservedIp = async () => false
 } = {}) => {
-  const received = {}
+  let received
 
   const createGetLogo = options => {
-    Object.assign(received, options)
+    received = options
     return async domain => logos[domain]
   }
 

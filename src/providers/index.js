@@ -1,6 +1,8 @@
 'use strict'
 
-const providersBy = {
+const INPUT_TYPES = ['email', 'username', 'domain']
+
+const providerTiers = {
   email: [['gravatar', 'github'], ['bimi']],
   emailHash: [['gravatar']],
   username: [
@@ -77,6 +79,10 @@ const providersBy = {
   ],
   domain: [['bimi'], ['duckduckgo', 'google', 'microlink']]
 }
+
+const providersBy = Object.fromEntries(
+  INPUT_TYPES.map(inputType => [inputType, providerTiers[inputType].flat()])
+)
 
 module.exports = ctx => {
   const providers = {
@@ -155,5 +161,5 @@ module.exports = ctx => {
     zhihu: require('./zhihu')(ctx)
   }
 
-  return { providers, providersBy }
+  return { providers, providerTiers, providersBy }
 }

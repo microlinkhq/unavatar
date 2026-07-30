@@ -60,12 +60,14 @@ module.exports = ({
     githubSearchCache: cache.githubSearchCache,
     itunesSearchCache: cache.itunesSearchCache
   }
-  const { providers, providersBy } = require('./providers')(providerCtx)
+  const { providers, providerTiers, providersBy } = require('./providers')(
+    providerCtx
+  )
 
   const { auto, getInputType, getAvatar } = require('./avatar/auto')({
     constants,
     providers,
-    providersBy,
+    providerTiers,
     reachableUrl
   })
 

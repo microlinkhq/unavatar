@@ -23,7 +23,7 @@ const getInputType = input => {
   return 'username'
 }
 
-const factory = ({ constants, providers, providersBy, reachableUrl }) => {
+const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
   const { REQUEST_TIMEOUT } = constants
 
   const getAvatarContent = provider => async output => {
@@ -97,7 +97,7 @@ const factory = ({ constants, providers, providersBy, reachableUrl }) => {
   const resolveAutoByType = async (inputType, input, context) => {
     const tierKey =
       inputType === 'email' && isHash(input) ? 'emailHash' : inputType
-    const tiers = providersBy[tierKey]
+    const tiers = providerTiers[tierKey]
 
     if (!tiers?.length) {
       throw new ExtendableError({

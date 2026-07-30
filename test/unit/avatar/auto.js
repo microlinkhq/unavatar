@@ -57,7 +57,7 @@ test('auto(type) uses the provided input type resolver', async t => {
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providerTiers: { domain: [['google']] },
     reachableUrl
   })
 
@@ -85,7 +85,7 @@ test('email hash input routes only to gravatar, not to other email providers', a
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { gravatar, github },
-    providersBy: {
+    providerTiers: {
       email: [['gravatar', 'github']],
       emailHash: [['gravatar']]
     },
@@ -119,7 +119,7 @@ const createTiers = ({
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT },
     providers: { primary: provider('primary'), fallback: provider('fallback') },
-    providersBy: { domain: [['primary'], ['fallback']] },
+    providerTiers: { domain: [['primary'], ['fallback']] },
     reachableUrl
   })
 
@@ -210,7 +210,7 @@ test('a provider reached with the budget already spent times out at once', async
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT },
     providers: {},
-    providersBy: {},
+    providerTiers: {},
     reachableUrl
   })
 
@@ -237,7 +237,7 @@ test('an input type with no providers declared reports not found', async t => {
   const { auto } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: {},
-    providersBy: { email: [['gravatar']] },
+    providerTiers: { email: [['gravatar']] },
     reachableUrl
   })
 
@@ -264,7 +264,7 @@ test('getAvatar throws "not found" when provider returns undefined', async t => 
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providerTiers: { domain: [['google']] },
     reachableUrl
   })
 
@@ -284,7 +284,7 @@ test('getAvatar throws "invalid" when provider returns a non-string value', asyn
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providerTiers: { domain: [['google']] },
     reachableUrl
   })
 
@@ -304,7 +304,7 @@ test('getAvatar throws "invalid" when provider returns an empty string', async t
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providerTiers: { domain: [['google']] },
     reachableUrl
   })
 
@@ -323,7 +323,7 @@ test('getAvatar throws when provider returns a non-absolute URL', async t => {
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providerTiers: { domain: [['google']] },
     reachableUrl
   })
 
@@ -345,7 +345,7 @@ test('getAvatar throws when the resolved URL is not reachable', async t => {
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providerTiers: { domain: [['google']] },
     reachableUrl
   })
 
@@ -367,7 +367,7 @@ test('getAvatar sets provider on error from response.statusCode when statusCode 
   const { getAvatar } = autoFactory({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providerTiers: { domain: [['google']] },
     reachableUrl
   })
 
@@ -393,7 +393,7 @@ test('auto(type) is deterministic with stateful data URI regex', async t => {
   const { auto } = autoFactoryWithStatefulRegex({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
-    providersBy: { domain: [['google']] },
+    providerTiers: { domain: [['google']] },
     reachableUrl
   })
 
