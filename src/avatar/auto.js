@@ -23,8 +23,24 @@ const getInputType = input => {
   return 'username'
 }
 
-const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
+const factory = ({
+  constants,
+  providers,
+  providerTiers,
+  reachableUrl,
+  isReservedIp
+}) => {
   const { REQUEST_TIMEOUT } = constants
+
+  const assertPublicUrl = async (url, provider) => {
+    if (await isReservedIp(new URL(url).hostname)) {
+      throw new ExtendableError({
+        message: 'The URL points to a reserved address.',
+        provider,
+        statusCode: httpStatus.FORBIDDEN
+      })
+    }
+  }
 
   const getAvatarContent = provider => async output => {
     if (typeof output !== 'string' || output === '') {
@@ -49,7 +65,11 @@ const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
       })
     }
 
+    await assertPublicUrl(output, provider)
+
     const { statusCode, url } = await reachableUrl(output)
+
+    await assertPublicUrl(url, provider)
 
     if (!reachableUrl.isReachable({ statusCode })) {
       throw new ExtendableError({

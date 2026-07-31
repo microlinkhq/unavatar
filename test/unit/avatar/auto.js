@@ -58,7 +58,8 @@ test('auto(type) uses the provided input type resolver', async t => {
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const resolver = auto('domain')
@@ -89,7 +90,8 @@ test('email hash input routes only to gravatar, not to other email providers', a
       email: [['gravatar', 'github']],
       emailHash: [['gravatar']]
     },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const md5hash = '0bc83cb571cd1c50ba6f3e8a78ef1346'
@@ -120,7 +122,8 @@ const createTiers = ({
     constants: { REQUEST_TIMEOUT },
     providers: { primary: provider('primary'), fallback: provider('fallback') },
     providerTiers: { domain: [['primary'], ['fallback']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   return { resolve: auto('domain'), calls }
@@ -211,7 +214,8 @@ test('a provider reached with the budget already spent times out at once', async
     constants: { REQUEST_TIMEOUT },
     providers: {},
     providerTiers: {},
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const spent = Date.now() - 1000
@@ -238,7 +242,8 @@ test('an input type with no providers declared reports not found', async t => {
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: {},
     providerTiers: { email: [['gravatar']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const error = await t.throwsAsync(auto('email')('0'.repeat(32), {}))
@@ -265,7 +270,8 @@ test('getAvatar throws "not found" when provider returns undefined', async t => 
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const error = await t.throwsAsync(() =>
@@ -285,7 +291,8 @@ test('getAvatar throws "invalid" when provider returns a non-string value', asyn
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const error = await t.throwsAsync(() =>
@@ -305,7 +312,8 @@ test('getAvatar throws "invalid" when provider returns an empty string', async t
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const error = await t.throwsAsync(() =>
@@ -324,7 +332,8 @@ test('getAvatar throws when provider returns a non-absolute URL', async t => {
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const error = await t.throwsAsync(() =>
@@ -346,7 +355,8 @@ test('getAvatar throws when the resolved URL is not reachable', async t => {
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const error = await t.throwsAsync(() =>
@@ -368,7 +378,8 @@ test('getAvatar sets provider on error from response.statusCode when statusCode 
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const error = await t.throwsAsync(() =>
@@ -394,7 +405,8 @@ test('auto(type) is deterministic with stateful data URI regex', async t => {
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl
+    reachableUrl,
+    isReservedIp: async () => false
   })
 
   const resolver = auto('domain')
@@ -408,4 +420,94 @@ test('auto(type) is deterministic with stateful data URI regex', async t => {
     data: 'data:image/png;base64,AAAA'
   })
   t.true(reachableUrl.notCalled)
+})
+
+test('refuses an avatar hosted on a reserved address before fetching it', async t => {
+  const provider = sinon.stub().resolves('https://127.0.0.1/avatar.png')
+  const reachableUrl = sinon.stub()
+  reachableUrl.isReachable = sinon.stub().returns(true)
+
+  const { getAvatar } = autoFactory({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { bimi: provider },
+    providerTiers: { domain: [['bimi']] },
+    reachableUrl,
+    isReservedIp: async hostname => hostname === '127.0.0.1'
+  })
+
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'bimi', 'attacker.com', {})
+  )
+
+  t.is(error.statusCode, 403)
+  t.is(error.provider, 'bimi')
+  t.is(error.message, 'The URL points to a reserved address.')
+  t.true(reachableUrl.notCalled)
+})
+
+test('refuses an avatar that redirects onto a reserved address', async t => {
+  const provider = sinon.stub().resolves('https://attacker.com/avatar.png')
+  const reachableUrl = sinon.stub().resolves({
+    statusCode: 200,
+    url: 'https://169.254.169.254/avatar.png'
+  })
+  reachableUrl.isReachable = sinon.stub().returns(true)
+
+  const { getAvatar } = autoFactory({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { bimi: provider },
+    providerTiers: { domain: [['bimi']] },
+    reachableUrl,
+    isReservedIp: async hostname => hostname === '169.254.169.254'
+  })
+
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'bimi', 'attacker.com', {})
+  )
+
+  t.is(error.statusCode, 403)
+  t.is(error.provider, 'bimi')
+  t.true(reachableUrl.calledOnce)
+})
+
+test('refuses an IPv6 reserved address', async t => {
+  const provider = sinon.stub().resolves('https://[::1]/avatar.png')
+  const reachableUrl = sinon.stub()
+  reachableUrl.isReachable = sinon.stub().returns(true)
+
+  const { getAvatar } = autoFactory({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { bimi: provider },
+    providerTiers: { domain: [['bimi']] },
+    reachableUrl,
+    isReservedIp: async hostname => hostname === '[::1]'
+  })
+
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'bimi', 'attacker.com', {})
+  )
+
+  t.is(error.statusCode, 403)
+  t.true(reachableUrl.notCalled)
+})
+
+test('a data URI avatar skips the reserved address check', async t => {
+  const provider = sinon.stub().resolves('data:image/png;base64,AAAA')
+  const reachableUrl = sinon.stub()
+  reachableUrl.isReachable = sinon.stub().returns(true)
+  const isReservedIp = sinon.stub().resolves(true)
+
+  const { getAvatar } = autoFactory({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { gravatar: provider },
+    providerTiers: { email: [['gravatar']] },
+    reachableUrl,
+    isReservedIp
+  })
+
+  t.deepEqual(await getAvatar(provider, 'gravatar', 'hello@microlink.io', {}), {
+    type: 'buffer',
+    data: 'data:image/png;base64,AAAA'
+  })
+  t.true(isReservedIp.notCalled)
 })

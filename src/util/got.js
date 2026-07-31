@@ -36,11 +36,21 @@ const userAgentHook = options => {
   }
 }
 
-module.exports = ({ cacheableLookup }) => {
+module.exports = ({ cacheableLookup, isReservedIp }) => {
+  const reservedAddressHook = async options => {
+    const hostname = options.url?.hostname
+    if (hostname && (await isReservedIp(hostname))) {
+      throw new Error(`Refusing to request a reserved address: ${hostname}`)
+    }
+  }
+
   const gotOpts = {
     dnsCache: cacheableLookup,
     https: { rejectUnauthorized: false },
-    hooks: { beforeRequest: [userAgentHook, tlsHook] }
+    hooks: {
+      beforeRequest: [reservedAddressHook, userAgentHook, tlsHook],
+      beforeRedirect: [reservedAddressHook]
+    }
   }
 
   const instance = got.extend(gotOpts)

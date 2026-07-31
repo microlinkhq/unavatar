@@ -4,8 +4,10 @@ const test = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache()
 
-const buildGot = () => {
-  const uaHints = sinon.stub().callsFake(userAgent => ({ 'sec-ch-ua': `"${userAgent}"` }))
+const buildGot = ({ isReservedIp = async () => false } = {}) => {
+  const uaHints = sinon
+    .stub()
+    .callsFake(userAgent => ({ 'sec-ch-ua': `"${userAgent}"` }))
   const randomUserAgent = sinon.stub().returns('custom-agent')
   const uniqueRandomArray = sinon.stub().returns(randomUserAgent)
   const tlsHook = sinon.stub()
@@ -19,9 +21,16 @@ const buildGot = () => {
     got: { extend: gotExtend }
   })
 
-  const got = gotFactory({ cacheableLookup: 'dns-cache' })
+  const got = gotFactory({ cacheableLookup: 'dns-cache', isReservedIp })
 
-  return { got, gotExtend, uaHints, randomUserAgent, uniqueRandomArray, tlsHook }
+  return {
+    got,
+    gotExtend,
+    uaHints,
+    randomUserAgent,
+    uniqueRandomArray,
+    tlsHook
+  }
 }
 
 test('got util creates instance with dns cache and hooks', t => {
@@ -34,14 +43,51 @@ test('got util creates instance with dns cache and hooks', t => {
   t.is(gotOpts.dnsCache, 'dns-cache')
   t.deepEqual(gotOpts.https, { rejectUnauthorized: false })
   t.true(Array.isArray(gotOpts.hooks.beforeRequest))
-  t.is(gotOpts.hooks.beforeRequest.length, 2)
-  t.is(gotOpts.hooks.beforeRequest[1], tlsHook)
+  t.is(gotOpts.hooks.beforeRequest.length, 3)
+  t.is(gotOpts.hooks.beforeRequest[2], tlsHook)
+  t.is(gotOpts.hooks.beforeRedirect.length, 1)
+  t.is(gotOpts.hooks.beforeRedirect[0], gotOpts.hooks.beforeRequest[0])
   t.is(got.gotOpts, gotOpts)
+})
+
+test('got util refuses a request to a reserved address', async t => {
+  const isReservedIp = sinon
+    .stub()
+    .callsFake(async hostname => hostname === '127.0.0.1')
+  const { got } = buildGot({ isReservedIp })
+  const reservedAddressHook = got.gotOpts.hooks.beforeRequest[0]
+
+  await t.throwsAsync(
+    reservedAddressHook({ url: new URL('https://127.0.0.1/logo.svg') }),
+    {
+      message: 'Refusing to request a reserved address: 127.0.0.1'
+    }
+  )
+  await t.notThrowsAsync(
+    reservedAddressHook({ url: new URL('https://cdn.microlink.io/logo.svg') })
+  )
+  await t.notThrowsAsync(reservedAddressHook({}))
+  t.deepEqual(isReservedIp.args, [['127.0.0.1'], ['cdn.microlink.io']])
+})
+
+test('got util refuses a redirect onto a reserved address', async t => {
+  const isReservedIp = sinon
+    .stub()
+    .callsFake(async hostname => hostname === '[::1]')
+  const { got } = buildGot({ isReservedIp })
+  const reservedAddressHook = got.gotOpts.hooks.beforeRedirect[0]
+
+  await t.throwsAsync(
+    reservedAddressHook({ url: new URL('https://[::1]/logo.svg') }),
+    {
+      message: 'Refusing to request a reserved address: [::1]'
+    }
+  )
 })
 
 test('got util uses precomputed ua hints for top user agents', t => {
   const { got, uaHints } = buildGot()
-  const userAgentHook = got.gotOpts.hooks.beforeRequest[0]
+  const userAgentHook = got.gotOpts.hooks.beforeRequest[1]
 
   uaHints.resetHistory()
 
@@ -58,7 +104,7 @@ test('got util uses precomputed ua hints for top user agents', t => {
 
 test('got util computes ua hints for non-top user agents per request', t => {
   const { got, uaHints } = buildGot()
-  const userAgentHook = got.gotOpts.hooks.beforeRequest[0]
+  const userAgentHook = got.gotOpts.hooks.beforeRequest[1]
 
   uaHints.resetHistory()
 
@@ -70,8 +116,10 @@ test('got util computes ua hints for non-top user agents per request', t => {
 
 test('got util replaces default got user agent before computing hints', t => {
   const { got, uaHints, randomUserAgent } = buildGot()
-  const userAgentHook = got.gotOpts.hooks.beforeRequest[0]
-  const options = { headers: { 'user-agent': 'got (https://github.com/sindresorhus/got)' } }
+  const userAgentHook = got.gotOpts.hooks.beforeRequest[1]
+  const options = {
+    headers: { 'user-agent': 'got (https://github.com/sindresorhus/got)' }
+  }
 
   uaHints.resetHistory()
   userAgentHook(options)
