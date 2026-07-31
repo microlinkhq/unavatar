@@ -10,13 +10,25 @@ const LOGO_URL = 'https://cdn.microlink.io/logo/logo.svg'
 
 const createProvider = ({
   logos = {},
+  resolveLogoUrl,
   isReservedIp = async () => false
 } = {}) => {
   let received
+  const resolveCalls = []
 
   const createGetLogo = options => {
     received = options
-    return async domain => logos[domain]
+    return async domain => {
+      if (options.resolveLogoUrl && logos[domain]) {
+        return options.resolveLogoUrl(logos[domain], options.gotOpts)
+      }
+      return logos[domain]
+    }
+  }
+  createGetLogo.resolveLogoUrl = async (logoUrl, gotOpts) => {
+    resolveCalls.push({ logoUrl, gotOpts })
+    if (resolveLogoUrl) return resolveLogoUrl(logoUrl, gotOpts)
+    return logoUrl
   }
 
   const bimiCache = new Keyv({ store: new Map() })
@@ -27,7 +39,7 @@ const createProvider = ({
     'bimi-url': createGetLogo
   })({ bimiCache, dnsResolver, got: { gotOpts }, isReservedIp })
 
-  return { bimi, received, bimiCache, gotOpts }
+  return { bimi, received, bimiCache, gotOpts, resolveCalls }
 }
 
 test('parseInput keeps a domain and takes the part after the @ of an email', t => {
@@ -64,11 +76,24 @@ test('returns undefined when the domain publishes no record', async t => {
   t.is(await bimi('example.com'), undefined)
 })
 
-test('refuses a logo hosted on a reserved address', async t => {
-  const { bimi } = createProvider({
+test('refuses a logo hosted on a reserved address before fetching', async t => {
+  const reserved = new Set(['127.0.0.1'])
+  const { bimi, resolveCalls } = createProvider({
     logos: { 'shopify.com': 'https://127.0.0.1/logo.svg' },
-    isReservedIp: async () => true
+    isReservedIp: async hostname => reserved.has(hostname)
   })
 
   t.is(await bimi('shopify.com'), undefined)
+  t.deepEqual(resolveCalls, [])
+})
+
+test('refuses a logo that resolves onto a reserved address', async t => {
+  const { bimi, resolveCalls } = createProvider({
+    logos: { 'shopify.com': LOGO_URL },
+    resolveLogoUrl: async () => 'https://169.254.169.254/logo.svg',
+    isReservedIp: async hostname => hostname === '169.254.169.254'
+  })
+
+  t.is(await bimi('shopify.com'), undefined)
+  t.is(resolveCalls.length, 1)
 })
