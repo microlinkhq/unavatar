@@ -7,6 +7,9 @@ const proxyquire = require('proxyquire')
 
 const autoFactory = require('../../../src/avatar/auto')
 
+const createAuto = ({ isReservedIp = async () => false, ...options }) =>
+  autoFactory({ ...options, isReservedIp })
+
 test('getInputType classifies email input', t => {
   t.is(autoFactory.getInputType('hello@microlink.io'), 'email')
 })
@@ -54,12 +57,11 @@ test('auto(type) uses the provided input type resolver', async t => {
   })
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { auto } = autoFactory({
+  const { auto } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const resolver = auto('domain')
@@ -83,15 +85,14 @@ test('email hash input routes only to gravatar, not to other email providers', a
   })
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { auto } = autoFactory({
+  const { auto } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { gravatar, github },
     providerTiers: {
       email: [['gravatar', 'github']],
       emailHash: [['gravatar']]
     },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const md5hash = '0bc83cb571cd1c50ba6f3e8a78ef1346'
@@ -118,12 +119,11 @@ const createTiers = ({
   const reachableUrl = async url => ({ statusCode: 200, url })
   reachableUrl.isReachable = () => true
 
-  const { auto } = autoFactory({
+  const { auto } = createAuto({
     constants: { REQUEST_TIMEOUT },
     providers: { primary: provider('primary'), fallback: provider('fallback') },
     providerTiers: { domain: [['primary'], ['fallback']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   return { resolve: auto('domain'), calls }
@@ -210,12 +210,11 @@ test('a provider reached with the budget already spent times out at once', async
   const reachableUrl = () => {}
   reachableUrl.isReachable = () => true
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT },
     providers: {},
     providerTiers: {},
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const spent = Date.now() - 1000
@@ -238,12 +237,11 @@ test('an input type with no providers declared reports not found', async t => {
   const reachableUrl = () => {}
   reachableUrl.isReachable = () => true
 
-  const { auto } = autoFactory({
+  const { auto } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: {},
     providerTiers: { email: [['gravatar']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const error = await t.throwsAsync(auto('email')('0'.repeat(32), {}))
@@ -266,12 +264,11 @@ test('getAvatar throws "not found" when provider returns undefined', async t => 
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const error = await t.throwsAsync(() =>
@@ -287,12 +284,11 @@ test('getAvatar throws "invalid" when provider returns a non-string value', asyn
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const error = await t.throwsAsync(() =>
@@ -308,12 +304,11 @@ test('getAvatar throws "invalid" when provider returns an empty string', async t
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const error = await t.throwsAsync(() =>
@@ -328,12 +323,11 @@ test('getAvatar throws when provider returns a non-absolute URL', async t => {
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const error = await t.throwsAsync(() =>
@@ -351,12 +345,11 @@ test('getAvatar throws when the resolved URL is not reachable', async t => {
     .resolves({ statusCode: 404, url: 'https://example.com/avatar.png' })
   reachableUrl.isReachable = sinon.stub().returns(false)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const error = await t.throwsAsync(() =>
@@ -374,12 +367,11 @@ test('getAvatar sets provider on error from response.statusCode when statusCode 
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { google: provider },
     providerTiers: { domain: [['google']] },
-    reachableUrl,
-    isReservedIp: async () => false
+    reachableUrl
   })
 
   const error = await t.throwsAsync(() =>
@@ -427,7 +419,7 @@ test('refuses an avatar hosted on a reserved address before fetching it', async 
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { bimi: provider },
     providerTiers: { domain: [['bimi']] },
@@ -453,7 +445,7 @@ test('refuses an avatar that redirects onto a reserved address', async t => {
   })
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { bimi: provider },
     providerTiers: { domain: [['bimi']] },
@@ -475,7 +467,7 @@ test('refuses an IPv6 reserved address', async t => {
   const reachableUrl = sinon.stub()
   reachableUrl.isReachable = sinon.stub().returns(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { bimi: provider },
     providerTiers: { domain: [['bimi']] },
@@ -497,7 +489,7 @@ test('a data URI avatar skips the reserved address check', async t => {
   reachableUrl.isReachable = sinon.stub().returns(true)
   const isReservedIp = sinon.stub().resolves(true)
 
-  const { getAvatar } = autoFactory({
+  const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },
     providers: { gravatar: provider },
     providerTiers: { email: [['gravatar']] },
