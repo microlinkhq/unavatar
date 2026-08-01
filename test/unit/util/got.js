@@ -74,6 +74,18 @@ test('got util refuses a request to a reserved address', async t => {
   t.deepEqual(isReservedIp.args, [['127.0.0.1'], ['cdn.microlink.io']])
 })
 
+test('the refused address is recorded on the request context', async t => {
+  const { got } = buildGot({ isReservedIp: async () => true })
+  const reservedAddressHook = got.gotOpts.hooks.beforeRedirect[0]
+  const context = {}
+
+  await t.throwsAsync(
+    reservedAddressHook({ url: new URL('https://169.254.169.254/x'), context })
+  )
+
+  t.is(context.reservedAddress, '169.254.169.254')
+})
+
 test('got util refuses a redirect onto a reserved address', async t => {
   const isReservedIp = sinon
     .stub()

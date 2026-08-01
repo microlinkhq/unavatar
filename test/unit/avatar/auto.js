@@ -462,6 +462,31 @@ test('refuses an avatar that redirects onto a reserved address', async t => {
   t.true(reachableUrl.calledOnce)
 })
 
+test('refuses an avatar whose redirect was blocked before connecting', async t => {
+  const provider = sinon.stub().resolves('https://attacker.com/avatar.png')
+  const reachableUrl = sinon.stub().resolves({
+    statusCode: 404,
+    url: 'https://attacker.com/avatar.png',
+    reservedAddress: '127.0.0.1'
+  })
+  reachableUrl.isReachable = sinon.stub().returns(false)
+
+  const { getAvatar } = createAuto({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { bimi: provider },
+    providerTiers: { domain: [['bimi']] },
+    reachableUrl
+  })
+
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'bimi', 'attacker.com', {})
+  )
+
+  t.is(error.statusCode, 403)
+  t.is(error.provider, 'bimi')
+  t.is(error.message, 'The URL points to a reserved address.')
+})
+
 test('refuses an IPv6 reserved address', async t => {
   const provider = sinon.stub().resolves('https://[::1]/avatar.png')
   const reachableUrl = sinon.stub()

@@ -32,14 +32,16 @@ const factory = ({
 }) => {
   const { REQUEST_TIMEOUT } = constants
 
+  const refuseReservedAddress = provider => {
+    throw new ExtendableError({
+      message: 'The URL points to a reserved address.',
+      provider,
+      statusCode: httpStatus.FORBIDDEN
+    })
+  }
+
   const assertPublicUrl = async (url, provider) => {
-    if (await isReservedIp(new URL(url).hostname)) {
-      throw new ExtendableError({
-        message: 'The URL points to a reserved address.',
-        provider,
-        statusCode: httpStatus.FORBIDDEN
-      })
-    }
+    if (await isReservedIp(new URL(url).hostname)) { refuseReservedAddress(provider) }
   }
 
   const getAvatarContent = provider => async output => {
@@ -67,8 +69,9 @@ const factory = ({
 
     await assertPublicUrl(output, provider)
 
-    const { statusCode, url } = await reachableUrl(output)
+    const { statusCode, url, reservedAddress } = await reachableUrl(output)
 
+    if (reservedAddress) refuseReservedAddress(provider)
     await assertPublicUrl(url, provider)
 
     if (!reachableUrl.isReachable({ statusCode })) {

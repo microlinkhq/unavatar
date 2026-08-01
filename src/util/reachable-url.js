@@ -7,11 +7,12 @@ module.exports = ({ got, pingCache }) => {
     value: ({ url, statusCode }) => ({ url, statusCode })
   })
 
-  const reachableUrl = (url, opts) =>
-    pingUrl(url, {
-      ...got.gotOpts,
-      ...opts
-    })
+  const reachableUrl = async (url, opts) => {
+    const context = {}
+    const response = await pingUrl(url, { ...got.gotOpts, ...opts, context })
+    const { reservedAddress } = context
+    return reservedAddress ? { ...response, reservedAddress } : response
+  }
 
   reachableUrl.isReachable = createPingUrl.isReachable
 
