@@ -8,6 +8,7 @@ const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const pAny = require('p-any')
 
+const { RESERVED_ADDRESS_CODE } = require('../util/is-reserved-ip')
 const httpStatus = require('../util/http-status')
 const isIterable = require('../util/is-iterable')
 const ExtendableError = require('../util/error')
@@ -23,8 +24,28 @@ const getInputType = input => {
   return 'username'
 }
 
-const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
+const factory = ({
+  constants,
+  providers,
+  providerTiers,
+  reachableUrl,
+  isReservedIp
+}) => {
   const { REQUEST_TIMEOUT } = constants
+
+  const refuseReservedAddress = provider => {
+    throw new ExtendableError({
+      message: 'The URL points to a reserved address.',
+      provider,
+      statusCode: httpStatus.FORBIDDEN
+    })
+  }
+
+  const assertPublicUrl = async (url, provider) => {
+    if (await isReservedIp(new URL(url).hostname)) {
+      refuseReservedAddress(provider)
+    }
+  }
 
   const getAvatarContent = provider => async output => {
     if (typeof output !== 'string' || output === '') {
@@ -49,7 +70,12 @@ const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
       })
     }
 
-    const { statusCode, url } = await reachableUrl(output)
+    await assertPublicUrl(output, provider)
+
+    const { statusCode, url, reservedAddress } = await reachableUrl(output)
+
+    if (reservedAddress) refuseReservedAddress(provider)
+    await assertPublicUrl(url, provider)
 
     if (!reachableUrl.isReachable({ statusCode })) {
       throw new ExtendableError({
@@ -73,6 +99,9 @@ const factory = ({ constants, providers, providerTiers, reachableUrl }) => {
       .then(getAvatarContent(provider))
       .catch(error => {
         isIterable.forEach(error, error => {
+          if (error.code === RESERVED_ADDRESS_CODE) {
+            error.statusCode = httpStatus.FORBIDDEN
+          }
           error.statusCode = error.statusCode ?? error.response?.statusCode
           error.provider = provider
         })

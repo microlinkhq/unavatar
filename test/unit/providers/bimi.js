@@ -8,10 +8,7 @@ const { parseInput } = require('../../../src/providers/bimi')
 
 const LOGO_URL = 'https://cdn.microlink.io/logo/logo.svg'
 
-const createProvider = ({
-  logos = {},
-  isReservedIp = async () => false
-} = {}) => {
+const createProvider = ({ logos = {} } = {}) => {
   let received
 
   const createGetLogo = options => {
@@ -25,7 +22,7 @@ const createProvider = ({
 
   const bimi = proxyquire('../../../src/providers/bimi', {
     'bimi-url': createGetLogo
-  })({ bimiCache, dnsResolver, got: { gotOpts }, isReservedIp })
+  })({ bimiCache, dnsResolver, got: { gotOpts } })
 
   return { bimi, received, bimiCache, gotOpts }
 }
@@ -62,13 +59,4 @@ test('returns undefined when the domain publishes no record', async t => {
   const { bimi } = createProvider()
 
   t.is(await bimi('example.com'), undefined)
-})
-
-test('refuses a logo hosted on a reserved address', async t => {
-  const { bimi } = createProvider({
-    logos: { 'shopify.com': 'https://127.0.0.1/logo.svg' },
-    isReservedIp: async () => true
-  })
-
-  t.is(await bimi('shopify.com'), undefined)
 })

@@ -29,23 +29,20 @@ module.exports = ({
     resolver: dnsResolver
   })
   const isReservedIp = require('./util/is-reserved-ip')({ cacheableLookup })
-  const got = require('./util/got')({ cacheableLookup })
+  const got = require('./util/got')({ cacheableLookup, isReservedIp })
   const reachableUrl = require('./util/reachable-url')({
     got,
     pingCache: cache.pingCache
   })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
-  const {
-    createHtmlProvider,
-    getOgImage,
-    NOT_FOUND
-  } = require('./util/html-provider')({
-    ...constants,
-    getHTML,
-    onFetchHTML,
-    userAgent
-  })
+  const { createHtmlProvider, getOgImage, NOT_FOUND } =
+    require('./util/html-provider')({
+      ...constants,
+      getHTML,
+      onFetchHTML,
+      userAgent
+    })
 
   const providerCtx = {
     constants,
@@ -60,15 +57,15 @@ module.exports = ({
     githubSearchCache: cache.githubSearchCache,
     itunesSearchCache: cache.itunesSearchCache
   }
-  const { providers, providerTiers, providersBy } = require('./providers')(
-    providerCtx
-  )
+  const { providers, providerTiers, providersBy } =
+    require('./providers')(providerCtx)
 
   const { auto, getInputType, getAvatar } = require('./avatar/auto')({
     constants,
     providers,
     providerTiers,
-    reachableUrl
+    reachableUrl,
+    isReservedIp
   })
 
   const unavatar = input => auto(getInputType(input))(input, {})

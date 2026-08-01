@@ -59,3 +59,10 @@ test('returns false for public unicast addresses', async t => {
 test('returns false for bracketed public IPv6 unicast', async t => {
   t.false(await isReservedIp('[2001:4860:4860::8888]'))
 })
+
+test('reads an IPv6 literal with or without brackets', async t => {
+  t.true(await isReservedIp('::1'))
+  t.true(await isReservedIp('fd00::1'))
+  t.true(await isReservedIp('fe80::1'))
+  t.false(await isReservedIp('2001:4860:4860::8888'))
+})
