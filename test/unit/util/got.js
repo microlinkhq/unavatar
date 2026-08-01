@@ -3,6 +3,9 @@
 const test = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache()
+const { RequestError } = require('got')
+
+const createGot = require('../../../src/util/got')
 
 const buildGot = ({ isReservedIp = async () => false } = {}) => {
   const uaHints = sinon
@@ -18,7 +21,7 @@ const buildGot = ({ isReservedIp = async () => false } = {}) => {
     'top-user-agents': ['agent-a', 'agent-b'],
     'unique-random-array': uniqueRandomArray,
     'https-tls/hook': tlsHook,
-    got: { extend: gotExtend }
+    got: { extend: gotExtend, RequestError }
   })
 
   const got = gotFactory({ cacheableLookup: 'dns-cache', isReservedIp })
@@ -60,7 +63,8 @@ test('got util refuses a request to a reserved address', async t => {
   await t.throwsAsync(
     reservedAddressHook({ url: new URL('https://127.0.0.1/logo.svg') }),
     {
-      message: 'Refusing to request a reserved address: 127.0.0.1'
+      message: 'Refusing to request a reserved address: 127.0.0.1',
+      instanceOf: RequestError
     }
   )
   await t.notThrowsAsync(
@@ -83,6 +87,18 @@ test('got util refuses a redirect onto a reserved address', async t => {
       message: 'Refusing to request a reserved address: [::1]'
     }
   )
+})
+
+test('the reserved address error keeps its status code through got', async t => {
+  const got = createGot({
+    cacheableLookup: undefined,
+    isReservedIp: async () => true
+  })
+
+  const error = await t.throwsAsync(got('https://127.0.0.1/logo.svg'))
+
+  t.is(error.statusCode, 403)
+  t.is(error.message, 'Refusing to request a reserved address: 127.0.0.1')
 })
 
 test('got util uses precomputed ua hints for top user agents', t => {

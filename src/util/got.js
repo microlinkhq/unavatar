@@ -5,6 +5,8 @@ const tlsHook = require('https-tls/hook')
 const uaHints = require('ua-hints')
 const got = require('got')
 
+const httpStatus = require('./http-status')
+
 const topUserAgents = require('top-user-agents')
 const randomUserAgent = uniqueRandomArray(topUserAgents)
 
@@ -37,10 +39,20 @@ const userAgentHook = options => {
 }
 
 module.exports = ({ cacheableLookup, isReservedIp }) => {
+  /**
+   * A plain Error is wrapped by got into a RequestError that keeps only the
+   * message, so the status code has to travel on an error got lets through.
+   */
   const reservedAddressHook = async options => {
     const hostname = options.url?.hostname
     if (hostname && (await isReservedIp(hostname))) {
-      throw new Error(`Refusing to request a reserved address: ${hostname}`)
+      const error = new got.RequestError(
+        `Refusing to request a reserved address: ${hostname}`,
+        {},
+        options
+      )
+      error.statusCode = httpStatus.FORBIDDEN
+      throw error
     }
   }
 
