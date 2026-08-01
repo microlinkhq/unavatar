@@ -5,7 +5,7 @@ const tlsHook = require('https-tls/hook')
 const uaHints = require('ua-hints')
 const got = require('got')
 
-const httpStatus = require('./http-status')
+const { RESERVED_ADDRESS_CODE } = require('./is-reserved-ip')
 
 const topUserAgents = require('top-user-agents')
 const randomUserAgent = uniqueRandomArray(topUserAgents)
@@ -48,8 +48,8 @@ module.exports = ({ cacheableLookup, isReservedIp }) => {
    * frozen and shared between requests, so asking to be told is what passing a
    * context means.
    *
-   * A plain Error is wrapped by got into a RequestError that keeps only the
-   * message, so the status code has to travel on an error got lets through.
+   * got replaces the error with a RequestError that keeps the message and the
+   * code, so the refusal is named by a code rather than by its type.
    */
   const reservedAddressHook = async options => {
     const hostname = options.url?.hostname
@@ -57,12 +57,10 @@ module.exports = ({ cacheableLookup, isReservedIp }) => {
       if (Object.isExtensible(options.context)) {
         options.context.reservedAddress = hostname
       }
-      const error = new got.RequestError(
-        `Refusing to request a reserved address: ${hostname}`,
-        {},
-        options
+      const error = new Error(
+        `Refusing to request a reserved address: ${hostname}`
       )
-      error.statusCode = httpStatus.FORBIDDEN
+      error.code = RESERVED_ADDRESS_CODE
       throw error
     }
   }

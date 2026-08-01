@@ -8,6 +8,7 @@ const isEmail = require('is-email-like')
 const pTimeout = require('p-timeout')
 const pAny = require('p-any')
 
+const { RESERVED_ADDRESS_CODE } = require('../util/is-reserved-ip')
 const httpStatus = require('../util/http-status')
 const isIterable = require('../util/is-iterable')
 const ExtendableError = require('../util/error')
@@ -41,7 +42,9 @@ const factory = ({
   }
 
   const assertPublicUrl = async (url, provider) => {
-    if (await isReservedIp(new URL(url).hostname)) { refuseReservedAddress(provider) }
+    if (await isReservedIp(new URL(url).hostname)) {
+      refuseReservedAddress(provider)
+    }
   }
 
   const getAvatarContent = provider => async output => {
@@ -96,6 +99,9 @@ const factory = ({
       .then(getAvatarContent(provider))
       .catch(error => {
         isIterable.forEach(error, error => {
+          if (error.code === RESERVED_ADDRESS_CODE) {
+            error.statusCode = httpStatus.FORBIDDEN
+          }
           error.statusCode = error.statusCode ?? error.response?.statusCode
           error.provider = provider
         })

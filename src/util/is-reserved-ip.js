@@ -21,3 +21,5 @@ module.exports = ({ cacheableLookup }) => {
     return ip.process(ipAddress).range() !== 'unicast'
   }
 }
+
+module.exports.RESERVED_ADDRESS_CODE = 'ERESERVEDADDRESSRANGE'

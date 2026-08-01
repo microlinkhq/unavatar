@@ -487,6 +487,31 @@ test('refuses an avatar whose redirect was blocked before connecting', async t =
   t.is(error.message, 'The URL points to a reserved address.')
 })
 
+test('a provider refused by got surfaces as forbidden, not as a fatal error', async t => {
+  const refused = Object.assign(
+    new Error('Refusing to request a reserved address: 127.0.0.1'),
+    { code: 'ERESERVEDADDRESSRANGE' }
+  )
+  const provider = sinon.stub().rejects(refused)
+  const reachableUrl = sinon.stub()
+  reachableUrl.isReachable = sinon.stub().returns(true)
+
+  const { getAvatar } = createAuto({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { mastodon: provider },
+    providerTiers: { username: [['mastodon']] },
+    reachableUrl
+  })
+
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'mastodon', 'user@attacker.com', {})
+  )
+
+  t.is(error.statusCode, 403)
+  t.is(error.provider, 'mastodon')
+  t.true(reachableUrl.notCalled)
+})
+
 test('refuses an IPv6 reserved address', async t => {
   const provider = sinon.stub().resolves('https://[::1]/avatar.png')
   const reachableUrl = sinon.stub()
