@@ -77,7 +77,10 @@ const factory = ({
     if (reservedAddress) refuseReservedAddress(provider)
     await assertPublicUrl(url, provider)
 
-    if (!reachableUrl.isReachable({ statusCode })) {
+    // Only a final 2xx means the avatar URL is fetchable. isReachable also
+    // accepts 3xx, but a 3xx here is the hop left when redirect following was
+    // aborted — and a cached probe can replay that hop without reservedAddress.
+    if (statusCode < 200 || statusCode >= 300) {
       throw new ExtendableError({
         message: httpStatus(statusCode),
         provider,

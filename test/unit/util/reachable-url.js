@@ -55,7 +55,7 @@ test('reachable-url composes ping-url with cache and merged got options', async 
 test('reports the address a refused redirect was pointing at', async t => {
   const ping = sinon.stub().callsFake(async (url, { context }) => {
     context.reservedAddress = '127.0.0.1'
-    return { statusCode: 404, url }
+    return { statusCode: 302, url }
   })
 
   const createPingUrl = sinon.stub().returns(ping)
@@ -69,6 +69,27 @@ test('reports the address a refused redirect was pointing at', async t => {
     statusCode: 404,
     url: 'https://attacker.com/avatar.png',
     reservedAddress: '127.0.0.1'
+  })
+})
+
+test('treats a bare redirect status as unreachable', async t => {
+  // Shape of a ping-cache hit after a reserved redirect was refused: the
+  // memoized value kept the 3xx hop but dropped context.reservedAddress.
+  const ping = sinon.stub().resolves({
+    statusCode: 302,
+    url: 'https://attacker.com/avatar.png'
+  })
+
+  const createPingUrl = sinon.stub().returns(ping)
+  createPingUrl.isReachable = sinon.stub().returns(true)
+
+  const reachableUrl = proxyquire('../../../src/util/reachable-url', {
+    '@microlink/ping-url': createPingUrl
+  })({ got: { gotOpts: {} }, pingCache: {} })
+
+  t.deepEqual(await reachableUrl('https://attacker.com/avatar.png'), {
+    statusCode: 404,
+    url: 'https://attacker.com/avatar.png'
   })
 })
 

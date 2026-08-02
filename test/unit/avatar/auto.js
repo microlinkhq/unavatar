@@ -487,6 +487,32 @@ test('refuses an avatar whose redirect was blocked before connecting', async t =
   t.is(error.message, 'The URL points to a reserved address.')
 })
 
+test('refuses a cached redirect hop that lost the reserved-address signal', async t => {
+  // After #638, a refused reserved redirect can be memoized as a bare 3xx.
+  // isReachable(302) is true, so without a 2xx requirement this would return
+  // the attacker URL on every subsequent lookup.
+  const provider = sinon.stub().resolves('https://attacker.com/avatar.png')
+  const reachableUrl = sinon.stub().resolves({
+    statusCode: 302,
+    url: 'https://attacker.com/avatar.png'
+  })
+  reachableUrl.isReachable = sinon.stub().returns(true)
+
+  const { getAvatar } = createAuto({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { bimi: provider },
+    providerTiers: { domain: [['bimi']] },
+    reachableUrl
+  })
+
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'bimi', 'attacker.com', {})
+  )
+
+  t.is(error.statusCode, 302)
+  t.is(error.provider, 'bimi')
+})
+
 test('a provider refused by got surfaces as forbidden, not as a fatal error', async t => {
   const refused = Object.assign(
     new Error('Refusing to request a reserved address: 127.0.0.1'),
