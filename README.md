@@ -98,7 +98,7 @@
 
 ---
 
-Last updated on June 19, 2026
+Last updated on July 2, 2026
 
 ![logo](https://unavatar.io/api/og ":id=banner")
 
@@ -112,13 +112,13 @@ Everything you need to serve avatars at scale:
 
 - **Versatile**: One endpoint rules 72 platforms and services — [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), and more — all queried the same way.
 
-- **Battle-tested**: Already serving 5.5 TB of avatars across 213.4M requests, with a 83% cache hit rate.
+- **Battle-tested**: Already serving 2.77 TB of avatars across 189.4M requests, with a 70% cache hit rate.
 
 - **Optimized**: Every image is compressed and optimized on-the-fly — smaller payloads at high quality, ready to drop straight into your site or app.
 
 - **Integration**: Drops into any site or app with zero setup. Clear docs and full support make onboarding quick and painless.
 
-It's proudly powered by [microlink.io](https://microlink.io/), the headless browser API that handles all the heavy lifting behind the scenes to keep your avatars always ready.
+It's proudly powered by [microlink.io](https://microlink.io/) , the headless browser API that handles all the heavy lifting behind the scenes to keep your avatars always ready.
 
 ## Quick start
 
@@ -442,7 +442,7 @@ x-proxy-tier:origin
 x-unavatar-cost:1
 ```
 
-To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout). After completing the payment, you'll receive an API key.
+To upgrade, visit [unavatar.io/checkout](https://unavatar.io/checkout) . After completing the payment, you'll receive an API key.
 
 ## Cache
 
@@ -1230,4 +1230,4 @@ Expected errors are known operational cases returned with stable codes.
 
 ## Contact
 
-If you have a suggestion or need to report a bug, contact us at <hello@unavatar.io>.
+If you have a suggestion or need to report a bug, contact us at <hello@unavatar.io> .
