@@ -5,6 +5,8 @@ const test = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 
+const { isReachable } = require('@microlink/ping-url')
+
 const autoFactory = require('../../../src/avatar/auto')
 
 const createAuto = ({ isReservedIp = async () => false, ...options }) =>
@@ -485,6 +487,29 @@ test('refuses an avatar whose redirect was blocked before connecting', async t =
   t.is(error.statusCode, 403)
   t.is(error.provider, 'bimi')
   t.is(error.message, 'The URL points to a reserved address.')
+})
+
+test('refuses a cached redirect hop that lost the reserved-address signal', async t => {
+  const provider = sinon.stub().resolves('https://attacker.com/avatar.png')
+  const reachableUrl = sinon.stub().resolves({
+    statusCode: 302,
+    url: 'https://attacker.com/avatar.png'
+  })
+  reachableUrl.isReachable = isReachable
+
+  const { getAvatar } = createAuto({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { bimi: provider },
+    providerTiers: { domain: [['bimi']] },
+    reachableUrl
+  })
+
+  const error = await t.throwsAsync(() =>
+    getAvatar(provider, 'bimi', 'attacker.com', {})
+  )
+
+  t.is(error.statusCode, 302)
+  t.is(error.provider, 'bimi')
 })
 
 test('a provider refused by got surfaces as forbidden, not as a fatal error', async t => {
