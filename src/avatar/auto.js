@@ -77,8 +77,7 @@ const factory = ({
     if (reservedAddress) refuseReservedAddress(provider)
     await assertPublicUrl(url, provider)
 
-    // `isReachable` accepts 3xx, but here that is an unfinished redirect.
-    if (statusCode < 200 || statusCode >= 300) {
+    if (!reachableUrl.isReachable({ statusCode })) {
       throw new ExtendableError({
         message: httpStatus(statusCode),
         provider,

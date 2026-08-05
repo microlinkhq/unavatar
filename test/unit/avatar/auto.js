@@ -5,6 +5,8 @@ const test = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 
+const { isReachable } = require('@microlink/ping-url')
+
 const autoFactory = require('../../../src/avatar/auto')
 
 const createAuto = ({ isReservedIp = async () => false, ...options }) =>
@@ -493,7 +495,7 @@ test('refuses a cached redirect hop that lost the reserved-address signal', asyn
     statusCode: 302,
     url: 'https://attacker.com/avatar.png'
   })
-  reachableUrl.isReachable = sinon.stub().returns(true)
+  reachableUrl.isReachable = isReachable
 
   const { getAvatar } = createAuto({
     constants: { REQUEST_TIMEOUT: 25000 },

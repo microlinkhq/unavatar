@@ -3,6 +3,8 @@
 const test = require('ava')
 const sinon = require('sinon')
 
+const { isReachable } = require('@microlink/ping-url')
+
 const duckduckgoFactory = require('../../../src/providers/duckduckgo')
 const { getAvatarUrl, toggleWww } = duckduckgoFactory
 
@@ -17,8 +19,7 @@ const stubReachable = (...reachableHosts) => {
     statusCode: set.has(url) ? 200 : 404,
     url
   }))
-  reachableUrl.isReachable = ({ statusCode }) =>
-    statusCode >= 200 && statusCode < 400
+  reachableUrl.isReachable = isReachable
   return reachableUrl
 }
 
@@ -73,8 +74,7 @@ test('treats a probe rejection as unreachable and tries the alternate', async t 
   reachableUrl
     .withArgs(ip3('www.chrisd.ca'))
     .resolves({ statusCode: 200, url: ip3('www.chrisd.ca') })
-  reachableUrl.isReachable = ({ statusCode }) =>
-    statusCode >= 200 && statusCode < 400
+  reachableUrl.isReachable = isReachable
   const duckduckgo = duckduckgoFactory({ reachableUrl })
 
   t.is(await duckduckgo('chrisd.ca'), ip3('www.chrisd.ca'))
