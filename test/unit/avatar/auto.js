@@ -488,9 +488,6 @@ test('refuses an avatar whose redirect was blocked before connecting', async t =
 })
 
 test('refuses a cached redirect hop that lost the reserved-address signal', async t => {
-  // After #638, a refused reserved redirect can be memoized as a bare 3xx.
-  // isReachable(302) is true, so without a 2xx requirement this would return
-  // the attacker URL on every subsequent lookup.
   const provider = sinon.stub().resolves('https://attacker.com/avatar.png')
   const reachableUrl = sinon.stub().resolves({
     statusCode: 302,

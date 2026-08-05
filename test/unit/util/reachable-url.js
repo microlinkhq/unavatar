@@ -73,8 +73,6 @@ test('reports the address a refused redirect was pointing at', async t => {
 })
 
 test('treats a bare redirect status as unreachable', async t => {
-  // Shape of a ping-cache hit after a reserved redirect was refused: the
-  // memoized value kept the 3xx hop but dropped context.reservedAddress.
   const ping = sinon.stub().resolves({
     statusCode: 302,
     url: 'https://attacker.com/avatar.png'
