@@ -122,7 +122,7 @@
     "@keyvhq/compress": "~2.2.0",
     "@keyvhq/core": "~2.1.15",
     "@keyvhq/memoize": "~2.2.1",
-    "@keyvhq/multi": "~2.1.15",
+    "@keyvhq/multi": "~2.2.6",
     "@keyvhq/offline": "~2.2.0",
     "@keyvhq/redis": "~2.2.3",
     "@metascraper/helpers": "~5.53.0",
