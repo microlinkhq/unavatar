@@ -24,6 +24,7 @@ const searchBody = {
 test('.normalizeHandle strips a leading @', t => {
   t.is(normalizeHandle('@DukeDoks'), 'DukeDoks')
   t.is(normalizeHandle('DukeDoks'), 'DukeDoks')
+  t.is(normalizeHandle(' @DukeDoks '), 'DukeDoks')
 })
 
 test('.getAvatar returns the media URL for an exact handle', t => {

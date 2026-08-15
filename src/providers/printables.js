@@ -11,6 +11,7 @@ const SEARCH_QUERY = `query SearchUsers($query: String!) {
 
 const normalizeHandle = input =>
   String(input || '')
+    .trim()
     .replace(/^@/, '')
     .trim()
 
