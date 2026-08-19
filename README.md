@@ -100,7 +100,7 @@
 
 ---
 
-Last updated on July 2, 2026
+Last updated on August 18, 2026
 
 ![logo](https://unavatar.io/api/og ":id=banner")
 
@@ -293,7 +293,7 @@ Rate limit status can be verified using these response headers:
 | `x-rate-limit-reset`     | UTC epoch seconds when the current window resets               |
 
 ```bash
-$curl-Ihttps://unavatar.io/github/kikobeats
+curl-Ihttps://unavatar.io/github/kikobeats
 
 x-rate-limit-limit:25
 
@@ -435,7 +435,7 @@ Every request has a cost in tokens (**\$0.010 per token**) based on the proxy ti
 The proxy tier used is returned in the `x-proxy-tier` response header, and the total cost in the `x-unavatar-cost` header.
 
 ```bash
-$curl-I-H"x-api-key: sk_YOUR_SECRET_KEY"https://unavatar.io/instagram/kikobeats
+curl-I-H"x-api-key: sk_YOUR_SECRET_KEY"https://unavatar.io/instagram/kikobeats
 
 x-pricing-tier:pro
 
@@ -471,7 +471,7 @@ To check the cache status in real requests, inspect these response headers:
 | `cache-control`  | Shows cache policy and effective TTL (for example `public, max-age=3600` for `ttl=1h`). |
 
 ```bash
-$curl-I-H"x-api-key: sk_YOUR_SECRET_KEY""https://unavatar.io/github/kikobeats?ttl=1h"
+curl-I-H"x-api-key: sk_YOUR_SECRET_KEY""https://unavatar.io/github/kikobeats?ttl=1h"
 
 cache-control:public,max-age=3600
 
@@ -1172,7 +1172,7 @@ These headers help you understand pricing, limits, and request diagnostics.
 | `retry-after`            | Seconds until rate limit resets (only on 429 responses)   |
 
 ```bash
-$curl-I-H"x-api-key: sk_YOUR_SECRET_KEY"https://unavatar.io/github/kikobeats
+curl-I-H"x-api-key: sk_YOUR_SECRET_KEY"https://unavatar.io/github/kikobeats
 
 x-pricing-tier:pro
 
