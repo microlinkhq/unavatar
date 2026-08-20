@@ -7,18 +7,20 @@ const unbracket = hostname =>
     ? hostname.slice(1, -1)
     : hostname
 
+const isReservedAddress = address => ip.process(address).range() !== 'unicast'
+
 module.exports = ({ cacheableLookup }) => {
-  const getIpAddress = async hostname => {
-    if (ip.IPv4.isIPv4(hostname)) return hostname
+  const getIpAddresses = async hostname => {
+    if (ip.IPv4.isIPv4(hostname)) return [hostname]
     const literal = unbracket(hostname)
-    if (ip.IPv6.isIPv6(literal)) return literal
-    const { address } = await cacheableLookup.lookupAsync(hostname)
-    return address
+    if (ip.IPv6.isIPv6(literal)) return [literal]
+    const result = await cacheableLookup.lookupAsync(hostname, { all: true })
+    return result.map(entry => entry.address)
   }
 
   return async hostname => {
-    const ipAddress = await getIpAddress(hostname)
-    return ip.process(ipAddress).range() !== 'unicast'
+    const addresses = await getIpAddresses(hostname)
+    return addresses.some(isReservedAddress)
   }
 }
 

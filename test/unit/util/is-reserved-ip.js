@@ -66,3 +66,39 @@ test('reads an IPv6 literal with or without brackets', async t => {
   t.true(await isReservedIp('fe80::1'))
   t.false(await isReservedIp('2001:4860:4860::8888'))
 })
+
+test('returns true when any resolved address is reserved', async t => {
+  const createIsReservedIp = require('../../../src/util/is-reserved-ip')
+  const check = createIsReservedIp({
+    cacheableLookup: {
+      lookupAsync: async (hostname, options = {}) => {
+        t.is(hostname, 'evil.test')
+        t.true(options.all)
+        return [
+          { address: '1.1.1.1', family: 4 },
+          { address: '169.254.169.254', family: 4 }
+        ]
+      }
+    }
+  })
+
+  t.true(await check('evil.test'))
+})
+
+test('returns false when every resolved address is public unicast', async t => {
+  const createIsReservedIp = require('../../../src/util/is-reserved-ip')
+  const check = createIsReservedIp({
+    cacheableLookup: {
+      lookupAsync: async (hostname, options = {}) => {
+        t.is(hostname, 'cdn.example')
+        t.true(options.all)
+        return [
+          { address: '1.1.1.1', family: 4 },
+          { address: '8.8.8.8', family: 4 }
+        ]
+      }
+    }
+  })
+
+  t.false(await check('cdn.example'))
+})
