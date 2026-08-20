@@ -1,49 +1,86 @@
 'use strict'
 
-const cheerio = require('cheerio')
 const test = require('ava')
 
-const getOgImage = require('../../../src/util/get-og-image')
+const {
+  getAvatar,
+  normalizeHandle
+} = require('../../../src/providers/printables')
 
-const { getAvatarUrl } = require('../../../src/providers/printables')
+const createPrintables = got =>
+  require('../../../src/providers/printables')({ got })
 
-test('.getAvatarUrl prepends @ when missing', t => {
-  t.is(getAvatarUrl('kikobeats'), 'https://www.printables.com/@kikobeats')
+const avatarPath = 'media/auth/avatars/cd/cd02bb1d.jpg'
+const avatarUrl = `https://media.printables.com/${avatarPath}`
+
+const searchBody = {
+  data: {
+    result: {
+      items: [{ handle: 'DukeDoks', avatarFilePath: avatarPath }]
+    }
+  }
+}
+
+test('.normalizeHandle strips a leading @', t => {
+  t.is(normalizeHandle('@DukeDoks'), 'DukeDoks')
+  t.is(normalizeHandle('DukeDoks'), 'DukeDoks')
+  t.is(normalizeHandle(' @DukeDoks '), 'DukeDoks')
 })
 
-test('.getAvatarUrl keeps existing @ prefix', t => {
-  t.is(getAvatarUrl('@kikobeats'), 'https://www.printables.com/@kikobeats')
+test('.getAvatar returns the media URL for an exact handle', t => {
+  t.is(getAvatar(searchBody, 'DukeDoks'), avatarUrl)
 })
 
-const createHtmlProvider = opts => opts
-
-const printables = require('../../../src/providers/printables')({
-  createHtmlProvider,
-  getOgImage
+test('.getAvatar matches handle case-insensitively', t => {
+  t.is(getAvatar(searchBody, 'dukedoks'), avatarUrl)
 })
 
-test('getter extracts og:image from name attribute', t => {
-  const $ = cheerio.load(
-    '<html><head>' +
-      '<meta name="og:image" content="https://media.printables.com/media/auth/avatars/cd/thumbs/cover/320x320/jpg/cd02bb1d.jpg"/>' +
-      '</head></html>'
-  )
+test('.getAvatar ignores other search hits', t => {
   t.is(
-    printables.getter($),
-    'https://media.printables.com/media/auth/avatars/cd/thumbs/cover/320x320/jpg/cd02bb1d.jpg'
+    getAvatar(
+      {
+        data: {
+          result: {
+            items: [
+              { handle: 'Duke', avatarFilePath: 'media/other.jpg' },
+              { handle: 'DukeDoks', avatarFilePath: avatarPath }
+            ]
+          }
+        }
+      },
+      'DukeDoks'
+    ),
+    avatarUrl
   )
 })
 
-test('getter extracts og:image from property attribute', t => {
-  const $ = cheerio.load(
-    '<html><head>' +
-      '<meta property="og:image" content="https://media.printables.com/avatar.jpg"/>' +
-      '</head></html>'
+test('.getAvatar treats a missing avatar as a miss', t => {
+  t.is(getAvatar({ data: { result: { items: [] } } }, 'DukeDoks'), undefined)
+  t.is(
+    getAvatar(
+      { data: { result: { items: [{ handle: 'DukeDoks' }] } } },
+      'DukeDoks'
+    ),
+    undefined
   )
-  t.is(printables.getter($), 'https://media.printables.com/avatar.jpg')
 })
 
-test('getter returns undefined when og:image is missing', t => {
-  const $ = cheerio.load('<html><head></head><body></body></html>')
-  t.is(printables.getter($), undefined)
+test('printables resolves the avatar from GraphQL', async t => {
+  const printables = createPrintables(async (url, opts) => {
+    t.is(url, 'https://api.printables.com/graphql/')
+    t.is(opts.method, 'POST')
+    t.is(opts.json.variables.query, 'DukeDoks')
+    return { statusCode: 200, body: searchBody }
+  })
+
+  t.is(await printables('@DukeDoks'), avatarUrl)
+})
+
+test('printables returns undefined when the user is missing', async t => {
+  const printables = createPrintables(async () => ({
+    statusCode: 200,
+    body: { data: { result: { items: [] } } }
+  }))
+
+  t.is(await printables('missing'), undefined)
 })

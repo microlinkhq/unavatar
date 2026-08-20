@@ -172,16 +172,6 @@ test('dribbble, reddit and telegram getters read expected HTML attributes', t =>
   t.is(telegram.getter(telegramHtml), 'https://a.com/tg.png')
 })
 
-test('printables provider prepends @ to input', t => {
-  const printables = require('../../../src/providers/printables')({
-    createHtmlProvider,
-    getOgImage
-  })
-
-  t.is(printables.url('DukeDoks'), 'https://www.printables.com/@DukeDoks')
-  t.is(printables.url('@DukeDoks'), 'https://www.printables.com/@DukeDoks')
-})
-
 test('soundcloud and substack provider options are derived from helper modules', t => {
   const soundcloud = proxyquire('../../../src/providers/soundcloud', {
     'unique-random-array': () => () => 'mobile-agent'
