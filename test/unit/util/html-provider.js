@@ -386,7 +386,7 @@ test('createHtmlProvider does not set blocked when getter returns undefined', as
 
 test('createHtmlProvider sets blocked via is-antibot when HTML contains antibot signals', async t => {
   const html =
-    '<html><head><title>Blocked</title></head><body><div class="cf-turnstile"></div></body></html>'
+    '<html><head><title>Just a moment...</title></head><body><div class="cf-turnstile"></div></body></html>'
   const $ = cheerio.load(html)
 
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
