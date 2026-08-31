@@ -1,3 +1,9 @@
+## 3.48.0 (2026-08-31)
+
+### Features
+
+* **providers:** resolve Bluesky, Deezer, GitLab via API ([#663](https://github.com/Kikobeats/unavatar/issues/663)) ([31d738c](https://github.com/Kikobeats/unavatar/commit/31d738ca6faf21719a6e177d9140cf7ee145c140))
+
 ## 3.47.0 (2026-08-31)
 
 ### Features
