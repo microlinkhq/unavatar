@@ -44,6 +44,20 @@ test('.getAvatar falls back to regex extraction when data-page is not valid JSON
   t.is(getAvatar($), avatarUrl)
 })
 
+test('.getAvatar reads creator avatar from script[data-page=app]', t => {
+  const html = `
+    <html>
+      <body>
+        <div id="app"></div>
+        <script data-page="app" type="application/json">{"props":{"creator_data":{"data":{"dp":"${avatarUrl}"}}}}</script>
+      </body>
+    </html>
+  `
+
+  const $ = cheerio.load(html)
+  t.is(getAvatar($), avatarUrl)
+})
+
 test('.getAvatar returns undefined when data-page payload is missing', t => {
   const $ = cheerio.load('<html><body></body></html>')
   t.is(getAvatar($), undefined)

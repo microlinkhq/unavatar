@@ -1,44 +1,32 @@
 'use strict'
 
-const API_URL = 'https://api.deezer.com'
-
 // Entities without artwork keep an empty image hash
 // (cdn-images.dzcdn.net/images/artist//500x500.jpg), which resolves to a
 // generic placeholder, so any empty hash segment is treated as a miss.
 const isArtwork = url => !/\/images\/[^/]+\/\/\d/.test(url)
 
-const parseInput = input => {
-  const [first, second] = input.split(':')
-  return {
-    type: second ? first : 'artist',
-    id: second ?? first
-  }
-}
-
 const getAvatarUrl = input => {
-  const { type, id } = parseInput(input)
-  return `${API_URL}/${encodeURIComponent(type)}/${encodeURIComponent(id)}`
+  const [first, second] = input.split(':')
+  const type = second ? first : 'artist'
+  const id = second ?? first
+  return `https://www.deezer.com/en/${type}/${id}`
 }
 
-const getAvatar = body => {
-  if (body?.error) return
-
-  const pic = body?.picture_xl || body?.cover_xl || body?.album?.cover_xl
-  return typeof pic === 'string' && pic && isArtwork(pic) ? pic : undefined
+// Deezer server-renders og:image for missing entities as well, so the empty
+// placeholder is filtered out and everything else is returned as-is.
+const getAvatar = ({ $, getOgImage, NOT_FOUND }) => {
+  const image = getOgImage($)
+  return image && isArtwork(image) ? image : NOT_FOUND
 }
 
-module.exports = ({ got }) =>
-  async function deezer (input) {
-    const { body, statusCode } = await got(getAvatarUrl(input), {
-      responseType: 'json',
-      throwHttpErrors: false
-    })
+const factory = ({ createHtmlProvider, getOgImage, NOT_FOUND }) =>
+  createHtmlProvider({
+    name: 'deezer',
+    url: getAvatarUrl,
+    getter: $ => getAvatar({ $, getOgImage, NOT_FOUND })
+  })
 
-    if (statusCode >= 400) return
+factory.getAvatarUrl = getAvatarUrl
+factory.getAvatar = getAvatar
 
-    return getAvatar(body)
-  }
-
-module.exports.parseInput = parseInput
-module.exports.getAvatarUrl = getAvatarUrl
-module.exports.getAvatar = getAvatar
+module.exports = factory

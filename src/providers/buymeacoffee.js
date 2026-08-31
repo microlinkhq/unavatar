@@ -1,7 +1,10 @@
 'use strict'
 
+const getDataPage = $ =>
+  $('#app').attr('data-page') || $('script[data-page="app"]').html()
+
 const getAvatar = $ => {
-  const dataPage = $('#app').attr('data-page')
+  const dataPage = getDataPage($)
   if (!dataPage) return
 
   try {
