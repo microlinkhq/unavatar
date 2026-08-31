@@ -1,3 +1,9 @@
+## 3.47.0 (2026-08-31)
+
+### Features
+
+* **providers:** add Kick avatar provider ([#661](https://github.com/Kikobeats/unavatar/issues/661)) ([6c0ec2a](https://github.com/Kikobeats/unavatar/commit/6c0ec2abe7952854146fa24bc218c36c094f735a))
+
 ## 3.46.17 (2026-08-27)
 
 ## 3.46.16 (2026-08-26)
