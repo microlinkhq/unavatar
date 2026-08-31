@@ -1,39 +1,49 @@
 'use strict'
 
 const test = require('ava')
-const sinon = require('sinon')
+
+const { getAvatar, getAvatarUrl } = require('../../../src/providers/kick')
 
 const createKick = got => require('../../../src/providers/kick')({ got })
 
-test('provider calls the channels API and returns the profile picture', async t => {
-  const avatarUrl =
-    'https://files.kick.com/images/user/676/profile_image/conversion/avatar-fullsize.webp'
-  const got = sinon.stub().resolves({
-    body: { user: { profile_pic: avatarUrl } }
+const avatarUrl =
+  'https://files.kick.com/images/user/676/profile_image/conversion/avatar-fullsize.webp'
+
+test('.getAvatarUrl builds the channel API URL', t => {
+  t.is(getAvatarUrl('xqc'), 'https://kick.com/api/v2/channels/xqc')
+})
+
+test('.getAvatarUrl encodes the input', t => {
+  t.is(getAvatarUrl('a b'), 'https://kick.com/api/v2/channels/a%20b')
+})
+
+test('.getAvatar returns the profile_pic', t => {
+  t.is(getAvatar({ user: { profile_pic: avatarUrl } }), avatarUrl)
+})
+
+test('.getAvatar treats a missing or empty profile_pic as a miss', t => {
+  t.is(getAvatar({ user: {} }), undefined)
+  t.is(getAvatar({ user: { profile_pic: null } }), undefined)
+  t.is(getAvatar({ user: { profile_pic: '' } }), undefined)
+})
+
+test('kick resolves the avatar from the channels API', async t => {
+  const kick = createKick(async (url, opts) => {
+    t.is(url, 'https://kick.com/api/v2/channels/xqc')
+    t.is(opts.responseType, 'json')
+    t.false(opts.throwHttpErrors)
+
+    return { statusCode: 200, body: { user: { profile_pic: avatarUrl } } }
   })
 
-  const kick = createKick(got)
-  const result = await kick('xqc')
-
-  t.is(result, avatarUrl)
-  t.true(got.calledOnce)
-  t.is(got.firstCall.args[0], 'https://kick.com/api/v2/channels/xqc')
+  t.is(await kick('xqc'), avatarUrl)
 })
 
-test('provider returns undefined when the channel has no picture', async t => {
-  const got = sinon.stub().resolves({ body: { user: {} } })
+test('kick returns undefined when the channel is missing', async t => {
+  const kick = createKick(async () => ({
+    statusCode: 404,
+    body: { error: 'Not Found', message: 'Channel not found.', status: 404 }
+  }))
 
-  const kick = createKick(got)
-  const result = await kick('someone')
-
-  t.is(result, undefined)
-})
-
-test('provider encodes the input in the request url', async t => {
-  const got = sinon.stub().resolves({ body: { user: {} } })
-
-  const kick = createKick(got)
-  await kick('a b')
-
-  t.is(got.firstCall.args[0], 'https://kick.com/api/v2/channels/a%20b')
+  t.is(await kick('missing'), undefined)
 })
