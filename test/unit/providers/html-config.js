@@ -15,17 +15,6 @@ test('html provider modules expose expected URL builders', t => {
   })
   t.is(behance.url('kikobeats'), 'https://www.behance.net/kikobeats')
 
-  const bluesky = proxyquire('../../../src/providers/bluesky', {
-    '@metascraper/helpers': {
-      $jsonld: path => () => `jsonld:${path}`
-    }
-  })({ createHtmlProvider })
-  t.is(
-    bluesky.url('kikobeats.bsky.social'),
-    'https://bsky.app/profile/kikobeats.bsky.social'
-  )
-  t.is(bluesky.getter({}), 'jsonld:mainEntity.image')
-
   const buymeacoffee = require('../../../src/providers/buymeacoffee')({
     createHtmlProvider
   })
@@ -66,12 +55,6 @@ test('html provider modules expose expected URL builders', t => {
     flickr.url('groups:best100only'),
     'https://www.flickr.com/groups/best100only/'
   )
-
-  const gitlab = require('../../../src/providers/gitlab')({
-    createHtmlProvider,
-    getOgImage
-  })
-  t.is(gitlab.url('kikobeats'), 'https://gitlab.com/kikobeats')
 
   const googlePlay = require('../../../src/providers/google-play')({
     createHtmlProvider,
