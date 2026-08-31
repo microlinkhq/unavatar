@@ -49,6 +49,7 @@
   - [Hugging Face](#hugging-face)
   - [Instagram](#instagram)
   - [Juejin](#juejin)
+  - [Kick](#kick)
   - [Ko-fi](#ko-fi)
   - [LinkedIn](#linkedin)
   - [Mastodon](#mastodon)
@@ -106,13 +107,13 @@ Last updated on August 18, 2026
 
 ## Introduction
 
-**unavatar.io** retrieves anyone's avatar from a single URL — by username, email, or domain — across 72 platforms including [Instagram](https://unavatar.io/docs#instagram), [GitHub](https://unavatar.io/docs#github), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), and [Gravatar](https://unavatar.io/docs#gravatar). No API keys, no SDKs, free to start.
+**unavatar.io** retrieves anyone's avatar from a single URL — by username, email, or domain — across 73 platforms including [Instagram](https://unavatar.io/docs#instagram), [GitHub](https://unavatar.io/docs#github), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), and [Gravatar](https://unavatar.io/docs#gravatar). No API keys, no SDKs, free to start.
 
 Try it: [unavatar.io/github/kikobeats](https://unavatar.io/github/kikobeats) · [unavatar.io/x/josebaseba](https://unavatar.io/x/josebaseba) · [unavatar.io/domain/reddit.com](https://unavatar.io/domain/reddit.com)
 
 Everything you need to serve avatars at scale:
 
-- **Versatile**: One endpoint rules 72 platforms and services — [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), and more — all queried the same way.
+- **Versatile**: One endpoint rules 73 platforms and services — [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), and more — all queried the same way.
 
 - **Battle-tested**: Already serving 2.77 TB of avatars across 189.4M requests, with a 70% cache hit rate.
 
@@ -810,6 +811,12 @@ e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 Get any Juejin user's profile picture by their numeric user ID.
 
 e.g., [unavatar.io/juejin/1556564194374926](https://unavatar.io/juejin/1556564194374926)
+
+### Kick
+
+Get any Kick streamer's profile picture by their username.
+
+e.g., [unavatar.io/kick/xqc](https://unavatar.io/kick/xqc)
 
 ### Ko-fi
 
