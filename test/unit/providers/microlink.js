@@ -5,12 +5,13 @@ const sinon = require('sinon')
 const proxyquire = require('proxyquire').noPreserveCache()
 
 test('microlink provider resolves logo using pro API key', async t => {
-  const mql = sinon
+  const logo = sinon
     .stub()
-    .resolves({ data: { logo: { url: 'https://cdn.example.com/logo.png' } } })
+    .resolves({ url: 'https://cdn.example.com/logo.png' })
+  const createClient = sinon.stub().returns({ logo })
 
   const microlink = proxyquire('../../../src/providers/microlink', {
-    '@microlink/mql': mql
+    'microlink.io': createClient
   })({ constants: { MICROLINK_API_KEY: 'pro-key' } })
 
   const result = await microlink('teslahunt.io', {
@@ -19,19 +20,20 @@ test('microlink provider resolves logo using pro API key', async t => {
 
   t.is(result, 'https://cdn.example.com/logo.png')
   t.true(
-    mql.calledOnceWithExactly('https://teslahunt.io', {
+    logo.calledOnceWithExactly('https://teslahunt.io', {
       apiKey: 'pro-key'
     })
   )
 })
 
 test('microlink provider falls back to request API key for non-pro users', async t => {
-  const mql = sinon.stub().resolves({
-    data: { logo: { url: 'https://cdn.example.com/free-logo.png' } }
-  })
+  const logo = sinon
+    .stub()
+    .resolves({ url: 'https://cdn.example.com/free-logo.png' })
+  const createClient = sinon.stub().returns({ logo })
 
   const microlink = proxyquire('../../../src/providers/microlink', {
-    '@microlink/mql': mql
+    'microlink.io': createClient
   })({ constants: { MICROLINK_API_KEY: 'pro-key' } })
 
   const result = await microlink('teslahunt.io', {
@@ -40,7 +42,7 @@ test('microlink provider falls back to request API key for non-pro users', async
 
   t.is(result, 'https://cdn.example.com/free-logo.png')
   t.true(
-    mql.calledOnceWithExactly('https://teslahunt.io', {
+    logo.calledOnceWithExactly('https://teslahunt.io', {
       apiKey: 'free-key'
     })
   )
