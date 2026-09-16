@@ -1,3 +1,9 @@
+## 3.49.0 (2026-09-16)
+
+### Features
+
+* **providers:** add Stripe avatar provider ([#668](https://github.com/Kikobeats/unavatar/issues/668)) ([82f7461](https://github.com/Kikobeats/unavatar/commit/82f7461b607145ed7be2aba9ac5871aa6812446e))
+
 ## 3.48.8 (2026-09-07)
 
 ## 3.48.7 (2026-09-04)
