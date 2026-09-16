@@ -1,15 +1,17 @@
 'use strict'
 
-const mql = require('@microlink/mql')
-const { get } = require('lodash')
+const createClient = require('microlink.io')
 
-module.exports = ({ constants }) =>
-  async function microlink (input, context) {
+module.exports = ({ constants }) => {
+  const client = createClient()
+
+  return async function microlink (input, context) {
     const req = context?.req
-    const { data } = await mql(`https://${input}`, {
+    const logo = await client.logo(`https://${input}`, {
       apiKey: req?.isPro
         ? constants.MICROLINK_API_KEY
         : req?.headers?.['x-api-key']
     })
-    return get(data, 'logo.url')
+    return logo?.url
   }
+}
