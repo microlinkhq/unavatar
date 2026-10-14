@@ -92,6 +92,12 @@ test('html provider modules expose expected URL builders', t => {
   )
   t.is(linkedin.url('school:mit'), 'https://www.linkedin.com/school/mit')
 
+  const osu = require('../../../src/providers/osu')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(osu.url('peppy'), 'https://osu.ppy.sh/users/peppy')
+
   const twitch = require('../../../src/providers/twitch')({
     createHtmlProvider,
     getOgImage
