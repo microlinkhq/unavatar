@@ -1,5 +1,12 @@
 'use strict'
 
+const uniqueRandomArray = require('unique-random-array')
+
+// Mobile user agents get an HTML page instead of the user_json payload.
+const randomDesktopUserAgent = uniqueRandomArray(
+  require('top-user-agents/desktop')
+)
+
 const PORTRAIT_URL = 'https://himg.bdimg.com/sys/portrait/item'
 
 const getAvatarUrl = input =>
@@ -17,7 +24,8 @@ module.exports = ({ got }) =>
     // Unknown users respond with an empty body, which is not valid JSON.
     const { body, statusCode } = await got(getAvatarUrl(input), {
       responseType: 'text',
-      throwHttpErrors: false
+      throwHttpErrors: false,
+      headers: { 'user-agent': randomDesktopUserAgent() }
     })
 
     if (statusCode >= 400 || !body) return

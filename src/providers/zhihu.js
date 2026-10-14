@@ -1,5 +1,12 @@
 'use strict'
 
+const uniqueRandomArray = require('unique-random-array')
+
+// Mobile user agents get a 403 from the members API.
+const randomDesktopUserAgent = uniqueRandomArray(
+  require('top-user-agents/desktop')
+)
+
 const API_URL = 'https://www.zhihu.com/api/v4/members'
 
 const getAvatarUrl = input =>
@@ -16,7 +23,8 @@ module.exports = ({ got }) =>
   async function zhihu (input) {
     const { body, statusCode } = await got(getAvatarUrl(input), {
       responseType: 'json',
-      throwHttpErrors: false
+      throwHttpErrors: false,
+      headers: { 'user-agent': randomDesktopUserAgent() }
     })
 
     if (statusCode >= 400) return

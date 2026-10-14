@@ -42,6 +42,19 @@ test('tieba resolves the portrait from the user_json API', async t => {
   )
 })
 
+test('tieba always requests the API with a desktop user agent', async t => {
+  const desktopUserAgents = require('top-user-agents/desktop')
+  const userAgents = []
+  const tieba = createTieba(async (url, opts) => {
+    userAgents.push(opts.headers?.['user-agent'])
+    return { statusCode: 200, body: JSON.stringify({ creator: { portrait } }) }
+  })
+
+  for (let i = 0; i < 20; i++) await tieba('Mojang')
+
+  t.true(userAgents.every(userAgent => desktopUserAgents.includes(userAgent)))
+})
+
 test('tieba returns undefined when the response body is empty', async t => {
   const tieba = createTieba(async () => ({ statusCode: 200, body: '' }))
 
