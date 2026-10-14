@@ -83,6 +83,7 @@
   - [Reddit](#reddit)
   - [Revolut](#revolut)
   - [Roblox](#roblox)
+  - [Sketchfab](#sketchfab)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -1059,6 +1060,12 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/roblox/builderman](https://unavatar.io/roblox/builderman)
 - User ID, e.g., [unavatar.io/roblox/id:156](https://unavatar.io/roblox/id:156)
+
+### Sketchfab
+
+Get any Sketchfab creator's profile picture by their username.
+
+e.g., [unavatar.io/sketchfab/nasa](https://unavatar.io/sketchfab/nasa)
 
 ### Snapchat
 
