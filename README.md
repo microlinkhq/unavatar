@@ -31,6 +31,7 @@
   - [Cults3D](#cults3d)
   - [Cursor](#cursor)
   - [Deezer](#deezer)
+  - [DEV](#dev)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
@@ -653,6 +654,12 @@ Available inputs:
 - `album`: [unavatar.io/deezer/album:302127](https://unavatar.io/deezer/album:302127)
 - `playlist`: [unavatar.io/deezer/playlist:908622995](https://unavatar.io/deezer/playlist:908622995)
 - `track`: [unavatar.io/deezer/track:3135556](https://unavatar.io/deezer/track:3135556)
+
+### DEV
+
+Get any [DEV](https://dev.to) user's profile picture by username, or an organization's logo by its slug.
+
+e.g., [unavatar.io/devto/ben](https://unavatar.io/devto/ben)
 
 ### DeviantArt
 
