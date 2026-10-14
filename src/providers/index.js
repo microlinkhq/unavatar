@@ -96,7 +96,8 @@ const providerTiers = {
       'zhihu'
     ]
   ],
-  domain: [['bimi'], ['duckduckgo', 'google', 'microlink']]
+  domain: [['bimi'], ['duckduckgo', 'google', 'microlink']],
+  ens: [['ens']]
 }
 
 const { emailHash, ...publicTiers } = providerTiers
@@ -133,6 +134,7 @@ module.exports = ctx => {
     dribbble: require('./dribbble')(ctx),
     duckduckgo: require('./duckduckgo')(ctx),
     duolingo: require('./duolingo')(ctx),
+    ens: require('./ens')(ctx),
     facebook: require('./facebook')(ctx),
     farcaster: require('./farcaster')(ctx),
     flickr: require('./flickr')(ctx),

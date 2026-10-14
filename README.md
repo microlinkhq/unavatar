@@ -44,6 +44,7 @@
   - [DuckDuckGo](#duckduckgo)
   - [Duolingo](#duolingo)
   - [Email](#email)
+  - [ENS](#ens)
   - [Facebook](#facebook)
   - [Farcaster](#farcaster)
   - [Flickr](#flickr)
@@ -772,6 +773,14 @@ Target a specific provider when you know where the avatar comes from.
 - BIMI (`unavatar.io/bimi/{email}`) — official brand logo from the address domain: [unavatar.io/bimi/support@ebay.com](https://unavatar.io/bimi/support@ebay.com)
 
 e.g., [unavatar.io/email/hello@microlink.io](https://unavatar.io/email/hello@microlink.io)
+
+### ENS
+
+Get the avatar set on any Ethereum Name Service (ENS) name, including subnames like `jesse.base.eth`. A bare label is treated as a `.eth` name.
+
+e.g., [unavatar.io/ens/vitalik.eth](https://unavatar.io/ens/vitalik.eth)
+
+Names ending in `.eth` are detected automatically, so [unavatar.io/vitalik.eth](https://unavatar.io/vitalik.eth) resolves through ENS too.
 
 ### Facebook
 

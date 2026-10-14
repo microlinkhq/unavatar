@@ -59,9 +59,10 @@ test('providerTiers references valid providers only', t => {
 })
 
 test('providersBy stays a flat list per input type, tiers kept private', t => {
-  t.deepEqual(Object.keys(providersBy), ['email', 'username', 'domain'])
+  t.deepEqual(Object.keys(providersBy), ['email', 'username', 'domain', 'ens'])
   t.deepEqual(providersBy.email, ['gravatar', 'github', 'libravatar', 'bimi'])
   t.deepEqual(providersBy.domain, ['bimi', 'duckduckgo', 'google', 'microlink'])
+  t.deepEqual(providersBy.ens, ['ens'])
   t.is(providersBy.username.at(0), 'apple-music')
 })
 
