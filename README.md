@@ -90,6 +90,7 @@
   - [Sketchfab](#sketchfab)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
+  - [Speedrun](#speedrun)
   - [Spotify](#spotify)
   - [Stack Overflow](#stack-overflow)
   - [Steam](#steam)
@@ -1118,6 +1119,12 @@ e.g., [unavatar.io/snapchat/teddysdaytoday](https://unavatar.io/snapchat/teddysd
 Get any SoundCloud artist's profile picture by their username.
 
 e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
+
+### Speedrun
+
+Get any Speedrun.com runner's profile picture by their username or user ID.
+
+e.g., [unavatar.io/speedrun/cheese](https://unavatar.io/speedrun/cheese)
 
 ### Spotify
 
