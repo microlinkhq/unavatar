@@ -42,6 +42,7 @@
   - [Domain](#domain)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
+  - [Duolingo](#duolingo)
   - [Email](#email)
   - [Facebook](#facebook)
   - [Flickr](#flickr)
@@ -737,6 +738,12 @@ e.g., [unavatar.io/dribbble/omidnikrah](https://unavatar.io/dribbble/omidnikrah)
 Get the favicon or logo for any domain via DuckDuckGo's icon service. Useful as a fallback when a domain doesn't expose its favicon directly.
 
 e.g., [unavatar.io/duckduckgo/microsoft.com](https://unavatar.io/duckduckgo/microsoft.com)
+
+### Duolingo
+
+Get any Duolingo learner's profile picture by their username.
+
+e.g., [unavatar.io/duolingo/luis](https://unavatar.io/duolingo/luis)
 
 ### Email
 
