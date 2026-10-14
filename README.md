@@ -67,6 +67,7 @@
   - [NetEase Music](#netease-music)
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
+  - [Open Collective](#open-collective)
   - [OpenStreetMap](#openstreetmap)
   - [osu!](#osu)
   - [Patreon](#patreon)
@@ -942,6 +943,12 @@ e.g., [unavatar.io/npm/mafintosh](https://unavatar.io/npm/mafintosh)
 Get any OnlyFans creator's profile picture by their username.
 
 e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
+
+### Open Collective
+
+Get any Open Collective account's avatar by its profile slug, for collectives, organizations, and individuals.
+
+e.g., [unavatar.io/opencollective/webpack](https://unavatar.io/opencollective/webpack)
 
 ### OpenStreetMap
 
