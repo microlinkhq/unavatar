@@ -59,6 +59,7 @@
   - [Mastodon](#mastodon)
   - [Medium](#medium)
   - [Microlink](#microlink)
+  - [Minecraft](#minecraft)
   - [NetEase Music](#netease-music)
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
@@ -885,6 +886,15 @@ e.g., [unavatar.io/medium/juancalmaraz](https://unavatar.io/medium/juancalmaraz)
 Extract the logo or representative image from any URL. The page is rendered and the best available image is selected — useful for getting brand logos from any website.
 
 e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
+
+### Minecraft
+
+Get any Minecraft Java Edition player's face by their username or UUID. The player is resolved through Mojang first, so unknown players return no avatar, and the face is rendered by [mc-heads.net](https://mc-heads.net).
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/minecraft/notch](https://unavatar.io/minecraft/notch)
+- UUID, with or without dashes, e.g., [unavatar.io/minecraft/069a79f4-44e9-4726-a5be-fca90e38aaf5](https://unavatar.io/minecraft/069a79f4-44e9-4726-a5be-fca90e38aaf5)
 
 ### NetEase Music
 
