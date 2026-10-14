@@ -114,6 +114,20 @@ test('treats the nophoto placeholder as a miss', async t => {
   t.is(await goodreads('4'), undefined)
 })
 
+test('.parseInput rejects empty or surplus fields', t => {
+  t.is(parseInput('author:'), undefined)
+  t.is(parseInput(':4'), undefined)
+  t.is(parseInput('author:4:5'), undefined)
+})
+
+test('returns undefined for malformed input without fetching', async t => {
+  const { goodreads, requestedUrls } = createGoodreads({})
+
+  t.is(await goodreads('author:'), undefined)
+  t.is(await goodreads('author:4:5'), undefined)
+  t.deepEqual(requestedUrls, [])
+})
+
 test('returns undefined for a missing user', async t => {
   const { goodreads } = createGoodreads({
     'https://www.goodreads.com/thisuserdoesnotexist12345xyz': {
