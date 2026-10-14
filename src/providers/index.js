@@ -1,8 +1,8 @@
 'use strict'
 
 const providerTiers = {
-  email: [['gravatar', 'github'], ['bimi']],
-  emailHash: [['gravatar']],
+  email: [['gravatar', 'github'], ['libravatar'], ['bimi']],
+  emailHash: [['gravatar'], ['libravatar']],
   username: [
     [
       'apple-music',
@@ -122,6 +122,7 @@ module.exports = ctx => {
     juejin: require('./juejin')(ctx),
     kick: require('./kick')(ctx),
     'ko-fi': require('./ko-fi')(ctx),
+    libravatar: require('./libravatar')(ctx),
     linkedin: require('./linkedin')(ctx),
     mastodon: require('./mastodon')(ctx),
     medium: require('./medium')(ctx),
