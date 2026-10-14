@@ -1,3 +1,9 @@
+## 3.54.0 (2026-10-14)
+
+### Features
+
+* add minecraft provider ([#688](https://github.com/Kikobeats/unavatar/issues/688)) ([88d3e26](https://github.com/Kikobeats/unavatar/commit/88d3e26d885c8b23e46e5eb06067f30fd719d77c))
+
 ## 3.53.0 (2026-10-14)
 
 ### Features
