@@ -1,3 +1,9 @@
+## 3.60.0 (2026-10-14)
+
+### Features
+
+* add bitbucket provider ([#695](https://github.com/Kikobeats/unavatar/issues/695)) ([5bd2317](https://github.com/Kikobeats/unavatar/commit/5bd23177194bedb54d3d99facbb5495c163ad524))
+
 ## 3.59.0 (2026-10-14)
 
 ### Features
