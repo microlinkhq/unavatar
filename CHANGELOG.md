@@ -1,3 +1,9 @@
+## 3.55.0 (2026-10-14)
+
+### Features
+
+* add chesscom provider ([#689](https://github.com/Kikobeats/unavatar/issues/689)) ([8f8aa81](https://github.com/Kikobeats/unavatar/commit/8f8aa815667f60af044a9d183b37dc0541343cf3))
+
 ## 3.54.0 (2026-10-14)
 
 ### Features
