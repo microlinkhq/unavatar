@@ -1,3 +1,9 @@
+## 3.51.0 (2026-10-14)
+
+### Features
+
+* add roblox provider ([#685](https://github.com/Kikobeats/unavatar/issues/685)) ([ee139da](https://github.com/Kikobeats/unavatar/commit/ee139da5750e11eee30ba559b3bbb14bdfcfba4d))
+
 ## 3.50.0 (2026-10-14)
 
 ### Features
