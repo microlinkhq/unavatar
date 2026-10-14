@@ -75,6 +75,11 @@ test('html provider modules expose expected URL builders', t => {
   })
   t.is(instagram.url('willsmith'), 'https://www.instagram.com/willsmith')
 
+  const kaggle = require('../../../src/providers/kaggle')({
+    createHtmlProvider
+  })
+  t.is(kaggle.url('jhoward'), 'https://www.kaggle.com/jhoward')
+
   const linkedin = require('../../../src/providers/linkedin')({
     createHtmlProvider,
     getOgImage
@@ -86,6 +91,12 @@ test('html provider modules expose expected URL builders', t => {
     'https://www.linkedin.com/company/unavatar'
   )
   t.is(linkedin.url('school:mit'), 'https://www.linkedin.com/school/mit')
+
+  const osu = require('../../../src/providers/osu')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(osu.url('peppy'), 'https://osu.ppy.sh/users/peppy')
 
   const twitch = require('../../../src/providers/twitch')({
     createHtmlProvider,
