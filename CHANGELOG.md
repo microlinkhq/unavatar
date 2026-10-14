@@ -1,3 +1,9 @@
+## 3.68.0 (2026-10-14)
+
+### Features
+
+* add lemmy provider ([#703](https://github.com/Kikobeats/unavatar/issues/703)) ([0ac105e](https://github.com/Kikobeats/unavatar/commit/0ac105e28205ed0ad0a747c234cd641734c79a8f))
+
 ## 3.67.0 (2026-10-14)
 
 ### Features
