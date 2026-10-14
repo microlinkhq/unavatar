@@ -27,6 +27,7 @@
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
   - [Cash App](#cash-app)
+  - [Chess.com](#chesscom)
   - [Codeforces](#codeforces)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
@@ -625,6 +626,12 @@ e.g., [unavatar.io/buymeacoffee/mikebarnesdrums](https://unavatar.io/buymeacoffe
 Get any Cash App user's profile picture by their Cashtag.
 
 e.g., [unavatar.io/cashapp/ninja](https://unavatar.io/cashapp/ninja)
+
+### Chess.com
+
+Get any Chess.com player's profile picture by their username.
+
+e.g., [unavatar.io/chesscom/hikaru](https://unavatar.io/chesscom/hikaru)
 
 ### Codeforces
 
