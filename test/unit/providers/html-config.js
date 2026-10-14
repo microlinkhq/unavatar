@@ -56,6 +56,14 @@ test('html provider modules expose expected URL builders', t => {
     'https://www.flickr.com/groups/best100only/'
   )
 
+  const goodreads = require('../../../src/providers/goodreads')({
+    createHtmlProvider,
+    getOgImage
+  })
+  t.is(goodreads.url('otis'), 'https://www.goodreads.com/otis')
+  t.is(goodreads.url('1'), 'https://www.goodreads.com/user/show/1')
+  t.is(goodreads.url('author:4'), 'https://www.goodreads.com/author/show/4')
+
   const googlePlay = require('../../../src/providers/google-play')({
     createHtmlProvider,
     getOgImage
