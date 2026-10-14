@@ -1,3 +1,9 @@
+## 3.71.1 (2026-10-14)
+
+### Bug Fixes
+
+* request tieba and zhihu with desktop user agents ([#708](https://github.com/Kikobeats/unavatar/issues/708)) ([0a272bb](https://github.com/Kikobeats/unavatar/commit/0a272bb59456159d5269f836bc89b1f33043eaa6))
+
 ## 3.71.0 (2026-10-14)
 
 ### Features
