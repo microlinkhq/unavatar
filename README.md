@@ -61,6 +61,7 @@
   - [Medium](#medium)
   - [Microlink](#microlink)
   - [Minecraft](#minecraft)
+  - [Mixcloud](#mixcloud)
   - [NetEase Music](#netease-music)
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
@@ -902,6 +903,12 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/minecraft/notch](https://unavatar.io/minecraft/notch)
 - UUID, with or without dashes, e.g., [unavatar.io/minecraft/069a79f4-44e9-4726-a5be-fca90e38aaf5](https://unavatar.io/minecraft/069a79f4-44e9-4726-a5be-fca90e38aaf5)
+
+### Mixcloud
+
+Get any Mixcloud user's profile picture by their username.
+
+e.g., [unavatar.io/mixcloud/spartacus](https://unavatar.io/mixcloud/spartacus)
 
 ### NetEase Music
 
