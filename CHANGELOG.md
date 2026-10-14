@@ -1,3 +1,9 @@
+## 3.65.0 (2026-10-14)
+
+### Features
+
+* add farcaster provider ([#700](https://github.com/Kikobeats/unavatar/issues/700)) ([66b3ced](https://github.com/Kikobeats/unavatar/commit/66b3cedc8ecbaed0654d181556c45719c9dc63cb))
+
 ## 3.64.0 (2026-10-14)
 
 ### Features
