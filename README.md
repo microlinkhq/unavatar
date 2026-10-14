@@ -27,6 +27,7 @@
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
   - [Cash App](#cash-app)
+  - [Codeforces](#codeforces)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
   - [Cursor](#cursor)
@@ -72,6 +73,7 @@
   - [Raycast](#raycast)
   - [Reddit](#reddit)
   - [Revolut](#revolut)
+  - [Roblox](#roblox)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -622,6 +624,12 @@ Get any Cash App user's profile picture by their Cashtag.
 
 e.g., [unavatar.io/cashapp/ninja](https://unavatar.io/cashapp/ninja)
 
+### Codeforces
+
+Get any Codeforces user's profile picture by their handle.
+
+e.g., [unavatar.io/codeforces/tourist](https://unavatar.io/codeforces/tourist)
+
 ### CodePen
 
 Get any CodePen user's profile picture by their username.
@@ -973,6 +981,15 @@ Available inputs:
 Get any Revolut user's profile picture by their Revolut.Me username.
 
 e.g., [unavatar.io/revolut/midudev](https://unavatar.io/revolut/midudev)
+
+### Roblox
+
+Get any Roblox user's avatar headshot by their username or user ID.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/roblox/builderman](https://unavatar.io/roblox/builderman)
+- User ID, e.g., [unavatar.io/roblox/id:156](https://unavatar.io/roblox/id:156)
 
 ### Snapchat
 
