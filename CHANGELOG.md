@@ -1,3 +1,9 @@
+## 3.53.0 (2026-10-14)
+
+### Features
+
+* add dailymotion provider ([#687](https://github.com/Kikobeats/unavatar/issues/687)) ([e90d32d](https://github.com/Kikobeats/unavatar/commit/e90d32d42a7aa2c7e892a985b675f5fc5ba1cfa7))
+
 ## 3.52.0 (2026-10-14)
 
 ### Features
