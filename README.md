@@ -27,6 +27,7 @@
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
   - [Cash App](#cash-app)
+  - [Codeforces](#codeforces)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
   - [Cursor](#cursor)
@@ -51,6 +52,7 @@
   - [Hugging Face](#hugging-face)
   - [Instagram](#instagram)
   - [Juejin](#juejin)
+  - [Keybase](#keybase)
   - [Kick](#kick)
   - [Ko-fi](#ko-fi)
   - [LinkedIn](#linkedin)
@@ -72,6 +74,7 @@
   - [Raycast](#raycast)
   - [Reddit](#reddit)
   - [Revolut](#revolut)
+  - [Roblox](#roblox)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -622,6 +625,12 @@ Get any Cash App user's profile picture by their Cashtag.
 
 e.g., [unavatar.io/cashapp/ninja](https://unavatar.io/cashapp/ninja)
 
+### Codeforces
+
+Get any Codeforces user's profile picture by their handle.
+
+e.g., [unavatar.io/codeforces/tourist](https://unavatar.io/codeforces/tourist)
+
 ### CodePen
 
 Get any CodePen user's profile picture by their username.
@@ -830,6 +839,12 @@ Get any Juejin user's profile picture by their numeric user ID.
 
 e.g., [unavatar.io/juejin/1556564194374926](https://unavatar.io/juejin/1556564194374926)
 
+### Keybase
+
+Get any Keybase user's profile picture by their username.
+
+e.g., [unavatar.io/keybase/chris](https://unavatar.io/keybase/chris)
+
 ### Kick
 
 Get any Kick streamer's profile picture by their username.
@@ -973,6 +988,15 @@ Available inputs:
 Get any Revolut user's profile picture by their Revolut.Me username.
 
 e.g., [unavatar.io/revolut/midudev](https://unavatar.io/revolut/midudev)
+
+### Roblox
+
+Get any Roblox user's avatar headshot by their username or user ID.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/roblox/builderman](https://unavatar.io/roblox/builderman)
+- User ID, e.g., [unavatar.io/roblox/id:156](https://unavatar.io/roblox/id:156)
 
 ### Snapchat
 
