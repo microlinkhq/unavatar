@@ -21,7 +21,7 @@ const isHash = require('../util/is-hash')
 
 const getInputType = input => {
   if (isEmail(input) || isHash(input)) return 'email'
-  if (ENS_REGEX.test(input)) return 'ens'
+  if (ENS_REGEX.test(input.trim())) return 'ens'
   if (stableRegex(DOMAIN_REGEX, input)) return 'domain'
   return 'username'
 }

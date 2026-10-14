@@ -39,6 +39,10 @@ test('getInputType classifies ENS names as ens, not domain', t => {
   t.is(autoFactory.getInputType('Nick.ETH'), 'ens')
 })
 
+test('getInputType routes ENS names with surrounding whitespace to ens', t => {
+  t.is(autoFactory.getInputType(' vitalik.eth '), 'ens')
+})
+
 test('getInputType keeps eth-looking domains and URLs as domain', t => {
   t.is(autoFactory.getInputType('ethereum.org'), 'domain')
   t.is(autoFactory.getInputType('https://vitalik.eth'), 'domain')

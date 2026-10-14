@@ -23,6 +23,20 @@ test('.parseInput lowercases and trims the name', t => {
   t.is(parseInput('  Vitalik.ETH '), 'vitalik.eth')
 })
 
+test('.parseInput applies ENSIP-15 normalization', t => {
+  t.is(parseInput('ＡＢＣ.eth'), 'abc.eth')
+  t.is(parseInput('🦊.ETH'), '🦊.eth')
+})
+
+test('.parseInput returns undefined for names ENS cannot normalize', t => {
+  t.is(parseInput('a b.eth'), undefined)
+  t.is(parseInput('..eth'), undefined)
+})
+
+test('ens returns no avatar for names ENS cannot normalize', t => {
+  t.is(ens('a b.eth'), undefined)
+})
+
 test('.getAvatarUrl encodes non-ascii names', t => {
   t.is(
     getAvatarUrl('🦊.eth'),
