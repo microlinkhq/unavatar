@@ -1,3 +1,9 @@
+## 3.50.0 (2026-10-14)
+
+### Features
+
+* add codeforces provider ([#684](https://github.com/Kikobeats/unavatar/issues/684)) ([bd70ccc](https://github.com/Kikobeats/unavatar/commit/bd70ccc4e3492a65ef29a3a1ac677aa52f6a86a5))
+
 ## 3.49.9 (2026-10-13)
 
 ## 3.49.8 (2026-10-05)
