@@ -66,6 +66,7 @@
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
+  - [osu!](#osu)
   - [Patreon](#patreon)
   - [PayPal](#paypal)
   - [Pinterest](#pinterest)
@@ -936,6 +937,15 @@ Available inputs:
 
 - Numeric user ID, e.g., [unavatar.io/openstreetmap/98672](https://unavatar.io/openstreetmap/98672)
 - Username, e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
+
+### osu!
+
+Get any osu! player's profile picture by their username or numeric user ID.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/osu/peppy](https://unavatar.io/osu/peppy)
+- Numeric user ID, e.g., [unavatar.io/osu/7562902](https://unavatar.io/osu/7562902)
 
 ### Patreon
 
