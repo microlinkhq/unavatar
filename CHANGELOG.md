@@ -1,3 +1,9 @@
+## 3.59.0 (2026-10-14)
+
+### Features
+
+* add opencollective provider ([#694](https://github.com/Kikobeats/unavatar/issues/694)) ([3bf6e0a](https://github.com/Kikobeats/unavatar/commit/3bf6e0a810426028d34597b4ac129bab73165277))
+
 ## 3.58.0 (2026-10-14)
 
 ### Features
