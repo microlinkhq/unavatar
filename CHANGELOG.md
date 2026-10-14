@@ -1,3 +1,9 @@
+## 3.57.0 (2026-10-14)
+
+### Features
+
+* add osu provider ([#691](https://github.com/Kikobeats/unavatar/issues/691)) ([649a99c](https://github.com/Kikobeats/unavatar/commit/649a99cd476ea0156aef3e6231cbc284a2981ba5))
+
 ## 3.56.0 (2026-10-14)
 
 ### Features
