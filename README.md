@@ -51,6 +51,7 @@
   - [Gitee](#gitee)
   - [GitHub](#github)
   - [GitLab](#gitlab)
+  - [Goodreads](#goodreads)
   - [Google](#google)
   - [Google Play](#google-play)
   - [Gravatar](#gravatar)
@@ -837,6 +838,20 @@ Available inputs:
 
 - User, e.g., [unavatar.io/gitlab/sytses](https://unavatar.io/gitlab/sytses)
 - Organization, e.g., [unavatar.io/gitlab/inkscape](https://unavatar.io/gitlab/inkscape)
+
+### Goodreads
+
+Get any Goodreads user's profile picture by their vanity username or numeric user ID, or an author's photo by their author ID.
+
+The input supports a URI format `type:id`.
+
+When no type is provided, the input is treated as a user (`user`).
+
+Available inputs:
+
+- `user` (default), by username: [unavatar.io/goodreads/otis](https://unavatar.io/goodreads/otis)
+- `user` (default), by user ID: [unavatar.io/goodreads/1](https://unavatar.io/goodreads/1)
+- `author`: [unavatar.io/goodreads/author:4](https://unavatar.io/goodreads/author:4)
 
 ### Google
 
