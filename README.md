@@ -71,6 +71,7 @@
   - [Raycast](#raycast)
   - [Reddit](#reddit)
   - [Revolut](#revolut)
+  - [Sketchfab](#sketchfab)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -966,6 +967,12 @@ Available inputs:
 Get any Revolut user's profile picture by their Revolut.Me username.
 
 e.g., [unavatar.io/revolut/midudev](https://unavatar.io/revolut/midudev)
+
+### Sketchfab
+
+Get any Sketchfab creator's profile picture by their username.
+
+e.g., [unavatar.io/sketchfab/nasa](https://unavatar.io/sketchfab/nasa)
 
 ### Snapchat
 
