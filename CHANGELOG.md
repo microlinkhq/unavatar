@@ -1,3 +1,9 @@
+## 3.70.0 (2026-10-14)
+
+### Features
+
+* add goodreads provider ([#705](https://github.com/Kikobeats/unavatar/issues/705)) ([46d9ff2](https://github.com/Kikobeats/unavatar/commit/46d9ff21ab7b5fbf568f71f39f313abcd830c531))
+
 ## 3.69.0 (2026-10-14)
 
 ### Features
