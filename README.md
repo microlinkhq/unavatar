@@ -72,6 +72,7 @@
   - [Raycast](#raycast)
   - [Reddit](#reddit)
   - [Revolut](#revolut)
+  - [Roblox](#roblox)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
   - [Spotify](#spotify)
@@ -973,6 +974,15 @@ Available inputs:
 Get any Revolut user's profile picture by their Revolut.Me username.
 
 e.g., [unavatar.io/revolut/midudev](https://unavatar.io/revolut/midudev)
+
+### Roblox
+
+Get any Roblox user's avatar headshot by their username or user ID.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/roblox/builderman](https://unavatar.io/roblox/builderman)
+- User ID, e.g., [unavatar.io/roblox/id:156](https://unavatar.io/roblox/id:156)
 
 ### Snapchat
 
