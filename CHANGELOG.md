@@ -1,3 +1,9 @@
+## 3.58.0 (2026-10-14)
+
+### Features
+
+* add devto provider ([#692](https://github.com/Kikobeats/unavatar/issues/692)) ([8bd0159](https://github.com/Kikobeats/unavatar/commit/8bd01597dce2cf9732ecc79c92f451f575371ffb))
+
 ## 3.57.0 (2026-10-14)
 
 ### Features
