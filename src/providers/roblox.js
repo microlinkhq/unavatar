@@ -1,5 +1,7 @@
 'use strict'
 
+const stringify = require('../util/stringify')
+
 const USERS_API_URL = 'https://users.roblox.com/v1/usernames/users'
 const THUMBNAILS_API_URL =
   'https://thumbnails.roblox.com/v1/users/avatar-headshot'
@@ -14,9 +16,12 @@ const parseInput = input =>
     : { type: 'username', value: input }
 
 const getAvatarUrl = userId =>
-  `${THUMBNAILS_API_URL}?userIds=${encodeURIComponent(
-    userId
-  )}&size=${THUMBNAIL_SIZE}&format=Png&isCircular=false`
+  `${THUMBNAILS_API_URL}?${stringify({
+    userIds: userId,
+    size: THUMBNAIL_SIZE,
+    format: 'Png',
+    isCircular: false
+  })}`
 
 const getAvatar = body => {
   const thumbnail = body?.data?.[0]
