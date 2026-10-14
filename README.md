@@ -56,6 +56,7 @@
   - [Mastodon](#mastodon)
   - [Medium](#medium)
   - [Microlink](#microlink)
+  - [Mixcloud](#mixcloud)
   - [NetEase Music](#netease-music)
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
@@ -863,6 +864,12 @@ e.g., [unavatar.io/medium/juancalmaraz](https://unavatar.io/medium/juancalmaraz)
 Extract the logo or representative image from any URL. The page is rendered and the best available image is selected — useful for getting brand logos from any website.
 
 e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
+
+### Mixcloud
+
+Get any Mixcloud user's profile picture by their username.
+
+e.g., [unavatar.io/mixcloud/spartacus](https://unavatar.io/mixcloud/spartacus)
 
 ### NetEase Music
 
