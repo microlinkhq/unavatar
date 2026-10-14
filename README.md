@@ -50,6 +50,7 @@
   - [Hugging Face](#hugging-face)
   - [Instagram](#instagram)
   - [Juejin](#juejin)
+  - [Keybase](#keybase)
   - [Kick](#kick)
   - [Ko-fi](#ko-fi)
   - [LinkedIn](#linkedin)
@@ -822,6 +823,12 @@ e.g., [unavatar.io/instagram/willsmith](https://unavatar.io/instagram/willsmith)
 Get any Juejin user's profile picture by their numeric user ID.
 
 e.g., [unavatar.io/juejin/1556564194374926](https://unavatar.io/juejin/1556564194374926)
+
+### Keybase
+
+Get any Keybase user's profile picture by their username.
+
+e.g., [unavatar.io/keybase/chris](https://unavatar.io/keybase/chris)
 
 ### Kick
 
