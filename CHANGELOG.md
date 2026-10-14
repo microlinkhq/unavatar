@@ -1,3 +1,9 @@
+## 3.66.0 (2026-10-14)
+
+### Features
+
+* add speedrun provider ([#701](https://github.com/Kikobeats/unavatar/issues/701)) ([d8d7b58](https://github.com/Kikobeats/unavatar/commit/d8d7b58449de3d53e2075cea0323c9ad7bbadbfa))
+
 ## 3.65.0 (2026-10-14)
 
 ### Features
