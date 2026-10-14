@@ -45,6 +45,7 @@
   - [Duolingo](#duolingo)
   - [Email](#email)
   - [Facebook](#facebook)
+  - [Farcaster](#farcaster)
   - [Flickr](#flickr)
   - [Gitee](#gitee)
   - [GitHub](#github)
@@ -777,6 +778,15 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/facebook/zuck](https://unavatar.io/facebook/zuck)
 - Page, e.g., [unavatar.io/facebook/windtodayco](https://unavatar.io/facebook/windtodayco)
+
+### Farcaster
+
+Get any Farcaster user's profile picture by their username (fname). ENS-style usernames are supported.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/farcaster/dwr](https://unavatar.io/farcaster/dwr)
+- ENS username, e.g., [unavatar.io/farcaster/vitalik.eth](https://unavatar.io/farcaster/vitalik.eth)
 
 ### Flickr
 
