@@ -1,3 +1,9 @@
+## 3.69.0 (2026-10-14)
+
+### Features
+
+* add ens provider ([#704](https://github.com/Kikobeats/unavatar/issues/704)) ([0464066](https://github.com/Kikobeats/unavatar/commit/0464066a05eaab69a00b0b90a6ced023508ce92e))
+
 ## 3.68.0 (2026-10-14)
 
 ### Features
