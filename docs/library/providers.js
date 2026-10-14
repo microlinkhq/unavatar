@@ -10,11 +10,13 @@ async function main () {
   console.log('by email:', unavatar.providersBy.email)
   console.log('by username:', unavatar.providersBy.username)
   console.log('by domain:', unavatar.providersBy.domain)
+  console.log('by ens:', unavatar.providersBy.ens)
 
   // Detect the input type of a string
   console.log(unavatar.getInputType('kikobeats')) // 'username'
   console.log(unavatar.getInputType('hello@microlink.io')) // 'email'
   console.log(unavatar.getInputType('reddit.com')) // 'domain'
+  console.log(unavatar.getInputType('vitalik.eth')) // 'ens'
 
   // Try multiple providers for the same username
   const username = 'kikobeats'
