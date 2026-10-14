@@ -1,3 +1,9 @@
+## 3.62.0 (2026-10-14)
+
+### Features
+
+* add gumroad provider ([#697](https://github.com/Kikobeats/unavatar/issues/697)) ([77e4391](https://github.com/Kikobeats/unavatar/commit/77e4391e044619833784c443c142c0a548a0c3c6))
+
 ## 3.61.0 (2026-10-14)
 
 ### Features
