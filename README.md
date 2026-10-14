@@ -52,6 +52,7 @@
   - [Juejin](#juejin)
   - [Kick](#kick)
   - [Ko-fi](#ko-fi)
+  - [Lemmy](#lemmy)
   - [LinkedIn](#linkedin)
   - [Mastodon](#mastodon)
   - [Medium](#medium)
@@ -834,6 +835,12 @@ e.g., [unavatar.io/kick/xqc](https://unavatar.io/kick/xqc)
 Get any Ko-fi page's profile picture by the creator username.
 
 e.g., [unavatar.io/ko-fi/geekshock](https://unavatar.io/ko-fi/geekshock)
+
+### Lemmy
+
+Get any Lemmy user's profile picture from any instance using the public user API. Pass the handle as `user@instance` so the account resolves on the correct home instance.
+
+e.g., [unavatar.io/lemmy/ruud@lemmy.world](https://unavatar.io/lemmy/ruud@lemmy.world)
 
 ### LinkedIn
 
