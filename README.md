@@ -24,6 +24,7 @@
   - [Behance](#behance)
   - [Bilibili](#bilibili)
   - [BIMI](#bimi)
+  - [Bitbucket](#bitbucket)
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
   - [Cash App](#cash-app)
@@ -599,6 +600,12 @@ Available inputs:
 
 - Domain, e.g., [unavatar.io/bimi/cnn.com](https://unavatar.io/bimi/cnn.com)
 - Email address, e.g., [unavatar.io/bimi/support@ebay.com](https://unavatar.io/bimi/support@ebay.com)
+
+### Bitbucket
+
+Get any Bitbucket workspace's avatar by its workspace slug. Personal accounts are covered through their personal workspace, which shares the account's username.
+
+e.g., [unavatar.io/bitbucket/atlassian](https://unavatar.io/bitbucket/atlassian)
 
 ### Bluesky
 
