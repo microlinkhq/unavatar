@@ -57,6 +57,7 @@
   - [Medium](#medium)
   - [Microlink](#microlink)
   - [NetEase Music](#netease-music)
+  - [note](#note)
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
   - [OpenStreetMap](#openstreetmap)
@@ -869,6 +870,12 @@ e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microli
 Get any NetEase Music user's profile picture by their numeric user ID.
 
 e.g., [unavatar.io/netease-music/32953014](https://unavatar.io/netease-music/32953014)
+
+### note
+
+Get any note.com creator's profile picture by their username.
+
+e.g., [unavatar.io/note/info](https://unavatar.io/note/info)
 
 ### npm
 
