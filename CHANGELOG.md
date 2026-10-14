@@ -1,3 +1,9 @@
+## 3.61.0 (2026-10-14)
+
+### Features
+
+* add sketchfab provider ([#696](https://github.com/Kikobeats/unavatar/issues/696)) ([4026cbb](https://github.com/Kikobeats/unavatar/commit/4026cbb248a26bb4c072b1fdf1b10e5350fb19fe))
+
 ## 3.60.0 (2026-10-14)
 
 ### Features
