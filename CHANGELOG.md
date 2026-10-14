@@ -1,3 +1,9 @@
+## 3.52.0 (2026-10-14)
+
+### Features
+
+* add keybase provider ([#686](https://github.com/Kikobeats/unavatar/issues/686)) ([3257b16](https://github.com/Kikobeats/unavatar/commit/3257b1610d9423298d799955e8becf986ea1d214))
+
 ## 3.51.0 (2026-10-14)
 
 ### Features
