@@ -18,7 +18,7 @@ const parseInput = input => {
   const server =
     separatorIndex === -1 ? DEFAULT_SERVER : cleaned.slice(separatorIndex + 1)
 
-  if (!localpart || localpart.includes('@') || localpart.includes('/')) return
+  if (!localpart || localpart.includes('@')) return
 
   if (!isValidServer(server)) return
 

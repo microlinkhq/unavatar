@@ -66,6 +66,14 @@ test('defaults a bare username to matrix.org', t => {
   })
 })
 
+test('accepts / in the localpart, as the Matrix spec allows', t => {
+  t.deepEqual(parseInput('@bridge/alice:matrix.org'), {
+    userId: '@bridge/alice:matrix.org',
+    server: 'matrix.org',
+    hostname: 'matrix.org'
+  })
+})
+
 test('keeps an explicit port on the server', t => {
   t.deepEqual(parseInput('@user:example.org:8448'), {
     userId: '@user:example.org:8448',
