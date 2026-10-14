@@ -1,25 +1,12 @@
 'use strict'
 
+const { isValidServer } = require('./mastodon')
+
 const DEFAULT_SERVER = 'matrix.org'
 const WELL_KNOWN_PATH = '/.well-known/matrix/client'
 const PROFILE_PATH = '/_matrix/client/v3/profile'
 const MEDIA_DOWNLOAD_PATH = '/_matrix/media/v3/download'
 const MXC_RE = /^mxc:\/\/([a-zA-Z0-9[][\w.:[\]-]*)\/([\w-]+)$/
-
-const parseServer = server => {
-  try {
-    const url = new URL(`https://${server}`)
-    const isBareHost =
-      Boolean(url.hostname) &&
-      url.username === '' &&
-      url.password === '' &&
-      url.pathname === '/' &&
-      url.search === '' &&
-      url.hash === '' &&
-      url.host.toLowerCase() === server.toLowerCase()
-    return isBareHost ? url : undefined
-  } catch {}
-}
 
 const parseInput = input => {
   if (typeof input !== 'string') return
@@ -33,13 +20,12 @@ const parseInput = input => {
 
   if (!localpart || localpart.includes('@') || localpart.includes('/')) return
 
-  const serverUrl = parseServer(server)
-  if (!serverUrl) return
+  if (!isValidServer(server)) return
 
   return {
     userId: `@${localpart}:${server}`,
     server,
-    hostname: serverUrl.hostname
+    hostname: new URL(`https://${server}`).hostname
   }
 }
 
