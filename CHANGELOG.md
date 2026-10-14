@@ -1,3 +1,9 @@
+## 3.63.0 (2026-10-14)
+
+### Features
+
+* add libravatar provider ([#698](https://github.com/Kikobeats/unavatar/issues/698)) ([a6ad2dd](https://github.com/Kikobeats/unavatar/commit/a6ad2ddfda6cd83332e1c0575ed912f55dd3a482))
+
 ## 3.62.0 (2026-10-14)
 
 ### Features
