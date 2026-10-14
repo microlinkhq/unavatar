@@ -88,6 +88,7 @@
   - [Twitch](#twitch)
   - [Venmo](#venmo)
   - [Vimeo](#vimeo)
+  - [Wattpad](#wattpad)
   - [Weibo](#weibo)
   - [WhatsApp](#whatsapp)
   - [Wise](#wise)
@@ -1096,6 +1097,12 @@ e.g., [unavatar.io/venmo/Jessica-Lee-77](https://unavatar.io/venmo/Jessica-Lee-7
 Get any Vimeo user's profile picture by their username.
 
 e.g., [unavatar.io/vimeo/ladieswithlenses](https://unavatar.io/vimeo/ladieswithlenses)
+
+### Wattpad
+
+Get any Wattpad user's profile picture by their username.
+
+e.g., [unavatar.io/wattpad/Wattpad](https://unavatar.io/wattpad/Wattpad)
 
 ### Weibo
 
