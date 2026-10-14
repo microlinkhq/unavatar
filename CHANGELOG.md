@@ -1,3 +1,9 @@
+## 3.56.0 (2026-10-14)
+
+### Features
+
+* add mixcloud provider ([#690](https://github.com/Kikobeats/unavatar/issues/690)) ([52d13e2](https://github.com/Kikobeats/unavatar/commit/52d13e2582b0ed4c0f2fdc4eecdb9aef9e80b873))
+
 ## 3.55.0 (2026-10-14)
 
 ### Features
