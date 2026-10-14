@@ -18,11 +18,8 @@ const mockCtx = {
   itunesSearchCache: new Keyv({ store: new Map() })
 }
 
-const {
-  providers,
-  providerTiers,
-  providersBy
-} = require('../../../src/providers')(mockCtx)
+const { providers, providerTiers, providersBy } =
+  require('../../../src/providers')(mockCtx)
 
 const providersDir = path.join(__dirname, '../../../src/providers')
 const providerFiles = fs
@@ -62,15 +59,17 @@ test('providerTiers references valid providers only', t => {
 })
 
 test('providersBy stays a flat list per input type, tiers kept private', t => {
-  t.deepEqual(Object.keys(providersBy), ['email', 'username', 'domain'])
+  t.deepEqual(Object.keys(providersBy), ['email', 'username', 'domain', 'ens'])
   t.deepEqual(providersBy.email, ['gravatar', 'github', 'bimi'])
   t.deepEqual(providersBy.domain, ['bimi', 'duckduckgo', 'google', 'microlink'])
+  t.deepEqual(providersBy.ens, ['ens'])
   t.is(providersBy.username.at(0), 'apple-music')
 })
 
 test('providers do not duplicate og:image extraction or import html-provider directly', t => {
   const directImportPattern = /require\((['"])..\/util\/html-provider\1\)/
-  const ogImageSelectorPattern = /meta\[property="og:image"\][\s\S]*meta\[name="og:image"\]/
+  const ogImageSelectorPattern =
+    /meta\[property="og:image"\][\s\S]*meta\[name="og:image"\]/
 
   for (const file of providerFiles) {
     const filePath = path.join(providersDir, file)

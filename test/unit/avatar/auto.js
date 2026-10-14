@@ -33,6 +33,48 @@ test('getInputType classifies domain input', t => {
   t.is(autoFactory.getInputType('reddit.com'), 'domain')
 })
 
+test('getInputType classifies ENS names as ens, not domain', t => {
+  t.is(autoFactory.getInputType('vitalik.eth'), 'ens')
+  t.is(autoFactory.getInputType('jesse.base.eth'), 'ens')
+  t.is(autoFactory.getInputType('Nick.ETH'), 'ens')
+})
+
+test('getInputType keeps eth-looking domains and URLs as domain', t => {
+  t.is(autoFactory.getInputType('ethereum.org'), 'domain')
+  t.is(autoFactory.getInputType('https://vitalik.eth'), 'domain')
+})
+
+test('getInputType does not treat a label-less .eth as ENS', t => {
+  t.not(autoFactory.getInputType('.eth'), 'ens')
+  t.not(autoFactory.getInputType('..eth'), 'ens')
+})
+
+test('ENS names route to the ens tier, never the domain tier', async t => {
+  const ens = sinon
+    .stub()
+    .resolves('https://metadata.ens.domains/mainnet/avatar/vitalik.eth')
+  const bimi = sinon.stub().resolves('https://bimi.example/logo.svg')
+  const reachableUrl = async url => ({ statusCode: 200, url })
+  reachableUrl.isReachable = () => true
+
+  const { auto, getInputType } = createAuto({
+    constants: { REQUEST_TIMEOUT: 25000 },
+    providers: { ens, bimi },
+    providerTiers: { domain: [['bimi']], ens: [['ens']] },
+    reachableUrl
+  })
+
+  const result = await auto(getInputType('vitalik.eth'))('vitalik.eth', {})
+
+  t.deepEqual(result, {
+    type: 'url',
+    data: 'https://metadata.ens.domains/mainnet/avatar/vitalik.eth',
+    provider: 'ens'
+  })
+  t.true(ens.calledOnce)
+  t.true(bimi.notCalled)
+})
+
 test('getInputType classifies localhost input as domain', t => {
   t.is(autoFactory.getInputType('localhost'), 'domain')
 })
