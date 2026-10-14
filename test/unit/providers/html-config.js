@@ -75,6 +75,11 @@ test('html provider modules expose expected URL builders', t => {
   })
   t.is(instagram.url('willsmith'), 'https://www.instagram.com/willsmith')
 
+  const kaggle = require('../../../src/providers/kaggle')({
+    createHtmlProvider
+  })
+  t.is(kaggle.url('jhoward'), 'https://www.kaggle.com/jhoward')
+
   const linkedin = require('../../../src/providers/linkedin')({
     createHtmlProvider,
     getOgImage
