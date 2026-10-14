@@ -30,6 +30,7 @@
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
   - [Cursor](#cursor)
+  - [Dailymotion](#dailymotion)
   - [Deezer](#deezer)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
@@ -638,6 +639,12 @@ e.g., [unavatar.io/cults3d/RaBros](https://unavatar.io/cults3d/RaBros)
 Get any Cursor user's profile picture by their username.
 
 e.g., [unavatar.io/cursor/leerob](https://unavatar.io/cursor/leerob)
+
+### Dailymotion
+
+Get any Dailymotion user's profile picture by their username or user ID.
+
+e.g., [unavatar.io/dailymotion/dailymotion](https://unavatar.io/dailymotion/dailymotion)
 
 ### Deezer
 
