@@ -1,3 +1,9 @@
+## 3.71.0 (2026-10-14)
+
+### Features
+
+* add matrix provider ([#707](https://github.com/Kikobeats/unavatar/issues/707)) ([7d04ba1](https://github.com/Kikobeats/unavatar/commit/7d04ba1fde8983e6217823b9c7cc5bcc163e6ca5))
+
 ## 3.70.0 (2026-10-14)
 
 ### Features
