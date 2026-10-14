@@ -1,7 +1,9 @@
 'use strict'
 
 const cheerio = require('cheerio')
+const path = require('path')
 const test = require('ava')
+const fs = require('fs')
 
 const createHtmlProviderFactory = require('../../../src/util/html-provider')
 const { NOT_FOUND } = require('../../../src/util/html-provider')
@@ -103,4 +105,63 @@ test('provider resolves undefined for a user without a picture', async t => {
 test('provider resolves undefined for a non profile kaggle page', async t => {
   const { kaggle } = createKaggle({ html: siteHtml })
   t.is(await kaggle('datasets'), undefined)
+})
+
+const readFixture = name =>
+  fs.readFileSync(path.join(__dirname, `kaggle-${name}.html`), 'utf8')
+
+const CHALLENGED_USER_AGENT =
+  'Better Uptime Bot Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+
+const createKaggleChallengingAgent = ({ respond }) => {
+  const userAgents = []
+  const { createHtmlProvider } = createHtmlProviderFactory({
+    PROXY_TIMEOUT: 1000,
+    userAgent: () => CHALLENGED_USER_AGENT,
+    getHTML: async (url, opts) => {
+      const userAgent = opts.headers['user-agent']
+      userAgents.push(userAgent)
+      const { html, statusCode } =
+        userAgent === CHALLENGED_USER_AGENT
+          ? { html: readFixture('challenge'), statusCode: 200 }
+          : respond(url)
+      return { $: cheerio.load(html), statusCode, headers: {} }
+    }
+  })
+  const kaggle = require('../../../src/providers/kaggle')({
+    createHtmlProvider,
+    NOT_FOUND
+  })
+  return { kaggle, userAgents }
+}
+
+test('provider resolves undefined for a missing user even when the rotated agent is challenged', async t => {
+  const { kaggle, userAgents } = createKaggleChallengingAgent({
+    respond: () => ({ html: readFixture('not-found'), statusCode: 404 })
+  })
+  t.is(await kaggle('zzqxnope9917'), undefined)
+  t.is(userAgents.length, 1)
+  t.not(userAgents[0], CHALLENGED_USER_AGENT)
+})
+
+test('provider resolves a real profile even when the rotated agent is challenged', async t => {
+  const { kaggle } = createKaggleChallengingAgent({
+    respond: () => ({
+      html: profileHtml(
+        'https://storage.googleapis.com/kaggle-avatars/thumbnails/3256.png'
+      ),
+      statusCode: 200
+    })
+  })
+  t.is(
+    await kaggle('jhoward'),
+    'https://storage.googleapis.com/kaggle-avatars/images/3256.png'
+  )
+})
+
+test('provider rejects instead of missing when kaggle serves the reCAPTCHA challenge', async t => {
+  const { kaggle } = createKaggle({ html: readFixture('challenge') })
+  const error = await t.throwsAsync(kaggle('zzqxnope9917'))
+  t.is(error.message, 'Empty value returned by the provider.')
+  t.is(error.statusCode, 200)
 })

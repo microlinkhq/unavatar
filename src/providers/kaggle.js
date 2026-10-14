@@ -5,6 +5,8 @@ const THUMBNAIL_URL_PREFIX =
 const FULL_SIZE_URL_PREFIX =
   'https://storage.googleapis.com/kaggle-avatars/images/'
 const DEFAULT_AVATAR_FILENAME = 'default-thumb.png'
+const UNCHALLENGED_CRAWLER_USER_AGENT =
+  'Googlebot/2.1 (+http://www.google.com/bot.html)'
 
 const getAvatarUrl = input => `https://www.kaggle.com/${input}`
 
@@ -26,7 +28,10 @@ module.exports = ({ createHtmlProvider, NOT_FOUND }) =>
   createHtmlProvider({
     name: 'kaggle',
     url: getAvatarUrl,
-    getter: $ => getAvatar({ $, NOT_FOUND })
+    getter: $ => getAvatar({ $, NOT_FOUND }),
+    htmlOpts: () => ({
+      headers: { 'user-agent': UNCHALLENGED_CRAWLER_USER_AGENT }
+    })
   })
 
 module.exports.getAvatarUrl = getAvatarUrl
