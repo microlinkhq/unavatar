@@ -57,3 +57,4 @@ module.exports = ({ got, isReservedIp }) => {
 }
 
 module.exports.parseInput = parseInput
+module.exports.isValidServer = isValidServer

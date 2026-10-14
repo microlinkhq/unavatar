@@ -3,7 +3,26 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const { parseInput } = require('../../../src/providers/mastodon')
+const { parseInput, isValidServer } = require('../../../src/providers/mastodon')
+
+test('isValidServer accepts bare hosts with optional port', t => {
+  t.true(isValidServer('mastodon.social'))
+  t.true(isValidServer('Mastodon.Social'))
+  t.true(isValidServer('example.org:8448'))
+  t.true(isValidServer('127.0.0.1'))
+  t.true(isValidServer('[::1]:8448'))
+})
+
+test('isValidServer rejects anything beyond a bare host', t => {
+  t.false(isValidServer(''))
+  t.false(isValidServer('user:pass@host'))
+  t.false(isValidServer('host/path'))
+  t.false(isValidServer('host?q=1'))
+  t.false(isValidServer('host#hash'))
+  t.false(isValidServer('host:443'))
+  t.false(isValidServer('host:99999'))
+  t.false(isValidServer('a@b'))
+})
 
 test('parses @user@server format', t => {
   t.deepEqual(parseInput('@kiko@indieweb.social'), {
