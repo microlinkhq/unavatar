@@ -49,6 +49,19 @@ test('zhihu resolves the avatar from the members API', async t => {
   t.is(await zhihu('kaifulee'), avatarUrl)
 })
 
+test('zhihu always requests the API with a desktop user agent', async t => {
+  const desktopUserAgents = require('top-user-agents/desktop')
+  const userAgents = []
+  const zhihu = createZhihu(async (url, opts) => {
+    userAgents.push(opts.headers?.['user-agent'])
+    return { statusCode: 200, body: { avatar_url: avatarUrl } }
+  })
+
+  for (let i = 0; i < 20; i++) await zhihu('kaifulee')
+
+  t.true(userAgents.every(userAgent => desktopUserAgents.includes(userAgent)))
+})
+
 test('zhihu returns undefined when the user is missing', async t => {
   const zhihu = createZhihu(async () => ({
     statusCode: 403,
