@@ -1,3 +1,9 @@
+## 3.64.0 (2026-10-14)
+
+### Features
+
+* add duolingo provider ([#699](https://github.com/Kikobeats/unavatar/issues/699)) ([b0345dc](https://github.com/Kikobeats/unavatar/commit/b0345dcb3e6c28eb833bdea8e6715c45b885a43f))
+
 ## 3.63.0 (2026-10-14)
 
 ### Features
