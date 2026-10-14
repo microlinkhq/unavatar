@@ -1,3 +1,129 @@
+## 3.70.0 (2026-10-14)
+
+### Features
+
+* add goodreads provider ([#705](https://github.com/Kikobeats/unavatar/issues/705)) ([46d9ff2](https://github.com/Kikobeats/unavatar/commit/46d9ff21ab7b5fbf568f71f39f313abcd830c531))
+
+## 3.69.0 (2026-10-14)
+
+### Features
+
+* add ens provider ([#704](https://github.com/Kikobeats/unavatar/issues/704)) ([0464066](https://github.com/Kikobeats/unavatar/commit/0464066a05eaab69a00b0b90a6ced023508ce92e))
+
+## 3.68.0 (2026-10-14)
+
+### Features
+
+* add lemmy provider ([#703](https://github.com/Kikobeats/unavatar/issues/703)) ([0ac105e](https://github.com/Kikobeats/unavatar/commit/0ac105e28205ed0ad0a747c234cd641734c79a8f))
+
+## 3.67.0 (2026-10-14)
+
+### Features
+
+* add wattpad provider ([#702](https://github.com/Kikobeats/unavatar/issues/702)) ([54e7d9e](https://github.com/Kikobeats/unavatar/commit/54e7d9e3aeb9a736c870dbab4e8f47ba21523cba))
+
+## 3.66.0 (2026-10-14)
+
+### Features
+
+* add speedrun provider ([#701](https://github.com/Kikobeats/unavatar/issues/701)) ([d8d7b58](https://github.com/Kikobeats/unavatar/commit/d8d7b58449de3d53e2075cea0323c9ad7bbadbfa))
+
+## 3.65.0 (2026-10-14)
+
+### Features
+
+* add farcaster provider ([#700](https://github.com/Kikobeats/unavatar/issues/700)) ([66b3ced](https://github.com/Kikobeats/unavatar/commit/66b3cedc8ecbaed0654d181556c45719c9dc63cb))
+
+## 3.64.0 (2026-10-14)
+
+### Features
+
+* add duolingo provider ([#699](https://github.com/Kikobeats/unavatar/issues/699)) ([b0345dc](https://github.com/Kikobeats/unavatar/commit/b0345dcb3e6c28eb833bdea8e6715c45b885a43f))
+
+## 3.63.0 (2026-10-14)
+
+### Features
+
+* add libravatar provider ([#698](https://github.com/Kikobeats/unavatar/issues/698)) ([a6ad2dd](https://github.com/Kikobeats/unavatar/commit/a6ad2ddfda6cd83332e1c0575ed912f55dd3a482))
+
+## 3.62.0 (2026-10-14)
+
+### Features
+
+* add gumroad provider ([#697](https://github.com/Kikobeats/unavatar/issues/697)) ([77e4391](https://github.com/Kikobeats/unavatar/commit/77e4391e044619833784c443c142c0a548a0c3c6))
+
+## 3.61.0 (2026-10-14)
+
+### Features
+
+* add sketchfab provider ([#696](https://github.com/Kikobeats/unavatar/issues/696)) ([4026cbb](https://github.com/Kikobeats/unavatar/commit/4026cbb248a26bb4c072b1fdf1b10e5350fb19fe))
+
+## 3.60.0 (2026-10-14)
+
+### Features
+
+* add bitbucket provider ([#695](https://github.com/Kikobeats/unavatar/issues/695)) ([5bd2317](https://github.com/Kikobeats/unavatar/commit/5bd23177194bedb54d3d99facbb5495c163ad524))
+
+## 3.59.0 (2026-10-14)
+
+### Features
+
+* add opencollective provider ([#694](https://github.com/Kikobeats/unavatar/issues/694)) ([3bf6e0a](https://github.com/Kikobeats/unavatar/commit/3bf6e0a810426028d34597b4ac129bab73165277))
+
+## 3.58.0 (2026-10-14)
+
+### Features
+
+* add devto provider ([#692](https://github.com/Kikobeats/unavatar/issues/692)) ([8bd0159](https://github.com/Kikobeats/unavatar/commit/8bd01597dce2cf9732ecc79c92f451f575371ffb))
+
+## 3.57.0 (2026-10-14)
+
+### Features
+
+* add osu provider ([#691](https://github.com/Kikobeats/unavatar/issues/691)) ([649a99c](https://github.com/Kikobeats/unavatar/commit/649a99cd476ea0156aef3e6231cbc284a2981ba5))
+
+## 3.56.0 (2026-10-14)
+
+### Features
+
+* add mixcloud provider ([#690](https://github.com/Kikobeats/unavatar/issues/690)) ([52d13e2](https://github.com/Kikobeats/unavatar/commit/52d13e2582b0ed4c0f2fdc4eecdb9aef9e80b873))
+
+## 3.55.0 (2026-10-14)
+
+### Features
+
+* add chesscom provider ([#689](https://github.com/Kikobeats/unavatar/issues/689)) ([8f8aa81](https://github.com/Kikobeats/unavatar/commit/8f8aa815667f60af044a9d183b37dc0541343cf3))
+
+## 3.54.0 (2026-10-14)
+
+### Features
+
+* add minecraft provider ([#688](https://github.com/Kikobeats/unavatar/issues/688)) ([88d3e26](https://github.com/Kikobeats/unavatar/commit/88d3e26d885c8b23e46e5eb06067f30fd719d77c))
+
+## 3.53.0 (2026-10-14)
+
+### Features
+
+* add dailymotion provider ([#687](https://github.com/Kikobeats/unavatar/issues/687)) ([e90d32d](https://github.com/Kikobeats/unavatar/commit/e90d32d42a7aa2c7e892a985b675f5fc5ba1cfa7))
+
+## 3.52.0 (2026-10-14)
+
+### Features
+
+* add keybase provider ([#686](https://github.com/Kikobeats/unavatar/issues/686)) ([3257b16](https://github.com/Kikobeats/unavatar/commit/3257b1610d9423298d799955e8becf986ea1d214))
+
+## 3.51.0 (2026-10-14)
+
+### Features
+
+* add roblox provider ([#685](https://github.com/Kikobeats/unavatar/issues/685)) ([ee139da](https://github.com/Kikobeats/unavatar/commit/ee139da5750e11eee30ba559b3bbb14bdfcfba4d))
+
+## 3.50.0 (2026-10-14)
+
+### Features
+
+* add codeforces provider ([#684](https://github.com/Kikobeats/unavatar/issues/684)) ([bd70ccc](https://github.com/Kikobeats/unavatar/commit/bd70ccc4e3492a65ef29a3a1ac677aa52f6a86a5))
+
 ## 3.49.9 (2026-10-13)
 
 ## 3.49.8 (2026-10-05)

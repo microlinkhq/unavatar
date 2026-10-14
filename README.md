@@ -24,43 +24,62 @@
   - [Behance](#behance)
   - [Bilibili](#bilibili)
   - [BIMI](#bimi)
+  - [Bitbucket](#bitbucket)
   - [Bluesky](#bluesky)
   - [Buy Me a Coffee](#buy-me-a-coffee)
   - [Cash App](#cash-app)
+  - [Chess.com](#chesscom)
+  - [Codeforces](#codeforces)
   - [CodePen](#codepen)
   - [Cults3D](#cults3d)
   - [Cursor](#cursor)
+  - [Dailymotion](#dailymotion)
   - [Deezer](#deezer)
+  - [DEV](#dev)
   - [DeviantArt](#deviantart)
   - [Discord](#discord)
   - [Docker Hub](#docker-hub)
   - [Domain](#domain)
   - [Dribbble](#dribbble)
   - [DuckDuckGo](#duckduckgo)
+  - [Duolingo](#duolingo)
   - [Email](#email)
+  - [ENS](#ens)
   - [Facebook](#facebook)
+  - [Farcaster](#farcaster)
   - [Flickr](#flickr)
   - [Gitee](#gitee)
   - [GitHub](#github)
   - [GitLab](#gitlab)
+  - [Goodreads](#goodreads)
   - [Google](#google)
   - [Google Play](#google-play)
   - [Gravatar](#gravatar)
+  - [Gumroad](#gumroad)
   - [Hevy](#hevy)
   - [Hugging Face](#hugging-face)
   - [Instagram](#instagram)
   - [Juejin](#juejin)
+  - [Kaggle](#kaggle)
+  - [Keybase](#keybase)
   - [Kick](#kick)
   - [Ko-fi](#ko-fi)
+  - [Lemmy](#lemmy)
+  - [Libravatar](#libravatar)
   - [LinkedIn](#linkedin)
   - [Mastodon](#mastodon)
   - [Matrix](#matrix)
   - [Medium](#medium)
   - [Microlink](#microlink)
+  - [Minecraft](#minecraft)
+  - [Mixcloud](#mixcloud)
   - [NetEase Music](#netease-music)
+  - [note](#note)
   - [npm](#npm)
   - [OnlyFans](#onlyfans)
+  - [Open Collective](#open-collective)
   - [OpenStreetMap](#openstreetmap)
+  - [osu!](#osu)
   - [Patreon](#patreon)
   - [PayPal](#paypal)
   - [Pinterest](#pinterest)
@@ -72,8 +91,11 @@
   - [Raycast](#raycast)
   - [Reddit](#reddit)
   - [Revolut](#revolut)
+  - [Roblox](#roblox)
+  - [Sketchfab](#sketchfab)
   - [Snapchat](#snapchat)
   - [SoundCloud](#soundcloud)
+  - [Speedrun](#speedrun)
   - [Spotify](#spotify)
   - [Stack Overflow](#stack-overflow)
   - [Steam](#steam)
@@ -89,6 +111,7 @@
   - [Twitch](#twitch)
   - [Venmo](#venmo)
   - [Vimeo](#vimeo)
+  - [Wattpad](#wattpad)
   - [Weibo](#weibo)
   - [WhatsApp](#whatsapp)
   - [Wise](#wise)
@@ -601,6 +624,12 @@ Available inputs:
 - Domain, e.g., [unavatar.io/bimi/cnn.com](https://unavatar.io/bimi/cnn.com)
 - Email address, e.g., [unavatar.io/bimi/support@ebay.com](https://unavatar.io/bimi/support@ebay.com)
 
+### Bitbucket
+
+Get any Bitbucket workspace's avatar by its workspace slug. Personal accounts are covered through their personal workspace, which shares the account's username.
+
+e.g., [unavatar.io/bitbucket/atlassian](https://unavatar.io/bitbucket/atlassian)
+
 ### Bluesky
 
 Get any Bluesky user's profile picture by their handle. Domain-style handles are supported.
@@ -622,6 +651,18 @@ Get any Cash App user's profile picture by their Cashtag.
 
 e.g., [unavatar.io/cashapp/ninja](https://unavatar.io/cashapp/ninja)
 
+### Chess.com
+
+Get any Chess.com player's profile picture by their username.
+
+e.g., [unavatar.io/chesscom/hikaru](https://unavatar.io/chesscom/hikaru)
+
+### Codeforces
+
+Get any Codeforces user's profile picture by their handle.
+
+e.g., [unavatar.io/codeforces/tourist](https://unavatar.io/codeforces/tourist)
+
 ### CodePen
 
 Get any CodePen user's profile picture by their username.
@@ -640,6 +681,12 @@ Get any Cursor user's profile picture by their username.
 
 e.g., [unavatar.io/cursor/leerob](https://unavatar.io/cursor/leerob)
 
+### Dailymotion
+
+Get any Dailymotion user's profile picture by their username or user ID.
+
+e.g., [unavatar.io/dailymotion/dailymotion](https://unavatar.io/dailymotion/dailymotion)
+
 ### Deezer
 
 Get artwork for any Deezer artist, album, playlist, or track by ID.
@@ -654,6 +701,12 @@ Available inputs:
 - `album`: [unavatar.io/deezer/album:302127](https://unavatar.io/deezer/album:302127)
 - `playlist`: [unavatar.io/deezer/playlist:908622995](https://unavatar.io/deezer/playlist:908622995)
 - `track`: [unavatar.io/deezer/track:3135556](https://unavatar.io/deezer/track:3135556)
+
+### DEV
+
+Get any [DEV](https://dev.to) user's profile picture by username, or an organization's logo by its slug.
+
+e.g., [unavatar.io/devto/ben](https://unavatar.io/devto/ben)
 
 ### DeviantArt
 
@@ -694,15 +747,21 @@ Get the favicon or logo for any domain via DuckDuckGo's icon service. Useful as 
 
 e.g., [unavatar.io/duckduckgo/microsoft.com](https://unavatar.io/duckduckgo/microsoft.com)
 
+### Duolingo
+
+Get any Duolingo learner's profile picture by their username.
+
+e.g., [unavatar.io/duolingo/luis](https://unavatar.io/duolingo/luis)
+
 ### Email
 
-Resolve user avatars from an email address with a single URL. The `/email/:key` route uses the same provider chain as a bare `/user@domain` path: the service tries Gravatar, GitHub, BIMI in order until one returns an image. No API keys and no SDK are required.
+Resolve user avatars from an email address with a single URL. The `/email/:key` route uses the same provider chain as a bare `/user@domain` path: the service tries Gravatar and GitHub, then Libravatar, then BIMI until one returns an image. No API keys and no SDK are required.
 
 When the path looks like an email, unavatar walks that chain until a provider succeeds. You can also skip the chain and call a named email provider directly when you know where the avatar should come from.
 
 Automatic resolution
 
-Pass the address as the only path segment, or prefix it with `email/`. The API auto-detects email-shaped inputs and runs the same chain (Gravatar, GitHub, BIMI).
+Pass the address as the only path segment, or prefix it with `email/`. The API auto-detects email-shaped inputs and runs the same chain (Gravatar and GitHub, then Libravatar, then BIMI).
 
 - Typed route `unavatar.io/email/{email}`: [unavatar.io/email/hello@microlink.io](https://unavatar.io/email/hello@microlink.io)
 - Bare path `unavatar.io/{email}`: [unavatar.io/hello@microlink.io](https://unavatar.io/hello@microlink.io)
@@ -713,9 +772,18 @@ Target a specific provider when you know where the avatar comes from.
 
 - Gravatar (`unavatar.io/gravatar/{email-or-hash}`) — email is normalized and SHA-256 hashed; 64-hex SHA-256 or 32-hex MD5 passes through. Example: [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
 - GitHub (`unavatar.io/github/{email}`) — public profile email or commit history: [unavatar.io/github/sindresorhus@gmail.com](https://unavatar.io/github/sindresorhus@gmail.com)
+- Libravatar (`unavatar.io/libravatar/{email-or-hash}`) — federated Gravatar alternative; follows the email domain's own avatar server when it publishes one: [unavatar.io/libravatar/francois@fmarier.org](https://unavatar.io/libravatar/francois@fmarier.org)
 - BIMI (`unavatar.io/bimi/{email}`) — official brand logo from the address domain: [unavatar.io/bimi/support@ebay.com](https://unavatar.io/bimi/support@ebay.com)
 
 e.g., [unavatar.io/email/hello@microlink.io](https://unavatar.io/email/hello@microlink.io)
+
+### ENS
+
+Get the avatar set on any Ethereum Name Service (ENS) name, including subnames like `jesse.base.eth`. A bare label is treated as a `.eth` name.
+
+e.g., [unavatar.io/ens/vitalik.eth](https://unavatar.io/ens/vitalik.eth)
+
+Names ending in `.eth` are detected automatically, so [unavatar.io/vitalik.eth](https://unavatar.io/vitalik.eth) resolves through ENS too.
 
 ### Facebook
 
@@ -725,6 +793,15 @@ Available inputs:
 
 - Username, e.g., [unavatar.io/facebook/zuck](https://unavatar.io/facebook/zuck)
 - Page, e.g., [unavatar.io/facebook/windtodayco](https://unavatar.io/facebook/windtodayco)
+
+### Farcaster
+
+Get any Farcaster user's profile picture by their username (fname). ENS-style usernames are supported.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/farcaster/dwr](https://unavatar.io/farcaster/dwr)
+- ENS username, e.g., [unavatar.io/farcaster/vitalik.eth](https://unavatar.io/farcaster/vitalik.eth)
 
 ### Flickr
 
@@ -764,6 +841,20 @@ Available inputs:
 - User, e.g., [unavatar.io/gitlab/sytses](https://unavatar.io/gitlab/sytses)
 - Organization, e.g., [unavatar.io/gitlab/inkscape](https://unavatar.io/gitlab/inkscape)
 
+### Goodreads
+
+Get any Goodreads user's profile picture by their vanity username or numeric user ID, or an author's photo by their author ID.
+
+The input supports a URI format `type:id`.
+
+When no type is provided, the input is treated as a user (`user`).
+
+Available inputs:
+
+- `user` (default), by username: [unavatar.io/goodreads/otis](https://unavatar.io/goodreads/otis)
+- `user` (default), by user ID: [unavatar.io/goodreads/1](https://unavatar.io/goodreads/1)
+- `author`: [unavatar.io/goodreads/author:4](https://unavatar.io/goodreads/author:4)
+
 ### Google
 
 Get the favicon or logo for any domain using Google's favicon service.
@@ -795,7 +886,13 @@ Available inputs:
 
 When you pass an email address directly in the URL, it is visible in plain text — both in server logs and to any intermediary that inspects the request.
 
-To avoid this, pass a pre-computed `MD5` or `SHA256` hash of the email instead. Unavatar detects the hash automatically and routes it to Gravatar, which natively supports both hash formats.
+To avoid this, pass a pre-computed `MD5` or `SHA256` hash of the email instead. Unavatar detects the hash automatically and routes it to Gravatar, then Libravatar, which both natively support both hash formats.
+
+### Gumroad
+
+Get any Gumroad creator's profile picture by their username (the subdomain of their store).
+
+e.g., [unavatar.io/gumroad/sahil](https://unavatar.io/gumroad/sahil)
 
 ### Hevy
 
@@ -824,6 +921,18 @@ Get any Juejin user's profile picture by their numeric user ID.
 
 e.g., [unavatar.io/juejin/1556564194374926](https://unavatar.io/juejin/1556564194374926)
 
+### Kaggle
+
+Get any Kaggle user's profile picture by their username.
+
+e.g., [unavatar.io/kaggle/jhoward](https://unavatar.io/kaggle/jhoward)
+
+### Keybase
+
+Get any Keybase user's profile picture by their username.
+
+e.g., [unavatar.io/keybase/chris](https://unavatar.io/keybase/chris)
+
 ### Kick
 
 Get any Kick streamer's profile picture by their username.
@@ -835,6 +944,26 @@ e.g., [unavatar.io/kick/xqc](https://unavatar.io/kick/xqc)
 Get any Ko-fi page's profile picture by the creator username.
 
 e.g., [unavatar.io/ko-fi/geekshock](https://unavatar.io/ko-fi/geekshock)
+
+### Lemmy
+
+Get any Lemmy user's profile picture from any instance using the public user API. Pass the handle as `user@instance` so the account resolves on the correct home instance.
+
+e.g., [unavatar.io/lemmy/ruud@lemmy.world](https://unavatar.io/lemmy/ruud@lemmy.world)
+
+### Libravatar
+
+Resolve avatars via [Libravatar](https://www.libravatar.org), the federated, open source alternative to Gravatar, using a plain email or a precomputed hash. Emails are trimmed, lowercased, and hashed with SHA-256; 64-hex SHA-256 and 32-hex MD5 values are passed through (normalized to lowercase).
+
+Available inputs:
+
+- Email address, e.g., [unavatar.io/libravatar/francois@fmarier.org](https://unavatar.io/libravatar/francois@fmarier.org)
+- SHA-256 hash, e.g., [unavatar.io/libravatar/857915e8681217376523fa2c4653a499a7dc6826197b077d35fc029d7c38bda1](https://unavatar.io/libravatar/857915e8681217376523fa2c4653a499a7dc6826197b077d35fc029d7c38bda1)
+- MD5 hash, e.g., [unavatar.io/libravatar/7cc352a2907216992f0f16d2af50b070](https://unavatar.io/libravatar/7cc352a2907216992f0f16d2af50b070)
+
+When an email domain runs its own avatar server and publishes a `_avatars-sec._tcp` SRV record, the avatar is fetched from that server. Otherwise, and always for hashes, the central `seccdn.libravatar.org` server is used.
+
+In the email chain, Libravatar runs only after Gravatar and GitHub miss, so it never overrides or slows down a Gravatar hit.
 
 ### LinkedIn
 
@@ -871,11 +1000,32 @@ Extract the logo or representative image from any URL. The page is rendered and 
 
 e.g., [unavatar.io/microlink/microlink.io](https://unavatar.io/microlink/microlink.io)
 
+### Minecraft
+
+Get any Minecraft Java Edition player's face by their username or UUID. The player is resolved through Mojang first, so unknown players return no avatar, and the face is rendered by [mc-heads.net](https://mc-heads.net).
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/minecraft/notch](https://unavatar.io/minecraft/notch)
+- UUID, with or without dashes, e.g., [unavatar.io/minecraft/069a79f4-44e9-4726-a5be-fca90e38aaf5](https://unavatar.io/minecraft/069a79f4-44e9-4726-a5be-fca90e38aaf5)
+
+### Mixcloud
+
+Get any Mixcloud user's profile picture by their username.
+
+e.g., [unavatar.io/mixcloud/spartacus](https://unavatar.io/mixcloud/spartacus)
+
 ### NetEase Music
 
 Get any NetEase Music user's profile picture by their numeric user ID.
 
 e.g., [unavatar.io/netease-music/32953014](https://unavatar.io/netease-music/32953014)
+
+### note
+
+Get any note.com creator's profile picture by their username.
+
+e.g., [unavatar.io/note/info](https://unavatar.io/note/info)
 
 ### npm
 
@@ -889,6 +1039,12 @@ Get any OnlyFans creator's profile picture by their username.
 
 e.g., [unavatar.io/onlyfans/amandaribas](https://unavatar.io/onlyfans/amandaribas)
 
+### Open Collective
+
+Get any Open Collective account's avatar by its profile slug, for collectives, organizations, and individuals.
+
+e.g., [unavatar.io/opencollective/webpack](https://unavatar.io/opencollective/webpack)
+
 ### OpenStreetMap
 
 Get any OpenStreetMap contributor's profile picture. Accepts either a numeric user ID or a username.
@@ -897,6 +1053,15 @@ Available inputs:
 
 - Numeric user ID, e.g., [unavatar.io/openstreetmap/98672](https://unavatar.io/openstreetmap/98672)
 - Username, e.g., [unavatar.io/openstreetmap/Terence%20Eden](https://unavatar.io/openstreetmap/Terence%20Eden)
+
+### osu!
+
+Get any osu! player's profile picture by their username or numeric user ID.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/osu/peppy](https://unavatar.io/osu/peppy)
+- Numeric user ID, e.g., [unavatar.io/osu/7562902](https://unavatar.io/osu/7562902)
 
 ### Patreon
 
@@ -974,6 +1139,21 @@ Get any Revolut user's profile picture by their Revolut.Me username.
 
 e.g., [unavatar.io/revolut/midudev](https://unavatar.io/revolut/midudev)
 
+### Roblox
+
+Get any Roblox user's avatar headshot by their username or user ID.
+
+Available inputs:
+
+- Username, e.g., [unavatar.io/roblox/builderman](https://unavatar.io/roblox/builderman)
+- User ID, e.g., [unavatar.io/roblox/id:156](https://unavatar.io/roblox/id:156)
+
+### Sketchfab
+
+Get any Sketchfab creator's profile picture by their username.
+
+e.g., [unavatar.io/sketchfab/nasa](https://unavatar.io/sketchfab/nasa)
+
 ### Snapchat
 
 Get any Snapchat user's profile picture by their username.
@@ -985,6 +1165,12 @@ e.g., [unavatar.io/snapchat/teddysdaytoday](https://unavatar.io/snapchat/teddysd
 Get any SoundCloud artist's profile picture by their username.
 
 e.g., [unavatar.io/soundcloud/gorillaz](https://unavatar.io/soundcloud/gorillaz)
+
+### Speedrun
+
+Get any Speedrun.com runner's profile picture by their username or user ID.
+
+e.g., [unavatar.io/speedrun/cheese](https://unavatar.io/speedrun/cheese)
 
 ### Spotify
 
@@ -1103,6 +1289,12 @@ e.g., [unavatar.io/venmo/Jessica-Lee-77](https://unavatar.io/venmo/Jessica-Lee-7
 Get any Vimeo user's profile picture by their username.
 
 e.g., [unavatar.io/vimeo/ladieswithlenses](https://unavatar.io/vimeo/ladieswithlenses)
+
+### Wattpad
+
+Get any Wattpad user's profile picture by their username.
+
+e.g., [unavatar.io/wattpad/Wattpad](https://unavatar.io/wattpad/Wattpad)
 
 ### Weibo
 
