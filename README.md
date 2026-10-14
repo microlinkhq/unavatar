@@ -60,6 +60,7 @@
   - [Keybase](#keybase)
   - [Kick](#kick)
   - [Ko-fi](#ko-fi)
+  - [Libravatar](#libravatar)
   - [LinkedIn](#linkedin)
   - [Mastodon](#mastodon)
   - [Medium](#medium)
@@ -739,13 +740,13 @@ e.g., [unavatar.io/duckduckgo/microsoft.com](https://unavatar.io/duckduckgo/micr
 
 ### Email
 
-Resolve user avatars from an email address with a single URL. The `/email/:key` route uses the same provider chain as a bare `/user@domain` path: the service tries Gravatar, GitHub, BIMI in order until one returns an image. No API keys and no SDK are required.
+Resolve user avatars from an email address with a single URL. The `/email/:key` route uses the same provider chain as a bare `/user@domain` path: the service tries Gravatar and GitHub, then Libravatar, then BIMI until one returns an image. No API keys and no SDK are required.
 
 When the path looks like an email, unavatar walks that chain until a provider succeeds. You can also skip the chain and call a named email provider directly when you know where the avatar should come from.
 
 Automatic resolution
 
-Pass the address as the only path segment, or prefix it with `email/`. The API auto-detects email-shaped inputs and runs the same chain (Gravatar, GitHub, BIMI).
+Pass the address as the only path segment, or prefix it with `email/`. The API auto-detects email-shaped inputs and runs the same chain (Gravatar and GitHub, then Libravatar, then BIMI).
 
 - Typed route `unavatar.io/email/{email}`: [unavatar.io/email/hello@microlink.io](https://unavatar.io/email/hello@microlink.io)
 - Bare path `unavatar.io/{email}`: [unavatar.io/hello@microlink.io](https://unavatar.io/hello@microlink.io)
@@ -756,6 +757,7 @@ Target a specific provider when you know where the avatar comes from.
 
 - Gravatar (`unavatar.io/gravatar/{email-or-hash}`) — email is normalized and SHA-256 hashed; 64-hex SHA-256 or 32-hex MD5 passes through. Example: [unavatar.io/gravatar/hello@microlink.io](https://unavatar.io/gravatar/hello@microlink.io)
 - GitHub (`unavatar.io/github/{email}`) — public profile email or commit history: [unavatar.io/github/sindresorhus@gmail.com](https://unavatar.io/github/sindresorhus@gmail.com)
+- Libravatar (`unavatar.io/libravatar/{email-or-hash}`) — federated Gravatar alternative; follows the email domain's own avatar server when it publishes one: [unavatar.io/libravatar/francois@fmarier.org](https://unavatar.io/libravatar/francois@fmarier.org)
 - BIMI (`unavatar.io/bimi/{email}`) — official brand logo from the address domain: [unavatar.io/bimi/support@ebay.com](https://unavatar.io/bimi/support@ebay.com)
 
 e.g., [unavatar.io/email/hello@microlink.io](https://unavatar.io/email/hello@microlink.io)
@@ -838,7 +840,7 @@ Available inputs:
 
 When you pass an email address directly in the URL, it is visible in plain text — both in server logs and to any intermediary that inspects the request.
 
-To avoid this, pass a pre-computed `MD5` or `SHA256` hash of the email instead. Unavatar detects the hash automatically and routes it to Gravatar, which natively supports both hash formats.
+To avoid this, pass a pre-computed `MD5` or `SHA256` hash of the email instead. Unavatar detects the hash automatically and routes it to Gravatar, then Libravatar, which both natively support both hash formats.
 
 ### Gumroad
 
@@ -896,6 +898,20 @@ e.g., [unavatar.io/kick/xqc](https://unavatar.io/kick/xqc)
 Get any Ko-fi page's profile picture by the creator username.
 
 e.g., [unavatar.io/ko-fi/geekshock](https://unavatar.io/ko-fi/geekshock)
+
+### Libravatar
+
+Resolve avatars via [Libravatar](https://www.libravatar.org), the federated, open source alternative to Gravatar, using a plain email or a precomputed hash. Emails are trimmed, lowercased, and hashed with SHA-256; 64-hex SHA-256 and 32-hex MD5 values are passed through (normalized to lowercase).
+
+Available inputs:
+
+- Email address, e.g., [unavatar.io/libravatar/francois@fmarier.org](https://unavatar.io/libravatar/francois@fmarier.org)
+- SHA-256 hash, e.g., [unavatar.io/libravatar/857915e8681217376523fa2c4653a499a7dc6826197b077d35fc029d7c38bda1](https://unavatar.io/libravatar/857915e8681217376523fa2c4653a499a7dc6826197b077d35fc029d7c38bda1)
+- MD5 hash, e.g., [unavatar.io/libravatar/7cc352a2907216992f0f16d2af50b070](https://unavatar.io/libravatar/7cc352a2907216992f0f16d2af50b070)
+
+When an email domain runs its own avatar server and publishes a `_avatars-sec._tcp` SRV record, the avatar is fetched from that server. Otherwise, and always for hashes, the central `seccdn.libravatar.org` server is used.
+
+In the email chain, Libravatar runs only after Gravatar and GitHub miss, so it never overrides or slows down a Gravatar hit.
 
 ### LinkedIn
 
