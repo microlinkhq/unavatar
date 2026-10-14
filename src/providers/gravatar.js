@@ -17,3 +17,5 @@ module.exports = ({ constants }) =>
       d: '404'
     })}`
   }
+
+module.exports.toHash = toHash
