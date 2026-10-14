@@ -2,6 +2,7 @@
 
 const test = require('ava')
 
+const constants = require('../../../src/constant')
 const createDevto = require('../../../src/providers/devto')
 const { parseInput, getUserAvatarUrl, getOrganizationAvatarUrl, getAvatar } =
   createDevto
@@ -10,12 +11,16 @@ const BEN_PROFILE_IMAGE =
   'https://media2.dev.to/dynamic/image/width=320,height=320,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F1%2Fbabb96d0-9cd2-49bc-a412-2dc4caf94c2a.png'
 const BEN_ORIGINAL_IMAGE =
   'https://dev-to-uploads.s3.us-east-2.amazonaws.com/uploads/user/profile_image/1/babb96d0-9cd2-49bc-a412-2dc4caf94c2a.png'
+const BEN_AVATAR_IMAGE =
+  'https://media2.dev.to/dynamic/image/width=400,height=400,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F1%2Fbabb96d0-9cd2-49bc-a412-2dc4caf94c2a.png'
 
 const DEVTEAM_PROFILE_IMAGE =
   'https://media2.dev.to/dynamic/image/width=640,height=640,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Forganization%2Fprofile_image%2F1%2Fd908a186-5651-4a5a-9f76-15200bc6801f.jpg'
-const DEVTEAM_ORIGINAL_IMAGE =
-  'https://dev-to-uploads.s3.us-east-2.amazonaws.com/uploads/organization/profile_image/1/d908a186-5651-4a5a-9f76-15200bc6801f.jpg'
+const DEVTEAM_AVATAR_IMAGE =
+  'https://media2.dev.to/dynamic/image/width=400,height=400,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Forganization%2Fprofile_image%2F1%2Fd908a186-5651-4a5a-9f76-15200bc6801f.jpg'
 
+const PLACEHOLDER_ORIGINAL_IMAGE =
+  'https://thepracticaldev.s3.amazonaws.com/i/99mvlsfu5tfj9m7ku25d.png'
 const PLACEHOLDER_PROFILE_IMAGE =
   'https://media2.dev.to/dynamic/image/width=320,height=320,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fthepracticaldev.s3.amazonaws.com%2Fi%2F99mvlsfu5tfj9m7ku25d.png'
 
@@ -55,25 +60,50 @@ test('.getOrganizationAvatarUrl builds encoded organization API URL', t => {
   )
 })
 
-test('.getAvatar unwraps the resized image into the original upload', t => {
-  t.is(getAvatar({ profile_image: BEN_PROFILE_IMAGE }), BEN_ORIGINAL_IMAGE)
+const SIZE = constants.AVATAR_SIZE
+
+test('.getAvatar requests the resize wrapper at the given size', t => {
+  t.is(
+    getAvatar({ body: { profile_image: BEN_PROFILE_IMAGE }, size: SIZE }),
+    BEN_AVATAR_IMAGE
+  )
+  t.is(
+    getAvatar({ body: { profile_image: DEVTEAM_PROFILE_IMAGE }, size: SIZE }),
+    DEVTEAM_AVATAR_IMAGE
+  )
 })
 
 test('.getAvatar keeps URLs that are not resize wrappers', t => {
-  t.is(getAvatar({ profile_image: BEN_ORIGINAL_IMAGE }), BEN_ORIGINAL_IMAGE)
+  t.is(
+    getAvatar({ body: { profile_image: BEN_ORIGINAL_IMAGE }, size: SIZE }),
+    BEN_ORIGINAL_IMAGE
+  )
 })
 
 test('.getAvatar treats the default placeholder as a miss', t => {
-  t.is(getAvatar({ profile_image: PLACEHOLDER_PROFILE_IMAGE }), undefined)
+  t.is(
+    getAvatar({
+      body: { profile_image: PLACEHOLDER_PROFILE_IMAGE },
+      size: SIZE
+    }),
+    undefined
+  )
+  t.is(
+    getAvatar({
+      body: { profile_image: PLACEHOLDER_ORIGINAL_IMAGE },
+      size: SIZE
+    }),
+    undefined
+  )
 })
 
 test('.getAvatar returns undefined without a profile image', t => {
-  t.is(getAvatar({}), undefined)
-  t.is(getAvatar({ profile_image: '' }), undefined)
-  t.is(getAvatar(undefined), undefined)
+  t.is(getAvatar({ body: {}, size: SIZE }), undefined)
+  t.is(getAvatar({ body: { profile_image: '' }, size: SIZE }), undefined)
+  t.is(getAvatar({ body: undefined, size: SIZE }), undefined)
 })
 
-test('devto resolves the original user avatar', async t => {
+test('devto resolves the user avatar at AVATAR_SIZE', async t => {
   const got = createGot({
     'https://dev.to/api/users/by_username?url=ben': {
       statusCode: 200,
@@ -81,9 +111,9 @@ test('devto resolves the original user avatar', async t => {
     }
   })
 
-  const devto = createDevto({ got })
+  const devto = createDevto({ constants, got })
 
-  t.is(await devto('@Ben'), BEN_ORIGINAL_IMAGE)
+  t.is(await devto('@Ben'), BEN_AVATAR_IMAGE)
   t.deepEqual(got.calls, [
     {
       url: 'https://dev.to/api/users/by_username?url=ben',
@@ -100,9 +130,9 @@ test('devto falls back to organizations', async t => {
     }
   })
 
-  const devto = createDevto({ got })
+  const devto = createDevto({ constants, got })
 
-  t.is(await devto('devteam'), DEVTEAM_ORIGINAL_IMAGE)
+  t.is(await devto('devteam'), DEVTEAM_AVATAR_IMAGE)
   t.deepEqual(
     got.calls.map(({ url }) => url),
     [
@@ -120,7 +150,7 @@ test('devto returns undefined for a user with the default placeholder', async t 
     }
   })
 
-  const devto = createDevto({ got })
+  const devto = createDevto({ constants, got })
 
   t.is(await devto('gokulkakde'), undefined)
 })
@@ -128,7 +158,7 @@ test('devto returns undefined for a user with the default placeholder', async t 
 test('devto returns undefined when neither user nor organization exist', async t => {
   const got = createGot({})
 
-  const devto = createDevto({ got })
+  const devto = createDevto({ constants, got })
 
   t.is(await devto('thisuserdoesnotexist-xyz-12345'), undefined)
   t.is(got.calls.length, 2)
