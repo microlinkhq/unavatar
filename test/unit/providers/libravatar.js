@@ -7,8 +7,9 @@ const test = require('ava')
 const createLibravatar = require('../../../src/providers/libravatar')
 const { parseInput } = createLibravatar
 const autoFactory = require('../../../src/avatar/auto')
+const constants = require('../../../src/constant')
 const { providerTiers } = require('../../../src/providers')({
-  constants: require('../../../src/constant'),
+  constants,
   createHtmlProvider: () => async function () {},
   getOgImage: () => undefined,
   got: Object.assign(() => {}, { gotOpts: {} }),
@@ -22,7 +23,7 @@ const EMAIL_HASH =
   'ad49d0c7b7ca8dc5d24bed5a5f64b4c3a1f7d7e3c2f8b2e6de3e0b7b8c43a3a3'
 const sha256 = str => crypto.createHash('sha256').update(str).digest('hex')
 const HELLO_HASH = sha256('hello@example.com')
-const QUERY = 's=512&d=404&gravatarproxy=n'
+const QUERY = 's=400&d=404&gravatarproxy=n'
 
 const createDnsResolver = (answer = []) => {
   const calls = []
@@ -49,7 +50,7 @@ test('parseInput passes a hash through lowercased, with no domain', t => {
 
 test('an email whose domain publishes no SRV record uses the central server', async t => {
   const dnsResolver = createDnsResolver([])
-  const libravatar = createLibravatar({ dnsResolver })
+  const libravatar = createLibravatar({ constants, dnsResolver })
 
   t.is(
     await libravatar('Hello@Example.com'),
@@ -62,7 +63,10 @@ test('a DNS failure falls back to the central server', async t => {
   const error = Object.assign(new Error('queryA ENOTFOUND'), {
     code: 'ENOTFOUND'
   })
-  const libravatar = createLibravatar({ dnsResolver: createDnsResolver(error) })
+  const libravatar = createLibravatar({
+    constants,
+    dnsResolver: createDnsResolver(error)
+  })
 
   t.is(
     await libravatar('hello@example.com'),
@@ -72,6 +76,7 @@ test('a DNS failure falls back to the central server', async t => {
 
 test('an email whose domain federates uses that server on the default port', async t => {
   const libravatar = createLibravatar({
+    constants,
     dnsResolver: createDnsResolver([
       { name: 'avatars.example.com.', port: 443, priority: 1, weight: 0 }
     ])
@@ -85,6 +90,7 @@ test('an email whose domain federates uses that server on the default port', asy
 
 test('a federated server on a custom port keeps the port', async t => {
   const libravatar = createLibravatar({
+    constants,
     dnsResolver: createDnsResolver([
       { name: 'avatars.example.com', port: 8443, priority: 1, weight: 0 }
     ])
@@ -98,6 +104,7 @@ test('a federated server on a custom port keeps the port', async t => {
 
 test('the lowest priority wins, then the highest weight', async t => {
   const libravatar = createLibravatar({
+    constants,
     dnsResolver: createDnsResolver([
       { name: 'backup.example.com', port: 443, priority: 20, weight: 100 },
       { name: 'light.example.com', port: 443, priority: 10, weight: 5 },
@@ -113,6 +120,7 @@ test('the lowest priority wins, then the highest weight', async t => {
 
 test('a malformed SRV target is skipped for the next valid one', async t => {
   const libravatar = createLibravatar({
+    constants,
     dnsResolver: createDnsResolver([
       { name: 'evil.com/steal#', port: 443, priority: 1, weight: 0 },
       { name: 'zero-port.example.com', port: 0, priority: 2, weight: 0 },
@@ -128,6 +136,7 @@ test('a malformed SRV target is skipped for the next valid one', async t => {
 
 test('only malformed SRV targets fall back to the central server', async t => {
   const libravatar = createLibravatar({
+    constants,
     dnsResolver: createDnsResolver([
       { name: 'evil.com@attacker.io/x', port: 443, priority: 1, weight: 0 }
     ])
@@ -143,7 +152,7 @@ test('a hash goes to the central server without a DNS lookup', async t => {
   const dnsResolver = createDnsResolver([
     { name: 'avatars.example.com', port: 443, priority: 1, weight: 0 }
   ])
-  const libravatar = createLibravatar({ dnsResolver })
+  const libravatar = createLibravatar({ constants, dnsResolver })
   const md5 = crypto.createHash('md5').update('hello@example.com').digest('hex')
 
   t.is(
