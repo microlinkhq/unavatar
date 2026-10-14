@@ -54,6 +54,7 @@
   - [Ko-fi](#ko-fi)
   - [LinkedIn](#linkedin)
   - [Mastodon](#mastodon)
+  - [Matrix](#matrix)
   - [Medium](#medium)
   - [Microlink](#microlink)
   - [NetEase Music](#netease-music)
@@ -851,6 +852,12 @@ Available inputs:
 Get any Mastodon user's profile picture from any instance using the public account lookup API. Pass the handle as `user@server` so the account resolves on the correct home instance.
 
 e.g., [unavatar.io/mastodon/kpwags@hachyderm.io](https://unavatar.io/mastodon/kpwags@hachyderm.io)
+
+### Matrix
+
+Get any Matrix user's profile picture from any homeserver using the public profile API. Pass the full user ID as `@user:server` (the leading `@` is optional); a bare `user` resolves on `matrix.org`. Homeservers that require authentication for profiles or media return no avatar.
+
+e.g., [unavatar.io/matrix/@matthew:matrix.org](https://unavatar.io/matrix/@matthew:matrix.org)
 
 ### Medium
 
