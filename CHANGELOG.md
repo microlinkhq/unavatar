@@ -1,3 +1,9 @@
+## 3.67.0 (2026-10-14)
+
+### Features
+
+* add wattpad provider ([#702](https://github.com/Kikobeats/unavatar/issues/702)) ([54e7d9e](https://github.com/Kikobeats/unavatar/commit/54e7d9e3aeb9a736c870dbab4e8f47ba21523cba))
+
 ## 3.66.0 (2026-10-14)
 
 ### Features
