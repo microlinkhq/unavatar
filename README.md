@@ -51,6 +51,7 @@
   - [Google](#google)
   - [Google Play](#google-play)
   - [Gravatar](#gravatar)
+  - [Gumroad](#gumroad)
   - [Hevy](#hevy)
   - [Hugging Face](#hugging-face)
   - [Instagram](#instagram)
@@ -838,6 +839,12 @@ Available inputs:
 When you pass an email address directly in the URL, it is visible in plain text — both in server logs and to any intermediary that inspects the request.
 
 To avoid this, pass a pre-computed `MD5` or `SHA256` hash of the email instead. Unavatar detects the hash automatically and routes it to Gravatar, which natively supports both hash formats.
+
+### Gumroad
+
+Get any Gumroad creator's profile picture by their username (the subdomain of their store).
+
+e.g., [unavatar.io/gumroad/sahil](https://unavatar.io/gumroad/sahil)
 
 ### Hevy
 
