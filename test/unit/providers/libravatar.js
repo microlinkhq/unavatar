@@ -2,7 +2,7 @@
 
 const Keyv = require('@keyvhq/core')
 const crypto = require('crypto')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const createLibravatar = require('../../../src/providers/libravatar')
 const { parseInput } = createLibravatar

@@ -1,7 +1,7 @@
 'use strict'
 
 const { setTimeout } = require('node:timers/promises')
-const test = require('ava')
+const { default: test } = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 

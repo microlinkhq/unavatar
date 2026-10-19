@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 
 const createEnsProvider = require('../../../src/providers/ens')
 const { parseInput, getAvatarUrl } = require('../../../src/providers/ens')

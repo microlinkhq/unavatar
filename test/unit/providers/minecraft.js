@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 
 const { parseInput, getAvatarUrl } = require('../../../src/providers/minecraft')
 const constants = require('../../../src/constant')

@@ -3,7 +3,7 @@
 const cheerio = require('cheerio')
 const fs = require('fs')
 const path = require('path')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const { getAvatar } = require('../../../src/providers/substack')
 

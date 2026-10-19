@@ -2,7 +2,7 @@
 
 const cheerio = require('cheerio')
 const path = require('path')
-const ava = require('ava')
+const { default: ava } = require('ava')
 const fs = require('fs')
 
 const { getAvatar } = require('../../../src/providers/tiktok')

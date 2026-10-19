@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 
 const { getAvatarUrl, getAvatar } = require('../../../src/providers/speedrun')
 

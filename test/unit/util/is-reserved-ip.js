@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 const CacheableLookup = require('cacheable-lookup')
 
 const createIsReservedIp = require('../../../src/util/is-reserved-ip')

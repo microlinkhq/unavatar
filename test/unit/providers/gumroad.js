@@ -2,7 +2,7 @@
 
 const cheerio = require('cheerio')
 const sinon = require('sinon')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const createHtmlProviderFactory = require('../../../src/util/html-provider')
 const gumroadFactory = require('../../../src/providers/gumroad')

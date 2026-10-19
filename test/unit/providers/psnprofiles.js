@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 const cheerio = require('cheerio')
 
 const { NOT_FOUND } = require('../../../src/util/html-provider')

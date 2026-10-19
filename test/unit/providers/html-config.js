@@ -2,7 +2,7 @@
 
 const proxyquire = require('proxyquire').noPreserveCache()
 const cheerio = require('cheerio')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const getOgImage = require('../../../src/util/get-og-image')
 

@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 const cheerio = require('cheerio')
 
 const { getAvatar } = require('../../../src/providers/buymeacoffee')

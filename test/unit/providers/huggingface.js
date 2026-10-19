@@ -1,7 +1,7 @@
 'use strict'
 
 const sinon = require('sinon')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const {
   getOrganizationOverviewUrl,
