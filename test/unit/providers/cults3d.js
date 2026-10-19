@@ -1,7 +1,7 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const getOgImage = require('../../../src/util/get-og-image')
 const { getAvatarUrl } = require('../../../src/providers/cults3d')

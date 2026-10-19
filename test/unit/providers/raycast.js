@@ -1,7 +1,7 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const { getAvatarUrl, getAvatar } = require('../../../src/providers/raycast')
 

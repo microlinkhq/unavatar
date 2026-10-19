@@ -2,7 +2,7 @@
 
 const proxyquire = require('proxyquire').noPreserveCache()
 const Keyv = require('@keyvhq/core')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const { parseInput } = require('../../../src/providers/bimi')
 

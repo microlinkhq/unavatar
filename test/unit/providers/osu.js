@@ -1,7 +1,7 @@
 'use strict'
 
 const cheerio = require('cheerio')
-const test = require('ava')
+const { default: test } = require('ava')
 
 const getOgImage = require('../../../src/util/get-og-image')
 const { NOT_FOUND } = require('../../../src/util/html-provider')

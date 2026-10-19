@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 const cheerio = require('cheerio')
 
 test('onlyfans provider exposes expected URL and html opts', t => {

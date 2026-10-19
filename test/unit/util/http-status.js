@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 const httpStatus = require('../../../src/util/http-status')
 
 test('converts status codes to names', t => {

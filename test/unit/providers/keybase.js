@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 
 const createKeybase = require('../../../src/providers/keybase')
 const { getAvatarUrl } = createKeybase

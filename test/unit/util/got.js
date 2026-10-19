@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache()
 const createGot = require('../../../src/util/got')

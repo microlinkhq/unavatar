@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 const sinon = require('sinon')
 
 const { parseInput, isValidServer } = require('../../../src/providers/mastodon')

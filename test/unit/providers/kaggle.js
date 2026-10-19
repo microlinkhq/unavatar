@@ -2,7 +2,7 @@
 
 const cheerio = require('cheerio')
 const path = require('path')
-const test = require('ava')
+const { default: test } = require('ava')
 const fs = require('fs')
 
 const createHtmlProviderFactory = require('../../../src/util/html-provider')

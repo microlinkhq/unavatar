@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 const path = require('path')
 const fs = require('fs')
 const Keyv = require('@keyvhq/core')

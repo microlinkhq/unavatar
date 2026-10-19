@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('ava')
+const { default: test } = require('ava')
 
 const {
   OPENSTREETMAP_USER_ID_REGEX
