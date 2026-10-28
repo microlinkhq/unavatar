@@ -1,3 +1,9 @@
+## 3.71.8 (2026-10-28)
+
+### Bug Fixes
+
+* **codeforces:** serve userpics through codeforces.com mirror ([#714](https://github.com/Kikobeats/unavatar/issues/714)) ([588494e](https://github.com/Kikobeats/unavatar/commit/588494eeaee8d8e81fcc5914daacb86e61a2efe4))
+
 ## 3.71.7 (2026-10-26)
 
 ## 3.71.6 (2026-10-19)
