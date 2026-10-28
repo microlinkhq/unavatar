@@ -23,6 +23,27 @@ test('.getAvatar returns undefined for an empty body', t => {
   t.is(getAvatar({ status: 'OK', result: [] }), undefined)
 })
 
+test('.getAvatar serves titlePhoto through the codeforces.com userpic mirror', t => {
+  t.is(
+    getAvatar({
+      result: [
+        {
+          titlePhoto:
+            'https://userpic.codeforces.org/422/title/50a270ed4a722867.jpg'
+        }
+      ]
+    }),
+    'https://codeforces.com/userpic.codeforces.org/422/title/50a270ed4a722867.jpg'
+  )
+})
+
+test('.getAvatar keeps titlePhoto hosted elsewhere untouched', t => {
+  t.is(
+    getAvatar({ result: [{ titlePhoto: 'https://example.com/photo.jpg' }] }),
+    'https://example.com/photo.jpg'
+  )
+})
+
 test('codeforces resolves titlePhoto from user.info', async t => {
   const codeforces = createCodeforces(async (url, opts) => {
     t.is(url, 'https://codeforces.com/api/user.info?handles=tourist')
@@ -48,7 +69,7 @@ test('codeforces resolves titlePhoto from user.info', async t => {
 
   t.is(
     await codeforces('tourist'),
-    'https://userpic.codeforces.org/422/title/50a270ed4a722867.jpg'
+    'https://codeforces.com/userpic.codeforces.org/422/title/50a270ed4a722867.jpg'
   )
 })
 
