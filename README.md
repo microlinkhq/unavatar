@@ -123,11 +123,12 @@
 - [Response Format](#response-format)
 - [Response Headers](#response-headers)
 - [Response Errors](#response-errors)
+- [AI agents](#ai-agents)
 - [Contact](#contact)
 
 ---
 
-Last updated on October 5, 2026
+Last updated on November 5, 2026
 
 ![logo](https://unavatar.io/api/og ":id=banner")
 
@@ -141,7 +142,7 @@ Everything you need to serve avatars at scale:
 
 - **Versatile**: One endpoint rules 99 platforms and services — [TikTok](https://unavatar.io/docs#tiktok), [Instagram](https://unavatar.io/docs#instagram), [YouTube](https://unavatar.io/docs#youtube), [X/Twitter](https://unavatar.io/docs#xtwitter), [Gravatar](https://unavatar.io/docs#gravatar), and more — all queried the same way.
 
-- **Battle-tested**: Already serving 2.96 TB of avatars across 226.5M requests, with a 70% cache hit rate.
+- **Battle-tested**: Already serving 2.99 TB of avatars across 235.8M requests, with a 67% cache hit rate.
 
 - **Optimized**: Every image is compressed and optimized on-the-fly — smaller payloads at high quality, ready to drop straight into your site or app.
 
@@ -1456,6 +1457,27 @@ Expected errors are known operational cases returned with stable codes.
 | 500  | `ECHECKOUT`          | Stripe checkout session creation failed                 |
 | 500  | `EAPIKEYFAILED`      | API key retrieval after checkout failed                 |
 | 500  | `EINTERNAL`          | Unexpected internal server failure                      |
+
+## AI agents
+
+unavatar.io publishes machine-readable descriptions of the API so agents can discover and call it without scraping these docs:
+
+| Resource                                                            | URL                                                                                                                        |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| OpenAPI 3.1 document                                                | [unavatar.io/openapi.json ✓](https://unavatar.io/openapi.json)                                                             |
+| API catalog ([RFC 9727 ✓](https://www.rfc-editor.org/rfc/rfc9727) ) | [unavatar.io/.well-known/api-catalog ✓](https://unavatar.io/.well-known/api-catalog)                                       |
+| Agent skill                                                         | [unavatar.io/.well-known/agent-skills/unavatar/SKILL.md ✓](https://unavatar.io/.well-known/agent-skills/unavatar/SKILL.md) |
+| Agent skills index                                                  | [unavatar.io/.well-known/agent-skills/index.json ✓](https://unavatar.io/.well-known/agent-skills/index.json)               |
+| AI catalog ([ARD ✓](https://agenticresourcediscovery.org/) )        | [unavatar.io/.well-known/ai-catalog.json ✓](https://unavatar.io/.well-known/ai-catalog.json)                               |
+| Full docs as markdown                                               | [unavatar.io/llms.txt ✓](https://unavatar.io/llms.txt)                                                                     |
+
+The homepage, these docs and every provider page return markdown when requested with `Accept: text/markdown`:
+
+```bash
+curl-H"Accept: text/markdown"https://unavatar.io/github
+```
+
+In browsers that support [WebMCP](https://webmachinelearning.github.io/webmcp/) , the site registers `get_avatar_url`, `resolve_avatar` and `list_providers` tools for in-page agents.
 
 ## Contact
 
