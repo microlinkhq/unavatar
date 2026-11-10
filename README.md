@@ -686,7 +686,7 @@ e.g., [unavatar.io/cults3d/RaBros](https://unavatar.io/cults3d/RaBros)
 
 Get any Cursor user's profile picture by their username.
 
-e.g., [unavatar.io/cursor/leerob](https://unavatar.io/cursor/leerob)
+e.g., [unavatar.io/cursor/kikobeats](https://unavatar.io/cursor/kikobeats)
 
 ### Dailymotion
 
@@ -1225,7 +1225,7 @@ e.g., [unavatar.io/strava/kikobeats](https://unavatar.io/strava/kikobeats)
 
 Get any Stripe user's profile picture by their username.
 
-e.g., [unavatar.io/stripe/levelsio](https://unavatar.io/stripe/levelsio)
+e.g., [unavatar.io/stripe/microlink](https://unavatar.io/stripe/microlink)
 
 ### Substack
 
