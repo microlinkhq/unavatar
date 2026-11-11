@@ -9,7 +9,7 @@ All provider auxiliary functions in `src/providers/` must use consistent names:
 
 - `getAvatarUrl(input)` — builds the URL to visit/scrape from user input (input → URL string). Passed as `url` to `createHtmlProvider` or `createApiProvider`.
 - `getAvatar($)` — extracts the avatar URL from fetched HTML markup (cheerio $ → URL string). Passed as `getter` to `createHtmlProvider`.
-- `getAvatar({ body, NOT_FOUND })` — reads the avatar URL from a JSON API response. Passed as `getter` to `createApiProvider`.
+- `getAvatar({ body, NOT_FOUND })` — reads the avatar URL from a JSON API response. `createApiProvider` calls the getter with the response only, so the factory injects `NOT_FOUND` from its own context: `getter: ({ body }) => getAvatar({ body, NOT_FOUND })`.
 - `isBlocked({ body, statusCode })` — recognizes an anti-bot or quota answer the API sends with its own payload (e.g. zhihu `40352`, bilibili `-352`). Passed as `isBlocked` to `createApiProvider`. 403 and 429 are already treated as blocks.
 - `parseInput(input)` — parses input when multiple formats are supported (e.g. "type:id"). Never prefix with provider name.
 
