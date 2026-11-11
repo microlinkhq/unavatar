@@ -12,4 +12,12 @@ const createApiProviderCtx = ({ got, onFetch, ...ctx }) => ({
   }).createApiProvider
 })
 
-module.exports = { createApiProviderCtx, NOT_FOUND }
+const captureAttempt = async ({ attempt }) => {
+  try {
+    return { value: await attempt() }
+  } catch (error) {
+    return { error }
+  }
+}
+
+module.exports = { captureAttempt, createApiProviderCtx, NOT_FOUND }

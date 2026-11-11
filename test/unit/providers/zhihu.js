@@ -3,6 +3,7 @@
 const { default: test } = require('ava')
 
 const {
+  captureAttempt,
   createApiProviderCtx,
   NOT_FOUND
 } = require('../helpers/create-api-provider')
@@ -12,14 +13,6 @@ const { getAvatar, getAvatarUrl, isBlocked } = factory
 
 const createZhihu = (got, onFetch) =>
   factory(createApiProviderCtx({ got, onFetch }))
-
-const captureAttempt = async attempt => {
-  try {
-    return { value: await attempt() }
-  } catch (error) {
-    return { error }
-  }
-}
 
 const avatarUrl =
   'https://picx.zhimg.com/v2-39371c20333081cf7220f12d522cab7d_xl.jpg?source=32738c0c&needBackground=1'
@@ -114,7 +107,7 @@ test('zhihu hands the 40352 bot check to the proxy tiers as a block', async t =>
       statusCode: 403,
       body: { error: { code: 40352, need_login: true } }
     }),
-    ({ attempt }) => captureAttempt(attempt)
+    captureAttempt
   )
 
   const { error } = await zhihu('kaifulee')

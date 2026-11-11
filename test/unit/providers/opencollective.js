@@ -4,6 +4,7 @@ const { default: test } = require('ava')
 
 const constants = require('../../../src/constant')
 const {
+  captureAttempt,
   createApiProviderCtx,
   NOT_FOUND
 } = require('../helpers/create-api-provider')
@@ -13,14 +14,6 @@ const { getProfileUrl, getAvatarUrl, getAvatar } = factory
 
 const createOpenCollective = (got, onFetch) =>
   factory(createApiProviderCtx({ got, onFetch, constants }))
-
-const captureAttempt = async attempt => {
-  try {
-    return { value: await attempt() }
-  } catch (error) {
-    return { error }
-  }
-}
 
 test('.getProfileUrl builds encoded profile JSON URL', t => {
   t.is(getProfileUrl('webpack'), 'https://opencollective.com/webpack.json')
@@ -94,7 +87,7 @@ test('opencollective returns undefined when account is missing', async t => {
 test('opencollective hands a Cloudflare 403 to the proxy tiers as a block', async t => {
   const opencollective = createOpenCollective(
     async () => ({ statusCode: 403, body: '<html>Just a moment...</html>' }),
-    ({ attempt }) => captureAttempt(attempt)
+    captureAttempt
   )
 
   const { error } = await opencollective('webpack')

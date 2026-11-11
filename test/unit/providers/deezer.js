@@ -3,6 +3,7 @@
 const { default: test } = require('ava')
 
 const {
+  captureAttempt,
   createApiProviderCtx,
   NOT_FOUND
 } = require('../helpers/create-api-provider')
@@ -12,14 +13,6 @@ const { getAvatar, getAvatarUrl, parseInput, isBlocked } = factory
 
 const createDeezer = (got, onFetch) =>
   factory(createApiProviderCtx({ got, onFetch }))
-
-const captureAttempt = async attempt => {
-  try {
-    return { value: await attempt() }
-  } catch (error) {
-    return { error }
-  }
-}
 
 const artistUrl =
   'https://cdn-images.dzcdn.net/images/artist/638e69b9caaf9f9f3f8826febea7b543/1000x1000-000000-80-0-0.jpg'
@@ -189,7 +182,7 @@ test('deezer hands the quota error to the proxy tiers as a block', async t => {
         error: { type: 'Exception', message: 'Quota limit exceeded', code: 4 }
       }
     }),
-    ({ attempt }) => captureAttempt(attempt)
+    captureAttempt
   )
 
   const { error } = await deezer('27')

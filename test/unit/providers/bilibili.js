@@ -3,6 +3,7 @@
 const { default: test } = require('ava')
 
 const {
+  captureAttempt,
   createApiProviderCtx,
   NOT_FOUND
 } = require('../helpers/create-api-provider')
@@ -12,14 +13,6 @@ const { getAvatar, getAvatarUrl, isBlocked } = factory
 
 const createBilibili = (got, onFetch) =>
   factory(createApiProviderCtx({ got, onFetch }))
-
-const captureAttempt = async attempt => {
-  try {
-    return { value: await attempt() }
-  } catch (error) {
-    return { error }
-  }
-}
 
 const avatarUrl =
   'https://i2.hdslb.com/bfs/face/ef0457addb24141e15dfac6fbf45293ccf1e32ab.jpg'
@@ -114,7 +107,7 @@ test('bilibili hands the -352 risk control to the proxy tiers as a block', async
       statusCode: 200,
       body: { code: -352, message: '-352', ttl: 1 }
     }),
-    ({ attempt }) => captureAttempt(attempt)
+    captureAttempt
   )
 
   const { error } = await bilibili('2')

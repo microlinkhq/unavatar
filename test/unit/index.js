@@ -4,6 +4,44 @@ const { default: test } = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 
+const proxyquireIndex = stubs =>
+  proxyquire('../../src/index', {
+    './constant': {},
+    './util/keyv': () => ({
+      createMultiCache: sinon.stub(),
+      createRedisCache: sinon.stub()
+    }),
+    './util/cache': () => ({
+      dnsCache: {},
+      pingCache: {},
+      githubSearchCache: {},
+      itunesSearchCache: {}
+    }),
+    './util/cacheable-lookup': () => ({}),
+    './util/is-reserved-ip': () => ({}),
+    './util/got': () => ({}),
+    './util/reachable-url': () => ({}),
+    './util/browserless': () => () => ({}),
+    './util/html-get': () => () => ({}),
+    './util/html-provider': () => ({
+      createHtmlProvider: sinon.stub(),
+      getOgImage: sinon.stub(),
+      NOT_FOUND: Symbol('NOT_FOUND')
+    }),
+    './util/api-provider': () => ({ createApiProvider: sinon.stub() }),
+    './providers': () => ({
+      providers: {},
+      providerTiers: {},
+      providersBy: {}
+    }),
+    './avatar/auto': () => ({
+      auto: sinon.stub().returns(() => {}),
+      getInputType: sinon.stub(),
+      getAvatar: sinon.stub()
+    }),
+    ...stubs
+  })
+
 test.serial(
   'supports explicit resolvers for email and domain while keeping direct input',
   async t => {
@@ -30,29 +68,7 @@ test.serial(
 
     const auto = sinon.stub().callsFake(inputType => resolversByType[inputType])
 
-    const createUnavatar = proxyquire('../../src/index', {
-      './constant': {},
-      './util/keyv': () => ({
-        createMultiCache: sinon.stub(),
-        createRedisCache: sinon.stub()
-      }),
-      './util/cache': () => ({
-        dnsCache: {},
-        pingCache: {},
-        githubSearchCache: {},
-        itunesSearchCache: {}
-      }),
-      './util/cacheable-lookup': () => ({}),
-      './util/is-reserved-ip': () => ({}),
-      './util/got': () => ({}),
-      './util/reachable-url': () => ({}),
-      './util/browserless': () => () => ({}),
-      './util/html-get': () => () => ({}),
-      './util/html-provider': () => ({
-        createHtmlProvider: sinon.stub(),
-        getOgImage: sinon.stub(),
-        NOT_FOUND: Symbol('NOT_FOUND')
-      }),
+    const createUnavatar = proxyquireIndex({
       './providers': () => ({
         providers: { github: githubProvider },
         providerTiers: {
@@ -103,24 +119,7 @@ test.serial(
 
 const loadWithFetchHook = hooks => {
   const seen = {}
-  const createUnavatar = proxyquire('../../src/index', {
-    './constant': {},
-    './util/keyv': () => ({
-      createMultiCache: sinon.stub(),
-      createRedisCache: sinon.stub()
-    }),
-    './util/cache': () => ({
-      dnsCache: {},
-      pingCache: {},
-      githubSearchCache: {},
-      itunesSearchCache: {}
-    }),
-    './util/cacheable-lookup': () => ({}),
-    './util/is-reserved-ip': () => ({}),
-    './util/got': () => ({}),
-    './util/reachable-url': () => ({}),
-    './util/browserless': () => () => ({}),
-    './util/html-get': () => () => ({}),
+  const createUnavatar = proxyquireIndex({
     './util/html-provider': opts => {
       seen.html = opts.onFetch
       return {
@@ -132,17 +131,7 @@ const loadWithFetchHook = hooks => {
     './util/api-provider': opts => {
       seen.api = opts.onFetch
       return { createApiProvider: sinon.stub() }
-    },
-    './providers': () => ({
-      providers: {},
-      providerTiers: {},
-      providersBy: {}
-    }),
-    './avatar/auto': () => ({
-      auto: sinon.stub().returns(() => {}),
-      getInputType: sinon.stub(),
-      getAvatar: sinon.stub()
-    })
+    }
   })
 
   createUnavatar(hooks)
