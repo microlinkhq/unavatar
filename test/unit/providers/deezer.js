@@ -3,12 +3,16 @@
 const { default: test } = require('ava')
 
 const {
-  getAvatar,
-  getAvatarUrl,
-  parseInput
-} = require('../../../src/providers/deezer')
+  captureAttempt,
+  createApiProviderCtx,
+  NOT_FOUND
+} = require('../helpers/create-api-provider')
+const factory = require('../../../src/providers/deezer')
 
-const createDeezer = got => require('../../../src/providers/deezer')({ got })
+const { getAvatar, getAvatarUrl, parseInput, isBlocked } = factory
+
+const createDeezer = (got, onFetch) =>
+  factory(createApiProviderCtx({ got, onFetch }))
 
 const artistUrl =
   'https://cdn-images.dzcdn.net/images/artist/638e69b9caaf9f9f3f8826febea7b543/1000x1000-000000-80-0-0.jpg'
@@ -37,31 +41,116 @@ test('.getAvatarUrl builds typed API URLs', t => {
 })
 
 test('.getAvatar returns picture_xl', t => {
-  t.is(getAvatar({ picture_xl: artistUrl }), artistUrl)
+  t.is(
+    getAvatar({ body: { id: 27, picture_xl: artistUrl }, NOT_FOUND }),
+    artistUrl
+  )
 })
 
 test('.getAvatar returns cover_xl for albums', t => {
-  t.is(getAvatar({ cover_xl: coverUrl }), coverUrl)
+  t.is(
+    getAvatar({ body: { id: 302127, cover_xl: coverUrl }, NOT_FOUND }),
+    coverUrl
+  )
 })
 
 test('.getAvatar returns album cover_xl for tracks', t => {
-  t.is(getAvatar({ album: { cover_xl: coverUrl } }), coverUrl)
+  t.is(
+    getAvatar({
+      body: { id: 3135556, album: { cover_xl: coverUrl } },
+      NOT_FOUND
+    }),
+    coverUrl
+  )
+})
+
+test('.getAvatar treats a non-string or empty picture as a miss', t => {
+  t.is(getAvatar({ body: { id: 1, picture_xl: {} }, NOT_FOUND }), NOT_FOUND)
+  t.is(
+    getAvatar({ body: { id: 1, album: { cover_xl: '' } }, NOT_FOUND }),
+    NOT_FOUND
+  )
 })
 
 test('.getAvatar treats the empty-hash placeholder as a miss', t => {
   t.is(
     getAvatar({
-      picture_xl: 'https://cdn-images.dzcdn.net/images/artist//500x500.jpg'
+      body: {
+        id: 1,
+        picture_xl: 'https://cdn-images.dzcdn.net/images/artist//500x500.jpg'
+      },
+      NOT_FOUND
     }),
-    undefined
+    NOT_FOUND
   )
 })
 
-test('.getAvatar treats an API error as a miss', t => {
-  t.is(
-    getAvatar({ error: { type: 'DataException', message: 'no data' } }),
-    undefined
+test('.getAvatar treats the no data error as a miss', t => {
+  const body = {
+    error: { type: 'DataException', message: 'no data', code: 800 }
+  }
+  t.is(getAvatar({ body, NOT_FOUND }), NOT_FOUND)
+})
+
+test('.getAvatar leaves other API errors unrecognized', t => {
+  const body = {
+    error: {
+      type: 'Exception',
+      message: 'An unknown error occurred',
+      code: 100
+    }
+  }
+  t.is(getAvatar({ body, NOT_FOUND }), undefined)
+})
+
+test('.getAvatar treats an invalid query as a miss', t => {
+  const body = {
+    error: {
+      type: 'InvalidQueryException',
+      message: 'Invalid query',
+      code: 600
+    }
+  }
+  t.is(getAvatar({ body, NOT_FOUND }), NOT_FOUND)
+})
+
+test('.getAvatar leaves bodies that are not a deezer entity unrecognized, so they escalate', t => {
+  for (const body of [
+    '<html>502 Bad Gateway</html>',
+    '',
+    null,
+    {},
+    { message: 'credits exhausted' }
+  ]) {
+    t.is(getAvatar({ body, NOT_FOUND }), undefined)
+  }
+})
+
+test('.isBlocked recognizes the quota error', t => {
+  t.true(
+    isBlocked({
+      body: {
+        error: { type: 'Exception', message: 'Quota limit exceeded', code: 4 }
+      }
+    })
   )
+  t.false(isBlocked({ body: { error: { code: 800 } } }))
+  t.false(isBlocked({ body: { picture_xl: artistUrl } }))
+})
+
+test('deezer resolves whitespace input as missing without a request, since the API 403s on it', async t => {
+  let requests = 0
+  const deezer = createDeezer(
+    async () => {
+      requests++
+      return { statusCode: 403, body: '<html>HTTP_FORBIDDEN</html>' }
+    },
+    ({ attempt }) => attempt()
+  )
+
+  t.is(await deezer('Daft Punk'), undefined)
+  t.is(await deezer('a\tb'), undefined)
+  t.is(requests, 0)
 })
 
 test('deezer resolves the avatar from the artist API', async t => {
@@ -70,7 +159,7 @@ test('deezer resolves the avatar from the artist API', async t => {
     t.is(opts.responseType, 'json')
     t.false(opts.throwHttpErrors)
 
-    return { statusCode: 200, body: { picture_xl: artistUrl } }
+    return { statusCode: 200, body: { id: 27, picture_xl: artistUrl } }
   })
 
   t.is(await deezer('27'), artistUrl)
@@ -79,8 +168,24 @@ test('deezer resolves the avatar from the artist API', async t => {
 test('deezer returns undefined when the entity is missing', async t => {
   const deezer = createDeezer(async () => ({
     statusCode: 200,
-    body: { error: { type: 'DataException', message: 'no data' } }
+    body: { error: { type: 'DataException', message: 'no data', code: 800 } }
   }))
 
   t.is(await deezer('0'), undefined)
+})
+
+test('deezer hands the quota error to the proxy tiers as a block', async t => {
+  const deezer = createDeezer(
+    async () => ({
+      statusCode: 200,
+      body: {
+        error: { type: 'Exception', message: 'Quota limit exceeded', code: 4 }
+      }
+    }),
+    captureAttempt
+  )
+
+  const { error } = await deezer('27')
+
+  t.true(error.blocked)
 })

@@ -10,6 +10,7 @@ const DEFAULTS = require('../../../src/constant')
 const mockCtx = {
   constants: DEFAULTS,
   createHtmlProvider: () => async function () {},
+  createApiProvider: () => async function () {},
   getOgImage: () => undefined,
   got: Object.assign(() => {}, { gotOpts: {} }),
   dnsResolver: { resolveTxt: async () => [], resolveSrv: async () => [] },

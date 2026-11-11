@@ -5,10 +5,12 @@ const DEFAULTS = require('./constant')
 module.exports = ({
   constants: userConstants,
   redis,
+  onFetch,
   onFetchHTML,
   userAgent
 } = {}) => {
   const constants = { ...DEFAULTS, ...userConstants }
+  const fetchHook = onFetch ?? onFetchHTML
 
   if (userConstants?.REQUEST_TIMEOUT && !userConstants?.PROXY_TIMEOUT) {
     constants.PROXY_TIMEOUT = Math.floor(constants.REQUEST_TIMEOUT * (1 / 3))
@@ -40,13 +42,19 @@ module.exports = ({
     require('./util/html-provider')({
       ...constants,
       getHTML,
-      onFetchHTML,
+      onFetch: fetchHook,
       userAgent
     })
+  const { createApiProvider } = require('./util/api-provider')({
+    got,
+    PROXY_TIMEOUT: constants.PROXY_TIMEOUT,
+    onFetch: fetchHook
+  })
 
   const providerCtx = {
     constants,
     createHtmlProvider,
+    createApiProvider,
     getOgImage,
     NOT_FOUND,
     got,

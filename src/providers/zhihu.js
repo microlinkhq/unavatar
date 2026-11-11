@@ -9,28 +9,32 @@ const randomDesktopUserAgent = uniqueRandomArray(
 
 const API_URL = 'https://www.zhihu.com/api/v4/members'
 
+const ANTIBOT_ERROR_CODE = 40352
+const MISSING_MEMBER_ERROR_CODE = 4041
+
 const getAvatarUrl = input =>
   `${API_URL}/${encodeURIComponent(input)}?include=avatar_url`
 
-// Misses (and bot challenges) come back as an `error` payload rather than
-// a plain 404, and default avatars are flagged via `use_default_avatar`.
-const getAvatar = body => {
-  if (!body || body.error || body.use_default_avatar) return
-  return body.avatar_url || undefined
+const isBlocked = ({ body }) => body?.error?.code === ANTIBOT_ERROR_CODE
+
+const getAvatar = ({ body, NOT_FOUND }) => {
+  if (body?.error?.code === MISSING_MEMBER_ERROR_CODE) return NOT_FOUND
+  if (body?.error) return undefined
+  if (body?.use_default_avatar) return NOT_FOUND
+  return body?.avatar_url || undefined
 }
 
-module.exports = ({ got }) =>
-  async function zhihu (input) {
-    const { body, statusCode } = await got(getAvatarUrl(input), {
-      responseType: 'json',
-      throwHttpErrors: false,
-      headers: { 'user-agent': randomDesktopUserAgent() }
-    })
+const factory = ({ createApiProvider, NOT_FOUND }) =>
+  createApiProvider({
+    name: 'zhihu',
+    url: getAvatarUrl,
+    gotOpts: () => ({ headers: { 'user-agent': randomDesktopUserAgent() } }),
+    isBlocked,
+    getter: ({ body }) => getAvatar({ body, NOT_FOUND })
+  })
 
-    if (statusCode >= 400) return
+factory.getAvatarUrl = getAvatarUrl
+factory.getAvatar = getAvatar
+factory.isBlocked = isBlocked
 
-    return getAvatar(body)
-  }
-
-module.exports.getAvatarUrl = getAvatarUrl
-module.exports.getAvatar = getAvatar
+module.exports = factory

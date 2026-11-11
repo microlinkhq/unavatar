@@ -36,7 +36,7 @@ const createErrorCause = ({ html, headers, statusCode }) => ({
 module.exports = ({
   PROXY_TIMEOUT,
   getHTML,
-  onFetchHTML,
+  onFetch,
   userAgent = require('./crawler-agent')
 }) => {
   /**
@@ -177,11 +177,17 @@ module.exports = ({
         throw error
       }
 
-      if (typeof onFetchHTML === 'function') {
-        return onFetchHTML({ ...context, attempt, provider: name, providerUrl })
-      }
+      const result =
+        typeof onFetch === 'function'
+          ? await onFetch({
+            ...context,
+            attempt,
+            provider: name,
+            providerUrl,
+            kind: 'html'
+          })
+          : await attempt()
 
-      const result = await attempt()
       return result === NOT_FOUND ? undefined : result
     }
 

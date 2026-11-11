@@ -2,6 +2,9 @@
 
 const API_URL = 'https://api.deezer.com'
 
+const MISSING_ERROR_CODES = new Set([600, 800])
+const QUOTA_ERROR_CODE = 4
+
 // Entities without artwork keep an empty image hash
 // (cdn-images.dzcdn.net/images/artist//500x500.jpg), which resolves to a
 // generic placeholder, so any empty hash segment is treated as a miss.
@@ -20,25 +23,37 @@ const getAvatarUrl = input => {
   return `${API_URL}/${encodeURIComponent(type)}/${encodeURIComponent(id)}`
 }
 
-const getAvatar = body => {
-  if (body?.error) return
+const isBlocked = ({ body }) => body?.error?.code === QUOTA_ERROR_CODE
 
-  const pic = body?.picture_xl || body?.cover_xl || body?.album?.cover_xl
-  return typeof pic === 'string' && pic && isArtwork(pic) ? pic : undefined
+const getAvatar = ({ body, NOT_FOUND }) => {
+  if (MISSING_ERROR_CODES.has(body?.error?.code)) return NOT_FOUND
+  if (body?.id === undefined) return undefined
+
+  const pic = body.picture_xl || body.cover_xl || body.album?.cover_xl
+  if (typeof pic !== 'string' || !pic || !isArtwork(pic)) return NOT_FOUND
+  return pic
 }
 
-module.exports = ({ got }) =>
-  async function deezer (input) {
-    const { body, statusCode } = await got(getAvatarUrl(input), {
-      responseType: 'json',
-      throwHttpErrors: false
-    })
+const hasWhitespace = input => /\s/.test(input)
 
-    if (statusCode >= 400) return
+const factory = ({ createApiProvider, NOT_FOUND }) => {
+  const apiProvider = createApiProvider({
+    name: 'deezer',
+    url: getAvatarUrl,
+    isBlocked,
+    getter: ({ body }) => getAvatar({ body, NOT_FOUND })
+  })
 
-    return getAvatar(body)
-  }
+  const provider = (input, context) =>
+    hasWhitespace(input) ? undefined : apiProvider(input, context)
 
-module.exports.parseInput = parseInput
-module.exports.getAvatarUrl = getAvatarUrl
-module.exports.getAvatar = getAvatar
+  provider.getUrl = getAvatarUrl
+  return provider
+}
+
+factory.parseInput = parseInput
+factory.getAvatarUrl = getAvatarUrl
+factory.getAvatar = getAvatar
+factory.isBlocked = isBlocked
+
+module.exports = factory

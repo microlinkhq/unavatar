@@ -11,6 +11,7 @@ const constants = require('../../../src/constant')
 const { providerTiers } = require('../../../src/providers')({
   constants,
   createHtmlProvider: () => async function () {},
+  createApiProvider: () => async function () {},
   getOgImage: () => undefined,
   got: Object.assign(() => {}, { gotOpts: {} }),
   dnsResolver: {},

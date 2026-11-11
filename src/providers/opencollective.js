@@ -11,17 +11,21 @@ const getAvatarUrl = ({ constants, slug }) =>
     constants.AVATAR_SIZE
   }.png`
 
-module.exports = ({ constants, got }) =>
-  async function opencollective (input) {
-    const { body, statusCode } = await got(getProfileUrl(input), {
-      responseType: 'json',
-      throwHttpErrors: false
-    })
+const getAvatar = ({ body, constants, NOT_FOUND }) => {
+  if (!body?.slug) return undefined
+  if (!body.image) return NOT_FOUND
+  return getAvatarUrl({ constants, slug: body.slug })
+}
 
-    if (statusCode >= 400 || !body?.image || !body.slug) return
+const factory = ({ constants, createApiProvider, NOT_FOUND }) =>
+  createApiProvider({
+    name: 'opencollective',
+    url: getProfileUrl,
+    getter: ({ body }) => getAvatar({ body, constants, NOT_FOUND })
+  })
 
-    return getAvatarUrl({ constants, slug: body.slug })
-  }
+factory.getProfileUrl = getProfileUrl
+factory.getAvatarUrl = getAvatarUrl
+factory.getAvatar = getAvatar
 
-module.exports.getProfileUrl = getProfileUrl
-module.exports.getAvatarUrl = getAvatarUrl
+module.exports = factory
