@@ -1,3 +1,9 @@
+## 3.72.0 (2026-11-11)
+
+### Features
+
+* proxy fallback for JSON API providers ([#718](https://github.com/Kikobeats/unavatar/issues/718)) ([a6a39f1](https://github.com/Kikobeats/unavatar/commit/a6a39f1268fc157fe92f6a8a9b23fc80f26d4443))
+
 ## 3.71.12 (2026-11-10)
 
 ## 3.71.11 (2026-11-05)
