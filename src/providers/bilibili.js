@@ -2,26 +2,34 @@
 
 const API_URL = 'https://api.bilibili.com/x/web-interface/card'
 
+const OK_CODE = 0
+const MISSING_CODES = new Set([-400, -404])
+const ANTIBOT_CODES = new Set([-352, -412, -509, -799])
+
 const getAvatarUrl = input => `${API_URL}?mid=${encodeURIComponent(input)}`
 
-// Users without a custom avatar get the generic `noface.jpg` placeholder.
-const getAvatar = body => {
-  if (body?.code !== 0) return
+const isPlaceholderFace = face => face.endsWith('/noface.jpg')
+
+const isBlocked = ({ body }) => ANTIBOT_CODES.has(body?.code)
+
+const getAvatar = ({ body, NOT_FOUND }) => {
+  if (MISSING_CODES.has(body?.code)) return NOT_FOUND
+  if (body?.code !== OK_CODE) return undefined
   const face = body.data?.card?.face
-  return face && !face.endsWith('/noface.jpg') ? face : undefined
+  if (!face || isPlaceholderFace(face)) return NOT_FOUND
+  return face
 }
 
-module.exports = ({ got }) =>
-  async function bilibili (input) {
-    const { body, statusCode } = await got(getAvatarUrl(input), {
-      responseType: 'json',
-      throwHttpErrors: false
-    })
+const factory = ({ createApiProvider, NOT_FOUND }) =>
+  createApiProvider({
+    name: 'bilibili',
+    url: getAvatarUrl,
+    isBlocked,
+    getter: ({ body }) => getAvatar({ body, NOT_FOUND })
+  })
 
-    if (statusCode >= 400) return
+factory.getAvatarUrl = getAvatarUrl
+factory.getAvatar = getAvatar
+factory.isBlocked = isBlocked
 
-    return getAvatar(body)
-  }
-
-module.exports.getAvatarUrl = getAvatarUrl
-module.exports.getAvatar = getAvatar
+module.exports = factory

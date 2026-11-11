@@ -5,7 +5,7 @@ const DEFAULTS = require('./constant')
 module.exports = ({
   constants: userConstants,
   redis,
-  onFetchHTML,
+  onFetch,
   userAgent
 } = {}) => {
   const constants = { ...DEFAULTS, ...userConstants }
@@ -40,13 +40,19 @@ module.exports = ({
     require('./util/html-provider')({
       ...constants,
       getHTML,
-      onFetchHTML,
+      onFetch,
       userAgent
     })
+  const { createApiProvider } = require('./util/api-provider')({
+    got,
+    PROXY_TIMEOUT: constants.PROXY_TIMEOUT,
+    onFetch
+  })
 
   const providerCtx = {
     constants,
     createHtmlProvider,
+    createApiProvider,
     getOgImage,
     NOT_FOUND,
     got,

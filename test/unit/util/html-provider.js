@@ -9,7 +9,7 @@ const { NOT_FOUND } = require('../../../src/util/html-provider')
 const createProvider = (opts = {}) => {
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
-    onFetchHTML: undefined,
+    onFetch: undefined,
     getHTML:
       opts.getHTML ??
       (async () => ({ $: {}, statusCode: opts.responseStatusCode ?? 200 }))
@@ -86,7 +86,7 @@ test('createHtmlProvider throws when upstream status is 500 and getter is empty'
   })
 })
 
-test('createHtmlProvider returns undefined when status is 404 and no onFetchHTML', async t => {
+test('createHtmlProvider returns undefined when status is 404 and no onFetch', async t => {
   const provider = createProvider({
     providerUrl: 'https://www.reddit.com/user/kikobeats/',
     getterResult: '/assets/avatar.svg',
@@ -135,15 +135,13 @@ test('createHtmlProvider prioritizes antibot detection over NOT_FOUND getter out
   t.true(error.blocked)
 })
 
-test('attempt returns NOT_FOUND symbol when status is 404 via onFetchHTML', async t => {
-  const { NOT_FOUND } = require('../../../src/util/html-provider')
-
-  const onFetchHTML = async ({ attempt }) => attempt()
+test('a 404 through onFetch resolves to undefined, not the NOT_FOUND symbol', async t => {
+  const onFetch = async ({ attempt }) => attempt()
 
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
     getHTML: async () => ({ $: {}, statusCode: 404 }),
-    onFetchHTML
+    onFetch
   })
 
   const provider = createHtmlProvider({
@@ -152,9 +150,36 @@ test('attempt returns NOT_FOUND symbol when status is 404 via onFetchHTML', asyn
     getter: () => '/assets/avatar.svg'
   })
 
-  const result = await runProvider(provider)
+  t.is(await runProvider(provider), undefined)
+})
 
-  t.is(result, NOT_FOUND)
+test('a provider miss through onFetch reaches auto as a plain not found', async t => {
+  const { createHtmlProvider } = require('../../../src/util/html-provider')({
+    PROXY_TIMEOUT: 8000,
+    getHTML: async () => ({ $: {}, statusCode: 404 }),
+    onFetch: async ({ attempt }) => attempt()
+  })
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://example.com/user',
+    getter: () => undefined
+  })
+  const auto = require('../../../src/avatar/auto')({
+    constants: { REQUEST_TIMEOUT: 5000 },
+    providers: {},
+    providerTiers: {},
+    reachableUrl: async () => ({}),
+    isReservedIp: async () => false
+  })
+
+  const error = await t.throwsAsync(
+    auto.getAvatar(provider, 'test-provider', 'test', {
+      req: { query: {} },
+      res: {}
+    })
+  )
+  t.is(error.message, 'not found')
+  t.is(error.statusCode, 404)
 })
 
 test('createHtmlProvider throws when status code is undefined', async t => {
@@ -218,7 +243,7 @@ test('createHtmlProvider exposes getUrl on provider function', async t => {
 test('createHtmlProvider forwards gotOpts to getHTML when attempt is called with gotOpts', async t => {
   const getHTML = sinon.stub().resolves({ $: {}, statusCode: 200 })
 
-  const onFetchHTML = async ({ attempt }) => {
+  const onFetch = async ({ attempt }) => {
     await attempt({ gotOpts: { customOption: true }, tier: 'datacenter' })
     return 'https://resolved.example/avatar.png'
   }
@@ -226,7 +251,7 @@ test('createHtmlProvider forwards gotOpts to getHTML when attempt is called with
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
     getHTML,
-    onFetchHTML
+    onFetch
   })
 
   const provider = createHtmlProvider({
@@ -250,7 +275,7 @@ test('createHtmlProvider exposes response headers and status code via attempt', 
   }
   const responseStatusCode = 206
 
-  const onFetchHTML = async ({ attempt }) => {
+  const onFetch = async ({ attempt }) => {
     await attempt()
     return {
       headers: attempt.lastHeaders,
@@ -265,7 +290,7 @@ test('createHtmlProvider exposes response headers and status code via attempt', 
       statusCode: responseStatusCode,
       headers: responseHeaders
     }),
-    onFetchHTML
+    onFetch
   })
 
   const provider = createHtmlProvider({
@@ -279,16 +304,16 @@ test('createHtmlProvider exposes response headers and status code via attempt', 
   t.is(result.statusCode, responseStatusCode)
 })
 
-test('createHtmlProvider delegates to onFetchHTML when provided', async t => {
+test('createHtmlProvider delegates to onFetch when provided', async t => {
   const getHTML = sinon.stub().resolves({ $: {}, statusCode: 200 })
-  const onFetchHTML = sinon
+  const onFetch = sinon
     .stub()
     .resolves('https://hook-returned.example/avatar.png')
 
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
     getHTML,
-    onFetchHTML
+    onFetch
   })
 
   const provider = createHtmlProvider({
@@ -303,22 +328,22 @@ test('createHtmlProvider delegates to onFetchHTML when provided', async t => {
   })
 
   t.is(result, 'https://hook-returned.example/avatar.png')
-  t.true(onFetchHTML.calledOnce)
-  const hookArg = onFetchHTML.firstCall.args[0]
+  t.true(onFetch.calledOnce)
+  const hookArg = onFetch.firstCall.args[0]
   t.is(hookArg.provider, 'test-provider')
   t.is(hookArg.providerUrl, 'https://example.com/user')
   t.is(typeof hookArg.attempt, 'function')
 })
 
-test('createHtmlProvider passes req and res to onFetchHTML', async t => {
+test('createHtmlProvider passes req and res to onFetch', async t => {
   const req = { query: { proxy: true } }
   const res = { setHeader: sinon.stub() }
-  const onFetchHTML = sinon.stub().resolves('https://hook.example/img.png')
+  const onFetch = sinon.stub().resolves('https://hook.example/img.png')
 
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
     getHTML: async () => ({ $: {}, statusCode: 200 }),
-    onFetchHTML
+    onFetch
   })
 
   const provider = createHtmlProvider({
@@ -329,8 +354,8 @@ test('createHtmlProvider passes req and res to onFetchHTML', async t => {
 
   await runProvider(provider, { req, res })
 
-  t.true(onFetchHTML.calledOnce)
-  const hookArg = onFetchHTML.firstCall.args[0]
+  t.true(onFetch.calledOnce)
+  const hookArg = onFetch.firstCall.args[0]
   t.is(hookArg.req, req)
   t.is(hookArg.res, res)
 })
