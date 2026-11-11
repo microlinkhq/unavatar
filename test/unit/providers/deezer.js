@@ -71,6 +71,11 @@ test('.getAvatar returns album cover_xl for tracks', t => {
   )
 })
 
+test('.getAvatar treats a non-string or empty picture as a miss', t => {
+  t.is(getAvatar({ body: { id: 1, picture_xl: {} }, NOT_FOUND }), NOT_FOUND)
+  t.is(getAvatar({ body: { id: 1, picture_xl: '' }, NOT_FOUND }), NOT_FOUND)
+})
+
 test('.getAvatar treats the empty-hash placeholder as a miss', t => {
   t.is(
     getAvatar({

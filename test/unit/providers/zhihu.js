@@ -49,6 +49,17 @@ test('.getAvatar treats a missing member as a miss', t => {
 test('.getAvatar leaves other error payloads unrecognized, so they escalate', t => {
   const body = { error: { code: 40362, need_login: true } }
   t.is(getAvatar({ body, NOT_FOUND }), undefined)
+  t.is(
+    getAvatar({
+      body: { error: { code: 40362 }, avatar_url: avatarUrl },
+      NOT_FOUND
+    }),
+    undefined
+  )
+})
+
+test('.getAvatar treats an empty avatar url as unrecognized', t => {
+  t.is(getAvatar({ body: { avatar_url: '' }, NOT_FOUND }), undefined)
 })
 
 test('.isBlocked recognizes the 40352 bot check', t => {

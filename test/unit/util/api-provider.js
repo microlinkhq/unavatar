@@ -77,6 +77,26 @@ test('a getter NOT_FOUND resolves to undefined', async t => {
   t.is(await provider('no-avatar', context), undefined)
 })
 
+test('a getter NOT_FOUND is returned to onFetch, so no proxy tier is spent', async t => {
+  const { onFetch } = captureAttempt()
+  const { provider } = createProvider({ getter: () => NOT_FOUND, onFetch })
+
+  const { value, error } = await provider('no-avatar', context)
+
+  t.is(error, undefined)
+  t.is(value, NOT_FOUND)
+})
+
+test('an empty string from the getter is an empty result, retried by onFetch', async t => {
+  const { onFetch } = captureAttempt()
+  const { provider } = createProvider({ getter: () => '', onFetch })
+
+  const { error } = await provider('kikobeats', context)
+
+  t.false(error.blocked)
+  t.is(error.code, 'empty_getter_result')
+})
+
 for (const statusCode of [403, 429]) {
   test(`a ${statusCode} is a block, retried by onFetch`, async t => {
     const { onFetch } = captureAttempt()

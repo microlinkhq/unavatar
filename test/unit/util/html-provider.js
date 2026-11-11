@@ -332,6 +332,7 @@ test('createHtmlProvider delegates to onFetch when provided', async t => {
   const hookArg = onFetch.firstCall.args[0]
   t.is(hookArg.provider, 'test-provider')
   t.is(hookArg.providerUrl, 'https://example.com/user')
+  t.is(hookArg.kind, 'html')
   t.is(typeof hookArg.attempt, 'function')
 })
 

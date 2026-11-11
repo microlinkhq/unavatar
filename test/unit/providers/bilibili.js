@@ -33,6 +33,20 @@ test('.getAvatar returns the face URL', t => {
   t.is(getAvatar({ body, NOT_FOUND }), avatarUrl)
 })
 
+test('.getAvatar treats a missing face as a miss', t => {
+  t.is(
+    getAvatar({ body: { code: 0, data: { card: {} } }, NOT_FOUND }),
+    NOT_FOUND
+  )
+  t.is(
+    getAvatar({
+      body: { code: 0, data: { card: { face: '' } } },
+      NOT_FOUND
+    }),
+    NOT_FOUND
+  )
+})
+
 test('.getAvatar treats the noface placeholder as a miss', t => {
   const body = {
     code: 0,
