@@ -16,12 +16,16 @@ const isUncached = statusCode =>
   UNCACHED_STATUS_CODES.has(statusCode) || statusCode >= 500
 
 const parseRetryAfter = (value, now = Date.now()) => {
+  if (typeof value === 'string') value = value.trim()
   if (!value) return undefined
   const seconds = Number(value)
   if (Number.isFinite(seconds)) return seconds * 1000
   const date = Date.parse(value)
-  if (Number.isNaN(date)) return undefined
-  return date - now
+  if (!Number.isNaN(date)) return date - now
+  const first = typeof value === 'string' ? value.split(',')[0].trim() : ''
+  if (!first || first === value) return undefined
+  const firstSeconds = Number(first)
+  return Number.isFinite(firstSeconds) ? firstSeconds * 1000 : undefined
 }
 
 const rateLimitTtl = retryAfter => {

@@ -110,6 +110,35 @@ test('each call gets its own context', async t => {
   t.not(contexts[0], contexts[1])
 })
 
+test('a failed ping is not swallowed or cached', async t => {
+  const ping = sinon.stub().rejects(new Error('dns failed'))
+  ping.isReachable = sinon.stub().returns(true)
+
+  const reachableUrl = proxyquire('../../../src/util/reachable-url', {
+    'reachable-url': ping
+  })({ got: { gotOpts: {} }, pingCache: {} })
+
+  const url = 'https://example.com/avatar.png'
+  await t.throwsAsync(reachableUrl(url), { message: 'dns failed' })
+  await t.throwsAsync(reachableUrl(url), { message: 'dns failed' })
+  t.is(ping.callCount, 2)
+})
+
+test('a rate limit without headers is still cached', async t => {
+  const url = 'https://example.com/limited'
+  const ping = sinon.stub().resolves({ statusCode: 429, url })
+  ping.isReachable = sinon.stub().returns(true)
+
+  const reachableUrl = proxyquire('../../../src/util/reachable-url', {
+    'reachable-url': ping
+  })({ got: { gotOpts: {} }, pingCache: {} })
+
+  t.deepEqual(await reachableUrl(url), { statusCode: 429, url })
+  ping.resolves({ statusCode: 200, url })
+  t.deepEqual(await reachableUrl(url), { statusCode: 429, url })
+  t.true(ping.calledOnce)
+})
+
 const createRealPing = async t => {
   const http = require('http')
   const ms = require('ms')
@@ -176,6 +205,7 @@ test('caches pings for a day, rate limits briefly and refusals not at all', asyn
     [429, ms('1m')],
     [403, undefined],
     [408, undefined],
+    [500, undefined],
     [503, undefined]
   ]
 
@@ -211,8 +241,13 @@ test('rate limit TTL follows Retry-After within bounds', t => {
     new Date(Date.now() + seconds * 1000).toUTCString()
 
   t.is(rateLimitTtl(undefined), ms('1m'))
+  t.is(rateLimitTtl(''), ms('1m'))
+  t.is(rateLimitTtl('   '), ms('1m'))
+  t.is(rateLimitTtl('\n'), ms('1m'))
+  t.is(rateLimitTtl('\uFEFF'), ms('1m'))
   t.is(rateLimitTtl('soon'), ms('1m'))
   t.is(rateLimitTtl('30'), ms('30s'))
+  t.is(rateLimitTtl('120, 60'), ms('2m'))
   t.is(rateLimitTtl('0'), ms('1s'))
   t.is(rateLimitTtl('-5'), ms('1s'))
   t.is(rateLimitTtl('86400'), ms('10m'))
