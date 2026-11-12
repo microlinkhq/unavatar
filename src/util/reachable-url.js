@@ -1,12 +1,24 @@
 'use strict'
 
 const createPingUrl = require('@microlink/ping-url')
+const ms = require('ms')
+
+const REFUSED_PING_TTL = ms('5m')
+
+const REFUSAL_STATUS_CODES = new Set([403, 408, 429])
 
 const isRedirectStatus = statusCode => statusCode >= 300 && statusCode < 400
 
+const isRefusal = statusCode =>
+  REFUSAL_STATUS_CODES.has(statusCode) || statusCode >= 500
+
+const pingTtl = ({ statusCode }) =>
+  isRefusal(statusCode) ? REFUSED_PING_TTL : undefined
+
 module.exports = ({ got, pingCache }) => {
   const pingUrl = createPingUrl(pingCache, {
-    value: ({ url, statusCode }) => ({ url, statusCode })
+    value: ({ url, statusCode }) => ({ url, statusCode }),
+    ttl: pingTtl
   })
 
   const reachableUrl = async (url, opts) => {

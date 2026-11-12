@@ -131,3 +131,54 @@ test('each call gets its own context', async t => {
   t.is(contexts.length, 2)
   t.not(contexts[0], contexts[1])
 })
+
+test('caches a refused ping for minutes and any other result for a day', async t => {
+  const http = require('http')
+  const ms = require('ms')
+  const { createMultiCache, createRedisCache } =
+    require('../../../src/util/keyv')({
+      TTL_DEFAULT: ms('28d')
+    })
+  const { pingCache } = require('../../../src/util/cache')({
+    createMultiCache,
+    createRedisCache
+  })
+  const reachableUrl = require('../../../src/util/reachable-url')({
+    got: { gotOpts: { retry: { limit: 0 } } },
+    pingCache
+  })
+
+  const server = http.createServer((req, res) => {
+    res.statusCode = Number(req.url.slice(1))
+    res.end()
+  })
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve))
+  t.teardown(() => server.close())
+  const baseUrl = `http://127.0.0.1:${server.address().port}`
+
+  const storedTtl = async url => {
+    const { remote } = pingCache.store
+    const raw = await remote.store.get(remote._getKeyPrefix(url))
+    return JSON.parse(raw).expires - Date.now()
+  }
+
+  const expectations = [
+    [200, ms('1d')],
+    [404, ms('1d')],
+    [403, ms('5m')],
+    [408, ms('5m')],
+    [429, ms('5m')],
+    [503, ms('5m')]
+  ]
+
+  for (const [statusCode, ttl] of expectations) {
+    const url = `${baseUrl}/${statusCode}`
+    const response = await reachableUrl(url)
+    t.is(response.statusCode, statusCode)
+    const remaining = await storedTtl(url)
+    t.true(
+      remaining > ttl - ms('1m') && remaining <= ttl,
+      `${statusCode}: ${remaining}ms`
+    )
+  }
+})
