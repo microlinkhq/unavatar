@@ -1,9 +1,7 @@
 'use strict'
 
-const createPingUrl = require('@microlink/ping-url')
-const ms = require('ms')
-
-const REFUSED_PING_TTL = ms('5m')
+const memoize = require('@keyvhq/memoize')
+const reachableUrl = require('reachable-url')
 
 const REFUSAL_STATUS_CODES = new Set([403, 408, 429])
 
@@ -12,18 +10,35 @@ const isRedirectStatus = statusCode => statusCode >= 300 && statusCode < 400
 const isRefusal = statusCode =>
   REFUSAL_STATUS_CODES.has(statusCode) || statusCode >= 500
 
-const pingTtl = ({ statusCode }) =>
-  isRefusal(statusCode) ? REFUSED_PING_TTL : undefined
+class RefusedPing extends Error {
+  constructor (response) {
+    super(`ping refused with ${response.statusCode}`)
+    this.response = response
+  }
+}
+
+const ping = async (url, opts) => {
+  const { url: resolvedUrl, statusCode } = await reachableUrl(url, opts)
+  const response = { url: resolvedUrl, statusCode }
+  if (isRefusal(statusCode)) throw new RefusedPing(response)
+  return response
+}
+
+const unwrapRefusal = error => {
+  if (error instanceof RefusedPing) return error.response
+  throw error
+}
 
 module.exports = ({ got, pingCache }) => {
-  const pingUrl = createPingUrl(pingCache, {
-    value: ({ url, statusCode }) => ({ url, statusCode }),
-    ttl: pingTtl
-  })
+  const cachedPing = memoize(ping, pingCache)
 
-  const reachableUrl = async (url, opts) => {
+  const pingUrl = async (url, opts) => {
     const context = {}
-    const response = await pingUrl(url, { ...got.gotOpts, ...opts, context })
+    const response = await cachedPing(url, {
+      ...got.gotOpts,
+      ...opts,
+      context
+    }).catch(unwrapRefusal)
     const { reservedAddress } = context
 
     // reachable-url leaves the redirect hop as the status when a beforeRedirect
@@ -38,7 +53,7 @@ module.exports = ({ got, pingCache }) => {
     return { ...response, statusCode }
   }
 
-  reachableUrl.isReachable = createPingUrl.isReachable
+  pingUrl.isReachable = reachableUrl.isReachable
 
-  return reachableUrl
+  return pingUrl
 }

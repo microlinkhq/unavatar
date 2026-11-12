@@ -5,7 +5,7 @@ const { default: test } = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 
-const { isReachable } = require('@microlink/ping-url')
+const { isReachable } = require('reachable-url')
 
 const autoFactory = require('../../../src/avatar/auto')
 

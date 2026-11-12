@@ -4,37 +4,19 @@ const { default: test } = require('ava')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire').noPreserveCache()
 
-test('reachable-url composes ping-url with cache and merged got options', async t => {
-  const ping = sinon
-    .stub()
-    .resolves({ statusCode: 200, url: 'https://example.com' })
-  const pingCache = { name: 'ping-cache' }
-
-  const createPingUrl = sinon.stub().callsFake((cache, opts) => {
-    t.deepEqual(cache, pingCache)
-    t.is(typeof opts.value, 'function')
-    t.deepEqual(
-      opts.value({
-        url: 'https://example.com',
-        statusCode: 200,
-        ignored: true
-      }),
-      {
-        url: 'https://example.com',
-        statusCode: 200
-      }
-    )
-    return ping
+test('reachable-url pings with merged got options and keeps url and statusCode', async t => {
+  const ping = sinon.stub().resolves({
+    statusCode: 200,
+    url: 'https://example.com',
+    headers: { 'content-type': 'image/png' }
   })
-  createPingUrl.isReachable = sinon.stub().returns(true)
+  ping.isReachable = sinon.stub().returns(true)
 
-  const reachableUrlFactory = proxyquire('../../../src/util/reachable-url', {
-    '@microlink/ping-url': createPingUrl
-  })
-
-  const reachableUrl = reachableUrlFactory({
+  const reachableUrl = proxyquire('../../../src/util/reachable-url', {
+    'reachable-url': ping
+  })({
     got: { gotOpts: { timeout: 1234, retry: { limit: 0 } } },
-    pingCache
+    pingCache: {}
   })
 
   const value = await reachableUrl('https://example.com/avatar.png', {
@@ -58,11 +40,10 @@ test('reports the address a refused redirect was pointing at', async t => {
     return { statusCode: 302, url }
   })
 
-  const createPingUrl = sinon.stub().returns(ping)
-  createPingUrl.isReachable = sinon.stub().returns(true)
+  ping.isReachable = sinon.stub().returns(true)
 
   const reachableUrl = proxyquire('../../../src/util/reachable-url', {
-    '@microlink/ping-url': createPingUrl
+    'reachable-url': ping
   })({ got: { gotOpts: {} }, pingCache: {} })
 
   t.deepEqual(await reachableUrl('https://attacker.com/avatar.png'), {
@@ -78,11 +59,10 @@ test('treats a bare redirect status as unreachable', async t => {
     url: 'https://attacker.com/avatar.png'
   })
 
-  const createPingUrl = sinon.stub().returns(ping)
-  createPingUrl.isReachable = sinon.stub().returns(true)
+  ping.isReachable = sinon.stub().returns(true)
 
   const reachableUrl = proxyquire('../../../src/util/reachable-url', {
-    '@microlink/ping-url': createPingUrl
+    'reachable-url': ping
   })({ got: { gotOpts: {} }, pingCache: {} })
 
   t.deepEqual(await reachableUrl('https://attacker.com/avatar.png'), {
@@ -96,11 +76,10 @@ test('a request that is not refused carries no reserved address', async t => {
     .stub()
     .resolves({ statusCode: 200, url: 'https://example.com' })
 
-  const createPingUrl = sinon.stub().returns(ping)
-  createPingUrl.isReachable = sinon.stub().returns(true)
+  ping.isReachable = sinon.stub().returns(true)
 
   const reachableUrl = proxyquire('../../../src/util/reachable-url', {
-    '@microlink/ping-url': createPingUrl
+    'reachable-url': ping
   })({ got: { gotOpts: {} }, pingCache: {} })
 
   t.deepEqual(await reachableUrl('https://example.com/avatar.png'), {
@@ -116,11 +95,10 @@ test('each call gets its own context', async t => {
     return { statusCode: 200, url }
   })
 
-  const createPingUrl = sinon.stub().returns(ping)
-  createPingUrl.isReachable = sinon.stub().returns(true)
+  ping.isReachable = sinon.stub().returns(true)
 
   const reachableUrl = proxyquire('../../../src/util/reachable-url', {
-    '@microlink/ping-url': createPingUrl
+    'reachable-url': ping
   })({ got: { gotOpts: {} }, pingCache: {} })
 
   await Promise.all([
@@ -132,7 +110,7 @@ test('each call gets its own context', async t => {
   t.not(contexts[0], contexts[1])
 })
 
-test('caches a refused ping for minutes and any other result for a day', async t => {
+const createRealPing = async t => {
   const http = require('http')
   const ms = require('ms')
   const { createMultiCache, createRedisCache } =
@@ -148,37 +126,55 @@ test('caches a refused ping for minutes and any other result for a day', async t
     pingCache
   })
 
+  const statusByPath = new Map()
   const server = http.createServer((req, res) => {
-    res.statusCode = Number(req.url.slice(1))
+    res.statusCode = statusByPath.get(req.url) ?? Number(req.url.slice(1))
     res.end()
   })
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve))
   t.teardown(() => server.close())
   const baseUrl = `http://127.0.0.1:${server.address().port}`
 
-  const storedTtl = async url => {
+  const isCached = async url => {
     const { remote } = pingCache.store
-    const raw = await remote.store.get(remote._getKeyPrefix(url))
-    return JSON.parse(raw).expires - Date.now()
+    return (await remote.store.get(remote._getKeyPrefix(url))) !== undefined
   }
+
+  return { reachableUrl, baseUrl, isCached, statusByPath }
+}
+
+test('caches pings except refusals', async t => {
+  const { reachableUrl, baseUrl, isCached } = await createRealPing(t)
 
   const expectations = [
-    [200, ms('1d')],
-    [404, ms('1d')],
-    [403, ms('5m')],
-    [408, ms('5m')],
-    [429, ms('5m')],
-    [503, ms('5m')]
+    [200, true],
+    [404, true],
+    [403, false],
+    [408, false],
+    [429, false],
+    [503, false]
   ]
 
-  for (const [statusCode, ttl] of expectations) {
+  for (const [statusCode, cached] of expectations) {
     const url = `${baseUrl}/${statusCode}`
     const response = await reachableUrl(url)
-    t.is(response.statusCode, statusCode)
-    const remaining = await storedTtl(url)
-    t.true(
-      remaining > ttl - ms('1m') && remaining <= ttl,
-      `${statusCode}: ${remaining}ms`
-    )
+    t.deepEqual(response, { url, statusCode })
+    t.is(await isCached(url), cached, String(statusCode))
   }
+})
+
+test('a host that refused once serves the avatar on the next ping', async t => {
+  const { reachableUrl, baseUrl, isCached, statusByPath } =
+    await createRealPing(t)
+  const url = `${baseUrl}/avatar.png`
+
+  statusByPath.set('/avatar.png', 403)
+  t.is((await reachableUrl(url)).statusCode, 403)
+
+  statusByPath.set('/avatar.png', 200)
+  t.is((await reachableUrl(url)).statusCode, 200)
+  t.true(await isCached(url))
+
+  statusByPath.set('/avatar.png', 403)
+  t.is((await reachableUrl(url)).statusCode, 200)
 })
