@@ -1,3 +1,9 @@
+## 3.72.3 (2026-11-12)
+
+### Bug Fixes
+
+* **reachable-url:** don't cache refused pings, rate limits by Retry-After ([#719](https://github.com/Kikobeats/unavatar/issues/719)) ([c912711](https://github.com/Kikobeats/unavatar/commit/c912711ee8f7e3cec104e55bf12e4dfbce0a2f76))
+
 ## 3.72.2 (2026-11-12)
 
 ## 3.72.1 (2026-11-12)
