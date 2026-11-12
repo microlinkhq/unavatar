@@ -128,7 +128,7 @@
 
 ---
 
-Last updated on November 12, 2026
+Last updated on November 5, 2026
 
 ![logo](https://unavatar.io/api/og ":id=banner")
 
