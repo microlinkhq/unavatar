@@ -2,43 +2,70 @@
 
 const memoize = require('@keyvhq/memoize')
 const reachableUrl = require('reachable-url')
+const ms = require('ms')
 
-const REFUSAL_STATUS_CODES = new Set([403, 408, 429])
+const RATE_LIMITED = 429
+const UNCACHED_STATUS_CODES = new Set([403, 408])
+const RATE_LIMIT_TTL_DEFAULT = ms('1m')
+const RATE_LIMIT_TTL_MIN = ms('1s')
+const RATE_LIMIT_TTL_MAX = ms('10m')
 
 const isRedirectStatus = statusCode => statusCode >= 300 && statusCode < 400
 
-const isRefusal = statusCode =>
-  REFUSAL_STATUS_CODES.has(statusCode) || statusCode >= 500
+const isUncached = statusCode =>
+  UNCACHED_STATUS_CODES.has(statusCode) || statusCode >= 500
 
-class RefusedPing extends Error {
+const parseRetryAfter = (value, now = Date.now()) => {
+  if (!value) return undefined
+  const seconds = Number(value)
+  if (Number.isFinite(seconds)) return seconds * 1000
+  const date = Date.parse(value)
+  if (Number.isNaN(date)) return undefined
+  return date - now
+}
+
+const rateLimitTtl = retryAfter => {
+  const wait = parseRetryAfter(retryAfter)
+  if (wait === undefined) return RATE_LIMIT_TTL_DEFAULT
+  return Math.min(Math.max(wait, RATE_LIMIT_TTL_MIN), RATE_LIMIT_TTL_MAX)
+}
+
+class UncachedPing extends Error {
   constructor (response) {
-    super(`ping refused with ${response.statusCode}`)
+    super(`ping not cached for ${response.statusCode}`)
     this.response = response
   }
 }
 
 const ping = async (url, opts) => {
-  const { url: resolvedUrl, statusCode } = await reachableUrl(url, opts)
+  const {
+    url: resolvedUrl,
+    statusCode,
+    headers
+  } = await reachableUrl(url, opts)
   const response = { url: resolvedUrl, statusCode }
-  if (isRefusal(statusCode)) throw new RefusedPing(response)
+  if (isUncached(statusCode)) throw new UncachedPing(response)
+  if (statusCode === RATE_LIMITED) {
+    return { ...response, ttl: rateLimitTtl(headers?.['retry-after']) }
+  }
   return response
 }
 
-const unwrapRefusal = error => {
-  if (error instanceof RefusedPing) return error.response
+const unwrapUncached = error => {
+  if (error instanceof UncachedPing) return error.response
   throw error
 }
 
 module.exports = ({ got, pingCache }) => {
-  const cachedPing = memoize(ping, pingCache)
+  const cachedPing = memoize(ping, pingCache, { ttl: value => value.ttl })
 
   const pingUrl = async (url, opts) => {
     const context = {}
-    const response = await cachedPing(url, {
+    const { ttl, ...response } = await cachedPing(url, {
       ...got.gotOpts,
       ...opts,
       context
-    }).catch(unwrapRefusal)
+    }).catch(unwrapUncached)
     const { reservedAddress } = context
 
     // reachable-url leaves the redirect hop as the status when a beforeRedirect
@@ -57,3 +84,5 @@ module.exports = ({ got, pingCache }) => {
 
   return pingUrl
 }
+
+module.exports.rateLimitTtl = rateLimitTtl
