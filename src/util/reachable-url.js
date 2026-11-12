@@ -20,10 +20,13 @@ const parseRetryAfter = (value, now = Date.now()) => {
   if (!value) return undefined
   const seconds = Number(value)
   if (Number.isFinite(seconds)) return seconds * 1000
-  const date = Date.parse(value)
-  if (!Number.isNaN(date)) return date - now
-  const first = typeof value === 'string' ? value.split(',')[0].trim() : ''
-  if (!first || first === value) return undefined
+  if (typeof value !== 'string') return undefined
+  if (/[a-z]/i.test(value)) {
+    const date = Date.parse(value)
+    if (!Number.isNaN(date)) return date - now
+  }
+  const first = value.split(',')[0]
+  if (!first) return undefined
   const firstSeconds = Number(first)
   return Number.isFinite(firstSeconds) ? firstSeconds * 1000 : undefined
 }
