@@ -3,7 +3,7 @@
 const { default: test } = require('ava')
 const sinon = require('sinon')
 
-const { isReachable } = require('@microlink/ping-url')
+const { isReachable } = require('reachable-url')
 
 const duckduckgoFactory = require('../../../src/providers/duckduckgo')
 const { getAvatarUrl, toggleWww } = duckduckgoFactory
