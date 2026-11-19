@@ -2,13 +2,9 @@
 
 const { get } = require('lodash')
 
-const SUBDOMAIN_REGEX = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i
-const DEFAULT_AVATAR_MARKER = 'gumroad-default-avatar'
+const parseInput = require('../util/parse-subdomain')
 
-const parseInput = input =>
-  typeof input === 'string' && SUBDOMAIN_REGEX.test(input)
-    ? input.toLowerCase()
-    : undefined
+const DEFAULT_AVATAR_MARKER = 'gumroad-default-avatar'
 
 const getAvatarUrl = input => `https://${input}.gumroad.com/`
 
@@ -36,7 +32,10 @@ module.exports = ({ createHtmlProvider, NOT_FOUND }) => {
     return username ? htmlProvider(username, context) : undefined
   }
 
-  provider.getUrl = getAvatarUrl
+  provider.getUrl = input => {
+    const subdomain = parseInput(input)
+    return subdomain ? getAvatarUrl(subdomain) : undefined
+  }
   return provider
 }
 

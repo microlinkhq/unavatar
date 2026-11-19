@@ -3,6 +3,8 @@
 const { $jsonld } = require('@metascraper/helpers')
 const { parse: parseSrcset } = require('srcset')
 
+const parseInput = require('../util/parse-subdomain')
+
 const getBestSrcsetUrl = srcset => {
   if (typeof srcset !== 'string' || srcset.trim() === '') return
 
@@ -25,11 +27,27 @@ const getPictureAvatar = $ => {
 
 const getAvatar = $ => $jsonld('publisher.logo.url')($) || getPictureAvatar($)
 
-module.exports = ({ createHtmlProvider }) =>
-  createHtmlProvider({
+const getAvatarUrl = input => `https://${input}.substack.com`
+
+module.exports = ({ createHtmlProvider }) => {
+  const htmlProvider = createHtmlProvider({
     name: 'substack',
-    url: input => `https://${input}.substack.com`,
+    url: getAvatarUrl,
     getter: getAvatar
   })
 
+  const provider = (input, context) => {
+    const publication = parseInput(input)
+    return publication ? htmlProvider(publication, context) : undefined
+  }
+
+  provider.getUrl = input => {
+    const subdomain = parseInput(input)
+    return subdomain ? getAvatarUrl(subdomain) : undefined
+  }
+  return provider
+}
+
+module.exports.parseInput = parseInput
+module.exports.getAvatarUrl = getAvatarUrl
 module.exports.getAvatar = getAvatar
