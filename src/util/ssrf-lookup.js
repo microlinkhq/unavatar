@@ -14,20 +14,15 @@ const createNotFoundError = hostname =>
     hostname
   })
 
-const toFamily = (address, declared) => {
-  if (declared === 4 || declared === 6) return declared
-  return address.includes(':') ? 6 : 4
-}
+const toFamily = address => (address.includes(':') ? 6 : 4)
 
-const toEntries = (result, family) => {
+const toEntries = result => {
   const answers = Array.isArray(result) ? result : [result]
   const entries = []
   for (const answer of answers) {
     const address = typeof answer === 'string' ? answer : answer?.address
     if (typeof address !== 'string' || address === '') continue
-    const declared =
-      typeof answer === 'string' ? family : answer.family ?? family
-    entries.push({ address, family: toFamily(address, declared) })
+    entries.push({ address, family: toFamily(address) })
   }
   return entries
 }
@@ -53,11 +48,10 @@ const createSsrfLookup = lookup => {
       callback(error, ...args)
     }
 
-    const decide = (error, result, family) => {
+    const decide = (error, result) => {
       if (error) return done(error)
 
-      const entries = toEntries(result, family)
-      if (entries.length === 0) return done(createNotFoundError(hostname))
+      const entries = toEntries(result)
       if (entries.some(entry => isReservedAddress(entry.address))) {
         return done(createReservedAddressError(hostname))
       }
@@ -74,12 +68,12 @@ const createSsrfLookup = lookup => {
     let isSync = true
     let syncAnswer
     try {
-      lookup(hostname, { all: true }, (error, result, family) => {
+      lookup(hostname, { all: true }, (error, result) => {
         if (isSync) {
-          syncAnswer ??= [error, result, family]
+          syncAnswer ??= [error, result]
           return
         }
-        decide(error, result, family)
+        decide(error, result)
       })
     } catch (error) {
       syncAnswer ??= [error]

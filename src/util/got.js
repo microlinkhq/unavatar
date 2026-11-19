@@ -76,10 +76,6 @@ module.exports = ({ cacheableLookup, isReservedIp }) => {
 
   const connectThroughSsrfLookup = (options, hostname) => {
     options.lookup = (name, lookupOptions, callback) => {
-      if (typeof lookupOptions === 'function') {
-        callback = lookupOptions
-        lookupOptions = {}
-      }
       ssrfLookup(name, lookupOptions, (error, ...answer) => {
         if (error?.code === RESERVED_ADDRESS_CODE) {
           recordReservedAddress(options, hostname)

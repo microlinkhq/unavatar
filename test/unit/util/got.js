@@ -133,8 +133,12 @@ test('a public literal is left to connect as is', async t => {
 })
 
 test('a request without a url is left alone', async t => {
-  const { got } = buildGotWithSpies()
-  await t.notThrowsAsync(got.gotOpts.hooks.beforeRequest[0]({}))
+  const { got, isReservedIp, lookup } = buildGotWithSpies()
+  const options = {}
+  await t.notThrowsAsync(got.gotOpts.hooks.beforeRequest[0](options))
+  t.is(options.lookup, undefined)
+  t.false(isReservedIp.called)
+  t.false(lookup.called)
 })
 
 test('a hostname connects through the lookup that checks the answer it returns', async t => {

@@ -44,6 +44,8 @@ const HOST_ESCAPES = [
 ]
 
 test('.parseInput accepts a publication subdomain and lowercases it', t => {
+  t.is(parseInput('a'), 'a')
+  t.is(parseInput('a1'), 'a1')
   t.is(parseInput('bankless'), 'bankless')
   t.is(parseInput('Bankless'), 'bankless')
   t.is(parseInput('failing-with-data'), 'failing-with-data')
