@@ -1,3 +1,9 @@
+## 3.72.8 (2026-11-19)
+
+### Bug Fixes
+
+* **ssrf:** connect with the address the reserved-IP check saw ([#722](https://github.com/Kikobeats/unavatar/issues/722)) ([1f8ed68](https://github.com/Kikobeats/unavatar/commit/1f8ed68d2492f8dd8ca7f1a47520be2a27270f52))
+
 ## 3.72.7 (2026-11-19)
 
 ## 3.72.6 (2026-11-16)
