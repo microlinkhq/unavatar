@@ -193,10 +193,13 @@ test('soundcloud and substack provider options are derived from helper modules',
     '@metascraper/helpers': {
       $jsonld: path => () => `jsonld:${path}`
     }
-  })({ createHtmlProvider })
+  })
 
-  t.is(substack.url('failingwithdata'), 'https://failingwithdata.substack.com')
-  t.is(substack.getter({}), 'jsonld:publisher.logo.url')
+  t.is(
+    substack.getAvatarUrl('failingwithdata'),
+    'https://failingwithdata.substack.com'
+  )
+  t.is(substack.getAvatar({}), 'jsonld:publisher.logo.url')
 
   const patreon = proxyquire('../../../src/providers/patreon', {
     '@metascraper/helpers': {
