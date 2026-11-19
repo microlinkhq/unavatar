@@ -5,7 +5,17 @@ const tlsHook = require('https-tls/hook')
 const uaHints = require('ua-hints')
 const got = require('got')
 
-const { RESERVED_ADDRESS_CODE } = require('./is-reserved-ip')
+const {
+  RESERVED_ADDRESS_CODE,
+  isReservedAddress,
+  literalAddresses
+} = require('./is-reserved-ip')
+const {
+  createSsrfLookup,
+  createReservedAddressError
+} = require('./ssrf-lookup')
+
+const UNIX_SOCKET_HOSTNAME = 'unix'
 
 const topUserAgents = require('top-user-agents')
 const randomUserAgent = uniqueRandomArray(topUserAgents)
@@ -51,18 +61,52 @@ module.exports = ({ cacheableLookup, isReservedIp }) => {
    * got replaces the error with a RequestError that keeps the message and the
    * code, so the refusal is named by a code rather than by its type.
    */
+  const ssrfLookup = createSsrfLookup(cacheableLookup.lookup)
+
+  const recordReservedAddress = (options, hostname) => {
+    if (Object.isExtensible(options.context)) {
+      options.context.reservedAddress = hostname
+    }
+  }
+
+  const refuse = (options, hostname) => {
+    recordReservedAddress(options, hostname)
+    throw createReservedAddressError(hostname)
+  }
+
+  const connectThroughSsrfLookup = (options, hostname) => {
+    options.lookup = (name, lookupOptions, callback) => {
+      if (typeof lookupOptions === 'function') {
+        callback = lookupOptions
+        lookupOptions = {}
+      }
+      ssrfLookup(name, lookupOptions, (error, ...answer) => {
+        if (error?.code === RESERVED_ADDRESS_CODE) {
+          recordReservedAddress(options, hostname)
+        }
+        callback(error, ...answer)
+      })
+    }
+  }
+
   const reservedAddressHook = async options => {
     const hostname = options.url?.hostname
-    if (hostname && (await isReservedIp(hostname))) {
-      if (Object.isExtensible(options.context)) {
-        options.context.reservedAddress = hostname
-      }
-      const error = new Error(
-        `Refusing to request a reserved address: ${hostname}`
-      )
-      error.code = RESERVED_ADDRESS_CODE
-      throw error
+    if (!hostname) return
+
+    if (hostname === UNIX_SOCKET_HOSTNAME) refuse(options, hostname)
+
+    const literals = literalAddresses(hostname)
+    if (literals) {
+      if (literals.some(isReservedAddress)) refuse(options, hostname)
+      return
     }
+
+    const isProxied = Boolean(options.agent)
+    if (isProxied && (await isReservedIp(hostname))) {
+      refuse(options, hostname)
+    }
+
+    connectThroughSsrfLookup(options, hostname)
   }
 
   const gotOpts = {

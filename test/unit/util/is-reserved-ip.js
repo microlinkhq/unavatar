@@ -102,3 +102,34 @@ test('returns false when every resolved address is public unicast', async t => {
 
   t.false(await check('cdn.example'))
 })
+
+test('.literalAddresses returns IPv4 and IPv6 literals, bracketed or not', t => {
+  const { literalAddresses } = createIsReservedIp
+  t.deepEqual(literalAddresses('1.1.1.1'), ['1.1.1.1'])
+  t.deepEqual(literalAddresses('[::1]'), ['::1'])
+  t.deepEqual(literalAddresses('::1'), ['::1'])
+  t.is(literalAddresses('example.com'), undefined)
+  t.is(literalAddresses('[not-an-ip]'), undefined)
+  t.is(literalAddresses(''), undefined)
+  t.is(literalAddresses(undefined), undefined)
+})
+
+test('.isReservedAddress treats an unparseable address as reserved', t => {
+  const { isReservedAddress } = createIsReservedIp
+  t.true(isReservedAddress('not-an-ip'))
+  t.true(isReservedAddress('10.0.0.1'))
+  t.false(isReservedAddress('1.1.1.1'))
+})
+
+test('a bare IPv6 literal is checked without a lookup', async t => {
+  t.true(await isReservedIp('::1'))
+  t.false(await isReservedIp('2001:4860:4860::8888'))
+})
+
+test('IPv4-compatible IPv6 addresses are reserved', t => {
+  const { isReservedAddress } = createIsReservedIp
+  t.true(isReservedAddress('::7f00:1'))
+  t.true(isReservedAddress('::a9fe:a9fe'))
+  t.false(isReservedAddress('::ffff:1.1.1.1'))
+  t.false(isReservedAddress('2606:4700:4700::1111'))
+})
