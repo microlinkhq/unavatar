@@ -299,6 +299,152 @@ test('a proxy hang does not look up the origin network', async t => {
   t.is(error.blocked, undefined)
 })
 
+test('a failed origin lookup still reports a missing status', async t => {
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: undefined }),
+    lookupOrigin: async () => {
+      throw new Error('radar down')
+    }
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.is(error.code, 'missing_status_code')
+  t.is(error.blocked, undefined)
+})
+
+test('an undefined origin lookup still reports a missing status', async t => {
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: undefined }),
+    lookupOrigin: async () => undefined
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.is(error.code, 'missing_status_code')
+  t.is(error.blocked, undefined)
+})
+
+test('a pro hang without an origin lookup stays a missing status', async t => {
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: undefined })
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.is(error.code, 'missing_status_code')
+  t.is(error.blocked, undefined)
+})
+
+test('a hang without a request does not look up the origin', async t => {
+  let lookups = 0
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: undefined }),
+    lookupOrigin: async () => {
+      lookups++
+      return { asn: 20940 }
+    }
+  })
+
+  const error = await t.throwsAsync(() => provider('test'), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.is(lookups, 0)
+  t.is(error.blocked, undefined)
+})
+
+test('a hang without a request object does not look up the origin', async t => {
+  let lookups = 0
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: undefined }),
+    lookupOrigin: async () => {
+      lookups++
+      return { asn: 20940 }
+    }
+  })
+
+  const error = await t.throwsAsync(() => provider('test', {}), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.is(lookups, 0)
+  t.is(error.blocked, undefined)
+})
+
+test('a silent hang that returns an antibot page is blocked', async t => {
+  const $ = cheerio.load('<script>bmak.sensor_data</script>')
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $, statusCode: undefined }),
+    lookupOrigin: async () => ({ asn: 13335 })
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.true(error.blocked)
+})
+
+test('a silent hang that returns an antibot header is blocked', async t => {
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({
+      $: {},
+      statusCode: undefined,
+      headers: { 'x-akamai-session-info': '1' }
+    }),
+    lookupOrigin: async () => ({ asn: 13335 })
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.true(error.blocked)
+})
+
+test('a silent hang on a verification page is blocked', async t => {
+  const $ = cheerio.load('Please wait for verification')
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $, statusCode: undefined }),
+    lookupOrigin: async () => ({ asn: 13335 })
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.true(error.blocked)
+})
+
 test('createHtmlProvider throws when status code is empty string', async t => {
   const provider = createProvider({
     providerUrl: 'https://www.reddit.com/user/kikobeats/',

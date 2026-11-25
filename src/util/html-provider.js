@@ -92,10 +92,13 @@ module.exports = ({
         if (isStatusCodeMissing(statusCode)) {
           const code = EMPTY_PROVIDER_VALUE_CODE.MISSING_STATUS_CODE
           // is-antibot matches an asn only when the origin never answered.
-          const asn =
-            tier === 'origin' && context?.req?.isPro
-              ? (await lookupOrigin?.(providerUrl))?.asn
-              : undefined
+          // A lookup that fails leaves the hang as a missing status.
+          let asn
+          if (tier === 'origin' && context?.req?.isPro) {
+            try {
+              asn = (await lookupOrigin(providerUrl)).asn
+            } catch {}
+          }
           const antibot = asn
             ? isAntibot({
               url: providerUrl,
