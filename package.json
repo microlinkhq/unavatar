@@ -128,7 +128,7 @@
     "@keyvhq/redis": "~2.2.3",
     "@metascraper/helpers": "~5.58.4",
     "bimi-url": "~1.0.0",
-    "browserless": "~14.2.0",
+    "browserless": "~14.3.0",
     "cacheable-lookup": "~6.1.0",
     "data-uri-regex": "~0.1.4",
     "debug-logfmt": "~1.4.10",
