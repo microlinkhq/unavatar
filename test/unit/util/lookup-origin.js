@@ -5,12 +5,16 @@ const proxyquire = require('proxyquire').noCallThru().noPreserveCache()
 
 const load = ({ token = 'token', body, lookupAsync, radarError } = {}) => {
   const calls = []
+  const clients = []
   const createLookupOrigin = proxyquire('../../../src/util/lookup-origin', {
     got: {
-      extend: () => (path, opts) => {
-        calls.push({ path, ip: opts.searchParams.ip })
-        if (radarError) return Promise.reject(radarError)
-        return Promise.resolve(body)
+      extend: opts => {
+        clients.push(opts)
+        return (path, req) => {
+          calls.push({ path, ip: req.searchParams.ip })
+          if (radarError) return Promise.reject(radarError)
+          return Promise.resolve(body)
+        }
       }
     }
   })
@@ -22,8 +26,32 @@ const load = ({ token = 'token', body, lookupAsync, radarError } = {}) => {
       lookupAsync: lookupAsync || (async () => [{ address: '23.33.42.82' }])
     }
   })
-  return { lookupOrigin, calls }
+  return { lookupOrigin, calls, clients }
 }
+
+test('lookupOrigin calls radar with the bearer token and no retry', async t => {
+  const { lookupOrigin, clients } = load({
+    token: 'secret',
+    body: { result: { ip: { asn: '20940' } } }
+  })
+
+  await lookupOrigin('https://example.com/user')
+
+  t.deepEqual(clients, [
+    {
+      prefixUrl: 'https://api.cloudflare.com/client/v4/radar/',
+      responseType: 'json',
+      resolveBodyOnly: true,
+      timeout: { request: 1000 },
+      retry: { limit: 0 },
+      headers: {
+        authorization: 'Bearer secret',
+        'user-agent': undefined
+      }
+    }
+  ])
+  t.true(Object.hasOwn(clients[0].headers, 'user-agent'))
+})
 
 test('lookupOrigin reads the asn once per address', async t => {
   const { lookupOrigin, calls } = load({

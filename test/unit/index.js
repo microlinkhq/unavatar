@@ -154,6 +154,35 @@ test.serial('onFetch is forwarded to html and api providers', t => {
   t.is(seen.api, onFetch)
 })
 
+test.serial('the origin lookup is passed to html providers', t => {
+  const lookup = async () => undefined
+  let lookupArgs
+  let htmlOpts
+  const createUnavatar = proxyquireIndex({
+    './util/lookup-origin': opts => {
+      lookupArgs = opts
+      return lookup
+    },
+    './util/html-provider': opts => {
+      htmlOpts = opts
+      return {
+        createHtmlProvider: sinon.stub(),
+        getOgImage: sinon.stub(),
+        NOT_FOUND: Symbol('NOT_FOUND')
+      }
+    }
+  })
+
+  createUnavatar({
+    constants: { CLOUDFLARE_TOKEN: 'token', DNS_TIMEOUT: 1000 }
+  })
+
+  t.is(lookupArgs.token, 'token')
+  t.is(lookupArgs.timeout, 1000)
+  t.truthy(lookupArgs.cacheableLookup)
+  t.is(htmlOpts.lookupOrigin, lookup)
+})
+
 test.serial('onFetch wins when onFetchHTML is also passed', t => {
   const onFetch = () => {}
   const onFetchHTML = () => {}
