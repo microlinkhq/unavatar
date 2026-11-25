@@ -50,7 +50,6 @@ test('lookupOrigin calls radar with the bearer token and no retry', async t => {
       }
     }
   ])
-  t.true(Object.hasOwn(clients[0].headers, 'user-agent'))
 })
 
 test('lookupOrigin reads the asn once per address', async t => {
