@@ -38,11 +38,17 @@ module.exports = ({
   })
   const createBrowser = require('./util/browserless')(constants)
   const getHTML = require('./util/html-get')({ createBrowser, got })
+  const lookupOrigin = require('./util/lookup-origin')({
+    cacheableLookup,
+    token: constants.CLOUDFLARE_TOKEN,
+    timeout: constants.DNS_TIMEOUT
+  })
   const { createHtmlProvider, getOgImage, NOT_FOUND } =
     require('./util/html-provider')({
       ...constants,
       getHTML,
       onFetch: fetchHook,
+      lookupOrigin,
       userAgent
     })
   const { createApiProvider } = require('./util/api-provider')({

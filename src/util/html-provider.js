@@ -37,6 +37,7 @@ module.exports = ({
   PROXY_TIMEOUT,
   getHTML,
   onFetch,
+  lookupOrigin,
   userAgent = require('./crawler-agent')
 }) => {
   /**
@@ -90,13 +91,40 @@ module.exports = ({
 
         if (isStatusCodeMissing(statusCode)) {
           const code = EMPTY_PROVIDER_VALUE_CODE.MISSING_STATUS_CODE
-          log.error({ statusCode, status: code })
-          throw createProviderError({
+          // is-antibot matches an asn only when the origin never answered.
+          const asn =
+            tier === 'origin' && context?.req?.isPro
+              ? (await lookupOrigin?.(providerUrl))?.asn
+              : undefined
+          const antibot = asn
+            ? isAntibot({
+              url: providerUrl,
+              headers: responseHeaders,
+              html: attempt.lastHtml,
+              asn
+            })
+            : undefined
+
+          const error = createProviderError({
             provider: name,
             statusCode,
             cause: errorCause,
             code
           })
+
+          if (antibot?.detected) {
+            error.blocked = true
+            log.error({
+              statusCode,
+              status: 'blocked',
+              antibot: antibot.provider ?? undefined,
+              userAgent: resolvedUserAgent
+            })
+          } else {
+            log.error({ statusCode, status: code })
+          }
+
+          throw error
         }
 
         const result = getter($)

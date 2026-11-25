@@ -10,6 +10,7 @@ const createProvider = (opts = {}) => {
   const { createHtmlProvider } = require('../../../src/util/html-provider')({
     PROXY_TIMEOUT: 8000,
     onFetch: undefined,
+    lookupOrigin: opts.lookupOrigin,
     getHTML:
       opts.getHTML ??
       (async () => ({ $: {}, statusCode: opts.responseStatusCode ?? 200 }))
@@ -210,6 +211,92 @@ test('createHtmlProvider throws when status code is null', async t => {
   await t.throwsAsync(runProvider(provider), {
     message: 'Empty value returned by the provider.'
   })
+})
+
+test('a silent hang on an antibot network is blocked', async t => {
+  const lookups = []
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: undefined }),
+    lookupOrigin: async url => {
+      lookups.push(url)
+      return { asn: 20940 }
+    }
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.true(error.blocked)
+  t.is(error.code, 'missing_status_code')
+  t.deepEqual(lookups, ['https://www.reddit.com/user/kikobeats/'])
+})
+
+test('a silent hang off an antibot network stays a missing status', async t => {
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: null }),
+    lookupOrigin: async () => ({ asn: 13335 })
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.is(error.blocked, undefined)
+  t.is(error.code, 'missing_status_code')
+})
+
+test('a silent hang on the free plan does not look up the origin network', async t => {
+  let lookups = 0
+  const provider = createProvider({
+    providerUrl: 'https://www.reddit.com/user/kikobeats/',
+    getterResult: '/assets/avatar.svg',
+    getHTML: async () => ({ $: {}, statusCode: undefined }),
+    lookupOrigin: async () => {
+      lookups++
+      return { asn: 20940 }
+    }
+  })
+
+  const error = await t.throwsAsync(runProvider(provider), {
+    message: 'Empty value returned by the provider.'
+  })
+
+  t.is(lookups, 0)
+  t.is(error.blocked, undefined)
+})
+
+test('a proxy hang does not look up the origin network', async t => {
+  let lookups = 0
+  const { createHtmlProvider } = require('../../../src/util/html-provider')({
+    PROXY_TIMEOUT: 8000,
+    getHTML: async () => ({ $: {}, statusCode: undefined }),
+    lookupOrigin: async () => {
+      lookups++
+      return { asn: 20940 }
+    },
+    onFetch: async ({ attempt }) => attempt({ tier: 'datacenter' })
+  })
+
+  const provider = createHtmlProvider({
+    name: 'test-provider',
+    url: () => 'https://www.reddit.com/user/kikobeats/',
+    getter: () => '/assets/avatar.svg'
+  })
+
+  const error = await t.throwsAsync(
+    runProvider(provider, { req: { query: {}, isPro: true } }),
+    { message: 'Empty value returned by the provider.' }
+  )
+
+  t.is(lookups, 0)
+  t.is(error.blocked, undefined)
 })
 
 test('createHtmlProvider throws when status code is empty string', async t => {
